@@ -25,7 +25,7 @@ In this model, realized output $(P)$
 
 ## 2. Key "Hidden" Variables
 The paper stands out by formalizing "anecdotal" workplace frustrations into mathematical constants:
-|                |            |        |   
+
 |Variable        | Description|Impact  |
 |----------------|------------|--------|
 |$U$ (Management Urgency)|	Externally imposed schedule pressure.	|Applied as an exponent $(U^2)$ on failure risk, meaning urgency makes every failure nonlinearly more costly.|

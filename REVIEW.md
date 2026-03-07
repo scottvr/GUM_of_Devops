@@ -6,7 +6,7 @@
 
 ----
 
-**Gemini said**: This paper, "The Grand Unified Model of DevOps/SRE Dynamics," is a fascinating, semi-satirical, yet mathematically rigorous critique of modern software delivery metrics. It effectively argues that the industry's obsession with "clean" numbers like DORA metrics fails to account for the "human-organizational variables" that actually dictate success or failure in the long run.
+**Gemini said**: This paper, ["The Grand Unified Model of DevOps/SRE Dynamics,"](https://blehg.paperclipmaximizer.ai/images/The_Grand_Unified_Model_of_DevOps_and_SRE_Dynamics_0_3.pdf) is a fascinating, semi-satirical, yet mathematically rigorous critique of modern software delivery metrics. It effectively argues that the industry's obsession with "clean" numbers like DORA metrics fails to account for the "human-organizational variables" that actually dictate success or failure in the long run.
 
 Essentially, it’s a "Descriptive Law" for why software teams feel like they are running at full speed while going nowhere.
 

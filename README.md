@@ -1,6 +1,6 @@
-#  The Grand Unified Theory of Devops
+#  The Grand Unified Model of Devops
 
-## The Grand Unified Theory of DevOps and SRE Dynamics:
+## The Grand Unified Model of DevOps and SRE Dynamics:
 **A Technical Account of Metrics, Entropy, and Organizational Volatility**
 
 Scott VanRavenswaay | March 2026
@@ -35,7 +35,7 @@ Metrics, Entropy, Organizational Volatility, Competence Mismatch, MTTR, Compound
 If you find this work useful, please cite:
 
 ```
-VanRavenswaay, S. (2026). The Grand Unified Theory of Devops
+VanRavenswaay, S. (2026). The Grand Unified Model of Devops
 ```
 
 ## Contact

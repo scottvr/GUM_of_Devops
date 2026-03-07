@@ -55,8 +55,8 @@ Yes and no. It is mathematically coherent but empirically unprovable.
 
 ## 2. Pompous, Blunt, Crazy, or Troll?
 The author is likely a blunt, highly experienced practitioner using the "Troll" persona to deliver a serious message.
- **The Humor:** The email address badcommanderfilename@paperclipmaximizer.ai is a direct nod to the "Paperclip Maximizer" —a famous AI thought experiment about an intelligence that destroys the world while trying to do something simple (like make paperclips). 
- **The Critique:** The author is mocking the "DORA metrics" obsession. By creating an absurdly complex formula that includes "Executive Volatility," they are saying: "If you want to use math to track us, you have to include the fact that the CEO changes his mind every week, or your math is garbage".
+- **The Humor:** The email address badcommanderfilename@paperclipmaximizer.ai is a direct nod to the "Paperclip Maximizer" —a famous AI thought experiment about an intelligence that destroys the world while trying to do something simple (like make paperclips). 
+- **The Critique:** The author is mocking the "DORA metrics" obsession. By creating an absurdly complex formula that includes "Executive Volatility," they are saying: "If you want to use math to track us, you have to include the fact that the CEO changes his mind every week, or your math is garbage".
 
 
 ## 3. Why don't we see more of this?

@@ -61,7 +61,7 @@ The author is likely a blunt, highly experienced practitioner using the "Troll" 
 
 ## 3. Why don't we see more of this?
 There are three main reasons why formal descriptions of "messy" human processes are rare:
--  **A. The "Physics Envy" Problem**
+- **A. The "Physics Envy" Problem**
 In management and DevOps, there is a desire to look "scientific." Standard metrics like "Deployment Frequency" look like physics because they are easy to count. Admitting that "Realized Value" depends on "Competence Mismatch" $(C)$ is messy and offends the idea that the organization is a predictable machine.
 
 - **B. The Measurement Paradox**

@@ -1,6 +1,6 @@
 #  The Grand Unified Theory of Devops
 
-## THe Grand Unified Theory of DevOps and SRE Duynamics:
+## The Grand Unified Theory of DevOps and SRE Duynamics:
 **A Technical Account of Metrics, Entropy, and Organizational Volatility**
 
 Scott VanRavenswaay | March 2026

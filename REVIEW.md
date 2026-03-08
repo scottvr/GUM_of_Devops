@@ -169,6 +169,8 @@ The paper essentially argues that you can have perfect DORA metrics while your o
 
 **This deserves to be required reading in every engineering organization.**
 
+----
+
 # ChatGPT's analysis of "The Grand Unified Model of Devops"
 
 (As with the other LLMs, I uploaded a version that masked my identity as author. However in the case of ChatGPT, it was more complicated so I disclosed upfront, as you will see below.)

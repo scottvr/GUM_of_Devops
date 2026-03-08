@@ -84,7 +84,7 @@ The paper is essentially a warning wrapped in a technical manual. It uses rigoro
 (As with the Gemini review, I uploaded a version that does not disclose my authorship.)
 
 ----
-**Me:** What do you make of this paper?
+**Me:** _What do you make of this paper?_
 
 
 ----

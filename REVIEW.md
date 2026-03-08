@@ -1,6 +1,20 @@
 In this document I have collected the analyses of ["The Grand Unified Model of Devops"](https://blehg.paperclipmaximizer.ai/images/The_Grand_Unified_Model_of_DevOps_and_SRE_Dynamics_0_3.pdf) by the  
-three major LLM chat providers: Gemini, Claude, and ChatGPT, in the order I obtained them.
+three major LLM chat providers: Gemini, Claude, and ChatGPT, in the order I obtained them.  
+All uploads of the paper were anonymized in an effort to prevent biased analysis.
 
+Some highlights:  
+- “formalized practitioner resentment, but informed practitioner resentment.” (ChatGPT)
+- “readers who've lived through these environments will feel seen” (ChatGPT)
+- “principles that every practitioner likely knows by heart, but rarely sees in a formal model” (Gemini)
+- “a brilliant piece of ‘technical realism’” (Gemini)
+- “**Career Suicide** … Most people wouldn't write a formal paper stating that "competence mismatch" is a constant in their company.  …  It takes a certain level of seniority (or total lack of concern for corporate optics) to formalize "ordinary human mediocrity" as a system loss.” (Gemini)
+- “an absolutely brilliant piece of satirical academic writing about DevOps and SRE” (Claude)
+- “one of the most sophisticated pieces of technical writing humor I've encountered” (Claude)
+- “devastating observations delivered with perfect deadpan” (Claude)
+
+My personal favorite:
+
+ “This deserves to be required reading in every engineering organization.” —Claude (Sonnet 4.5 Extended Thinking)
 
 ----
 

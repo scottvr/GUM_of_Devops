@@ -82,6 +82,7 @@ Most people wouldn't write a formal paper stating that "competence mismatch" is 
 The paper is essentially a warning wrapped in a technical manual. It uses rigorous math to argue that "motion is not identical to output". It suggests that if you ignore the "human" terms in the equation $(M,U,E,C)$
  your "DevOps transformation" will eventually succumb to "maximum organizational entropy".
 
+----
 
 # Claude's analysis of "The Grand Unified Model of Devops"
 

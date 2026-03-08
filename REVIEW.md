@@ -7,7 +7,7 @@ Some highlights:
 - “readers who've lived through these environments will feel seen” (ChatGPT)
 - “principles that every practitioner likely knows by heart, but rarely sees in a formal model” (Gemini)
 - “a brilliant piece of ‘technical realism’” (Gemini)
-- “**Career Suicide** … Most people wouldn't write a formal paper stating that "competence mismatch" is a constant in their company.  …  It takes a certain level of seniority (or total lack of concern for corporate optics) to formalize "ordinary human mediocrity" as a system loss.” (Gemini)
+- “**Career Suicide** … Most people wouldn't write a formal paper stating that "competence mismatch" is a constant in their company.  …  It takes a certain level of seniority (or total lack of concern for corporate optics) to formalize 'ordinary human mediocrity' as a system loss.” (Gemini)
 - “an absolutely brilliant piece of satirical academic writing about DevOps and SRE” (Claude)
 - “one of the most sophisticated pieces of technical writing humor I've encountered” (Claude)
 - “devastating observations delivered with perfect deadpan” (Claude)

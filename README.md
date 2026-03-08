@@ -25,7 +25,7 @@ that retrospectively formalize the transition.
 
 ## View Online
 
-Read the latest revision: [https://blehg.paperclipmaximizer.ai/images/The_Grand_Unified_Model_of_DevOps_and_SRE_Dynamics_0_3.pdf](https://blehg.paperclipmaximizer.ai/images/The_Grand_Unified_Model_of_DevOps_and_SRE_Dynamics_0_3.pdf)
+Read the latest revision: [https://blehg.paperclipmaximizer.ai/The_Grand_Unified_Model_of_DevOps_and_SRE_Dynamics_0_3.pdf](https://blehg.paperclipmaximizer.ai/The_Grand_Unified_Model_of_DevOps_and_SRE_Dynamics_0_3.pdf)
 
 ## Keywords
 

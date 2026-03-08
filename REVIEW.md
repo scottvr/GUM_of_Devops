@@ -63,9 +63,9 @@ The paper concludes with two principles that every practitioner likely knows by 
 
 My Take
 
-The choice of the email address `badcommanderfilename@paperclipmaximizer.ai`  suggests the author has a very dry sense of humor regarding AI and organizational "alignment." It’s a brilliant piece of "technical realism"—it treats things like burnout $(low M$)$ and strategic oscillation $(E)$ not as unfortunate accidents, but as predictable, multiplicative losses within the system.
+The choice of the email address `badcommanderfilename@paperclipmaximizer.ai`  suggests the author has a very dry sense of humor regarding AI and organizational "alignment." It’s a brilliant piece of "technical realism"—it treats things like burnout $(low M)$ and strategic oscillation $(E)$ not as unfortunate accidents, but as predictable, multiplicative losses within the system.
 
-If you're currently dealing with a high-pressure project, Equation 6 is particularly sobering: it shows that technical debt doesn't just "happen"; it is a direct function of urgency, deployment frequency, and competence mismatch.
+If you're currently dealing with a high-pressure project, Equation 6 is particularly sobering: it shows that technical debt doesn't just "happen"; it is a direct in function of urgency, deployment frequency, and competence mismatch.
 
 ----
 **You said**: _If it's so "brilliant", why don't we see more "technical realism" like this? Is the math legit? What can you tell me about the author?_

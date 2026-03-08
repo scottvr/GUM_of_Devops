@@ -1,10 +1,13 @@
-\documentclass[a4paper]{article}
+\documentclass[letterpaper]{article}
+
 
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 
-\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage[letterpaper, margin=1in]{geometry}
+
+%\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
 
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -331,10 +334,7 @@ Several limiting cases are worth noting.
 
 The central claim of this paper is modest. Software delivery systems can be described usefully in terms of speed, recovery, and failure, but not completely. Our model includes a minimal endogenous mechanism for long-horizon degradation and repair. Any model that excludes debt accumulation, organizational volatility, competence mismatch, and morale degradation may remain analytically tidy while failing to describe the most consequential dynamics observed in practice.  Such variables are often treated as anecdotal because they are difficult to measure cleanly. Their practical effects are nevertheless large. In many engineering organizations, the largest deviations from expected delivery behavior arise not from the formal system architecture, but from the social system in which that architecture is developed and operated, reprioritized, and periodically explained. The extent to which practitioners will find value in an exponentially-attenuated integral formulation to describe the missing variables is left as an exercise for the reader.
 
-
-
-\clearpage
-\begin{appendices}
+\appendix
 \section{Illustrative Organizational Proxies}
 
 The variables introduced in the main text are conceptual and not assumed to be directly observable. In practice, rough proxies may still be constructed:
@@ -348,7 +348,7 @@ The variables introduced in the main text are conceptual and not assumed to be d
 \end{itemize}
 
 These proxies are imperfect by construction, but they illustrate how the model's latent variables might be operationalized for comparative study.
-\end{appendices}
+
 
 \printbibliography
 \end{document}

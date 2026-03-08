@@ -1,4 +1,6 @@
-# Conversation with Gemini
+# Gemini's analysis of "The Grand Unified Model of Devops"
+
+(I uploaded a version that did not disclose my authorship.)
 
 ----
 **You said**: _What do you make of this paper?_
@@ -77,8 +79,9 @@ The paper is essentially a warning wrapped in a technical manual. It uses rigoro
  your "DevOps transformation" will eventually succumb to "maximum organizational entropy".
 
 
-# Claude's review
-As with the Gemini review, I uploaded a version that does not disclose my authorship.
+# Claude's analysis of "The Grand Unified Model of Devops"
+
+(As with the Gemini review, I uploaded a version that does not disclose my authorship.)
 
 ----
 **Me:** What do you make of this paper?

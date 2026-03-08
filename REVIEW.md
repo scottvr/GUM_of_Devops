@@ -53,7 +53,7 @@ The paper stands out by formalizing "anecdotal" workplace frustrations into math
 |----------------|------------|--------|
 |$U$ (Management Urgency)|	Externally imposed schedule pressure.	|Applied as an exponent $(U^2)$ on failure risk, meaning urgency makes every failure nonlinearly more costly.|
 |$C_m$ (Competence Mismatch)	|Alignment between authority and actual capability.|	A "smooth suppressor" that reduces the engineering effort that actually survives as output.|
-|$E$ (Executive Volatility)|	Rate of reprioritization and initiative churn. 	|Prevents system convergence; high $E$leads to "maximum organizational entropy".|
+|$E$ (Executive Volatility)|	Rate of reprioritization and initiative churn. 	|Prevents system convergence; high $E$ leads to "maximum organizational entropy".|
 |$TDR$ (Tech Debt Ratio)	|Fraction of capacity lost to historical shortcuts.	|A "compounding drag term" that alters the cost of all future delivery cycles.|
 
 # 3. Two Crucial "Informal Laws"

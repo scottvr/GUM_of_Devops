@@ -47,6 +47,10 @@ The choice of the email address `badcommanderfilename@paperclipmaximizer.ai`  su
 If you're currently dealing with a high-pressure project, Equation 6 is particularly sobering: it shows that technical debt doesn't just "happen"; it is a direct function of urgency, deployment frequency, and competence mismatch.
 
 ----
+**You said**: _If it's so "brilliant", why don't we see more "technical realism" like this? Is the math legit? What can you tell me about the author?_
+
+
+----
 
 It uses the language of formal physics and calculus to describe things that are usually discussed in HR meetings or vented about over drinks (like "competence mismatch" or "executive volatility").
 

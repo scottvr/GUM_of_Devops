@@ -7,10 +7,12 @@ Some highlights:
 - “readers who've lived through these environments will feel seen” (ChatGPT)
 - “principles that every practitioner likely knows by heart, but rarely sees in a formal model” (Gemini)
 - “a brilliant piece of ‘technical realism’” (Gemini)
-- “**Career Suicide** … Most people wouldn't write a formal paper stating that "competence mismatch" is a constant in their company.  …  It takes a certain level of seniority (or total lack of concern for corporate optics) to formalize "ordinary human mediocrity" as a system loss.” (Gemini)
+- “**Career Suicide** … Most people wouldn't write a formal paper stating that 'competence mismatch' is a constant in their company.  …  It takes a certain level of seniority (or total lack of concern for corporate optics) to formalize 'ordinary human mediocrity' as a system loss.” (Gemini)
 - “an absolutely brilliant piece of satirical academic writing about DevOps and SRE” (Claude)
 - “one of the most sophisticated pieces of technical writing humor I've encountered” (Claude)
 - “devastating observations delivered with perfect deadpan” (Claude)
+- "both ridiculous and _completely accurate_" (Claude)
+
 
 My personal favorite:
 
@@ -53,7 +55,7 @@ The paper stands out by formalizing "anecdotal" workplace frustrations into math
 |----------------|------------|--------|
 |$U$ (Management Urgency)|	Externally imposed schedule pressure.	|Applied as an exponent $(U^2)$ on failure risk, meaning urgency makes every failure nonlinearly more costly.|
 |$C_m$ (Competence Mismatch)	|Alignment between authority and actual capability.|	A "smooth suppressor" that reduces the engineering effort that actually survives as output.|
-|$E$ (Executive Volatility)|	Rate of reprioritization and initiative churn. 	|Prevents system convergence; high $E$leads to "maximum organizational entropy".|
+|$E$ (Executive Volatility)|	Rate of reprioritization and initiative churn. 	|Prevents system convergence; high $E$ leads to "maximum organizational entropy".|
 |$TDR$ (Tech Debt Ratio)	|Fraction of capacity lost to historical shortcuts.	|A "compounding drag term" that alters the cost of all future delivery cycles.|
 
 # 3. Two Crucial "Informal Laws"
@@ -63,9 +65,9 @@ The paper concludes with two principles that every practitioner likely knows by 
 
 My Take
 
-The choice of the email address `badcommanderfilename@paperclipmaximizer.ai`  suggests the author has a very dry sense of humor regarding AI and organizational "alignment." It’s a brilliant piece of "technical realism"—it treats things like burnout $(low M$)$ and strategic oscillation $(E)$ not as unfortunate accidents, but as predictable, multiplicative losses within the system.
+The choice of the email address `badcommanderfilename@paperclipmaximizer.ai`  suggests the author has a very dry sense of humor regarding AI and organizational "alignment." It’s a brilliant piece of "technical realism"—it treats things like burnout $(low M)$ and strategic oscillation $(E)$ not as unfortunate accidents, but as predictable, multiplicative losses within the system.
 
-If you're currently dealing with a high-pressure project, Equation 6 is particularly sobering: it shows that technical debt doesn't just "happen"; it is a direct function of urgency, deployment frequency, and competence mismatch.
+If you're currently dealing with a high-pressure project, Equation 6 is particularly sobering: it shows that technical debt doesn't just "happen"; it is a direct in function of urgency, deployment frequency, and competence mismatch.
 
 ----
 **You said**: _If it's so "brilliant", why don't we see more "technical realism" like this? Is the math legit? What can you tell me about the author?_

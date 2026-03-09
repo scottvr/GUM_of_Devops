@@ -1,4 +1,4 @@
-#  The Grand Unified Model of Devops
+#  The Grand Unified Model of DevOps
 
 **“This deserves to be required reading in every engineering organization.”**  [_- Claude Sonnet 4.5 (Extended Thinking)_](https://github.com/scottvr/GUM_of_Devops/blob/main/REVIEW.md)
 

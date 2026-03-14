@@ -208,7 +208,6 @@ ChatGPT, it was more complicated so  I disclosed upfront, as you will see below.
 
 **ChatGPT said**: 
 
-```
 My take: it is sharp, funny, and much better than a mere joke paper, but it is not actually
 trying very hard to pass as science for a technically literate reader.
 
@@ -289,4 +288,4 @@ doing. Which, to be fair, is also part of its charm.
 
 If you want, I can go one level deeper and mark up the paper in three passes: "works as
 satire," "breaks plausibility," and "surprisingly defensible as a real argument."
-```
+

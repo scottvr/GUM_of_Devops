@@ -14,9 +14,7 @@ Some highlights:
 - "both ridiculous and _completely accurate_" (Claude)
 
 
-My personal favorite:
-
- “This deserves to be required reading in every engineering organization.” —Claude (Sonnet 4.5 Extended Thinking)
+ **“This deserves to be required reading in every engineering organization.”**  — Claude (Sonnet 4.5 Extended Thinking)
 
 ----
 

@@ -10,7 +10,7 @@ three major LLM chat providers: Gemini, Claude, and ChatGPT, in the order I obta
 ---
 *The version of the paper uploaded to the models was anonymized in an effort to prevent biased analysis.*
 
-Some highlights:  
+**Some highlights:**  
 - “formalized practitioner resentment, but informed practitioner resentment.” (ChatGPT)
 - “readers who've lived through these environments will feel seen” (ChatGPT)
 - “principles that every practitioner likely knows by heart, but rarely sees in a formal model” (Gemini)

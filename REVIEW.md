@@ -8,7 +8,7 @@ In this document I have collected the analyses of ["The Grand Unified Model of D
 three major LLM chat providers: Gemini, Claude, and ChatGPT, in the order I obtained them.
 
 ---
-The version of the paper uploaded to the models was anonymized in an effort to prevent biased analysis.*
+*The version of the paper uploaded to the models was anonymized in an effort to prevent biased analysis.*
 
 Some highlights:  
 - “formalized practitioner resentment, but informed practitioner resentment.” (ChatGPT)

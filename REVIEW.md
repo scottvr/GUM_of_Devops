@@ -4,7 +4,7 @@ Luckily, there exists a varacious consumer of text with an ability to navigate d
 
 I speak of course of the venerable LLM, which also has the useful property of not being able to refuse to read a document until it has already ingested it, and by then of course, it is too late.
 
-In this document I have collected the analyses of ["The Grand Unified Model of Devops"](https://github.com/scottvr/GUM_of_Devops/blob/main/The_Grand_Unified_Model_of_DevOps_and_SRE_Dynamics_0_3.pdf?raw=1) by the  
+In this document I have collected the analyses of ["The Grand Unified Model of Devops"](https://blehg.paperclipmaximizer.ai/images/The_Grand_Unified_Model_of_DevOps_and_SRE_Dynamics_0_3.pdf) by the  
 three major LLM chat providers: Gemini, Claude, and ChatGPT, in the order I obtained them.
 
 ---

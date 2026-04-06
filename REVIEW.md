@@ -1,6 +1,6 @@
 When one is *peerless*, it is difficult to obtain peer reviews. 
 
-Luckily, there exists a varacious consumer of text with an ability to navigate dense and complex papers and provide surprising insight in the process. 
+Luckily, there exists a voracious consumer of text with an ability to navigate dense and complex papers and provide surprising insight in the process. 
 
 I speak of course of the venerable LLM, which also has the useful property of not being able to refuse to read a document until it has already ingested it, and by then of course, it is too late.
 

@@ -1,0 +1,5 @@
+*.code-workspace
+.gitignore
+.DS_Store
+**/./dump.txt
+2.0/*

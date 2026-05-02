@@ -1,12 +1,13 @@
-I am honored to have my recent paper, ["The Grand Unified Model of DevOps/SRE Dynamics"](https://blehg.paperclipmaximizer.ai/images/The_Grand_Unified_Model_of_DevOps_and_SRE_Dynamics_0_3.pdf) (referred to as "GUM" throughout), appear in the proceedings of SIGBOVIK 2026. The venue and publication are a good fit for the paper and serve as useful signals for the temperament of the treatment throughout the development of the model, should you have not yet read it. The conference proceedings are also available in print from Lulu.
+I am honored to have my recent paper, ["The Grand Unified Model of DevOps/SRE Dynamics"](https://blehg.paperclipmaximizer.ai/images/The_Grand_Unified_Model_of_DevOps_and_SRE_Dynamics_0_3.pdf) (referred to as "GUM" throughout), appear in the proceedings of SIGBOVIK 2026. The venue and publication are a good fit for the paper and serve as useful signals for the temperament of the treatment throughout the development of the model, should you have not yet read it. The conference proceedings are also available in print from [Lulu](https://www.lulu.com/search?sortBy=PUBLICATION_DATE_DESC&page=1&q=sigbovik&pageSize=50&adult_audience_rating=00)
 
 The paper is, as it admits in its abstract, not offered as a predictive instrument in the strict scientific sense. It is instead a formalized account of a familiar practitioner truth: software delivery is not shaped only by pipelines, tooling, deployment frequency, or architectural complexity. It is also shaped by technical debt, morale, urgency campaigns, competence mismatch, and executive volatility.
 
 As a side note: While researching for GUM 2.0, we were surprised by how much recent literature appears to be moving into adjacent territory. One paper formalizes delivery speed as a function of automation and CI/CD maturity; another models developer-experience variables such as cognitive load and technical frustration as causal contributors to release-cycle duration. A third attempts to quantify technical debt as a compound-interest problem with remediation ROI. It is, of course, an honor to see how much impact the GUM has had, even if it has not yet been cited in any papers. A more thorough [survey of the recent literature can be found at the GUM's primary site](GUM-202605_lit_review.html).
 
-We are currently working on the GUM v2.0 to address these developments. As stated in the original "Grand Unified Model of DevOps", when the real world begins to collide with a model, it is time to introduce more formalism.
-
 The ethos of GUM does not stem from a belief that DevOps metrics are useless. Rather, they are useful enough to make their omissions conspicuous. If we can assign symbols to deployment frequency and change failure rate, we may eventually have to admit that organizations themselves also perturb the system. Recent literature has done much of the work of formalizing the example proxies given in GUM 1.0, which allows us to construct a new model that may satisfy the critics who claimed GUM 1.0 required "measuring the immeasurable."
+
+We are currently working on the GUM v2.0 to address these developments. As stated in the original "Grand Unified Model of DevOps", when the real world begins to collide with a model, **it is time to introduce more formalism.**
+
 
 
 ---

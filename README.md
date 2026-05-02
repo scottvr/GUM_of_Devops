@@ -1,5 +1,8 @@
 #  The Grand Unified Model of DevOps
 
+### NEW 202605 - Emerging Literature Review - SIGBOVIK 2026 Announcement
+
+
 **“This deserves to be required reading in every engineering organization.”**  [_- Claude Sonnet 4.5 (Extended Thinking)_](https://github.com/scottvr/GUM_of_Devops/blob/main/REVIEW.md)
 
 ## The Grand Unified Model of DevOps and SRE Dynamics:
@@ -25,7 +28,7 @@ that retrospectively formalize the transition.
 
 ## View Online
 
-Read the latest revision: [https://blehg.paperclipmaximizer.ai/images/The_Grand_Unified_Model_of_DevOps_and_SRE_Dynamics_0_3.pdf](https://blehg.paperclipmaximizer.ai/images/The_Grand_Unified_Model_of_DevOps_and_SRE_Dynamics_0_3.pdf)
+Read the latest revision: [The_Grand_Unified_Model_of_DevOps_and_SRE_Dynamics_0_3.pdf](https://blehg.paperclipmaximizer.ai/images/The_Grand_Unified_Model_of_DevOps_and_SRE_Dynamics_0_3.pdf)
 
 ## Keywords
 
@@ -43,5 +46,3 @@ VanRavenswaay, S. (2026). The Grand Unified Model of Devops
 ## Contact
 
 Scott VanRavenswaay - scottvr+github@paperclipmaximizer.ai
-
-

@@ -6,7 +6,7 @@ published *anywhere*, the fact that it was within the proceedings of the confere
 a useful signal as to the paper's tone and temperament, as well as the astute reading skills of those
 who served as peer-reviewers.
 
-What was more surprising to me, though, was how much recent literature appearing elseehere is inching 
+What was more surprising to me, though, was how much recent literature appearing elsewhere is inching 
 toward adjacent territory: formal models of delivery throughput, causal models of developer experience, 
 and quantitative models of technical debt are all converging on pieces of the same socio-technical system. 
 
@@ -28,7 +28,7 @@ This is a real attempt to do something the field mostly handwaves: write down a 
 
 ## Paper I: The Outer Machinery
 
-Salman et al. (*A Mathematical Framework for Quantifying DevOps Delivery Speed*,IJMECS Vol. 18 No. 1) address the problem that most DevOps research remains qua litative, with few studies formalizing the interactions among development speed, automation, CI/CD maturity, resource availability, and architectural complexity. They are correct, and the acknowledgment is welcome.
+Salman et al. [*A Mathematical Framework for Quantifying DevOps Delivery Speed*, IJMECS Vol. 18 No. 1](https://www.mecs-press.org/ijmecs/ijmecs-v18-n1/v18n1-4.html#:~:text=*%20Corresponding%20author.,real%20and%20training%20empirical%20data.) address the problem that most DevOps research remains qua litative, with few studies formalizing the interactions among development speed, automation, CI/CD maturity, resource availability, and architectural complexity. They are correct, and the acknowledgment is welcome.
 
 Their model is built as a multiplicative structure in which delivery speed S is expressed approximately as:
 
@@ -37,21 +37,21 @@ Their model is built as a multiplicative structure in which delivery speed S is 
 Development speed, automation maturity, CI/CD maturity, and resources combine multiplicatively under a weakest-link logic, while architectural complexity enters as an exponential damper. Automation and CI/CD maturity are modeled with logist
 ic and saturation curves that exhibit threshold effects: early investment yields large returns, later investment flattens. The model is validated on pseudo-real and student-built CI/CD pipelines, reporting a 14.3% average calibration deviation, and is pitched explicitly as pedagogically useful.
 
-The paper is at its strongest where it refuses to treat DevOps as pure slogan and instead insists on an explicit functional form. The complexity term is sensible. The saturation story for automation is both empirically plausible and mathematically tidy.
+The paper is at its strongest where it refuses to accept DevOps as cargo cult slogan, and instead insists on an explicit functional form. The complexity term is sensible. The saturation story for automation is both empirically plausible and mathematically tidy.
 
 **On the complexity term.** Their architectural complexity damper e^(−λC) is a strong intuition and worth meeting halfway rather than dismissing. Architecture is, however, only the most photogenic form of complexity. In production organizations, complexity is also historical, political, and managerial. It arrives in the form of accumulated shortcuts that alter future cost structures, organizational debt that compounds like interest, and strategic pivots that impose rework retroactively on completed work. The exponential damping form is correct; the question is what fills C.
 
-**On the saturation curves.** Automation saturation is real, and the logistic model captures the diminishing-returns dynamic accurately. The more pointed observation is that flatlining gains from automation are not only a technical saturation effect. They frequently mark the moment at which the system stops being bottlenecked by manual steps and starts being bottlenecked by prioritization churn, trust deficits, and coordination drag. Once enough manual toil has been automated away, the remaining bottlenecks are frequently upgraded to executive format.
+**On the saturation curves.** Automation saturation is real, and the logistic model captures the diminishing-returns dynamic accurately. The more pointed observation is that flatlining gains from automation are not only a technical saturation effect; they frequently mark the moment at which the system stops being bottlenecked by manual steps and starts being bottlenecked by prioritization churn, trust deficits, and coordination drag. Once enough manual toil has been automated away, the remaining bottlenecks are frequently upgraded to executive format.
 
-**On the educational validation.** The model's validation on student-built pipelines is genuinely useful and may also help explain why certain variables do not yet appear. Student teams typically operate with comparatively low executive volatility, limited incentive distortion, and only modest exposure to deadline compression campaigns masquerading as strategy. The model's good behavior in educational settings is encouraging, and may also help explain why it remains only moderately contaminated by management.
+**On the educational validation.** The model's validation on student-built pipelines is useful, and may also help explain why certain variables do not yet appear. Student teams typically operate with comparatively low executive volatility, limited incentive distortion, and only modest exposure to deadline compression campaigns masquerading as strategy. The model's good behavior in educational settings is encouraging, but whether the model only being moderately contaminated by management is causal or coincidental was not explored.
 
-**On the novelty claim.** The paper's stated novelty is the formal, unified analytical framework for delivery speed. This is a fair claim. One can accept it entirely while observing that their S-model is a respectable throughput model under the special case where the surrounding institution is treated as a mostly neutral transport medium -- and like many elegant models, it benefits from an environment in which nobody above the team changes direction three times during a working session started before, and ending after, lunch.
+**On the novelty claim.** The paper's stated novelty is the formal, unified analytical framework for delivery speed. This is a fair claim. One can accept it entirely while observing that their S-model is a respectable throughput model under the special case where the surrounding institution is treated as a **mostly neutral transport medium** -- and like many elegant models, it benefits from an environment in which nobody above the team changes direction multiple times during a working session started before, and ending after, lunch.
 
 ---
 
 ## Paper II: The Inner Operator Condition
 
-Farhan et al. (*Impact of Developer Experience Metrics on Release Cycle Duration*, VTSE) approach the formalization problem from the other direction: rather than the pipeline surrounding the developer, they model the developer's interior state as a causal contributor to release timing.
+Farhan et al. [*Impact of Developer Experience Metrics on Release Cycle Duration*, VTSE](https://vfast.org/journals/index.php/VTSE/article/view/2300) approach the formalization problem from the other direction: rather than the pipeline surrounding the developer, they model the developer's interior state as a causal contributor to release timing.
 
 The framework is a Bayesian structural causal model in which cognitive load, tool quality, context switching, and feedback quality are treated as causal variables affecting release-cycle duration, with architecture and organizational structure as control parameters. They argue explicitly that DORA-style metrics are limited for identifying causal relationships between developer experience and process performance, and they formalize the deficiency using directed acyclic graphs and Average Treatment Effect notation for interventions. Their key finding: slow CI/CD integration raises the probability of release durations exceeding 14 days from 21% to 83%; low-quality tools raise it from 18% to 72%.
 
@@ -70,7 +70,7 @@ pfully relocated into planning churn, authority misalignment, and deadline theat
 
 ## Paper III: The Debt Remediation Shell
 
-Rajput et al. (*Quantifying Technical Debt Impact on DevOps Performance*, American Impact Review) are the most directly useful for turning the GUM's latent terms into something approaching measurable quantities.
+Rajput et al. [*Quantifying Technical Debt Impact on DevOps Performance*, American Impact Review](https://americanimpactreview.com/article/e2026034) are the most directly useful for turning the GUM's latent terms into something approaching measurable quantities.
 
 Their study covers 89 enterprise projects and 412 engineering leaders, integrates DORA with SPACE, and models technical debt as compound interest. They report quantified relationships between debt density and worse deployment frequency, lead time, change failure rate, delivery velocity, and defect density. They also report category-differentiated debt growth rates: architectural debt compounds at 0.14 per quarter, design debt at 0.09, code debt at 0.05, and test debt at 0.04, implying a weighted average of 0.07 per quarter and a doubling period of approximately 2.7 years if unmanaged.
 

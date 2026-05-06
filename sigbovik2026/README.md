@@ -13,7 +13,7 @@ We are currently working to address these developments un GUM v2.0. As stated in
 
 ### ERRATA
 We would like to formally address the previous brief note where we had acknowledged that the present-day DORA model
-has changed to include a "fifth metric", and that they had "caught up" to the GUM insofar as accounting for rework by naming it as a metric since the DORA metrics formulation is now different than that used in "The Grand Unified Model of DevOps/SRE Dynamics", but we now feel a retraction is in order.
+has changed to include a "fifth metric", and that they had "caught up" to the GUM insofar as accounting for rework by naming it as a metri, leaving  the DORA metrics formulation is now different than that used in "The Grand Unified Model of DevOps/SRE Dynamics", but we now feel a retraction is in order.
 
 An earlier version of this document erroneously ascribed blame to the author of "The Grand Unified Model of Devops (GUM)" for the initial omission -- and subsequent awkward handling -- of the so-called "fifth" DORA metric. However, upon further review of the historical record, this mea culpa was entirely unwarranted. The confusion surrounding this metric is not a failure of the author’s scholarship, but rather a direct result of the DevOps Research and Assessment (DORA) organization's prolonged ontological crisis regarding its own framework. The record must hereby be corrected to reflect that the author is blameless.
 

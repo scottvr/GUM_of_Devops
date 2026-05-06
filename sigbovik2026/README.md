@@ -6,7 +6,7 @@ The ethos of GUM does not stem from a belief that DevOps metrics are useless. Ra
 
 As a side note: While researching for GUM 2.0, we were surprised by how rapidly the recent literature appears to be moving into  territory adjacent to that of the GUM.  One paper formalizes delivery speed as a function of automation and CI/CD maturity; another models developer-experience variables such as cognitive load and technical frustration as causal contributors to release-cycle duration, which looks quite a lot like the GUM term M (Developer Morale Multiplier). A third attempts to quantify technical debt as a compound-interest problem with remediation ROI. It is, of course, an honor to see how much impact the GUM has had, even if it has not yet been cited in any papers. A more thorough [survey of these papers from recent literature can be found at the GUM's primary site](GUM-202605_lit_review.md).
 
-We are currently working to address these developments un GUM v2.0. As stated in the original "Grand Unified Model of DevOps", when the real world begins to collide with a model, **it is time to introduce more formalism.**
+We are currently working to address these developments in GUM v2.0. As stated in the original "Grand Unified Model of DevOps", when the real world begins to collide with a model, **it is time to introduce more formalism.**
 
 
 ---

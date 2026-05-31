@@ -30,6 +30,8 @@ that retrospectively formalize the transition.
 
 Read the latest revision: [The Grand Unified Model of DevOps and SRE Dynamics](https://blehg.paperclipmaximizer.ai/images/The_Grand_Unified_Model_of_DevOps_and_SRE_Dynamics_0_3.pdf)
 
+Or in the [Record of the Proceedings of SIGBOVIK XX, Volume 0x2026. ISSN 2155-0166.](https://sigbovik.org/2026/proceedings.pdf)
+
 ## Keywords
 
 *SRE, DevOps, DORA, Infinity Loop, Simple Math, Calculus, Grand Unified,
@@ -40,7 +42,7 @@ Metrics, Entropy, Organizational Volatility, Competence Mismatch, MTTR, Compound
 If you find this work useful, please cite:
 
 ```
-VanRavenswaay, S. (2026). The Grand Unified Model of Devops
+VanRavenswaay, S. (2026). The Grand Unified Model of Devops, Proceedings of SIGBOVIK XX, Volume 0x2026. ISSN 2155-0166.
 ```
 
 ## Contact

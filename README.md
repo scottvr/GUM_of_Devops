@@ -42,7 +42,7 @@ Metrics, Entropy, Organizational Volatility, Competence Mismatch, MTTR, Compound
 If you find this work useful, please cite:
 
 ```
-VanRavenswaay, S. (2026). The Grand Unified Model of Devops, Proceedings of SIGBOVIK XX, Volume 0x2026. ISSN 2155-0166.
+VanRavenswaay, S. (2026). The Grand Unified Model of Devops, Proceedings of SIGBOVIK XX, Volume 0x2026, pp 893-900. ISSN 2155-0166.
 ```
 
 ## Contact

@@ -1,7 +1,7 @@
 # Formalizing the Obvious: A Literature Survey on the Way to Writing Down Management
 
-I am honored to have my recent paper, *The Grand Unified Model of DevOps/SRE Dynamics*,
-published in the proceedings of SIGBOVIK 2026. While I am additionally *surprised* to have it
+I am honored to have my recent paper, [*The Grand Unified Model of DevOps/SRE Dynamics*](https://sigbovik.org/2026/proceedings.pdf#page=897),
+published in the proceedings of [SIGBOVIK 2026](https://sigbovik.org/2026/). While I am additionally *surprised* to have it
 published *anywhere*, the fact that it was within the proceedings of the conference is perhaps
 a useful signal as to the paper's tone and temperament, as well as the astute reading skills of those
 who served as peer-reviewers.

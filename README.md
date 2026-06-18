@@ -1,7 +1,7 @@
 
 **“This deserves to be required reading in every engineering organization.”**  [_- Claude Sonnet 4.5 (Extended Thinking)_](https://github.com/scottvr/GUM_of_Devops/blob/main/REVIEW.md)
 
-##### NEW 202605 - [Emerging Literature Review - SIGBOVIK 2026 Announcement](sigbovik2026/GUM-202605_lit_review.md)
+##### NEW 20260501 - [Emerging Literature Review - SIGBOVIK 2026 Announcement](sigbovik2026/GUM-202605_lit_review.md)
   
 ---
 

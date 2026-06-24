@@ -26,7 +26,7 @@
 
 <div class="layout">
 
-  <!-- ── LEFT: CONTROLS ─────────────────────────────────────── -->
+  <!-- LEFT CONTROLS -->
   <div class="controls-panel">
 
     <!-- Presets -->
@@ -101,7 +101,7 @@
       </div>
     </div>
 
-    <!-- Organizational Terms -->
+    <!-- Organizational perturbation Terms -->
     <div class="panel-section">
       <div class="panel-section-label">Organizational Perturbation Terms</div>
 
@@ -208,10 +208,10 @@
 
   </div><!-- /controls-panel -->
 
-  <!-- ── RIGHT: OUTPUT ───────────────────────────────────────── -->
+  <!-- RIGHT (OUTPUT) -->
   <div class="output-panel">
 
-    <!-- Score + health bars -->
+    <!-- Score / health bars -->
     <div class="output-primary">
       <div class="output-score">
         <div class="score-label">P<sub>real</sub> — Realized Output</div>
@@ -299,7 +299,7 @@
       </div>
     </div>
 
-    <!-- TDR dynamics -->
+    <!-- TDR / devt dynamics -->
     <div class="tdr-dynamics">
       <h3>Long-Horizon Debt Dynamics — dTDR/dt</h3>
       <div style="font-size:11px; color:var(--text-dim); margin-bottom:0.8rem;">
@@ -326,7 +326,7 @@
       </div>
     </div>
 
-    <!-- Diagnosis -->
+    <!-- Diagnostics -->
     <div class="diagnosis">
       <span class="label">System Diagnosis</span>
       <span id="diagnosis-text">Adjusting a slider will reveal the current system state.</span>
@@ -341,7 +341,7 @@
 </footer>
 
 <script>
-// ── MODEL ─────────────────────────────────────────────────────────
+//  GUM
 
 const EPS   = 0.01;   // regularization
 const Z     = 1.0;    // normalization (rhetorical)
@@ -393,7 +393,7 @@ function computeTerms(v) {
   return { omega, urgency_exp, cfr_term, debt_att, throughput, dTDR };
 }
 
-// ── DISPLAY ───────────────────────────────────────────────────────
+// DISPLAY
 
 function fmt(x, digits=3) {
   if (x >= 100) return x.toFixed(1);
@@ -497,7 +497,7 @@ function setBar(name, val, max, lowT, highT) {
   text.textContent = fmt(val, 3);
 }
 
-// ── DIAGNOSIS ─────────────────────────────────────────────────────
+// diags
 
 function buildDiagnosis(v, t, P) {
   const notes = [];
@@ -545,7 +545,7 @@ function buildDiagnosis(v, t, P) {
   return notes.join('<br><br>') || 'System within normal parameters. Adjust variables to explore.';
 }
 
-// ── SWEEP STATE ───────────────────────────────────────────────────
+//  SWEEP STATE
 
 const HANDLE_R = 8;
 let chartDragging = false;
@@ -632,7 +632,7 @@ function setCFRMode(mode) {
   drawChart(v);
 }
 
-// ── CHART RENDER ──────────────────────────────────────────────────
+// RENDER CHART
 
 function drawChart(v) {
   const canvas = document.getElementById('sparkline');
@@ -788,7 +788,7 @@ function drawChart(v) {
   canvas._pMax = pMax;
 }
 
-// ── CHART DRAG ────────────────────────────────────────────────────
+// chart drag
 
 function canvasXtoSweepVal(canvas, clientX) {
   const cfg = SWEEP_CONFIG[activeSweep];
@@ -846,7 +846,7 @@ function initChartDrag() {
   window.addEventListener('touchend', () => { chartDragging = false; });
 }
 
-// ── PRESETS ───────────────────────────────────────────────────────
+// pRESETS
 
 const presets = {
   elite: {
@@ -890,7 +890,7 @@ function applyPreset(name) {
   update();
 }
 
-// ── INIT ──────────────────────────────────────────────────────────
+//  INIT
 
 window.addEventListener('resize', () => {
   const v = getVars();

@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="./doragum.css">
+<title>The Grand Unified Model of DevOps/SRE Dynamics</title>
+
+</head>
+<body>
+
+<header>
+  <div class="header-eyebrow">Interactive Model Explorer</div>
+  <h1>
+    The Grand Unified Model of DevOps/SRE Dynamics
+    <span class="sub">A Technical Account of Metrics, Entropy, and Organizational Volatility</span>
+  </h1>
+  <div class="header-meta">
+    Scott VanRavenswaay &nbsp;·&nbsp;
+    <a href="mailto:scottvr@paperclipmaximizer.ai">scottvr@paperclipmaximizer.ai</a>
+    &nbsp;·&nbsp;
+    Presented to the DORA Community, July 2025
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- ── LEFT: CONTROLS ─────────────────────────────────────── -->
+  <div class="controls-panel">
+
+    <!-- Presets -->
+    <div class="panel-section">
+      <div class="panel-section-label">Organizational Archetypes</div>
+      <div class="presets">
+        <button class="preset-btn" onclick="applyPreset('elite')">
+          <span class="preset-name">Elite Performer</span>
+          High trust, low chaos
+        </button>
+        <button class="preset-btn" onclick="applyPreset('healthy')">
+          <span class="preset-name">High Performer</span>
+          Mostly functional
+        </button>
+        <button class="preset-btn" onclick="applyPreset('stressed')">
+          <span class="preset-name">Under Pressure</span>
+          Urgency rising
+        </button>
+        <button class="preset-btn" onclick="applyPreset('legacy')">
+          <span class="preset-name">Legacy Bog</span>
+          Debt-laden, stable-ish
+        </button>
+        <button class="preset-btn" onclick="applyPreset('crisis')">
+          <span class="preset-name">Incident Loop</span>
+          Fire-fighting mode
+        </button>
+        <button class="preset-btn" onclick="applyPreset('entropy')">
+          <span class="preset-name">Max Entropy</span>
+          The literature review
+        </button>
+      </div>
+    </div>
+
+    <!-- DORA Metrics -->
+    <div class="panel-section">
+      <div class="panel-section-label">DORA Delivery Variables</div>
+
+      <div class="control-row">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">DF</span> — Deployment Frequency</span>
+          <span class="control-value" id="val-DF">4.0</span>
+        </div>
+        <div class="control-desc">Deployments per day. Elite: &gt;1/day. Low: &lt;1/month.</div>
+        <input type="range" id="sl-DF" min="0.01" max="20" step="0.01" value="4" oninput="update()">
+      </div>
+
+      <div class="control-row">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">LT</span> — Lead Time for Changes (hrs)</span>
+          <span class="control-value" id="val-LT">4.0</span>
+        </div>
+        <div class="control-desc">Hours from commit to production. Elite: &lt;1hr. Low: &gt;1 month.</div>
+        <input type="range" id="sl-LT" min="0.5" max="720" step="0.5" value="4" oninput="update()">
+      </div>
+
+      <div class="control-row">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">CFR</span> — Change Failure Rate</span>
+          <span class="control-value" id="val-CFR">0.05</span>
+        </div>
+        <div class="control-desc">Fraction of changes causing incidents. Elite: 0–5%. Low: 46–60%.</div>
+        <input type="range" id="sl-CFR" min="0" max="0.6" step="0.01" value="0.05" oninput="update()">
+      </div>
+
+      <div class="control-row">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">MTTR</span> — Mean Time to Restore (hrs)</span>
+          <span class="control-value" id="val-MTTR">0.5</span>
+        </div>
+        <div class="control-desc">Hours to recover from failure. Elite: &lt;1hr. Low: &gt;1 week.</div>
+        <input type="range" id="sl-MTTR" min="0.1" max="336" step="0.1" value="0.5" oninput="update()">
+      </div>
+    </div>
+
+    <!-- Organizational Terms -->
+    <div class="panel-section">
+      <div class="panel-section-label">Organizational Perturbation Terms</div>
+
+      <div class="control-row">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">M</span> — Developer Morale Multiplier</span>
+          <span class="control-value" id="val-M">1.0</span>
+        </div>
+        <div class="control-desc">Ratio of energizing work to chronic toil. &lt;1 = degradation regime.</div>
+        <input type="range" id="sl-M" min="0.1" max="2.0" step="0.05" value="1.0" oninput="update()">
+      </div>
+
+      <div class="control-row">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">U</span> — Management Urgency</span>
+          <span class="control-value" id="val-U">1.0</span>
+        </div>
+        <div class="control-desc">Externally imposed schedule pressure. Applied as exponent on (1−CFR)^U². Proceed with caution.</div>
+        <input type="range" id="sl-U" min="0.1" max="5.0" step="0.05" value="1.0" oninput="update()">
+      </div>
+
+      <div class="control-row">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">C<sub>m</sub></span> — Competence Mismatch</span>
+          <span class="control-value" id="val-Cm">0.1</span>
+        </div>
+        <div class="control-desc">Misalignment of responsibility, authority, and actual capability.</div>
+        <input type="range" id="sl-Cm" min="0" max="1.0" step="0.01" value="0.1" oninput="update()">
+      </div>
+
+      <div class="control-row">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">E</span> — Executive Volatility</span>
+          <span class="control-value" id="val-E">0.1</span>
+        </div>
+        <div class="control-desc">Strategic oscillation, reprioritization churn, initiative reversals.</div>
+        <input type="range" id="sl-E" min="0" max="1.0" step="0.01" value="0.1" oninput="update()">
+      </div>
+    </div>
+
+    <!-- Debt & Remediation -->
+    <div class="panel-section">
+      <div class="panel-section-label">Debt and Remediation</div>
+
+      <div class="control-row">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">TDR</span> — Technical Debt Ratio</span>
+          <span class="control-value" id="val-TDR">0.1</span>
+        </div>
+        <div class="control-desc">Fraction of capacity consumed by historical shortcuts and rework burden.</div>
+        <input type="range" id="sl-TDR" min="0" max="1.0" step="0.01" value="0.1" oninput="update()">
+      </div>
+
+      <div class="control-row">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">R</span> — Remediation Rate</span>
+          <span class="control-value" id="val-R">0.1</span>
+        </div>
+        <div class="control-desc">Capacity diverted to debt repayment. Subtracts from visible throughput; benefits are deferred.</div>
+        <input type="range" id="sl-R" min="0" max="0.9" step="0.01" value="0.1" oninput="update()">
+      </div>
+    </div>
+
+    <!-- Value & Constants -->
+    <div class="panel-section">
+      <div class="panel-section-label">Value and Sensitivity Constants</div>
+
+      <div class="control-row">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">V</span> — Business Value per Change</span>
+          <span class="control-value" id="val-V">1.0</span>
+        </div>
+        <div class="control-desc">Normalized realized value delivered per change. Relative unit.</div>
+        <input type="range" id="sl-V" min="0.1" max="5.0" step="0.1" value="1.0" oninput="update()">
+      </div>
+
+      <div class="control-row">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">λ</span> — Debt sensitivity</span>
+          <span class="control-value" id="val-lam">1.0</span>
+        </div>
+        <div class="control-desc">How aggressively TDR attenuates output via e^(−λ·TDR).</div>
+        <input type="range" id="sl-lam" min="0.1" max="5.0" step="0.1" value="1.0" oninput="update()">
+      </div>
+
+      <div class="control-row">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">α</span> — Competence sensitivity</span>
+          <span class="control-value" id="val-alpha">1.0</span>
+        </div>
+        <div class="control-desc">Cm's weight in the Ω coherence term.</div>
+        <input type="range" id="sl-alpha" min="0.1" max="5.0" step="0.1" value="1.0" oninput="update()">
+      </div>
+
+      <div class="control-row">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">β</span> — Volatility sensitivity</span>
+          <span class="control-value" id="val-beta">1.0</span>
+        </div>
+        <div class="control-desc">E's weight in the Ω coherence term.</div>
+        <input type="range" id="sl-beta" min="0.1" max="5.0" step="0.1" value="1.0" oninput="update()">
+      </div>
+    </div>
+
+  </div><!-- /controls-panel -->
+
+  <!-- ── RIGHT: OUTPUT ───────────────────────────────────────── -->
+  <div class="output-panel">
+
+    <!-- Score + health bars -->
+    <div class="output-primary">
+      <div class="output-score">
+        <div class="score-label">P<sub>real</sub> — Realized Output</div>
+        <div class="score-value" id="score-value">—</div>
+        <div class="score-unit">normalized units</div>
+      </div>
+      <div class="health-bars">
+        <div class="health-bar-row">
+          <span class="health-bar-label">Throughput</span>
+          <div class="health-bar-track"><div class="health-bar-fill" id="bar-throughput" style="width:0%"></div></div>
+          <span class="health-bar-val" id="bv-throughput">—</span>
+        </div>
+        <div class="health-bar-row">
+          <span class="health-bar-label">Coherence Ω</span>
+          <div class="health-bar-track"><div class="health-bar-fill" id="bar-omega" style="width:0%"></div></div>
+          <span class="health-bar-val" id="bv-omega">—</span>
+        </div>
+        <div class="health-bar-row">
+          <span class="health-bar-label">Debt drag</span>
+          <div class="health-bar-track"><div class="health-bar-fill" id="bar-debt" style="width:0%"></div></div>
+          <span class="health-bar-val" id="bv-debt">—</span>
+        </div>
+        <div class="health-bar-row">
+          <span class="health-bar-label">Urgency exp</span>
+          <div class="health-bar-track"><div class="health-bar-fill" id="bar-urgency" style="width:0%"></div></div>
+          <span class="health-bar-val" id="bv-urgency">—</span>
+        </div>
+        <div class="health-bar-row">
+          <span class="health-bar-label">Morale M</span>
+          <div class="health-bar-track"><div class="health-bar-fill" id="bar-morale" style="width:0%"></div></div>
+          <span class="health-bar-val" id="bv-morale">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Equation breakdown -->
+    <div class="equation-block">
+      <h3>Instantaneous Term Breakdown</h3>
+      <div class="eq-line">
+        <span class="sym">P<sub>real</sub></span>
+        <span class="op"> = </span>
+        <span class="sym">1/Z</span>
+        <span class="op"> · </span>
+        [<span class="sym"> V·DF·M·Ω·(1−R) </span>
+        <span class="op"> / </span>
+        <span class="sym">(LT + MTTR + ε)</span>]
+        <span class="op"> · </span>
+        <span class="sym">(1−CFR)^(U²)</span>
+        <span class="op"> · </span>
+        <span class="sym">e^(−λ·TDR)</span>
+      </div>
+      <div id="eq-expanded" style="margin-top:0.7rem; font-size:12px; color:var(--text-dim);">—</div>
+    </div>
+
+    <!-- Tabbed sweep panel -->
+    <div class="sweep-panel">
+      <div class="sweep-tabs">
+        <button class="sweep-tab active" onclick="setSweep('U')" id="tab-U">
+          <span class="tab-sym">U</span>Urgency
+        </button>
+        <button class="sweep-tab" onclick="setSweep('TDR')" id="tab-TDR">
+          <span class="tab-sym">TDR</span>Debt
+        </button>
+        <button class="sweep-tab" onclick="setSweep('CFR')" id="tab-CFR">
+          <span class="tab-sym">CFR</span>Fragility
+        </button>
+        <button class="sweep-tab" onclick="setSweep('M')" id="tab-M">
+          <span class="tab-sym">M</span>Morale
+        </button>
+      </div>
+      <div class="sweep-body">
+        <div class="sweep-title" id="sweep-title">P&#x1D563; vs. Urgency — holding current settings</div>
+        <div class="sweep-thesis" id="sweep-thesis">Urgency-Induced Instability: moderate U may increase visible activity; beyond a system-dependent threshold it raises fragility faster than output. That threshold is reliably discovered through direct experimentation.</div>
+        <div class="cfr-toggle" id="cfr-toggle-row" style="display:none">
+          Compare at: &nbsp;
+          <button id="cfr-btn-current" class="active" onclick="setCFRMode('current')">current U</button>
+          <button id="cfr-btn-low" onclick="setCFRMode('low')">U = 1.0</button>
+          <button id="cfr-btn-high" onclick="setCFRMode('high')">U = 3.5</button>
+        </div>
+        <canvas id="sparkline"></canvas>
+        <div class="chart-legend" id="chart-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div> <span id="legend-curve">P<sub>real</sub> as U sweeps 0.1 → 5</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--warn)"></div> <span id="legend-handle">Current U — drag chart to sweep</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TDR dynamics -->
+    <div class="tdr-dynamics">
+      <h3>Long-Horizon Debt Dynamics — dTDR/dt</h3>
+      <div style="font-size:11px; color:var(--text-dim); margin-bottom:0.8rem;">
+        At current settings, technical debt is <strong id="tdr-trend-word" style="color:var(--warn)">—</strong>.
+        Rate: <span id="tdr-rate" style="color:var(--text-bright)">—</span>/period.
+      </div>
+      <div class="tdr-grid">
+        <div class="tdr-term">
+          <span class="tdr-sym">+κ₁·U</span>: urgency-driven debt<br>
+          <span class="tdr-val" id="tdr-k1">—</span>
+        </div>
+        <div class="tdr-term">
+          <span class="tdr-sym">+κ₂·DF</span>: velocity-driven debt<br>
+          <span class="tdr-val" id="tdr-k2">—</span>
+        </div>
+        <div class="tdr-term">
+          <span class="tdr-sym">+κ₃·Cₘ</span>: mismatch-driven debt<br>
+          <span class="tdr-val" id="tdr-k3">—</span>
+        </div>
+        <div class="tdr-term">
+          <span class="tdr-sym">−κ₄·R</span>: remediation<br>
+          <span class="tdr-val" id="tdr-k4">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Diagnosis -->
+    <div class="diagnosis">
+      <span class="label">System Diagnosis</span>
+      <span id="diagnosis-text">Adjusting a slider will reveal the current system state.</span>
+    </div>
+
+  </div><!-- /output-panel -->
+</div><!-- /layout -->
+
+<footer>
+  <span>VanRavenswaay, S. (2026). <em>The Grand Unified Model of DevOps/SRE Dynamics.</em></span>
+  <span>Model is descriptive, not predictive. Attenuation terms are more elegant than the phenomena they represent.</span>
+</footer>
+
+<script>
+// ── MODEL ─────────────────────────────────────────────────────────
+
+const EPS   = 0.01;   // regularization
+const Z     = 1.0;    // normalization (rhetorical)
+const K1    = 0.3;    // urgency → debt
+const K2    = 0.05;   // DF → debt (velocity adds shortcuts)
+const K3    = 0.4;    // Cm → debt
+const K4    = 0.8;    // R → debt reduction
+
+function getVars() {
+  return {
+    DF:    +document.getElementById('sl-DF').value,
+    LT:    +document.getElementById('sl-LT').value,
+    CFR:   +document.getElementById('sl-CFR').value,
+    MTTR:  +document.getElementById('sl-MTTR').value,
+    M:     +document.getElementById('sl-M').value,
+    U:     +document.getElementById('sl-U').value,
+    Cm:    +document.getElementById('sl-Cm').value,
+    E:     +document.getElementById('sl-E').value,
+    TDR:   +document.getElementById('sl-TDR').value,
+    R:     +document.getElementById('sl-R').value,
+    V:     +document.getElementById('sl-V').value,
+    lam:   +document.getElementById('sl-lam').value,
+    alpha: +document.getElementById('sl-alpha').value,
+    beta:  +document.getElementById('sl-beta').value,
+  };
+}
+
+function computeOmega(v) {
+  return Math.exp(-v.alpha * v.Cm - v.beta * v.E);
+}
+
+function computeP(v) {
+  const omega    = computeOmega(v);
+  const urgency_exp = Math.pow(v.U, 2);
+  const cfr_term = Math.pow(1 - v.CFR, urgency_exp);
+  const debt_att = Math.exp(-v.lam * v.TDR);
+  const num      = v.V * v.DF * v.M * omega * (1 - v.R);
+  const den      = v.LT + v.MTTR + EPS;
+  return (1 / Z) * (num / den) * cfr_term * debt_att;
+}
+
+function computeTerms(v) {
+  const omega     = computeOmega(v);
+  const urgency_exp = Math.pow(v.U, 2);
+  const cfr_term  = Math.pow(1 - v.CFR, urgency_exp);
+  const debt_att  = Math.exp(-v.lam * v.TDR);
+  const throughput = v.V * v.DF / (v.LT + v.MTTR + EPS);
+  const dTDR      = K1*v.U + K2*v.DF + K3*v.Cm - K4*v.R;
+  return { omega, urgency_exp, cfr_term, debt_att, throughput, dTDR };
+}
+
+// ── DISPLAY ───────────────────────────────────────────────────────
+
+function fmt(x, digits=3) {
+  if (x >= 100) return x.toFixed(1);
+  if (x >= 10)  return x.toFixed(2);
+  return x.toPrecision(digits);
+}
+
+function pct(x, max) {
+  return Math.min(100, Math.max(0, (x / max) * 100)).toFixed(1) + '%';
+}
+
+function colorClass(val, lowThresh, highThresh) {
+  if (val <= lowThresh) return 'danger';
+  if (val <= highThresh) return 'warn';
+  return '';
+}
+
+function update() {
+  const v = getVars();
+  const t = computeTerms(v);
+  const P = computeP(v);
+
+  // Update slider labels
+  setText('val-DF',    fmt(v.DF));
+  setText('val-LT',    fmt(v.LT) + ' hr');
+  setText('val-CFR',   fmt(v.CFR));
+  setText('val-MTTR',  fmt(v.MTTR) + ' hr');
+  setText('val-M',     fmt(v.M));
+  setText('val-U',     fmt(v.U));
+  setText('val-Cm',    fmt(v.Cm));
+  setText('val-E',     fmt(v.E));
+  setText('val-TDR',   fmt(v.TDR));
+  setText('val-R',     fmt(v.R));
+  setText('val-V',     fmt(v.V));
+  setText('val-lam',   fmt(v.lam));
+  setText('val-alpha', fmt(v.alpha));
+  setText('val-beta',  fmt(v.beta));
+
+  // Score
+  const scoreEl = document.getElementById('score-value');
+  scoreEl.textContent = fmt(P, 4);
+  scoreEl.className = 'score-value ' + (P < 0.3 ? 'danger' : P < 1.0 ? 'warn' : '');
+
+  // Health bars (normalized to sensible maxes)
+  setBar('throughput', t.throughput, 30, 0.1, 1.0);
+  setBar('omega',      t.omega,       1,  0.3, 0.6);
+  setBar('debt',       t.debt_att,    1,  0.3, 0.6);
+  setBar('urgency',    t.cfr_term,    1,  0.3, 0.6);
+  setBar('morale',     v.M,           2,  0.4, 0.7);
+
+  // Equation expanded
+  document.getElementById('eq-expanded').innerHTML =
+    `<span style="color:var(--text)">= (1/${Z.toFixed(0)}) · [</span>` +
+    `<span style="color:var(--accent)">${fmt(v.V)}·${fmt(v.DF)}·${fmt(v.M)}·${fmt(t.omega,3)}·${fmt(1-v.R,3)}</span>` +
+    `<span style="color:var(--text-dim)"> / </span>` +
+    `<span style="color:var(--accent)">(${fmt(v.LT)}+${fmt(v.MTTR)}+${EPS})</span>` +
+    `<span style="color:var(--text)">] · </span>` +
+    `<span style="color:var(--accent)">(${fmt(1-v.CFR)})^${fmt(t.urgency_exp,3)}</span>` +
+    `<span style="color:var(--text)"> · </span>` +
+    `<span style="color:var(--accent)">e^(−${fmt(v.lam)}·${fmt(v.TDR)})</span>` +
+    `<span style="color:var(--text-dim)"> = </span>` +
+    `<span style="color:var(--text-bright); font-weight:500">${fmt(P, 4)}</span>`;
+
+  // TDR dynamics
+  const dTDR = t.dTDR;
+  setText('tdr-k1', `+${fmt(K1*v.U, 3)} (κ₁=${K1}·U=${fmt(v.U)})`);
+  setText('tdr-k2', `+${fmt(K2*v.DF, 3)} (κ₂=${K2}·DF=${fmt(v.DF)})`);
+  setText('tdr-k3', `+${fmt(K3*v.Cm, 3)} (κ₃=${K3}·Cₘ=${fmt(v.Cm)})`);
+  setText('tdr-k4', `−${fmt(K4*v.R,  3)} (κ₄=${K4}·R=${fmt(v.R)})`);
+  const trendWord = document.getElementById('tdr-trend-word');
+  if (dTDR > 0.05) {
+    trendWord.textContent = 'accumulating';
+    trendWord.style.color = 'var(--danger)';
+  } else if (dTDR > 0) {
+    trendWord.textContent = 'slowly growing';
+    trendWord.style.color = 'var(--warn)';
+  } else {
+    trendWord.textContent = 'being paid down';
+    trendWord.style.color = 'var(--accent)';
+  }
+  setText('tdr-rate', (dTDR >= 0 ? '+' : '') + fmt(dTDR, 3));
+
+  // Diagnosis
+  document.getElementById('diagnosis-text').innerHTML = buildDiagnosis(v, t, P);
+
+  // Chart
+  drawChart(v);
+}
+
+function setText(id, val) {
+  document.getElementById(id).textContent = val;
+}
+
+function setBar(name, val, max, lowT, highT) {
+  const fill = document.getElementById('bar-' + name);
+  const text = document.getElementById('bv-' + name);
+  const w = Math.min(100, Math.max(0, (val / max) * 100));
+  fill.style.width = w + '%';
+  const ratio = val / max;
+  fill.className = 'health-bar-fill ' + (ratio < lowT ? 'danger' : ratio < highT ? 'warn' : '');
+  text.textContent = fmt(val, 3);
+}
+
+// ── DIAGNOSIS ─────────────────────────────────────────────────────
+
+function buildDiagnosis(v, t, P) {
+  const notes = [];
+
+  if (v.U > 3.0) {
+    notes.push(`<strong>Urgency-Induced Instability:</strong> U=${fmt(v.U)} is applying a failure amplification exponent of ${fmt(t.urgency_exp,3)} to CFR. The literature suggests additional urgency is often prescribed as the corrective measure.`);
+  } else if (v.U > 2.0) {
+    notes.push(`<strong>Elevated urgency</strong> (U=${fmt(v.U)}) is amplifying fragility. The threshold reliably discovered through direct experimentation may be near.`);
+  }
+
+  if (v.M < 0.5) {
+    notes.push(`<strong>Degraded morale regime</strong> (M=${fmt(v.M)}): throughput metrics may remain superficially acceptable while resilience and discretionary problem-solving degrade. These are leading, not lagging, indicators.`);
+  }
+
+  if (v.E > 0.6 && v.Cm > 0.5) {
+    notes.push(`<strong>Maximum organizational entropy:</strong> elevated E and Cₘ predict a coordination-fragmented state. Local effort will increase without system-level convergence.`);
+  }
+
+  if (v.TDR > 0.6) {
+    notes.push(`<strong>Debt dominance:</strong> TDR=${fmt(v.TDR)} yields an attenuation factor of ${fmt(t.debt_att,3)}. In the absence of sustained remediation, a non-trivial fraction of lead time is consumed by rework and caution.`);
+  }
+
+  if (v.R < 0.05 && v.TDR > 0.3) {
+    notes.push(`<strong>Remediation insufficient:</strong> R≈0 under active delivery pressure. Debt trajectory is divergent. Future throughput is being mortgaged.`);
+  }
+
+  if (v.CFR > 0.3 && v.U > 1.5) {
+    notes.push(`<strong>Fragility under pressure:</strong> a CFR of ${fmt(v.CFR)} combined with U=${fmt(v.U)} produces (1−CFR)^(U²) = ${fmt(t.cfr_term,3)}. The combination is nonlinearly costly.`);
+  }
+
+  if (t.omega < 0.5) {
+    notes.push(`<strong>Organizational coherence Ω=${fmt(t.omega,3)}:</strong> responsibility, authority, expertise, and strategic direction are insufficiently aligned. Most monitoring frameworks will not detect this.`);
+  }
+
+  if (P > 5) {
+    notes.push(`<strong>Elite delivery posture.</strong> DORA variables dominate. The model reduces toward a stable high-trust system.`);
+  } else if (P > 1) {
+    notes.push(`<strong>Functional delivery system.</strong> Visible room for improvement in organizational coherence or debt reduction.`);
+  } else if (P > 0.2) {
+    notes.push(`<strong>Sub-optimal delivery.</strong> The system produces output, but organizational attenuation is extracting a significant premium.`);
+  } else {
+    notes.push(`<strong>Critical degradation.</strong> The system is producing negligible realized output. Nominal activity may remain high. The two conditions are, in practice, only loosely coupled.`);
+  }
+
+  return notes.join('<br><br>') || 'System within normal parameters. Adjust variables to explore.';
+}
+
+// ── SWEEP STATE ───────────────────────────────────────────────────
+
+const HANDLE_R = 8;
+let chartDragging = false;
+let activeSweep = 'U';   // 'U' | 'TDR' | 'CFR' | 'M'
+let cfrMode = 'current'; // 'current' | 'low' | 'high'
+
+const SWEEP_CONFIG = {
+  U: {
+    sliderKey: 'U',
+    min: 0.1, max: 5.0,
+    label: v => 'U=' + fmt(v.U),
+    xLabel: min => 'U=0.1',
+    xLabelMax: () => 'U=5.0',
+    title: 'P\u1D63 vs. Urgency \u2014 holding current settings',
+    thesis: 'Urgency-Induced Instability: moderate U may increase visible activity; beyond a system-dependent threshold it raises fragility faster than output. That threshold is reliably discovered through direct experimentation.',
+    curveLabel: 'P\u1D63 as U sweeps 0.1 \u2192 5',
+    handleLabel: 'Current U \u2014 drag chart to sweep',
+    curveColor: '#5af078',
+    showCFRToggle: false,
+    getValue: v => v.U,
+    sweep: (v, x) => Object.assign({}, v, { U: x }),
+  },
+  TDR: {
+    sliderKey: 'TDR',
+    min: 0.0, max: 1.0,
+    label: v => 'TDR=' + fmt(v.TDR),
+    title: 'P\u1D63 vs. Technical Debt Ratio \u2014 holding current settings',
+    thesis: 'The Compounding Debt Tax: TDR enters as e\u207B\u02E1\u22C5\u1D40\u1D30\u1D3F — an exponential toll on every unit of nominal output. Remediation reduces visible throughput now so the future can exist at all.',
+    curveLabel: 'P\u1D63 as TDR sweeps 0 \u2192 1',
+    handleLabel: 'Current TDR \u2014 drag chart to sweep',
+    curveColor: '#5af078',
+    showCFRToggle: false,
+    getValue: v => v.TDR,
+    sweep: (v, x) => Object.assign({}, v, { TDR: x }),
+  },
+  CFR: {
+    sliderKey: 'CFR',
+    min: 0.0, max: 0.6,
+    label: v => 'CFR=' + fmt(v.CFR),
+    title: 'P\u1D63 vs. Change Failure Rate \u2014 fragility under pressure',
+    thesis: 'CFR is amplified nonlinearly by urgency via (1\u2212CFR)^U\u00B2. Toggle the comparison lines to see how the same failure rate costs far more under pressure than in a calm system.',
+    curveLabel: 'P\u1D63 at current U',
+    handleLabel: 'Current CFR \u2014 drag chart to sweep',
+    curveColor: '#5af078',
+    showCFRToggle: true,
+    getValue: v => v.CFR,
+    sweep: (v, x) => Object.assign({}, v, { CFR: x }),
+  },
+  M: {
+    sliderKey: 'M',
+    min: 0.1, max: 2.0,
+    label: v => 'M=' + fmt(v.M),
+    title: 'P\u1D63 vs. Developer Morale \u2014 holding current settings',
+    thesis: 'Morale is a linear multiplier — the curve is a straight line, which is the point. Degradation is undramatic, which is why organizations miss it until it is severe. M\u202F<\u202F1 is a leading indicator invisible to most monitoring frameworks.',
+    curveLabel: 'P\u1D63 as M sweeps 0.1 \u2192 2',
+    handleLabel: 'Current M \u2014 drag chart to sweep',
+    curveColor: '#5af078',
+    showCFRToggle: false,
+    getValue: v => v.M,
+    sweep: (v, x) => Object.assign({}, v, { M: x }),
+  },
+};
+
+function setSweep(key) {
+  activeSweep = key;
+  document.querySelectorAll('.sweep-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + key).classList.add('active');
+  const cfg = SWEEP_CONFIG[key];
+  document.getElementById('sweep-title').textContent = cfg.title;
+  document.getElementById('sweep-thesis').textContent = cfg.thesis;
+  document.getElementById('legend-curve').innerHTML = cfg.curveLabel;
+  document.getElementById('legend-handle').textContent = cfg.handleLabel;
+  document.getElementById('cfr-toggle-row').style.display = cfg.showCFRToggle ? 'flex' : 'none';
+  const v = getVars();
+  drawChart(v);
+}
+
+function setCFRMode(mode) {
+  cfrMode = mode;
+  ['current','low','high'].forEach(m => {
+    document.getElementById('cfr-btn-' + m).classList.toggle('active', m === mode);
+  });
+  const v = getVars();
+  drawChart(v);
+}
+
+// ── CHART RENDER ──────────────────────────────────────────────────
+
+function drawChart(v) {
+  const canvas = document.getElementById('sparkline');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.offsetWidth;
+  const H = canvas.offsetHeight;
+  canvas.width = W;
+  canvas.height = H;
+
+  const cfg = SWEEP_CONFIG[activeSweep];
+  const steps = 80;
+  const { min, max } = cfg;
+
+  // Build primary curve points
+  const points = [];
+  for (let i = 0; i <= steps; i++) {
+    const x = min + (max - min) * (i / steps);
+    const vv = cfg.sweep(v, x);
+    points.push({ x, p: computeP(vv) });
+  }
+
+  // For CFR: optional comparison curves
+  let compCurves = [];
+  if (activeSweep === 'CFR' && cfrMode !== 'current') {
+    const compU = cfrMode === 'low' ? 1.0 : 3.5;
+    const compPoints = [];
+    for (let i = 0; i <= steps; i++) {
+      const x = min + (max - min) * (i / steps);
+      const vv = cfg.sweep(Object.assign({}, v, { U: compU }), x);
+      compPoints.push({ x, p: computeP(vv) });
+    }
+    compCurves.push({ points: compPoints, color: '#e85438', label: 'U=' + compU });
+  }
+
+  const allPs = [...points.map(p => p.p), ...compCurves.flatMap(c => c.points.map(p => p.p))];
+  const pMax = Math.max(...allPs) * 1.15 || 1;
+
+  ctx.clearRect(0, 0, W, H);
+
+  // Grid
+  ctx.strokeStyle = '#2a2f2a';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const y = H - (i / 4) * H;
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+  }
+
+  // M=1 reference line (only on M tab — the "morale floor")
+  if (activeSweep === 'M') {
+    const refX = ((1.0 - min) / (max - min)) * W;
+    ctx.strokeStyle = '#2a4a2a';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([3, 4]);
+    ctx.beginPath(); ctx.moveTo(refX, 0); ctx.lineTo(refX, H); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#3a6a3a';
+    ctx.font = '9px IBM Plex Mono, monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText('M=1 threshold', refX + 3, 10);
+  }
+
+  // Draw comparison curves first (behind primary)
+  compCurves.forEach(cc => {
+    ctx.beginPath();
+    ctx.strokeStyle = cc.color;
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([5, 3]);
+    cc.points.forEach((pt, i) => {
+      const px = (i / steps) * W;
+      const py = H - (pt.p / pMax) * H;
+      i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    });
+    ctx.stroke();
+    ctx.setLineDash([]);
+  });
+
+  // Primary curve
+  ctx.beginPath();
+  ctx.strokeStyle = cfg.curveColor;
+  ctx.lineWidth = 2;
+  points.forEach((pt, i) => {
+    const px = (i / steps) * W;
+    const py = H - (pt.p / pMax) * H;
+    i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+  });
+  ctx.stroke();
+
+  // Fill under primary
+  const lastPt = points[points.length - 1];
+  ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath();
+  ctx.fillStyle = 'rgba(90,240,120,0.05)';
+  ctx.fill();
+
+  // Current value marker
+  const curVal = cfg.getValue(v);
+  const curFrac = (curVal - min) / (max - min);
+  const cx = curFrac * W;
+  const curP = computeP(v);
+  const cy = H - (curP / pMax) * H;
+
+  ctx.beginPath();
+  ctx.strokeStyle = '#e8a838';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([4, 3]);
+  ctx.moveTo(cx, H); ctx.lineTo(cx, 0);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  if (chartDragging) {
+    ctx.beginPath();
+    ctx.arc(cx, cy, HANDLE_R + 4, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(232,168,56,0.15)';
+    ctx.fill();
+  }
+
+  ctx.beginPath();
+  ctx.arc(cx, cy, HANDLE_R, 0, Math.PI * 2);
+  ctx.fillStyle = '#e8a838';
+  ctx.fill();
+
+  ctx.strokeStyle = '#0d0f0e';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(cx - 3, cy); ctx.lineTo(cx + 3, cy);
+  ctx.moveTo(cx, cy - 3); ctx.lineTo(cx, cy + 3);
+  ctx.stroke();
+
+  // Floating value label
+  ctx.fillStyle = '#e8a838';
+  ctx.font = '10px IBM Plex Mono, monospace';
+  const onRight = cx < W * 0.75;
+  ctx.textAlign = onRight ? 'left' : 'right';
+  ctx.fillText(cfg.label(v), onRight ? cx + HANDLE_R + 4 : cx - HANDLE_R - 4, cy - 5);
+
+  // Comparison curve label in legend area
+  if (compCurves.length) {
+    ctx.fillStyle = compCurves[0].color;
+    ctx.font = '9px IBM Plex Mono, monospace';
+    ctx.textAlign = 'right';
+    ctx.fillText('at ' + compCurves[0].label, W - 3, 10);
+  }
+
+  // Axis labels
+  ctx.fillStyle = '#6a7a6a';
+  ctx.font = '10px IBM Plex Mono, monospace';
+  ctx.textAlign = 'left';
+  ctx.fillText(activeSweep + '=' + fmt(min), 2, H - 2);
+  ctx.textAlign = 'right';
+  ctx.fillText(activeSweep + '=' + fmt(max), W - 2, H - 2);
+  ctx.textAlign = 'left';
+  ctx.fillText(fmt(pMax, 3), 2, 12);
+
+  canvas._pMax = pMax;
+}
+
+// ── CHART DRAG ────────────────────────────────────────────────────
+
+function canvasXtoSweepVal(canvas, clientX) {
+  const cfg = SWEEP_CONFIG[activeSweep];
+  const rect = canvas.getBoundingClientRect();
+  const x = clientX - rect.left;
+  const frac = x / canvas.width;
+  const val = cfg.min + (cfg.max - cfg.min) * frac;
+  return Math.min(cfg.max, Math.max(cfg.min, val));
+}
+
+function applyFromCanvas(clientX) {
+  const canvas = document.getElementById('sparkline');
+  const cfg = SWEEP_CONFIG[activeSweep];
+  const val = canvasXtoSweepVal(canvas, clientX);
+  const sl = document.getElementById('sl-' + cfg.sliderKey);
+  if (sl) sl.value = val;
+  update();
+}
+
+function initChartDrag() {
+  const canvas = document.getElementById('sparkline');
+
+  canvas.addEventListener('mousemove', e => {
+    if (chartDragging) {
+      applyFromCanvas(e.clientX);
+    } else {
+      canvas.style.cursor = 'ew-resize';
+    }
+  });
+
+  canvas.addEventListener('mousedown', e => {
+    chartDragging = true;
+    canvas.style.cursor = 'ew-resize';
+    applyFromCanvas(e.clientX);
+    e.preventDefault();
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (chartDragging) { chartDragging = false; }
+  });
+
+  canvas.addEventListener('touchstart', e => {
+    chartDragging = true;
+    applyFromCanvas(e.touches[0].clientX);
+    e.preventDefault();
+  }, { passive: false });
+
+  canvas.addEventListener('touchmove', e => {
+    if (chartDragging) {
+      applyFromCanvas(e.touches[0].clientX);
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  window.addEventListener('touchend', () => { chartDragging = false; });
+}
+
+// ── PRESETS ───────────────────────────────────────────────────────
+
+const presets = {
+  elite: {
+    DF:1.0, LT:0.5, CFR:0.02, MTTR:0.5,
+    M:1.4, U:0.5, Cm:0.05, E:0.05,
+    TDR:0.05, R:0.2, V:1.5, lam:1.0, alpha:1.0, beta:1.0
+  },
+  healthy: {
+    DF:0.25, LT:4, CFR:0.08, MTTR:2,
+    M:1.1, U:1.0, Cm:0.15, E:0.15,
+    TDR:0.2, R:0.15, V:1.0, lam:1.0, alpha:1.0, beta:1.0
+  },
+  stressed: {
+    DF:0.5, LT:8, CFR:0.15, MTTR:4,
+    M:0.75, U:2.5, Cm:0.3, E:0.4,
+    TDR:0.35, R:0.05, V:1.0, lam:1.0, alpha:1.0, beta:1.0
+  },
+  legacy: {
+    DF:0.05, LT:48, CFR:0.25, MTTR:12,
+    M:0.8, U:1.2, Cm:0.3, E:0.2,
+    TDR:0.7, R:0.1, V:0.8, lam:1.5, alpha:1.0, beta:1.0
+  },
+  crisis: {
+    DF:0.1, LT:24, CFR:0.45, MTTR:48,
+    M:0.4, U:4.0, Cm:0.5, E:0.6,
+    TDR:0.5, R:0.0, V:0.5, lam:1.0, alpha:1.5, beta:1.5
+  },
+  entropy: {
+    DF:0.2, LT:336, CFR:0.55, MTTR:120,
+    M:0.2, U:4.8, Cm:0.9, E:0.9,
+    TDR:0.9, R:0.0, V:0.5, lam:3.0, alpha:3.0, beta:3.0
+  }
+};
+
+function applyPreset(name) {
+  const p = presets[name];
+  for (const [k, val] of Object.entries(p)) {
+    const el = document.getElementById('sl-' + k);
+    if (el) el.value = val;
+  }
+  update();
+}
+
+// ── INIT ──────────────────────────────────────────────────────────
+
+window.addEventListener('resize', () => {
+  const v = getVars();
+  drawChart(v);
+});
+
+initChartDrag();
+update();
+</script>
+</body>
+</html>

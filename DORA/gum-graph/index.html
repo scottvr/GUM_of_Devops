@@ -67,6 +67,12 @@
           Freeze controls during simulation
         </label>
       </div>
+      <div class="control-inline">
+        <label for="toggle-dora-lens">
+          <input type="checkbox" id="toggle-dora-lens" onchange="onDoraLensToggle()">
+          DORA Lens (highlight observed metrics)
+        </label>
+      </div>
     </div>
 
     <!-- DORA Metrics -->
@@ -345,7 +351,7 @@
           <div class="tdr-formula-note">Integrated explicitly each step: TDR(t+Δt) = TDR(t) + (dTDR/dt)·Δt.</div>
           <div style="font-size:11px; color:var(--text-dim); margin-bottom:0.8rem;">
             At current settings, technical debt is <strong id="tdr-trend-word" style="color:var(--warn)">—</strong>.
-            Rate: <span id="tdr-rate" style="color:var(--text-bright)">—</span>/period.
+            Debt Velocity Vector: <span id="tdr-rate" style="color:var(--text-bright)">—</span>/period.
           </div>
           <div class="tdr-grid">
             <div class="tdr-term">
@@ -406,6 +412,7 @@
               <label><input type="checkbox" id="toggle-urgency-boost" onchange="onUrgencyBoostToggle()"> Enable urgency activity boost</label>
               <button type="button" onclick="adoptSimulatedState()">Adopt simulated state</button>
             </div>
+            <div class="integration-step" id="integration-step">Integration Step (dt=0.25)</div>
           </div>
           <canvas id="sim-canvas"></canvas>
           <div class="sim-ticker">
@@ -543,6 +550,7 @@ const appState = {
   vizMode: 'sweep',
   projectionMode: 'debt',
   freezeControls: true,
+  doraLens: false,
   urgencyBoost: false,
   simHorizon: 24,
   simTime: 0,
@@ -558,6 +566,7 @@ const appState = {
     coupling: false,
   },
   floorToastShown: false,
+  dfSaturationToastAt: 0,
 };
 
 function renderSliderLabels(v) {
@@ -635,6 +644,31 @@ function applySliderSemanticHints() {
   });
 }
 
+function initControlRowSemantics() {
+  const sliderToKey = {
+    'sl-DF': 'DF', 'sl-LT': 'LT', 'sl-CFR': 'CFR', 'sl-MTTR': 'MTTR',
+    'sl-M': 'M', 'sl-U': 'U', 'sl-Cm': 'Cm', 'sl-E': 'E',
+    'sl-TDR': 'TDR', 'sl-R': 'R', 'sl-V': 'V', 'sl-lam': 'lam',
+    'sl-alpha': 'alpha', 'sl-beta': 'beta'
+  };
+  Object.entries(sliderToKey).forEach(([id, key]) => {
+    const slider = document.getElementById(id);
+    const row = slider ? slider.closest('.control-row') : null;
+    if (row) row.dataset.var = key;
+  });
+}
+
+function applyDoraLens() {
+  const doraVars = new Set(['DF', 'LT', 'CFR', 'MTTR']);
+  const rows = document.querySelectorAll('.control-row[data-var]');
+  rows.forEach(row => {
+    const v = row.dataset.var;
+    const isDora = doraVars.has(v);
+    row.classList.toggle('lens-dora', appState.doraLens && isDora);
+    row.classList.toggle('lens-latent', appState.doraLens && !isDora);
+  });
+}
+
 function initCollapsibleSections() {
   const sections = Array.from(document.querySelectorAll('.controls-panel .panel-section'));
   sections.forEach((section, idx) => {
@@ -679,6 +713,13 @@ function renderKaTeXEquations() {
     ],
     throwOnError: false
   });
+}
+
+function onDoraLensToggle() {
+  appState.doraLens = document.getElementById('toggle-dora-lens').checked;
+  applyDoraLens();
+  showToast(appState.doraLens ? 'DORA Lens enabled: observed metrics foregrounded.' : 'DORA Lens disabled.');
+  syncPermalink();
 }
 
 const SWEEP_CONFIG = {
@@ -897,6 +938,9 @@ function setBar(name, val, max, lowT, highT) {
 
 function buildDiagnosis(v, t, pInst) {
   const notes = [];
+  if (v.TDR > 0.9 && v.R < 0.08 && t.U_t > 3) {
+    notes.push(`<strong>CRITICAL REGIME:</strong> Resume Driven Development detected. System functions on institutional momentum; innovation is mathematically improbable.`);
+  }
   if (v.U > 3.0) {
     notes.push(`<strong>Urgency-Induced Instability:</strong> U=${fmt(v.U)} applies exponent ${fmt(t.urgencyExp,3)} to CFR impact.`);
   } else if (v.U > 2.0) {
@@ -985,7 +1029,10 @@ function renderMainOutput(v) {
   setText('tdr-k3', `+${fmt(K3 * v.Cm, 3)} (k3=${K3}·Cm=${fmt(v.Cm)})`);
   setText('tdr-k4', `-${fmt(K4 * v.R, 3)} (k4=${K4}·R=${fmt(v.R)})`);
   const trendWord = document.getElementById('tdr-trend-word');
-  if (dTDR > 0.05) {
+  if (v.TDR > 0.9 && v.R < 0.08 && terms.U_t > 3) {
+    trendWord.textContent = 'CRITICAL REGIME';
+    trendWord.style.color = 'var(--danger)';
+  } else if (dTDR > 0.05) {
     trendWord.textContent = 'accumulating';
     trendWord.style.color = 'var(--danger)';
   } else if (dTDR > 0) {
@@ -1015,7 +1062,8 @@ function renderTimeProjectionFrame() {
 }
 
 function update() {
-  const policyVars = getVars();
+  let policyVars = getVars();
+  policyVars = enforceDebtSaturation(policyVars);
 
   appState.showSeries.pInst = document.getElementById('toggle-pinst').checked;
   appState.showSeries.pCum = document.getElementById('toggle-pcum').checked;
@@ -1058,6 +1106,18 @@ function updateWaterfall(v, terms, pInst) {
     `= Realized output ${fmt(pInst,4)}`
   ];
   document.getElementById('waterfall-view').innerHTML = rows.join('<br>');
+}
+
+function enforceDebtSaturation(v) {
+  const maxVelocity = 15 * Math.exp(-0.5 * v.TDR);
+  if (v.DF <= maxVelocity) return v;
+  const reduced = Math.max(maxVelocity, v.DF * 0.95);
+  document.getElementById('sl-DF').value = reduced;
+  if (!appState.dfSaturationToastAt || Date.now() - appState.dfSaturationToastAt > 2000) {
+    showToast('Debt Saturation: Cannot sustain high velocity.');
+    appState.dfSaturationToastAt = Date.now();
+  }
+  return getVars();
 }
 
 function updateBaselineCompare(v) {
@@ -1188,6 +1248,7 @@ function setSimSpeed(v) {
 function toggleSimPlay() {
   appState.simPlaying = !appState.simPlaying;
   document.getElementById('sim-play-btn').textContent = appState.simPlaying ? 'Pause' : 'Play';
+  document.getElementById('integration-step').classList.toggle('active', appState.simPlaying);
   if (appState.simPlaying) {
     appState.lastTs = null;
     if (appState.rafToken) cancelAnimationFrame(appState.rafToken);
@@ -1211,6 +1272,7 @@ function tickSim(ts) {
   if (appState.simTime >= appState.simHorizon) {
     appState.simPlaying = false;
     document.getElementById('sim-play-btn').textContent = 'Play';
+    document.getElementById('integration-step').classList.remove('active');
     appState.rafToken = null;
     syncPermalink();
     return;
@@ -1497,6 +1559,7 @@ function toQueryState() {
   q.tab = appState.vizMode;
   q.projectionMode = appState.projectionMode;
   q.freeze = appState.freezeControls ? 1 : 0;
+  q.doraLens = appState.doraLens ? 1 : 0;
   q.urgencyBoost = appState.urgencyBoost ? 1 : 0;
   q.horizon = appState.simHorizon;
   q.time = +appState.simTime.toFixed(3);
@@ -1538,6 +1601,10 @@ function hydrateFromUrl() {
   const freeze = sp.get('freeze');
   if (freeze === '0' || freeze === '1' || freeze === 'true' || freeze === 'false') {
     appState.freezeControls = freeze === '1' || freeze === 'true';
+  }
+  const lens = sp.get('doraLens');
+  if (lens === '0' || lens === '1' || lens === 'true' || lens === 'false') {
+    appState.doraLens = lens === '1' || lens === 'true';
   }
   const ub = sp.get('urgencyBoost');
   appState.urgencyBoost = ub === '1' || ub === 'true';
@@ -1581,12 +1648,16 @@ function applyInitialUiState() {
   document.getElementById('sim-speed').value = String(appState.simSpeed);
   document.getElementById('sim-mode').value = appState.projectionMode;
   document.getElementById('sim-freeze-controls').checked = appState.freezeControls;
+  document.getElementById('toggle-dora-lens').checked = appState.doraLens;
   document.getElementById('toggle-urgency-boost').checked = appState.urgencyBoost;
   document.getElementById('toggle-pinst').checked = appState.showSeries.pInst;
   document.getElementById('toggle-pcum').checked = appState.showSeries.pCum;
   document.getElementById('toggle-tdr').checked = appState.showSeries.tdr;
   document.getElementById('toggle-coupling').checked = appState.showSeries.coupling;
+  setText('integration-step', `Integration Step (dt=${SIM_DT})`);
+  initControlRowSemantics();
   applySliderSemanticHints();
+  applyDoraLens();
   setVizMode(appState.vizMode);
   setSweep(activeSweep);
   setCFRMode(cfrMode);

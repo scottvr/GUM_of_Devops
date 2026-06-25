@@ -332,6 +332,18 @@
     cursor: pointer;
   }
 
+  .control-row.lens-dora {
+    border-left: 3px solid var(--viz-handle);
+    background: color-mix(in srgb, var(--surface), var(--viz-handle) 8%);
+    padding-left: 0.45rem;
+    border-radius: 4px;
+  }
+
+  .control-row.lens-latent {
+    opacity: 0.55;
+    filter: saturate(0.55);
+  }
+
   /* ── OUTPUT PANEL ───────────────────────────────────────── */
   .output-panel {
     padding: 1.5rem;
@@ -789,6 +801,27 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 0.6rem;
+  }
+
+  .integration-step {
+    font-size: 10px;
+    color: var(--text-dim);
+    border: 1px dashed var(--border);
+    background: color-mix(in srgb, var(--surface2), white 45%);
+    padding: 0.28rem 0.45rem;
+    width: fit-content;
+  }
+
+  .integration-step.active {
+    animation: integratePulse 0.9s ease-in-out infinite;
+    color: var(--accent);
+    border-color: var(--accent-dim);
+  }
+
+  @keyframes integratePulse {
+    0% { box-shadow: 0 0 0 0 rgba(73, 160, 236, 0.25); }
+    70% { box-shadow: 0 0 0 7px rgba(73, 160, 236, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(73, 160, 236, 0); }
   }
 
   .time-actions button,

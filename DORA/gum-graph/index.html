@@ -342,6 +342,7 @@
         <!-- TDR dynamics -->
         <div class="tdr-dynamics">
           <h3>Long-Horizon Debt Dynamics — dTDR/dt</h3>
+          <div class="tdr-formula-note">Integrated explicitly each step: TDR(t+Δt) = TDR(t) + (dTDR/dt)·Δt.</div>
           <div style="font-size:11px; color:var(--text-dim); margin-bottom:0.8rem;">
             At current settings, technical debt is <strong id="tdr-trend-word" style="color:var(--warn)">—</strong>.
             Rate: <span id="tdr-rate" style="color:var(--text-bright)">—</span>/period.
@@ -407,6 +408,11 @@
             </div>
           </div>
           <canvas id="sim-canvas"></canvas>
+          <div class="sim-ticker">
+            <div><span class="ticker-label">P_inst</span> <span id="ticker-pinst">—</span></div>
+            <div><span class="ticker-label">P_real(t)</span> <span id="ticker-preal">—</span></div>
+            <div><span class="ticker-label">TDR(t)</span> <span id="ticker-tdr">—</span></div>
+          </div>
           <div class="sim-readout" id="sim-readout">At t = 0.00: projected TDR = 0.000, instantaneous output = 0.000, cumulative output = 0.000</div>
         </div>
       </div>
@@ -551,6 +557,7 @@ const appState = {
     tdr: true,
     coupling: false,
   },
+  floorToastShown: false,
 };
 
 function renderSliderLabels(v) {
@@ -782,14 +789,11 @@ function computeOmega(v) {
 }
 
 function computeRawP(v, opts = { urgencyBoost: false }) {
-  const omega = computeOmega(v);
-  const urgencyExp = Math.pow(v.U, 2);
-  const cfrTerm = Math.pow(1 - v.CFR, urgencyExp);
-  const debtAtt = Math.exp(-v.lam * v.TDR);
-  const activity = opts.urgencyBoost ? urgencyActivityBoost(v.U) : 1;
-  const num = v.V * v.DF * activity * v.M * omega * (1 - v.R);
+  const terms = computeTerms(v, opts);
+  const activity = opts.urgencyBoost ? urgencyActivityBoost(terms.U_t) : 1;
+  const num = v.V * terms.DF_t * activity * v.M * terms.omega * (1 - v.R);
   const den = v.LT + v.MTTR + EPS;
-  return (num / den) * cfrTerm * debtAtt;
+  return (num / den) * terms.cfrTerm * terms.debtAtt;
 }
 
 function computePInst(v, opts = { urgencyBoost: false }) {
@@ -802,18 +806,24 @@ function computePCum(previous, pInst, dt) {
 
 function computeTerms(v, opts = { urgencyBoost: false }) {
   const omega = computeOmega(v);
-  const urgencyExp = Math.pow(v.U, 2);
-  const cfrTerm = Math.pow(1 - v.CFR, urgencyExp);
   const debtAtt = Math.exp(-v.lam * v.TDR);
-  const activity = opts.urgencyBoost ? urgencyActivityBoost(v.U) : 1;
-  const throughput = v.V * v.DF / (v.LT + v.MTTR + EPS);
-  const dTDR = K1 * v.U + K2 * v.DF + K3 * v.Cm - K4 * v.R;
-  return { omega, urgencyExp, cfrTerm, debtAtt, throughput, dTDR, activity };
+  const attenuationDriver = clamp(omega * debtAtt * Math.max(0.2, v.M / 1.2), 0.05, 1.25);
+  const U_t = v.U * (1 + 0.6 * (1 - attenuationDriver));
+  const DF_t = v.DF * attenuationDriver;
+  const urgencyExp = Math.pow(U_t, 2);
+  const cfrTerm = Math.pow(1 - v.CFR, urgencyExp);
+  const activity = opts.urgencyBoost ? urgencyActivityBoost(U_t) : 1;
+  const throughputNominal = v.V * v.DF / (v.LT + v.MTTR + EPS);
+  const throughput = v.V * DF_t / (v.LT + v.MTTR + EPS);
+  const growthDrivers = (K1 * urgencyExp + K2 * DF_t + K3 * v.Cm) * attenuationDriver;
+  const dTDR = growthDrivers - K4 * v.R;
+  return { omega, urgencyExp, cfrTerm, debtAtt, throughput, throughputNominal, dTDR, activity, attenuationDriver, U_t, DF_t };
 }
 
 function stepDebtOnlyState(v, dt, opts = { urgencyBoost: false }) {
   const t = computeTerms(v, opts);
-  return { ...v, TDR: clamp(v.TDR + t.dTDR * dt, 0, 1) };
+  const next = v.TDR + t.dTDR * dt;
+  return { ...v, TDR: clamp(next, 0, 1) };
 }
 
 function stepCoupledState(v, dt, opts = { urgencyBoost: false }) {
@@ -846,6 +856,10 @@ function simulateTrajectory(v0, periods = 24, dt = SIM_DT, options = {}) {
       omega: terms.omega,
       debt_att: terms.debtAtt,
       cfr_term: terms.cfrTerm,
+      U_t: terms.U_t,
+      DF_t: terms.DF_t,
+      attenuationDriver: terms.attenuationDriver,
+      floorActive: state.TDR + terms.dTDR * dt < 0,
       M: state.M,
       LT: state.LT,
       CFR: state.CFR,
@@ -954,7 +968,7 @@ function renderMainOutput(v) {
 
   document.getElementById('eq-expanded').innerHTML =
     `<span style="color:var(--text)">= (1/${fmt(normalizationZ,4)}) · [</span>` +
-    `<span style="color:var(--accent)">${fmt(v.V)}·${fmt(v.DF)}·${fmt(v.M)}·${fmt(terms.omega,3)}·${fmt(1-v.R,3)}</span>` +
+    `<span style="color:var(--accent)">${fmt(v.V)}·${fmt(terms.DF_t)}·${fmt(v.M)}·${fmt(terms.omega,3)}·${fmt(1-v.R,3)}</span>` +
     `<span style="color:var(--text-dim)"> / </span>` +
     `<span style="color:var(--accent)">(${fmt(v.LT)}+${fmt(v.MTTR)}+${EPS})</span>` +
     `<span style="color:var(--text)">] · </span>` +
@@ -962,6 +976,7 @@ function renderMainOutput(v) {
     `<span style="color:var(--text)"> · </span>` +
     `<span style="color:var(--accent)">e^(-${fmt(v.lam)}·${fmt(v.TDR)})</span>` +
     (appState.urgencyBoost ? `<span style="color:var(--text)"> · </span><span style="color:var(--accent)">activity=${fmt(terms.activity,3)}</span>` : '') +
+    `<span style="color:var(--text)"> · </span><span style="color:var(--accent)">U(t)=${fmt(terms.U_t)} DF(t)=${fmt(terms.DF_t)}</span>` +
     `<span style="color:var(--text-dim)"> = </span><span style="color:var(--text-bright); font-weight:500">${fmt(pInst, 4)}</span>`;
 
   const dTDR = terms.dTDR;
@@ -1031,11 +1046,12 @@ function update() {
 }
 
 function updateWaterfall(v, terms, pInst) {
-  const nominal = v.V * v.DF / (v.LT + v.MTTR + EPS);
+  const nominal = terms.throughputNominal;
   const rows = [
     `Nominal throughput ${fmt(nominal,4)}`,
     `x Morale ${fmt(v.M,4)}`,
     `x Omega ${fmt(terms.omega,4)}`,
+    `x Effective DF(t)/DF ${fmt(terms.attenuationDriver,4)}`,
     `x Remediation capacity ${fmt(1-v.R,4)}`,
     `x CFR/U term ${fmt(terms.cfrTerm,4)}`,
     `x Debt drag ${fmt(terms.debtAtt,4)}`,
@@ -1152,8 +1168,16 @@ function updateSimReadout() {
   setText('sim-time-val', `t = ${fmt(appState.simTime,4)}`);
   const row = rowAtTime(appState.simRows, appState.simTime);
   if (!row) return;
+  if (row.floorActive && !appState.floorToastShown) {
+    showToast('Remediation Floor Active: Debt Fully Cleared.');
+    appState.floorToastShown = true;
+  }
+  if (!row.floorActive) appState.floorToastShown = false;
+  setText('ticker-pinst', fmt(row.P_inst, 4));
+  setText('ticker-preal', fmt(row.P_cum, 4));
+  setText('ticker-tdr', fmt(row.TDR, 4));
   setText('sim-readout',
-    `At t = ${fmt(row.time,4)}: projected TDR = ${fmt(row.TDR,4)}, instantaneous output = ${fmt(row.P_inst,4)}, cumulative output = ${fmt(row.P_cum,4)}`);
+    `At t = ${fmt(row.time,4)} (Δt=${SIM_DT}): projected TDR = ${fmt(row.TDR,4)}, instantaneous output = ${fmt(row.P_inst,4)}, cumulative P_real(t) = ${fmt(row.P_cum,4)}.`);
 }
 
 function setSimSpeed(v) {

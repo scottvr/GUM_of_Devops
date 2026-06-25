@@ -736,6 +736,13 @@
     margin-bottom: 0.6rem;
   }
 
+  .tdr-formula-note {
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-bottom: 0.55rem;
+    font-style: italic;
+  }
+
   .tdr-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -822,6 +829,26 @@
     padding: 0.5rem 0.6rem;
   }
 
+  .sim-ticker {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.45rem;
+  }
+
+  .sim-ticker > div {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    padding: 0.35rem 0.45rem;
+    font-size: 11px;
+    color: var(--text);
+  }
+
+  .ticker-label {
+    color: var(--text-dim);
+    font-size: 10px;
+    margin-right: 0.3rem;
+  }
+
   .tool-row {
     display: flex;
     gap: 0.5rem;
@@ -887,5 +914,8 @@
     .time-row {
       grid-template-columns: 1fr;
       gap: 0.3rem;
+    }
+    .sim-ticker {
+      grid-template-columns: 1fr;
     }
   }

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GUM DevOps Simulator: Tech Debt Dynamics</title>
+    <!-- Chart.js for real-time visualization -->
+    <script src="https://jsdelivr.net"></script>
+    <!-- Tailwind CSS for high-utility, modern layout -->
+    <script src="https://jsdelivr.net"></script>
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; background-color: #0f172a; color: #f8fafc; }
+        input[type="range"] { accent-color: #3b82f6; }
+    </style>
+</head>
+<body class="p-6">
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- COLUMN 1: CONTROLS & HYPERPARAMETERS -->
+        <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl space-y-6">
+            <h2 class="text-xl font-bold border-b border-slate-700 pb-2 text-blue-400">⚡ System Drivers & Gains</h2>
+            
+            <!-- Drivers -->
+            <div class="space-y-4">
+                <h3 class="text-sm font-semibold tracking-wider text-slate-400 uppercase">State Variables</h3>
+                <div>
+                    <label class="flex justify-between text-xs mb-1"><span>Urgency $U(t)$</span><span id="v-U" class="font-mono text-blue-400">1.60</span></label>
+                    <input type="range" id="U" min="0" max="3" step="0.05" value="1.60" class="w-full">
+                </div>
+                <div>
+                    <label class="flex justify-between text-xs mb-1"><span>Velocity/Delivery Factor $DF(t)$</span><span id="v-DF" class="font-mono text-blue-400">7.58</span></label>
+                    <input type="range" id="DF" min="1" max="15" step="0.1" value="7.58" class="w-full">
+                </div>
+                <div>
+                    <label class="flex justify-between text-xs mb-1"><span>Capability Mismatch $C_m(t)$</span><span id="v-Cm" class="font-mono text-blue-400">0.28</span></label>
+                    <input type="range" id="Cm" min="0" max="1" step="0.01" value="0.28" class="w-full">
+                </div>
+                <div>
+                    <label class="flex justify-between text-xs mb-1"><span>Remediation Effort $R(t)$</span><span id="v-R" class="font-mono text-emerald-400">0.90</span></label>
+                    <input type="range" id="R" min="0" max="1" step="0.01" value="0.90" class="w-full">
+                </div>
+            </div>
+
+            <!-- Coefficients -->
+            <div class="space-y-4 pt-4 border-t border-slate-700">
+                <h3 class="text-sm font-semibold tracking-wider text-slate-400 uppercase">Gains ($\kappa_i$) & Sensitivity ($\lambda$)</h3>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="text-xs text-slate-400">$\kappa_1$ (Urgency)</label>
+                        <input type="number" id="k1" value="0.30" step="0.05" class="w-full bg-slate-900 border border-slate-700 p-1 rounded text-sm text-center">
+                    </div>
+                    <div>
+                        <label class="text-xs text-slate-400">$\kappa_2$ (Velocity)</label>
+                        <input type="number" id="k2" value="0.05" step="0.01" class="w-full bg-slate-900 border border-slate-700 p-1 rounded text-sm text-center">
+                    </div>
+                    <div>
+                        <label class="text-xs text-slate-400">$\kappa_3$ (Mismatch)</label>
+                        <input type="number" id="k3" value="0.40" step="0.05" class="w-full bg-slate-900 border border-slate-700 p-1 rounded text-sm text-center">
+                    </div>
+                    <div>
+                        <label class="text-xs text-slate-400">$\kappa_4$ (Remediation)</label>
+                        <input type="number" id="k4" value="0.80" step="0.05" class="w-full bg-slate-900 border border-slate-700 p-1 rounded text-sm text-center">
+                    </div>
+                </div>
+                <div>
+                    <label class="flex justify-between text-xs mb-1"><span>$\lambda$ (Debt Sensitivity Constant)</span><span id="v-lambda" class="font-mono text-amber-400">0.85</span></label>
+                    <input type="range" id="lambda" min="0.1" max="2.5" step="0.05" value="0.85" class="w-full">
+                </div>
+            </div>
+        </div>
+
+        <!-- COLUMN 2: HIGH-DENSITY DEBT DYNAMICS METRICS -->
+        <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl flex flex-col justify-between">
+            <div>
+                <h2 class="text-xl font-bold border-b border-slate-700 pb-2 text-amber-400">📊 Long-Horizon Debt Dynamics</h2>
+                
+                <!-- Live Rate -->
+                <div class="my-4 p-4 rounded-lg bg-slate-900 border border-slate-700 text-center">
+                    <span class="text-xs block text-slate-400 uppercase tracking-widest font-semibold">Net Trajectory ($dTDR/dt$)</span>
+                    <div id="rate-display" class="text-3xl font-extrabold font-mono tracking-tight mt-1 text-emerald-400">+0.251</div>
+                    <span id="state-interpretation" class="text-xs italic text-slate-400">Technical debt is accumulating.</span>
+                </div>
+
+                <!-- Equation Ledger breakdown -->
+                <div class="space-y-2 font-mono text-xs">
+                    <div class="flex justify-between items-center p-2 bg-slate-900/50 rounded border-l-4 border-blue-500">
+                        <span>➕ $\kappa_1 \cdot U$ (Urgency Gain)</span>
+                        <span id="calc-k1" class="font-bold text-blue-400">+0.480</span>
+                    </div>
+                    <div class="flex justify-between items-center p-2 bg-slate-900/50 rounded border-l-4 border-indigo-500">
+                        <span>➕ $\kappa_2 \cdot DF$ (Velocity Gain)</span>
+                        <span id="calc-k2" class="font-bold text-indigo-400">+0.379</span>
+                    </div>
+                    <div class="flex justify-between items-center p-2 bg-slate-900/50 rounded border-l-4 border-purple-500">
+                        <span>➕ $\kappa_3 \cdot C_m$ (Mismatch Gain)</span>
+                        <span id="calc-k3" class="font-bold text-purple-400">+0.112</span>
+                    </div>
+                    <div class="flex justify-between items-center p-2 bg-slate-900/50 rounded border-l-4 border-emerald-500">
+                        <span>➖ $\kappa_4 \cdot R$ (Remediation Vector)</span>
+                        <span id="calc-k4" class="font-bold text-emerald-400">-0.720</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Instantaneous Drag Effect Multiplier -->
+            <div class="mt-6 pt-4 border-t border-slate-700 bg-slate-900 p-4 rounded-lg">
+                <span class="text-xs block text-slate-400 uppercase tracking-wider font-semibold">Realized Value Attenuation</span>
+                <div class="flex justify-between items-baseline mt-2">
+                    <span class="text-2xl font-bold font-mono text-red-400" id="attenuation-display">0.806x</span>
+                    <span class="text-xs text-slate-500">Factor: $e^{-\lambda \cdot TDR}$</span>
+                </div>
+                <div class="text-xs text-slate-400 mt-1">Current State: $TDR = <span id="current-tdr-val" class="font-bold">0.25</span>$</div>
+                <p class="text-[11px] text-slate-500 italic mt-2">Note: Remediation captures short-horizon capacity but forces an improved long-horizon output curve.</p>
+            </div>
+        </div>
+
+        <!-- COLUMN 3: GRAPHICAL ENGINE -->
+        <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl flex flex-col">
+            <h2 class="text-xl font-bold border-b border-slate-700 pb-2 text-rose-400">📈 Compounding Drag Curve</h2>
+            <div class="flex-grow relative min-h-[250px] mt-4">
+                <canvas id="simChart"></canvas>
+            </div>
+            <div class="mt-2 flex gap-2">
+                <button onclick="resetSim()" class="flex-1 bg-slate-700 hover:bg-slate-600 border border-slate-600 text-xs py-1.5 rounded transition font-medium">🔄 Reset Simulation</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Simulation State Engine
+        let t = 0;
+        let TDR = 0.25; // Initial TDR floor
+        const historyLength = 40;
+        
+        let timelineData = Array(historyLength).fill(0);
+        let tdrData = Array(historyLength).fill(TDR);
+        let dragData = Array(historyLength).fill(1.0);
+        let labels = Array(historyLength).fill(0).map((_, i) => `t-${historyLength - 1 - i}`);
+
+        // GUM Constants (Held stable here to focus clarity entirely on the TDR attenuation engine)
+        const constantZ = 1.0, V = 10, M = 1.2, Omega = 1.0, CFR = 0.15, LT = 2.0, MTTR = 1.0, epsilon = 0.1;
+
+        // Initialize Chart.js
+        const ctx = document.getElementById('simChart').getContext('2d');
+        const simChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    { label: 'TDR State', data: tdrData, borderColor: '#f43f5e', borderWidth: 2, yAxisID: 'y' },
+                    { label: 'Value Attenuation (e^-λ·TDR)', data: dragData, borderColor: '#3b82f6', borderWidth: 2, borderDash: [4, 4], yAxisID: 'y1' }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { type: 'linear', display: true, position: 'left', min: 0, max: 4, title: { display: true, text: 'TDR Level', color: '#f43f5e' }, grid: { color: '#334155' } },

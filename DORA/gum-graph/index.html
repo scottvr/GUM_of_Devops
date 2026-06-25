@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="./doragum.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
 <title>The Grand Unified Model of DevOps/SRE Dynamics</title>
 
 </head>
@@ -269,19 +272,28 @@
 
     <!-- Equation breakdown -->
     <div class="equation-block">
-      <h3>Instantaneous Term Breakdown</h3>
-      <div class="eq-line">
-        <span class="sym">P<sub>inst</sub></span>
-        <span class="op"> = </span>
-        <span class="sym">1/Z</span>
-        <span class="op"> · </span>
-        [<span class="sym"> V·DF·M·Ω·(1−R) </span>
-        <span class="op"> / </span>
-        <span class="sym">(LT + MTTR + ε)</span>]
-        <span class="op"> · </span>
-        <span class="sym">(1−CFR)^(U²)</span>
-        <span class="op"> · </span>
-        <span class="sym">e^(−λ·TDR)</span>
+      <div class="equation-hero">
+        <div class="equation-kicker">A Grand Unified Model</div>
+        <h3>Instantaneous Term Breakdown</h3>
+      </div>
+      <div class="equation-katex-area" id="equation-katex-area">
+        <div class="eq-main">$$
+          P_{\mathrm{inst}}(t)=\frac{1}{Z}
+          \left[
+            \frac{V(t)\,DF(t)\,M(t)\,\Omega(t)\,(1-R(t))}{LT(t)+MTTR(t)+\epsilon}
+          \right]
+          (1-CFR(t))^{U(t)^2}e^{-\lambda TDR(t)}
+        $$</div>
+        <div class="eq-side-grid">
+          <div class="eq-side-card">
+            <div class="eq-side-label">Organizational Coherence</div>
+            $$\Omega(t)=\exp\!\left(-\alpha C_m(t)-\beta E(t)\right)$$
+          </div>
+          <div class="eq-side-card">
+            <div class="eq-side-label">Long-Horizon Debt Dynamics</div>
+            $$\frac{d}{dt}TDR(t)=\kappa_1U(t)+\kappa_2DF(t)+\kappa_3C_m(t)-\kappa_4R(t)$$
+          </div>
+        </div>
       </div>
       <div class="eq-meta" id="eq-meta">Normalization: calibrated to healthy preset (P_inst ≈ 1.0).</div>
       <div id="eq-expanded" style="margin-top:0.7rem; font-size:12px; color:var(--text-dim);">—</div>
@@ -321,8 +333,8 @@
             </div>
             <canvas id="sparkline"></canvas>
             <div class="chart-legend" id="chart-legend">
-              <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div> <span id="legend-curve">P_inst as U sweeps 0.1 → 5</span></div>
-              <div class="legend-item"><div class="legend-dot" style="background:var(--warn)"></div> <span id="legend-handle">Current U — drag chart to sweep</span></div>
+              <div class="legend-item"><div class="legend-dot" style="background:var(--viz-primary)"></div> <span id="legend-curve">P_inst as U sweeps 0.1 → 5</span></div>
+              <div class="legend-item"><div class="legend-dot" style="background:var(--viz-handle)"></div> <span id="legend-handle">Current U — drag chart to sweep</span></div>
             </div>
           </div>
         </div>
@@ -616,6 +628,52 @@ function applySliderSemanticHints() {
   });
 }
 
+function initCollapsibleSections() {
+  const sections = Array.from(document.querySelectorAll('.controls-panel .panel-section'));
+  sections.forEach((section, idx) => {
+    if (section.dataset.collapsibleInit === '1') return;
+    const label = section.querySelector(':scope > .panel-section-label');
+    if (!label) return;
+
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'section-toggle';
+    toggle.innerHTML = `<span>${label.textContent}</span><span class="section-chevron">▾</span>`;
+
+    const content = document.createElement('div');
+    content.className = 'section-content';
+    while (label.nextSibling) {
+      content.appendChild(label.nextSibling);
+    }
+
+    const isOpenDefault = idx === 0;
+    section.classList.add('collapsible');
+    section.classList.toggle('collapsed', !isOpenDefault);
+    toggle.setAttribute('aria-expanded', isOpenDefault ? 'true' : 'false');
+    toggle.addEventListener('click', () => {
+      const collapsed = section.classList.toggle('collapsed');
+      toggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+    });
+
+    label.replaceWith(toggle);
+    section.appendChild(content);
+    section.dataset.collapsibleInit = '1';
+  });
+}
+
+function renderKaTeXEquations() {
+  if (typeof renderMathInElement !== 'function') return;
+  const target = document.getElementById('equation-katex-area');
+  if (!target) return;
+  renderMathInElement(target, {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\(', right: '\\)', display: false }
+    ],
+    throwOnError: false
+  });
+}
+
 const SWEEP_CONFIG = {
   U: {
     sliderKey: 'U',
@@ -625,7 +683,7 @@ const SWEEP_CONFIG = {
     thesis: 'Urgency-Induced Instability: moderate U may increase visible activity; beyond a system-dependent threshold it raises fragility faster than output.',
     curveLabel: 'P_inst as U sweeps 0.1 -> 5',
     handleLabel: 'Current U — drag chart to sweep',
-    curveColor: '#5af078',
+    curveColor: '#49a0ec',
     showCFRToggle: false,
     getValue: v => v.U,
     sweep: (v, x) => Object.assign({}, v, { U: x }),
@@ -638,7 +696,7 @@ const SWEEP_CONFIG = {
     thesis: 'The Compounding Debt Tax: TDR enters as an exponential toll on every unit of nominal output.',
     curveLabel: 'P_inst as TDR sweeps 0 -> 1',
     handleLabel: 'Current TDR — drag chart to sweep',
-    curveColor: '#5af078',
+    curveColor: '#49a0ec',
     showCFRToggle: false,
     getValue: v => v.TDR,
     sweep: (v, x) => Object.assign({}, v, { TDR: x }),
@@ -651,7 +709,7 @@ const SWEEP_CONFIG = {
     thesis: 'CFR is amplified nonlinearly by urgency via (1-CFR)^U^2.',
     curveLabel: 'P_inst at current U',
     handleLabel: 'Current CFR — drag chart to sweep',
-    curveColor: '#5af078',
+    curveColor: '#49a0ec',
     showCFRToggle: true,
     getValue: v => v.CFR,
     sweep: (v, x) => Object.assign({}, v, { CFR: x }),
@@ -664,7 +722,7 @@ const SWEEP_CONFIG = {
     thesis: 'Morale is a direct multiplier. Low morale hides in plain sight until degradation becomes severe.',
     curveLabel: 'P_inst as M sweeps 0.1 -> 2',
     handleLabel: 'Current M — drag chart to sweep',
-    curveColor: '#5af078',
+    curveColor: '#49a0ec',
     showCFRToggle: false,
     getValue: v => v.M,
     sweep: (v, x) => Object.assign({}, v, { M: x }),
@@ -680,6 +738,11 @@ function fmt(x, digits=3) {
   if (Math.abs(x) >= 100) return x.toFixed(1);
   if (Math.abs(x) >= 10) return x.toFixed(2);
   return x.toPrecision(digits);
+}
+
+function cssVar(name, fallback) {
+  const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  return v || fallback;
 }
 
 function getVars() {
@@ -1143,10 +1206,10 @@ function drawSimChart() {
   if (!rows.length) return;
 
   const selected = [];
-  if (appState.showSeries.pInst) selected.push({ key: 'P_inst', color: '#49a0ec' });
-  if (appState.showSeries.pCum) selected.push({ key: 'P_cum', color: '#e8a838' });
-  if (appState.showSeries.tdr) selected.push({ key: 'TDR', color: '#e85438' });
-  if (appState.showSeries.coupling) selected.push({ key: 'omega', color: '#5af078' });
+  if (appState.showSeries.pInst) selected.push({ key: 'P_inst', color: cssVar('--viz-primary', '#49a0ec') });
+  if (appState.showSeries.pCum) selected.push({ key: 'P_cum', color: cssVar('--viz-handle', '#e8a838') });
+  if (appState.showSeries.tdr) selected.push({ key: 'TDR', color: cssVar('--viz-compare', '#6f54d6') });
+  if (appState.showSeries.coupling) selected.push({ key: 'omega', color: cssVar('--accent', '#0b3954') });
   if (!selected.length) return;
 
   const values = selected.flatMap(s => rows.map(r => r[s.key]));
@@ -1228,6 +1291,9 @@ function drawChart(v) {
   canvas.width = W;
   canvas.height = H;
   const cfg = SWEEP_CONFIG[activeSweep];
+  const primaryColor = cssVar('--viz-primary', '#49a0ec');
+  const compareColor = cssVar('--viz-compare', '#6f54d6');
+  const handleColor = cssVar('--viz-handle', '#e8a838');
   const steps = 80;
   const { min, max } = cfg;
 
@@ -1247,7 +1313,7 @@ function drawChart(v) {
       const vv = cfg.sweep(Object.assign({}, v, { U: compU }), x);
       compPoints.push({ x, p: computePInst(vv, { urgencyBoost: appState.urgencyBoost }) });
     }
-    compCurves.push({ points: compPoints, color: '#e85438', label: 'U=' + compU });
+    compCurves.push({ points: compPoints, color: compareColor, label: 'U=' + compU });
   }
 
   const allPs = [...points.map(p => p.p), ...compCurves.flatMap(c => c.points.map(p => p.p))];
@@ -1289,7 +1355,7 @@ function drawChart(v) {
   });
 
   ctx.beginPath();
-  ctx.strokeStyle = cfg.curveColor;
+  ctx.strokeStyle = cfg.curveColor || primaryColor;
   ctx.lineWidth = 2;
   points.forEach((pt, i) => {
     const px = (i / steps) * W;
@@ -1310,7 +1376,7 @@ function drawChart(v) {
   const cy = H - (curP / pMax) * H;
 
   ctx.beginPath();
-  ctx.strokeStyle = '#e8a838';
+  ctx.strokeStyle = handleColor;
   ctx.lineWidth = 1;
   ctx.setLineDash([4, 3]);
   ctx.moveTo(cx, H); ctx.lineTo(cx, 0);
@@ -1326,7 +1392,7 @@ function drawChart(v) {
 
   ctx.beginPath();
   ctx.arc(cx, cy, HANDLE_R, 0, Math.PI * 2);
-  ctx.fillStyle = '#e8a838';
+  ctx.fillStyle = handleColor;
   ctx.fill();
   ctx.strokeStyle = '#0d0f0e';
   ctx.lineWidth = 1.5;
@@ -1514,9 +1580,11 @@ window.addEventListener('resize', () => {
 
 hydrateFromUrl();
 calibrateNormalization();
+initCollapsibleSections();
 initChartDrag();
 applyInitialUiState();
 update();
+window.addEventListener('load', renderKaTeXEquations);
 </script>
 </body>
 </html>

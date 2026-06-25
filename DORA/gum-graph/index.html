@@ -36,27 +36,27 @@
     <div class="panel-section">
       <div class="panel-section-label">Organizational Archetypes</div>
       <div class="presets">
-        <button type="button" class="preset-btn" onclick="applyPreset('elite')">
+        <button type="button" class="preset-btn" id="preset-elite" onclick="applyPreset('elite')">
           <span class="preset-name">Elite Performer</span>
           High trust, low chaos
         </button>
-        <button type="button" class="preset-btn" onclick="applyPreset('healthy')">
+        <button type="button" class="preset-btn" id="preset-healthy" onclick="applyPreset('healthy')">
           <span class="preset-name">High Performer</span>
           Mostly functional
         </button>
-        <button type="button" class="preset-btn" onclick="applyPreset('stressed')">
+        <button type="button" class="preset-btn" id="preset-stressed" onclick="applyPreset('stressed')">
           <span class="preset-name">Under Pressure</span>
           Urgency rising
         </button>
-        <button type="button" class="preset-btn" onclick="applyPreset('legacy')">
+        <button type="button" class="preset-btn" id="preset-legacy" onclick="applyPreset('legacy')">
           <span class="preset-name">Legacy Bog</span>
           Debt-laden, stable-ish
         </button>
-        <button type="button" class="preset-btn" onclick="applyPreset('crisis')">
+        <button type="button" class="preset-btn" id="preset-crisis" onclick="applyPreset('crisis')">
           <span class="preset-name">Incident Loop</span>
           Fire-fighting mode
         </button>
-        <button type="button" class="preset-btn" onclick="applyPreset('entropy')">
+        <button type="button" class="preset-btn" id="preset-entropy" onclick="applyPreset('entropy')">
           <span class="preset-name">Max Entropy</span>
           The literature review
         </button>
@@ -71,6 +71,12 @@
         <label for="toggle-dora-lens">
           <input type="checkbox" id="toggle-dora-lens" onchange="onDoraLensToggle()">
           DORA Lens (highlight observed metrics)
+        </label>
+      </div>
+      <div class="control-inline">
+        <label for="toggle-posture-mode">
+          <input type="checkbox" id="toggle-posture-mode" onchange="onPostureModeToggle()">
+          Institutional Momentum Mode (off = Strict Scientific Posture)
         </label>
       </div>
     </div>
@@ -279,7 +285,7 @@
     <!-- Equation breakdown -->
     <div class="equation-block">
       <div class="equation-hero">
-        <div class="equation-kicker">A Grand Unified Model</div>
+        <div class="equation-kicker" id="equation-kicker">A Grand Unified Model</div>
         <h3>Instantaneous Term Breakdown</h3>
       </div>
       <div class="equation-katex-area" id="equation-katex-area">
@@ -351,7 +357,7 @@
           <div class="tdr-formula-note">Integrated explicitly each step: TDR(t+Δt) = TDR(t) + (dTDR/dt)·Δt.</div>
           <div style="font-size:11px; color:var(--text-dim); margin-bottom:0.8rem;">
             At current settings, technical debt is <strong id="tdr-trend-word" style="color:var(--warn)">—</strong>.
-            Debt Velocity Vector: <span id="tdr-rate" style="color:var(--text-bright)">—</span>/period.
+            <span id="tdr-rate-label">Debt Velocity Vector</span>: <span id="tdr-rate" style="color:var(--text-bright)">—</span>/period.
           </div>
           <div class="tdr-grid">
             <div class="tdr-term">
@@ -551,6 +557,7 @@ const appState = {
   projectionMode: 'debt',
   freezeControls: true,
   doraLens: false,
+  postureMode: 'strict',
   urgencyBoost: false,
   simHorizon: 24,
   simTime: 0,
@@ -567,6 +574,37 @@ const appState = {
   },
   floorToastShown: false,
   dfSaturationToastAt: 0,
+};
+
+const POSTURE_COPY = {
+  strict: {
+    kicker: 'A Structured Descriptive Model',
+    rateLabel: 'Debt derivative',
+    integration: dt => `Euler Integration Step (dt=${dt})`,
+    eqMetaPrefix: 'Normalization: calibrated to healthy preset',
+    criticalTrend: 'SATURATED REGIME',
+    criticalDiagnosis: '<strong>SATURATED REGIME:</strong> Constraint interactions dominate; marginal innovation yield is near zero.',
+    lensOnToast: 'DORA Lens enabled: observed metrics foregrounded.',
+    lensOffToast: 'DORA Lens disabled.',
+    modeOnToast: 'Institutional Momentum Mode enabled.',
+    modeOffToast: 'Strict Scientific Posture enabled.',
+    floorToast: 'Remediation floor active: debt state clamped at zero.',
+    dfToast: 'Debt saturation: sustained velocity exceeds feasible envelope.',
+  },
+  momentum: {
+    kicker: 'A Grand Unified Model',
+    rateLabel: 'Debt Velocity Vector',
+    integration: dt => `Integration Step (dt=${dt})`,
+    eqMetaPrefix: 'Normalization: calibrated to healthy preset',
+    criticalTrend: 'CRITICAL REGIME',
+    criticalDiagnosis: '<strong>CRITICAL REGIME:</strong> Resume Driven Development detected. System functions on institutional momentum; innovation is mathematically improbable.',
+    lensOnToast: 'DORA Lens enabled: observed metrics foregrounded.',
+    lensOffToast: 'DORA Lens disabled.',
+    modeOnToast: 'Institutional Momentum Mode enabled.',
+    modeOffToast: 'Strict Scientific Posture enabled.',
+    floorToast: 'Remediation Floor Active: Debt Fully Cleared.',
+    dfToast: 'Debt Saturation: Cannot sustain high velocity.',
+  }
 };
 
 function renderSliderLabels(v) {
@@ -669,6 +707,18 @@ function applyDoraLens() {
   });
 }
 
+function postureCopy() {
+  return appState.postureMode === 'momentum' ? POSTURE_COPY.momentum : POSTURE_COPY.strict;
+}
+
+function applyPostureCopy() {
+  const c = postureCopy();
+  setText('equation-kicker', c.kicker);
+  setText('tdr-rate-label', c.rateLabel);
+  setText('integration-step', c.integration(SIM_DT));
+  setText('eq-meta', `${c.eqMetaPrefix} (P_inst ≈ 1.0, Z=${fmt(normalizationZ,4)}).`);
+}
+
 function initCollapsibleSections() {
   const sections = Array.from(document.querySelectorAll('.controls-panel .panel-section'));
   sections.forEach((section, idx) => {
@@ -718,7 +768,17 @@ function renderKaTeXEquations() {
 function onDoraLensToggle() {
   appState.doraLens = document.getElementById('toggle-dora-lens').checked;
   applyDoraLens();
-  showToast(appState.doraLens ? 'DORA Lens enabled: observed metrics foregrounded.' : 'DORA Lens disabled.');
+  const c = postureCopy();
+  showToast(appState.doraLens ? c.lensOnToast : c.lensOffToast);
+  syncPermalink();
+}
+
+function onPostureModeToggle() {
+  appState.postureMode = document.getElementById('toggle-posture-mode').checked ? 'momentum' : 'strict';
+  applyPostureCopy();
+  const c = postureCopy();
+  showToast(appState.postureMode === 'momentum' ? c.modeOnToast : c.modeOffToast);
+  update();
   syncPermalink();
 }
 
@@ -938,8 +998,9 @@ function setBar(name, val, max, lowT, highT) {
 
 function buildDiagnosis(v, t, pInst) {
   const notes = [];
+  const c = postureCopy();
   if (v.TDR > 0.9 && v.R < 0.08 && t.U_t > 3) {
-    notes.push(`<strong>CRITICAL REGIME:</strong> Resume Driven Development detected. System functions on institutional momentum; innovation is mathematically improbable.`);
+    notes.push(c.criticalDiagnosis);
   }
   if (v.U > 3.0) {
     notes.push(`<strong>Urgency-Induced Instability:</strong> U=${fmt(v.U)} applies exponent ${fmt(t.urgencyExp,3)} to CFR impact.`);
@@ -1023,6 +1084,7 @@ function renderMainOutput(v) {
     `<span style="color:var(--text)"> · </span><span style="color:var(--accent)">U(t)=${fmt(terms.U_t)} DF(t)=${fmt(terms.DF_t)}</span>` +
     `<span style="color:var(--text-dim)"> = </span><span style="color:var(--text-bright); font-weight:500">${fmt(pInst, 4)}</span>`;
 
+  const c = postureCopy();
   const dTDR = terms.dTDR;
   setText('tdr-k1', `+${fmt(K1 * v.U, 3)} (k1=${K1}·U=${fmt(v.U)})`);
   setText('tdr-k2', `+${fmt(K2 * v.DF, 3)} (k2=${K2}·DF=${fmt(v.DF)})`);
@@ -1030,7 +1092,7 @@ function renderMainOutput(v) {
   setText('tdr-k4', `-${fmt(K4 * v.R, 3)} (k4=${K4}·R=${fmt(v.R)})`);
   const trendWord = document.getElementById('tdr-trend-word');
   if (v.TDR > 0.9 && v.R < 0.08 && terms.U_t > 3) {
-    trendWord.textContent = 'CRITICAL REGIME';
+    trendWord.textContent = c.criticalTrend;
     trendWord.style.color = 'var(--danger)';
   } else if (dTDR > 0.05) {
     trendWord.textContent = 'accumulating';
@@ -1109,12 +1171,13 @@ function updateWaterfall(v, terms, pInst) {
 }
 
 function enforceDebtSaturation(v) {
+  const c = postureCopy();
   const maxVelocity = 15 * Math.exp(-0.5 * v.TDR);
   if (v.DF <= maxVelocity) return v;
   const reduced = Math.max(maxVelocity, v.DF * 0.95);
   document.getElementById('sl-DF').value = reduced;
   if (!appState.dfSaturationToastAt || Date.now() - appState.dfSaturationToastAt > 2000) {
-    showToast('Debt Saturation: Cannot sustain high velocity.');
+    showToast(c.dfToast);
     appState.dfSaturationToastAt = Date.now();
   }
   return getVars();
@@ -1225,11 +1288,12 @@ function updateSimTimeFromSlider() {
 }
 
 function updateSimReadout() {
+  const c = postureCopy();
   setText('sim-time-val', `t = ${fmt(appState.simTime,4)}`);
   const row = rowAtTime(appState.simRows, appState.simTime);
   if (!row) return;
   if (row.floorActive && !appState.floorToastShown) {
-    showToast('Remediation Floor Active: Debt Fully Cleared.');
+    showToast(c.floorToast);
     appState.floorToastShown = true;
   }
   if (!row.floorActive) appState.floorToastShown = false;
@@ -1548,6 +1612,9 @@ function initChartDrag() {
 
 function applyPreset(name) {
   const p = presets[name];
+  document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+  const activeBtn = document.getElementById('preset-' + name);
+  if (activeBtn) activeBtn.classList.add('active');
   setVars(p);
   update();
 }
@@ -1560,6 +1627,7 @@ function toQueryState() {
   q.projectionMode = appState.projectionMode;
   q.freeze = appState.freezeControls ? 1 : 0;
   q.doraLens = appState.doraLens ? 1 : 0;
+  q.posture = appState.postureMode;
   q.urgencyBoost = appState.urgencyBoost ? 1 : 0;
   q.horizon = appState.simHorizon;
   q.time = +appState.simTime.toFixed(3);
@@ -1606,6 +1674,8 @@ function hydrateFromUrl() {
   if (lens === '0' || lens === '1' || lens === 'true' || lens === 'false') {
     appState.doraLens = lens === '1' || lens === 'true';
   }
+  const posture = sp.get('posture');
+  if (posture === 'strict' || posture === 'momentum') appState.postureMode = posture;
   const ub = sp.get('urgencyBoost');
   appState.urgencyBoost = ub === '1' || ub === 'true';
   const horizon = +sp.get('horizon');
@@ -1649,12 +1719,13 @@ function applyInitialUiState() {
   document.getElementById('sim-mode').value = appState.projectionMode;
   document.getElementById('sim-freeze-controls').checked = appState.freezeControls;
   document.getElementById('toggle-dora-lens').checked = appState.doraLens;
+  document.getElementById('toggle-posture-mode').checked = appState.postureMode === 'momentum';
   document.getElementById('toggle-urgency-boost').checked = appState.urgencyBoost;
   document.getElementById('toggle-pinst').checked = appState.showSeries.pInst;
   document.getElementById('toggle-pcum').checked = appState.showSeries.pCum;
   document.getElementById('toggle-tdr').checked = appState.showSeries.tdr;
   document.getElementById('toggle-coupling').checked = appState.showSeries.coupling;
-  setText('integration-step', `Integration Step (dt=${SIM_DT})`);
+  applyPostureCopy();
   initControlRowSemantics();
   applySliderSemanticHints();
   applyDoraLens();
@@ -1665,7 +1736,7 @@ function applyInitialUiState() {
 
 function calibrateNormalization() {
   normalizationZ = computeRawP(presets.healthy, { urgencyBoost: false }) || 1.0;
-  setText('eq-meta', `Normalization: calibrated to healthy preset (P_inst ≈ 1.0, Z=${fmt(normalizationZ,4)}).`);
+  applyPostureCopy();
 }
 
 window.addEventListener('resize', () => {

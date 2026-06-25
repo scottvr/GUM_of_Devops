@@ -312,6 +312,13 @@
     color: var(--text-bright);
   }
 
+  .preset-btn.active {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent-dim), white 70%);
+    color: var(--text-bright);
+    font-weight: 600;
+  }
+
   .preset-btn .preset-name {
     display: block;
     font-weight: 500;

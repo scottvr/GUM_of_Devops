@@ -2,13 +2,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
-@font-face {
-  font-family: "Latin Modern Roman";
-  src: url("https://cdn.jsdelivr.net/npm/@fontsource/latin-modern-roman@5.1.1/files/latin-modern-roman-latin-400-normal.woff2") format("woff2");
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
 
 :root {
   --dora-black: rgb(34, 30, 39);
@@ -27,10 +20,10 @@
   --text-bright: color-mix(in srgb, var(--dora-black), white 5%);
   --text-dim: color-mix(in srgb, var(--dora-black), white 38%);
   --mono: "Roboto", Arial, Helvetica, sans-serif;
-  --sans: "Google Sans Flex", Arial, Helvetica, sans-serif;
+  --sans: "Latin Modern Roman", "Times New Roman", Times, serif;
 }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
   .sr-only {
     position: absolute;
     width: 1px;
@@ -877,6 +870,17 @@
   .tool-row {
     display: flex;
     gap: 0.5rem;
+  }
+
+  .state-chip {
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--text-dim);
+    padding: 0.45rem 0.6rem;
+    font-size: 10px;
+    letter-spacing: 0.01em;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
   }
 
   .diag-grid {

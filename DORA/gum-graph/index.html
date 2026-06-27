@@ -434,6 +434,7 @@
       <button type="button" onclick="pinBaseline()">Pin Baseline</button>
       <button type="button" onclick="copyPermalink()">Copy Permalink</button>
     </div>
+    <div class="state-chip" id="state-chip">View: Parameter sweep | Projection: debt-only | Freeze: ON | Preset: Custom | t=0.000 | Baseline: none</div>
 
     <div class="diag-grid">
       <div class="diag-card">
@@ -548,6 +549,7 @@ let activeSweep = 'U';
 let cfrMode = 'current';
 let baselineSnapshot = null;
 let suppressUrlSync = false;
+let pendingCollapsedState = null;
 let lastSliderValues = null;
 const sliderPulseTimers = {};
 
@@ -555,6 +557,7 @@ const appState = {
   vizMode: 'sweep',
   projectionMode: 'debt',
   freezeControls: true,
+  activePreset: null,
   doraLens: false,
   postureMode: 'strict',
   urgencyBoost: false,
@@ -762,11 +765,33 @@ function initCollapsibleSections() {
       toggle.addEventListener('click', () => {
         section.classList.toggle('collapsed');
         syncExpanded();
+        syncPermalink();
       });
       toggle.dataset.collapseBound = '1';
     }
 
     section.dataset.collapsibleInit = '1';
+  });
+  if (pendingCollapsedState) {
+    applyCollapsedSectionState(pendingCollapsedState);
+    pendingCollapsedState = null;
+  }
+}
+
+function getCollapsedSectionState() {
+  const sections = Array.from(document.querySelectorAll('.controls-panel .panel-section'));
+  return sections.map(section => (section.classList.contains('collapsed') ? '1' : '0')).join('');
+}
+
+function applyCollapsedSectionState(bits) {
+  if (!bits || !/^[01]+$/.test(bits)) return;
+  const sections = Array.from(document.querySelectorAll('.controls-panel .panel-section'));
+  sections.forEach((section, idx) => {
+    if (idx >= bits.length) return;
+    const collapsed = bits[idx] === '1';
+    section.classList.toggle('collapsed', collapsed);
+    const toggle = section.querySelector(':scope > .section-toggle');
+    if (toggle) toggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
   });
 }
 
@@ -897,6 +922,50 @@ function setVars(v) {
     const meta = SLIDER_META[key];
     el.value = clamp(+v[key], meta.min, meta.max);
   });
+}
+
+function getPresetNameForVars(v) {
+  const keys = Object.keys(SLIDER_META);
+  for (const [name, preset] of Object.entries(presets)) {
+    const matches = keys.every(key => Math.abs((v[key] ?? 0) - (preset[key] ?? 0)) < 1e-9);
+    if (matches) return name;
+  }
+  return null;
+}
+
+function syncPresetButtonState(v = getVars()) {
+  const matchedPreset = getPresetNameForVars(v);
+  appState.activePreset = matchedPreset;
+  document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+  if (matchedPreset) {
+    const activeBtn = document.getElementById('preset-' + matchedPreset);
+    if (activeBtn) activeBtn.classList.add('active');
+  }
+}
+
+function formatPresetLabel(name) {
+  if (!name) return 'Custom';
+  const btn = document.getElementById('preset-' + name);
+  const label = btn ? btn.querySelector('.preset-name') : null;
+  return label ? label.textContent.trim() : name;
+}
+
+function uiStateContextLabel() {
+  const tab = appState.vizMode === 'time' ? 'Time simulation' : 'Parameter sweep';
+  const projection = appState.projectionMode === 'coupled' ? 'coupled' : 'debt-only';
+  const freeze = appState.freezeControls ? 'freeze ON' : 'freeze OFF';
+  return `${tab}, ${projection}, ${freeze}, t=${fmt(appState.simTime,4)}`;
+}
+
+function renderStateChip() {
+  const el = document.getElementById('state-chip');
+  if (!el) return;
+  const view = appState.vizMode === 'time' ? 'Time simulation' : 'Parameter sweep';
+  const projection = appState.projectionMode === 'coupled' ? 'coupled' : 'debt-only';
+  const freeze = appState.freezeControls ? 'ON' : 'OFF';
+  const preset = formatPresetLabel(appState.activePreset);
+  const baseline = baselineSnapshot ? `pinned@t=${fmt(baselineSnapshot.simTime,4)}` : 'none';
+  el.textContent = `View: ${view} | Projection: ${projection} | Freeze: ${freeze} | Preset: ${preset} | t=${fmt(appState.simTime,4)} | Baseline: ${baseline}`;
 }
 
 function urgencyActivityBoost(U) {
@@ -1128,12 +1197,13 @@ function renderMainOutput(v) {
   updateWaterfall(v, terms, pInst);
 }
 
-function renderTimeProjectionFrame() {
+function renderTimeProjectionFrame(options = {}) {
+  const { allowControlSync = true } = options;
   if (appState.vizMode !== 'time') return;
   const baseVars = getVars();
   let projected = getProjectedVars(baseVars);
   if (!projected) return;
-  if (!appState.freezeControls) {
+  if (!appState.freezeControls && allowControlSync) {
     syncControlsToProjected(projected);
     projected = getVars();
     renderSliderLabels(projected);
@@ -1149,6 +1219,7 @@ function update() {
   appState.showSeries.pCum = document.getElementById('toggle-pcum').checked;
   appState.showSeries.tdr = document.getElementById('toggle-tdr').checked;
   appState.showSeries.coupling = document.getElementById('toggle-coupling').checked;
+  syncPresetButtonState(policyVars);
   appState.simRows = simulateTrajectory(policyVars, appState.simHorizon, SIM_DT, {
     projectionMode: appState.projectionMode,
     urgencyBoost: appState.urgencyBoost
@@ -1160,7 +1231,7 @@ function update() {
 
   renderSliderLabels(getVars());
   if (appState.vizMode === 'time') {
-    renderTimeProjectionFrame();
+    renderTimeProjectionFrame({ allowControlSync: false });
   } else {
     renderMainOutput(getVars());
   }
@@ -1170,6 +1241,7 @@ function update() {
   updateSimReadout();
   updateBaselineCompare(policyVars);
   updateSensitivity(policyVars);
+  renderStateChip();
   syncPermalink();
 }
 
@@ -1211,12 +1283,20 @@ function updateBaselineCompare(v) {
   const baseTerms = computeTerms(baselineSnapshot.vars, { urgencyBoost: baselineSnapshot.urgencyBoost });
   const nowP = computePInst(v, { urgencyBoost: appState.urgencyBoost });
   const baseP = computePInst(baselineSnapshot.vars, { urgencyBoost: baselineSnapshot.urgencyBoost });
-  const pct = (a, b) => b === 0 ? 'n/a' : ((100 * (a - b)) / Math.abs(b)).toFixed(1) + '%';
+  const pct = (a, b) => {
+    if (Math.abs(b) < EPS) return 'n/a';
+    const delta = ((100 * (a - b)) / Math.abs(b)).toFixed(1);
+    return `${delta.startsWith('-') ? '' : '+'}${delta}%`;
+  };
+  const baselineMode = baselineSnapshot.vizMode === 'time' ? 'Time simulation' : 'Parameter sweep';
+  const baselineProjection = baselineSnapshot.projectionMode === 'coupled' ? 'coupled' : 'debt-only';
+  const baselineFreeze = baselineSnapshot.freezeControls ? 'ON' : 'OFF';
   el.innerHTML =
-    `P_inst: ${pct(nowP, baseP)}<br>` +
-    `Omega: ${pct(nowTerms.omega, baseTerms.omega)}<br>` +
-    `Debt drag: ${pct(nowTerms.debtAtt, baseTerms.debtAtt)}<br>` +
-    `Urgency term: ${pct(nowTerms.cfrTerm, baseTerms.cfrTerm)}`;
+    `Pinned baseline: ${baselineMode}, ${baselineProjection}, freeze ${baselineFreeze}, t=${fmt(baselineSnapshot.simTime,4)}, ${formatPresetLabel(baselineSnapshot.preset)}<br>` +
+    `P_inst: ${fmt(nowP, 4)} vs ${fmt(baseP, 4)} (${pct(nowP, baseP)})<br>` +
+    `Omega: ${fmt(nowTerms.omega, 4)} vs ${fmt(baseTerms.omega, 4)} (${pct(nowTerms.omega, baseTerms.omega)})<br>` +
+    `Debt drag: ${fmt(nowTerms.debtAtt, 4)} vs ${fmt(baseTerms.debtAtt, 4)} (${pct(nowTerms.debtAtt, baseTerms.debtAtt)})<br>` +
+    `Urgency term: ${fmt(nowTerms.cfrTerm, 4)} vs ${fmt(baseTerms.cfrTerm, 4)} (${pct(nowTerms.cfrTerm, baseTerms.cfrTerm)})`;
 }
 
 function updateSensitivity(v) {
@@ -1242,13 +1322,19 @@ function updateSensitivity(v) {
 }
 
 function pinBaseline() {
+  const varsNow = getVars();
   baselineSnapshot = {
-    vars: getVars(),
+    vars: varsNow,
     urgencyBoost: appState.urgencyBoost,
+    vizMode: appState.vizMode,
+    projectionMode: appState.projectionMode,
+    freezeControls: appState.freezeControls,
+    simTime: appState.simTime,
+    preset: getPresetNameForVars(varsNow),
   };
 
 
-  showToast('Baseline pinned for comparison.');
+  showToast(`Baseline pinned (${uiStateContextLabel()}).`);
   update();
 }
 
@@ -1271,8 +1357,9 @@ function setVizMode(mode) {
   document.getElementById('viz-tab-time').classList.toggle('active', mode === 'time');
   document.getElementById('panel-sweep').classList.toggle('active', mode === 'sweep');
   document.getElementById('panel-time').classList.toggle('active', mode === 'time');
-  if (mode === 'time') renderTimeProjectionFrame();
+  if (mode === 'time') renderTimeProjectionFrame({ allowControlSync: false });
   else renderMainOutput(getVars());
+  renderStateChip();
   syncPermalink();
 }
 
@@ -1284,13 +1371,19 @@ function setProjectionMode(mode) {
 
 function onUrgencyBoostToggle() {
   appState.urgencyBoost = document.getElementById('toggle-urgency-boost').checked;
-  showToast(appState.urgencyBoost ? 'Urgency activity boost enabled.' : 'Urgency activity boost disabled.');
+  showToast(appState.urgencyBoost
+    ? `Urgency activity boost enabled (${uiStateContextLabel()}).`
+    : `Urgency activity boost disabled (${uiStateContextLabel()}).`);
   update();
 }
 
 function onFreezeControlsToggle() {
   appState.freezeControls = document.getElementById('sim-freeze-controls').checked;
-  showToast(appState.freezeControls ? 'Simulation keeps controls fixed.' : 'Simulation now moves live controls.');
+  if (appState.freezeControls) {
+    showToast(`Freeze ON: simulation keeps controls fixed (${uiStateContextLabel()}).`);
+  } else {
+    showToast(`Freeze OFF: time simulation can write projected values into controls (${uiStateContextLabel()}).`);
+  }
   update();
 }
 
@@ -1423,13 +1516,23 @@ function drawSimChart() {
 function adoptSimulatedState() {
   const row = rowAtTime(appState.simRows, appState.simTime);
   if (!row) return;
+  const before = getVars();
   document.getElementById('sl-TDR').value = row.TDR;
+  const adoptedKeys = ['TDR'];
   if (appState.projectionMode === 'coupled') {
     document.getElementById('sl-M').value = row.M;
     document.getElementById('sl-LT').value = row.LT;
     document.getElementById('sl-CFR').value = row.CFR;
+    adoptedKeys.push('M', 'LT', 'CFR');
   }
-  showToast('Projected state copied to live controls.');
+  const after = getVars();
+  const changed = adoptedKeys.filter(key => Math.abs(after[key] - before[key]) > 1e-9);
+  if (!changed.length) {
+    showToast(`No control changes at t=${fmt(row.time,4)}. Try a later time or coupled mode.`);
+    return;
+  }
+  const modeLabel = appState.projectionMode === 'coupled' ? 'coupled' : 'debt-only';
+  showToast(`Adopted ${changed.join(', ')} from simulated state at t=${fmt(row.time,4)} (${modeLabel}, freeze ${appState.freezeControls ? 'ON' : 'OFF'}).`);
   update();
 }
 
@@ -1634,10 +1737,9 @@ function initChartDrag() {
 
 function applyPreset(name) {
   const p = presets[name];
-  document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
-  const activeBtn = document.getElementById('preset-' + name);
-  if (activeBtn) activeBtn.classList.add('active');
   setVars(p);
+  appState.activePreset = name;
+  showToast(`Applied preset: ${formatPresetLabel(name)} (${uiStateContextLabel()}).`);
   update();
 }
 
@@ -1656,6 +1758,7 @@ function toQueryState() {
   q.speed = appState.simSpeed;
   q.sweep = activeSweep;
   q.cfrMode = cfrMode;
+  q.collapsed = getCollapsedSectionState();
   q.series = [
     appState.showSeries.pInst ? 'pinst' : '',
     appState.showSeries.pCum ? 'pcum' : '',
@@ -1710,6 +1813,8 @@ function hydrateFromUrl() {
   if (SWEEP_CONFIG[sweep]) activeSweep = sweep;
   const modeCfr = sp.get('cfrMode');
   if (['current', 'low', 'high'].includes(modeCfr)) cfrMode = modeCfr;
+  const collapsed = sp.get('collapsed');
+  if (collapsed && /^[01]+$/.test(collapsed)) pendingCollapsedState = collapsed;
   const series = (sp.get('series') || '').split(',').filter(Boolean);
   if (series.length) {
     appState.showSeries.pInst = series.includes('pinst');

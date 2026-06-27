@@ -18,12 +18,6 @@
     The Grand Unified Model of DevOps/SRE Dynamics
     <span class="sub">A Technical Account of Metrics, Entropy, and Organizational Volatility</span>
   </h1>
-  <div class="header-meta">
-    Scott VanRavenswaay &nbsp;·&nbsp;
-    <a href="mailto:scottvr@paperclipmaximizer.ai">scottvr@paperclipmaximizer.ai</a>
-    &nbsp;·&nbsp;
-    Presented to the DORA Community, July 2026
-  </div>
 </header>
 
 <div class="layout">
@@ -31,9 +25,49 @@
   <!-- LEFT CONTROLS-->  
  <div class="controls-panel">
 
-      <!-- Presets -->
+      <!-- Session Controls -->
     <div class="panel-section collapsible" data-collapsible-init="1">
-      <button type="button" class="section-toggle" aria-expanded="true"><span>Organizational Archetypes</span><span class="section-chevron">▾</span></button><div class="section-content">
+      <button type="button" class="section-toggle" aria-expanded="true"><span>Session Controls</span><span class="section-chevron">▾</span></button><div class="section-content">
+      <div class="control-inline">
+        <label for="sim-freeze-controls">
+          <input type="checkbox" id="sim-freeze-controls" checked="" onchange="onFreezeControlsToggle()">
+          Freeze controls during simulation
+        </label>
+      </div>
+      <div class="control-inline">
+        <label for="toggle-dora-lens">
+          <input type="checkbox" id="toggle-dora-lens" onchange="onDoraLensToggle()">
+          DORA Lens (highlight observed metrics)
+        </label>
+      </div>
+      <div class="control-inline">
+        <label for="toggle-posture-mode">
+          <input type="checkbox" id="toggle-posture-mode" onchange="onPostureModeToggle()">
+          Institutional Momentum Mode (off = Strict Scientific Posture)
+        </label>
+      </div>
+      <div class="control-inline">
+        <label for="df-dynamics-mode">DF dynamics mode</label>
+        <select id="df-dynamics-mode" onchange="setDFDynamicsMode(this.value)">
+          <option value="conservative">Conservative (OG GUM)</option>
+          <option value="endogenous">Endogenous (Exploratory)</option>
+        </select>
+      </div>
+      <div class="control-inline">
+        <label for="toggle-quiet-toasts">
+          <input type="checkbox" id="toggle-quiet-toasts" onchange="onToastModeToggle()">
+          Quiet toasts (small, bottom-right, short)
+        </label>
+      </div>
+      <div class="control-actions">
+        <button type="button" onclick="pinBaseline()">Pin Baseline</button>
+        <button type="button" onclick="copyPermalink()">Copy Permalink</button>
+      </div>
+    </div></div>
+
+      <!-- Presets -->
+    <div class="panel-section collapsible collapsed" data-collapsible-init="1">
+      <button type="button" class="section-toggle" aria-expanded="false"><span>Organizational Archetypes</span><span class="section-chevron">▾</span></button><div class="section-content">
       <div class="presets">
         <button type="button" class="preset-btn" id="preset-elite" onclick="applyPreset('elite')">
           <span class="preset-name">Elite Performer</span>
@@ -59,24 +93,6 @@
           <span class="preset-name">Max Entropy</span>
           The literature review
         </button>
-      </div>
-      <div class="control-inline">
-        <label for="sim-freeze-controls">
-          <input type="checkbox" id="sim-freeze-controls" checked="" onchange="onFreezeControlsToggle()">
-          Freeze controls during simulation
-        </label>
-      </div>
-      <div class="control-inline">
-        <label for="toggle-dora-lens">
-          <input type="checkbox" id="toggle-dora-lens" onchange="onDoraLensToggle()">
-          DORA Lens (highlight observed metrics)
-        </label>
-      </div>
-      <div class="control-inline">
-        <label for="toggle-posture-mode">
-          <input type="checkbox" id="toggle-posture-mode" onchange="onPostureModeToggle()">
-          Institutional Momentum Mode (off = Strict Scientific Posture)
-        </label>
       </div>
     </div></div>
 
@@ -384,12 +400,12 @@
           <div class="time-controls">
             <div class="time-row">
               <label for="sim-horizon">Time horizon</label>
-              <input type="range" id="sim-horizon" min="0" max="36" step="1" value="24" oninput="updateSimHorizon()">
+              <input type="range" id="sim-horizon" min="0" max="36" step="1" value="24" oninput="updateSimHorizon()" title="Simulation horizon in model periods." aria-description="Simulation horizon in model periods.">
               <span class="time-val" id="sim-horizon-val">24 periods</span>
             </div>
             <div class="time-row">
               <label for="sim-time">Time scrubber</label>
-              <input type="range" id="sim-time" min="0" max="24" step="0.25" value="0" oninput="updateSimTimeFromSlider()">
+              <input type="range" id="sim-time" min="0" max="24" step="0.25" value="0" oninput="updateSimTimeFromSlider()" title="Scrub projected state over simulated time." aria-description="Scrub projected state over simulated time.">
               <span class="time-val" id="sim-time-val">t = 0.000</span>
             </div>
             <div class="time-actions">
@@ -417,6 +433,7 @@
               <label><input type="checkbox" id="toggle-urgency-boost" onchange="onUrgencyBoostToggle()"> Enable urgency activity boost</label>
               <button type="button" onclick="adoptSimulatedState()">Adopt simulated state</button>
             </div>
+            <div class="sim-assumption-banner" id="df-dynamics-banner">DF dynamics mode: Conservative (OG GUM). DF is treated as an observed policy input; latent terms do not rewrite DF.</div>
             <div class="integration-step" id="integration-step">Euler Integration Step (dt=0.25)</div>
           </div>
           <canvas id="sim-canvas" width="0" height="0"></canvas>
@@ -424,16 +441,14 @@
             <div><span class="ticker-label">P_inst</span> <span id="ticker-pinst">29.44</span></div>
             <div><span class="ticker-label">P_real(t)</span> <span id="ticker-preal">0.000</span></div>
             <div><span class="ticker-label">TDR(t)</span> <span id="ticker-tdr">0.1000</span></div>
+            <div><span class="ticker-label">DF_policy</span> <span id="ticker-df-policy">4.000</span></div>
+            <div><span class="ticker-label">DF_eff(t)</span> <span id="ticker-df-eff">4.000</span></div>
           </div>
           <div class="sim-readout" id="sim-readout">At t = 0.000 (Δt=0.25): projected TDR = 0.1000, instantaneous output = 29.44, cumulative P_real(t) = 0.000.</div>
         </div>
       </div>
     </div>
 
-    <div class="tool-row">
-      <button type="button" onclick="pinBaseline()">Pin Baseline</button>
-      <button type="button" onclick="copyPermalink()">Copy Permalink</button>
-    </div>
     <div class="state-chip" id="state-chip">View: Parameter sweep | Projection: debt-only | Freeze: ON | Preset: Custom | t=0.000 | Baseline: none</div>
 
     <div class="diag-grid">
@@ -461,11 +476,59 @@
 </div><!-- /layout -->
 
 <footer>
-  <span>VanRavenswaay, S. (2026). <em>The Grand Unified Model of DevOps/SRE Dynamics.</em></span>
-  <span>Model is descriptive, not predictive. Attenuation terms are more elegant than the phenomena they represent.</span>
+  <div class="footer-meta">
+    Scott VanRavenswaay &nbsp;·&nbsp;
+    <a href="mailto:scottvr@paperclipmaximizer.ai">scottvr@paperclipmaximizer.ai</a>
+    &nbsp;·&nbsp;
+    Presented to the DORA Community, July 2026
+  </div>
+  <div class="paper-links">
+    <a href="https://github.com/scottvr/GUM_of_Devops/" target="_blank" rel="noopener noreferrer">Paper Repo</a>
+    <a href="https://sigbovik.org/2026/proceedings.pdf" target="_blank" rel="noopener noreferrer">SIGBOVIK 2026 Proceedings PDF</a>
+    <button type="button" onclick="openKeySectionsModal()">Read Key Sections (4.1, 5.1-5.3, 6, 6.1, 7)</button>
+  </div>
 </footer>
 
 <div class="toast-stack" id="toast-stack" aria-live="polite" aria-atomic="true"></div>
+
+<div class="paper-modal-overlay" id="paper-modal-overlay" onclick="closeKeySectionsModal(event)" hidden>
+  <div class="paper-modal" role="dialog" aria-modal="true" aria-labelledby="paper-modal-title" onclick="event.stopPropagation()">
+    <div class="paper-modal-head">
+      <h2 id="paper-modal-title">GUM Reader Excerpts</h2>
+      <button type="button" class="paper-modal-close" onclick="closeKeySectionsModal()">Close</button>
+    </div>
+    <div class="paper-modal-body" id="paper-modal-body">
+      <h3>4.1 Technical Debt as a Compounding Drag Term</h3>
+      <p>Technical debt ratio \(TDR\) is modeled as a compounding drag on future delivery capacity, not just a one-time penalty. Remediation \(R\) is treated as a short-term throughput cost with longer-horizon stabilizing effect.</p>
+
+      <h3>5.1 Canonical Delivery Variables</h3>
+      <p>Observed delivery metrics remain explicit: \(DF\), \(LT\), \(CFR\), and \(MTTR\). These are treated as operational observables in OG posture.</p>
+
+      <h3>5.2 Entropy and Recovery Terms</h3>
+      <p>\(TDR\) captures accumulated organizational/technical drag; \(R\) represents deliberate repayment effort that competes with short-term visible output.</p>
+
+      <h3>5.3 Organizational Perturbation Terms</h3>
+      <p>Latent terms (\(M\), \(U\), \(C_m\), \(E\)) are included to model socio-organizational effects that are difficult to measure cleanly but materially influence system behavior.</p>
+
+      <h3>6 Conceptual Grand Unified Law</h3>
+      <p>$$
+      P_{inst}(t)=\frac{1}{Z}
+      \left[
+      \frac{V(t)\,DF(t)\,M(t)\,\Omega(t)\,(1-R(t))}
+      {LT(t)+MTTR(t)+\epsilon}
+      \right]
+      (1-CFR(t))^{U(t)^2}
+      e^{-\lambda TDR(t)}
+      $$</p>
+
+      <h3>6.1 Limiting Cases</h3>
+      <p>As \(TDR\to 0\), \(C_m\to 0\), and \(E\to 0\), behavior tends toward comparatively stable high-trust dynamics where DORA variables dominate. With insufficient remediation over time, debt drag grows and realized output decays.</p>
+
+      <h3>7 Informal Laws of DevOps Dynamics</h3>
+      <p>The “laws” summarize practical behavior: visible activity can diverge from realized output, latent organizational terms can dominate outcomes, and unmanaged debt accumulation can overwhelm nominal throughput.</p>
+    </div>
+  </div>
+</div>
 
 <script>
 const EPS = 0.01;
@@ -556,8 +619,10 @@ const sliderPulseTimers = {};
 const appState = {
   vizMode: 'sweep',
   projectionMode: 'debt',
+  dfDynamicsMode: 'conservative',
   freezeControls: true,
   activePreset: null,
+  quietToasts: false,
   doraLens: false,
   postureMode: 'strict',
   urgencyBoost: false,
@@ -576,6 +641,9 @@ const appState = {
   },
   floorToastShown: false,
   dfSaturationToastAt: 0,
+  lastYAxisMax: null,
+  yAxisPulseUntil: 0,
+  yAxisScaleToastAt: 0,
 };
 
 const POSTURE_COPY = {
@@ -749,6 +817,13 @@ function initCollapsibleSections() {
       section.appendChild(content);
     }
 
+    let hint = toggle.querySelector('.section-toggle-hint');
+    if (!hint) {
+      hint = document.createElement('span');
+      hint.className = 'section-toggle-hint';
+      toggle.appendChild(hint);
+    }
+
     section.classList.add('collapsible');
     const hasExplicitState = section.classList.contains('collapsed') || toggle.hasAttribute('aria-expanded');
     if (!hasExplicitState) {
@@ -758,6 +833,7 @@ function initCollapsibleSections() {
     const syncExpanded = () => {
       const isCollapsed = section.classList.contains('collapsed');
       toggle.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+      hint.textContent = isCollapsed ? 'click to expand' : 'click to collapse';
     };
     syncExpanded();
 
@@ -791,22 +867,52 @@ function applyCollapsedSectionState(bits) {
     const collapsed = bits[idx] === '1';
     section.classList.toggle('collapsed', collapsed);
     const toggle = section.querySelector(':scope > .section-toggle');
-    if (toggle) toggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+      const hint = toggle.querySelector('.section-toggle-hint');
+      if (hint) hint.textContent = collapsed ? 'click to expand' : 'click to collapse';
+    }
   });
 }
 
 function renderKaTeXEquations() {
   if (typeof renderMathInElement !== 'function') return;
-  const target = document.getElementById('equation-katex-area');
-  if (!target) return;
-  renderMathInElement(target, {
-    delimiters: [
-      { left: '$$', right: '$$', display: true },
-      { left: '\\(', right: '\\)', display: false }
-    ],
-    throwOnError: false
-  });
+  const renderIn = (target) => {
+    if (!target) return;
+    renderMathInElement(target, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '\\(', right: '\\)', display: false }
+      ],
+      throwOnError: false
+    });
+  };
+  renderIn(document.getElementById('equation-katex-area'));
+  renderIn(document.getElementById('paper-modal-body'));
 }
+
+function openKeySectionsModal() {
+  const overlay = document.getElementById('paper-modal-overlay');
+  if (!overlay) return;
+  overlay.hidden = false;
+  renderKaTeXEquations();
+  document.body.style.overflow = 'hidden';
+}
+
+function closeKeySectionsModal(event) {
+  if (event && event.target && event.target.id !== 'paper-modal-overlay') return;
+  const overlay = document.getElementById('paper-modal-overlay');
+  if (!overlay) return;
+  overlay.hidden = true;
+  document.body.style.overflow = '';
+}
+
+window.addEventListener('keydown', (event) => {
+  if (event.key !== 'Escape') return;
+  const overlay = document.getElementById('paper-modal-overlay');
+  if (!overlay || overlay.hidden) return;
+  closeKeySectionsModal();
+});
 
 function onDoraLensToggle() {
   appState.doraLens = document.getElementById('toggle-dora-lens').checked;
@@ -962,10 +1068,28 @@ function renderStateChip() {
   if (!el) return;
   const view = appState.vizMode === 'time' ? 'Time simulation' : 'Parameter sweep';
   const projection = appState.projectionMode === 'coupled' ? 'coupled' : 'debt-only';
+  const dfMode = appState.dfDynamicsMode === 'endogenous' ? 'endogenous' : 'conservative';
   const freeze = appState.freezeControls ? 'ON' : 'OFF';
   const preset = formatPresetLabel(appState.activePreset);
   const baseline = baselineSnapshot ? `pinned@t=${fmt(baselineSnapshot.simTime,4)}` : 'none';
-  el.textContent = `View: ${view} | Projection: ${projection} | Freeze: ${freeze} | Preset: ${preset} | t=${fmt(appState.simTime,4)} | Baseline: ${baseline}`;
+  const toastMode = appState.quietToasts ? 'quiet' : 'focus';
+  el.textContent = `View: ${view} | Projection: ${projection} | DF dynamics: ${dfMode} | Freeze: ${freeze} | Preset: ${preset} | t=${fmt(appState.simTime,4)} | Baseline: ${baseline} | Toasts: ${toastMode}`;
+}
+
+function applyToastMode() {
+  const stack = document.getElementById('toast-stack');
+  if (!stack) return;
+  stack.classList.toggle('quiet', appState.quietToasts);
+}
+
+function renderDFDynamicsBanner() {
+  const el = document.getElementById('df-dynamics-banner');
+  if (!el) return;
+  if (appState.dfDynamicsMode === 'endogenous') {
+    el.textContent = 'DF dynamics mode: Endogenous (Exploratory). DF_eff(t) is attenuated by latent terms and can diverge from DF_policy.';
+  } else {
+    el.textContent = 'DF dynamics mode: Conservative (OG GUM). DF is treated as an observed policy input; latent terms do not rewrite DF.';
+  }
 }
 
 function urgencyActivityBoost(U) {
@@ -997,7 +1121,8 @@ function computeTerms(v, opts = { urgencyBoost: false }) {
   const debtAtt = Math.exp(-v.lam * v.TDR);
   const attenuationDriver = clamp(omega * debtAtt * Math.max(0.2, v.M / 1.2), 0.05, 1.25);
   const U_t = v.U * (1 + 0.6 * (1 - attenuationDriver));
-  const DF_t = v.DF * attenuationDriver;
+  const DF_t = appState.dfDynamicsMode === 'endogenous' ? v.DF * attenuationDriver : v.DF;
+  const dfScale = v.DF <= EPS ? 1 : DF_t / v.DF;
   const urgencyExp = Math.pow(U_t, 2);
   const cfrTerm = Math.pow(1 - v.CFR, urgencyExp);
   const activity = opts.urgencyBoost ? urgencyActivityBoost(U_t) : 1;
@@ -1005,7 +1130,7 @@ function computeTerms(v, opts = { urgencyBoost: false }) {
   const throughput = v.V * DF_t / (v.LT + v.MTTR + EPS);
   const growthDrivers = (K1 * urgencyExp + K2 * DF_t + K3 * v.Cm) * attenuationDriver;
   const dTDR = growthDrivers - K4 * v.R;
-  return { omega, urgencyExp, cfrTerm, debtAtt, throughput, throughputNominal, dTDR, activity, attenuationDriver, U_t, DF_t };
+  return { omega, urgencyExp, cfrTerm, debtAtt, throughput, throughputNominal, dTDR, activity, attenuationDriver, dfScale, U_t, DF_t };
 }
 
 function stepDebtOnlyState(v, dt, opts = { urgencyBoost: false }) {
@@ -1040,6 +1165,8 @@ function simulateTrajectory(v0, periods = 24, dt = SIM_DT, options = {}) {
       P_inst: pInst,
       P_cum: cumulative,
       TDR: state.TDR,
+      DF_policy: state.DF,
+      DF_eff: terms.DF_t,
       dTDR: terms.dTDR,
       omega: terms.omega,
       debt_att: terms.debtAtt,
@@ -1211,8 +1338,10 @@ function renderTimeProjectionFrame(options = {}) {
   renderMainOutput(projected);
 }
 
-function update() {
+function update(options = {}) {
+  const { allowControlSync = true } = options;
   let policyVars = getVars();
+  console.log('vars:', policyVars);
   policyVars = enforceDebtSaturation(policyVars);
 
   appState.showSeries.pInst = document.getElementById('toggle-pinst').checked;
@@ -1231,7 +1360,7 @@ function update() {
 
   renderSliderLabels(getVars());
   if (appState.vizMode === 'time') {
-    renderTimeProjectionFrame({ allowControlSync: false });
+    renderTimeProjectionFrame({ allowControlSync });
   } else {
     renderMainOutput(getVars());
   }
@@ -1242,6 +1371,7 @@ function update() {
   updateBaselineCompare(policyVars);
   updateSensitivity(policyVars);
   renderStateChip();
+  renderDFDynamicsBanner();
   syncPermalink();
 }
 
@@ -1251,7 +1381,7 @@ function updateWaterfall(v, terms, pInst) {
     `Nominal throughput ${fmt(nominal,4)}`,
     `x Morale ${fmt(v.M,4)}`,
     `x Omega ${fmt(terms.omega,4)}`,
-    `x Effective DF(t)/DF ${fmt(terms.attenuationDriver,4)}`,
+    `x Effective DF(t)/DF ${fmt(terms.dfScale,4)}`,
     `x Remediation capacity ${fmt(1-v.R,4)}`,
     `x CFR/U term ${fmt(terms.cfrTerm,4)}`,
     `x Debt drag ${fmt(terms.debtAtt,4)}`,
@@ -1290,9 +1420,10 @@ function updateBaselineCompare(v) {
   };
   const baselineMode = baselineSnapshot.vizMode === 'time' ? 'Time simulation' : 'Parameter sweep';
   const baselineProjection = baselineSnapshot.projectionMode === 'coupled' ? 'coupled' : 'debt-only';
+  const baselineDfMode = baselineSnapshot.dfDynamicsMode === 'endogenous' ? 'endogenous' : 'conservative';
   const baselineFreeze = baselineSnapshot.freezeControls ? 'ON' : 'OFF';
   el.innerHTML =
-    `Pinned baseline: ${baselineMode}, ${baselineProjection}, freeze ${baselineFreeze}, t=${fmt(baselineSnapshot.simTime,4)}, ${formatPresetLabel(baselineSnapshot.preset)}<br>` +
+    `Pinned baseline: ${baselineMode}, ${baselineProjection}, DF ${baselineDfMode}, freeze ${baselineFreeze}, t=${fmt(baselineSnapshot.simTime,4)}, ${formatPresetLabel(baselineSnapshot.preset)}<br>` +
     `P_inst: ${fmt(nowP, 4)} vs ${fmt(baseP, 4)} (${pct(nowP, baseP)})<br>` +
     `Omega: ${fmt(nowTerms.omega, 4)} vs ${fmt(baseTerms.omega, 4)} (${pct(nowTerms.omega, baseTerms.omega)})<br>` +
     `Debt drag: ${fmt(nowTerms.debtAtt, 4)} vs ${fmt(baseTerms.debtAtt, 4)} (${pct(nowTerms.debtAtt, baseTerms.debtAtt)})<br>` +
@@ -1328,6 +1459,7 @@ function pinBaseline() {
     urgencyBoost: appState.urgencyBoost,
     vizMode: appState.vizMode,
     projectionMode: appState.projectionMode,
+    dfDynamicsMode: appState.dfDynamicsMode,
     freezeControls: appState.freezeControls,
     simTime: appState.simTime,
     preset: getPresetNameForVars(varsNow),
@@ -1345,10 +1477,11 @@ function showToast(msg) {
   node.textContent = msg;
   stack.appendChild(node);
   setTimeout(() => node.classList.add('visible'), 10);
+  const ttl = appState.quietToasts ? 1400 : 2200;
   setTimeout(() => {
     node.classList.remove('visible');
     setTimeout(() => node.remove(), 250);
-  }, 2200);
+  }, ttl);
 }
 
 function setVizMode(mode) {
@@ -1357,9 +1490,16 @@ function setVizMode(mode) {
   document.getElementById('viz-tab-time').classList.toggle('active', mode === 'time');
   document.getElementById('panel-sweep').classList.toggle('active', mode === 'sweep');
   document.getElementById('panel-time').classList.toggle('active', mode === 'time');
-  if (mode === 'time') renderTimeProjectionFrame({ allowControlSync: false });
-  else renderMainOutput(getVars());
+  if (mode === 'time') {
+    renderTimeProjectionFrame({ allowControlSync: false });
+    drawSimChart();
+    updateSimReadout();
+  } else {
+    drawChart(getVars());
+    renderMainOutput(getVars());
+  }
   renderStateChip();
+  renderDFDynamicsBanner();
   syncPermalink();
 }
 
@@ -1369,12 +1509,22 @@ function setProjectionMode(mode) {
   update();
 }
 
+function setDFDynamicsMode(mode) {
+  if (mode !== 'conservative' && mode !== 'endogenous') return;
+  appState.dfDynamicsMode = mode;
+  renderDFDynamicsBanner();
+  showToast(mode === 'endogenous'
+    ? 'DF dynamics set to Endogenous (Exploratory).'
+    : 'DF dynamics set to Conservative (OG GUM).');
+  update({ allowControlSync: false });
+}
+
 function onUrgencyBoostToggle() {
   appState.urgencyBoost = document.getElementById('toggle-urgency-boost').checked;
   showToast(appState.urgencyBoost
     ? `Urgency activity boost enabled (${uiStateContextLabel()}).`
     : `Urgency activity boost disabled (${uiStateContextLabel()}).`);
-  update();
+  update({ allowControlSync: false });
 }
 
 function onFreezeControlsToggle() {
@@ -1385,6 +1535,13 @@ function onFreezeControlsToggle() {
     showToast(`Freeze OFF: time simulation can write projected values into controls (${uiStateContextLabel()}).`);
   }
   update();
+}
+
+function onToastModeToggle() {
+  appState.quietToasts = document.getElementById('toggle-quiet-toasts').checked;
+  applyToastMode();
+  showToast(appState.quietToasts ? 'Quiet toast mode enabled.' : 'Focus toast mode enabled.');
+  update({ allowControlSync: false });
 }
 
 function updateSimHorizon() {
@@ -1415,8 +1572,10 @@ function updateSimReadout() {
   setText('ticker-pinst', fmt(row.P_inst, 4));
   setText('ticker-preal', fmt(row.P_cum, 4));
   setText('ticker-tdr', fmt(row.TDR, 4));
+  setText('ticker-df-policy', fmt(row.DF_policy, 4));
+  setText('ticker-df-eff', fmt(row.DF_eff, 4));
   setText('sim-readout',
-    `At t = ${fmt(row.time,4)} (Δt=${SIM_DT}): projected TDR = ${fmt(row.TDR,4)}, instantaneous output = ${fmt(row.P_inst,4)}, cumulative P_real(t) = ${fmt(row.P_cum,4)}.`);
+    `At t = ${fmt(row.time,4)} (Δt=${SIM_DT}): projected TDR = ${fmt(row.TDR,4)}, DF_policy = ${fmt(row.DF_policy,4)}, DF_eff = ${fmt(row.DF_eff,4)}, instantaneous output = ${fmt(row.P_inst,4)}, cumulative P_real(t) = ${fmt(row.P_cum,4)}.`);
 }
 
 function setSimSpeed(v) {
@@ -1591,8 +1750,31 @@ function drawChart(v) {
     compCurves.push({ points: compPoints, color: compareColor, label: 'U=' + compU });
   }
 
+  const niceAxisMax = (raw) => {
+    const safe = Math.max(raw, 1e-6);
+    const exp = Math.floor(Math.log10(safe));
+    const base = Math.pow(10, exp);
+    const f = safe / base;
+    let niceF = 10;
+    if (f <= 1) niceF = 1;
+    else if (f <= 2) niceF = 2;
+    else if (f <= 5) niceF = 5;
+    return niceF * base;
+  };
+
   const allPs = [...points.map(p => p.p), ...compCurves.flatMap(c => c.points.map(p => p.p))];
-  const pMax = Math.max(...allPs) * 1.15 || 1;
+  const rawMax = (Math.max(...allPs) * 1.15) || 1;
+  const pMax = niceAxisMax(rawMax);
+  const nowMs = Date.now();
+  const yScaleChanged = appState.lastYAxisMax == null ? false : pMax !== appState.lastYAxisMax;
+  if (yScaleChanged) {
+    appState.yAxisPulseUntil = nowMs + 900;
+    if (appState.quietToasts && (!appState.yAxisScaleToastAt || nowMs - appState.yAxisScaleToastAt > 2600)) {
+      showToast(`Y-axis scale updated: Y max=${fmt(pMax,3)}`);
+      appState.yAxisScaleToastAt = nowMs;
+    }
+  }
+  appState.lastYAxisMax = pMax;
   ctx.clearRect(0, 0, W, H);
 
   ctx.strokeStyle = '#d5d8df';
@@ -1678,16 +1860,59 @@ function drawChart(v) {
 
   ctx.fillStyle = '#20293a';
   ctx.font = '10px IBM Plex Mono, monospace';
-  const onRight = cx < W * 0.75;
-  ctx.textAlign = onRight ? 'left' : 'right';
-  ctx.fillText(cfg.label(v), onRight ? cx + HANDLE_R + 4 : cx - HANDLE_R - 4, cy - 5);
-  ctx.fillStyle = '#596170';
+  const xText = cfg.label(v);
+  const yText = `P=${fmt(curP)}`;
+  const labelOffset = HANDLE_R + 4;
+  const xTextW = ctx.measureText(xText).width;
+  const yTextW = ctx.measureText(yText).width;
+  const rightWouldClip = cx + labelOffset + Math.max(xTextW, yTextW) > W - 4;
+  const leftWouldClip = cx - labelOffset - Math.max(xTextW, yTextW) < 4;
+
+  let xSide = cx < W * 0.75 ? 'right' : 'left';
+  let ySide = 'left';
+  if (cx < 74) ySide = 'right'; // Left edge: keep y label in bottom-right quadrant.
+  if (rightWouldClip) {
+    xSide = 'left';
+    ySide = 'left';
+  } else if (leftWouldClip) {
+    xSide = 'right';
+    ySide = 'right';
+  }
+
+  let xLabelY = Math.max(12, cy - HANDLE_R - 8);
+  if (cy > H - 26) xLabelY = Math.max(12, cy - HANDLE_R - 20);
+  const xLabelX = xSide === 'right' ? cx + labelOffset : cx - labelOffset;
+  ctx.textAlign = xSide === 'right' ? 'left' : 'right';
+  ctx.fillText(xText, xLabelX, xLabelY);
+
+  let yLabelY = Math.min(H - 12, cy + HANDLE_R + 11);
+  const yLabelX = ySide === 'right' ? cx + labelOffset : cx - labelOffset;
+  if (cy > H - 18) yLabelY = H - 14;
+  ctx.textAlign = ySide === 'right' ? 'left' : 'right';
+  ctx.fillText(yText, yLabelX, yLabelY);
+
+  const xAxisColor = cssVar('--viz-handle', '#e8a838');
+  const yAxisColor = cssVar('--viz-primary', '#49a0ec');
+  ctx.fillStyle = xAxisColor;
   ctx.textAlign = 'left';
-  ctx.fillText(activeSweep + '=' + fmt(min), 2, H - 2);
+  ctx.fillText(activeSweep + '=' + fmt(min), 2, H - 6);
   ctx.textAlign = 'right';
-  ctx.fillText(activeSweep + '=' + fmt(max), W - 2, H - 2);
+  ctx.fillText(activeSweep + '=' + fmt(max), W - 2, H - 6);
+  const yMaxText = `Y max=${fmt(pMax, 3)}`;
+  const yMaxX = 2;
+  const yMaxY = 12;
+  if (nowMs < appState.yAxisPulseUntil) {
+    const pulsePhase = (nowMs % 420) / 420;
+    const glow = 0.16 + 0.18 * Math.abs(Math.sin(pulsePhase * Math.PI * 2));
+    const w = ctx.measureText(yMaxText).width;
+    ctx.save();
+    ctx.fillStyle = `rgba(73,160,236,${glow.toFixed(3)})`;
+    ctx.fillRect(yMaxX - 2, yMaxY - 9, w + 6, 11);
+    ctx.restore();
+  }
+  ctx.fillStyle = yAxisColor;
   ctx.textAlign = 'left';
-  ctx.fillText(fmt(pMax, 3), 2, 12);
+  ctx.fillText(yMaxText, yMaxX, yMaxY);
 }
 
 function canvasXtoSweepVal(canvas, clientX) {
@@ -1749,7 +1974,9 @@ function toQueryState() {
   Object.keys(SLIDER_META).forEach(k => q[k] = v[k]);
   q.tab = appState.vizMode;
   q.projectionMode = appState.projectionMode;
+  q.dfDynamics = appState.dfDynamicsMode;
   q.freeze = appState.freezeControls ? 1 : 0;
+  q.quietToasts = appState.quietToasts ? 1 : 0;
   q.doraLens = appState.doraLens ? 1 : 0;
   q.posture = appState.postureMode;
   q.urgencyBoost = appState.urgencyBoost ? 1 : 0;
@@ -1791,9 +2018,15 @@ function hydrateFromUrl() {
   if (tab === 'time' || tab === 'sweep') appState.vizMode = tab;
   const mode = sp.get('projectionMode');
   if (mode === 'debt' || mode === 'coupled') appState.projectionMode = mode;
+  const dfDynamics = sp.get('dfDynamics');
+  if (dfDynamics === 'conservative' || dfDynamics === 'endogenous') appState.dfDynamicsMode = dfDynamics;
   const freeze = sp.get('freeze');
   if (freeze === '0' || freeze === '1' || freeze === 'true' || freeze === 'false') {
     appState.freezeControls = freeze === '1' || freeze === 'true';
+  }
+  const quiet = sp.get('quietToasts');
+  if (quiet === '0' || quiet === '1' || quiet === 'true' || quiet === 'false') {
+    appState.quietToasts = quiet === '1' || quiet === 'true';
   }
   const lens = sp.get('doraLens');
   if (lens === '0' || lens === '1' || lens === 'true' || lens === 'false') {
@@ -1844,7 +2077,9 @@ function applyInitialUiState() {
   document.getElementById('sim-time').value = appState.simTime;
   document.getElementById('sim-speed').value = String(appState.simSpeed);
   document.getElementById('sim-mode').value = appState.projectionMode;
+  document.getElementById('df-dynamics-mode').value = appState.dfDynamicsMode;
   document.getElementById('sim-freeze-controls').checked = appState.freezeControls;
+  document.getElementById('toggle-quiet-toasts').checked = appState.quietToasts;
   document.getElementById('toggle-dora-lens').checked = appState.doraLens;
   document.getElementById('toggle-posture-mode').checked = appState.postureMode === 'momentum';
   document.getElementById('toggle-urgency-boost').checked = appState.urgencyBoost;
@@ -1856,6 +2091,8 @@ function applyInitialUiState() {
   initControlRowSemantics();
   applySliderSemanticHints();
   applyDoraLens();
+  applyToastMode();
+  renderDFDynamicsBanner();
   setVizMode(appState.vizMode);
   setSweep(activeSweep);
   setCFRMode(cfrMode);

@@ -395,7 +395,7 @@
 <div class="toast-stack" id="toast-stack" aria-live="polite" aria-atomic="true"></div>
 
 <script>
-// ── MODEL ─────────────────────────────────────────────────────────
+//  GUM
 
 const EPS   = 0.01;   // regularization
 const Z     = 1.0;    // normalization (rhetorical)
@@ -458,7 +458,7 @@ function computeTerms(v) {
   return { omega, urgency_exp, cfr_term, debt_att, throughput, dTDR };
 }
 
-// ── DISPLAY ───────────────────────────────────────────────────────
+// DISPLAY
 
 function fmt(x, digits=3) {
   if (x >= 100) return x.toFixed(1);
@@ -682,7 +682,7 @@ function update() {
   syncPermalink();
 }
 
-// ── DIAGNOSIS ─────────────────────────────────────────────────────
+// diags
 
 function buildDiagnosis(v, t, P) {
   const notes = [];
@@ -816,7 +816,7 @@ function setCFRMode(mode) {
   drawChart(getVars());
 }
 
-// ── CHART RENDER ──────────────────────────────────────────────────
+// RENDER CHART
 
 function drawChart(v) {
   const canvas = document.getElementById('sparkline');
@@ -950,7 +950,7 @@ function drawChart(v) {
   ctx.fillText(fmt(pMax, 3), 2, 12);
 }
 
-// ── CHART DRAG ────────────────────────────────────────────────────
+// chart drag
 
 function canvasXtoSweepVal(canvas, clientX) {
   const cfg = SWEEP_CONFIG[activeSweep];
@@ -997,7 +997,7 @@ function initChartDrag() {
   window.addEventListener('touchend', () => { chartDragging = false; });
 }
 
-// ── PRESETS ───────────────────────────────────────────────────────
+// pRESETS
 
 const presets = {
   elite: {
@@ -1041,7 +1041,7 @@ function applyPreset(name) {
   update();
 }
 
-// ── INIT ──────────────────────────────────────────────────────────
+//  INIT
 
 window.addEventListener('resize', () => {
   drawChart(getVars());

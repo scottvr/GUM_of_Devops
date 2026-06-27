@@ -27,7 +27,6 @@ body {
   min-height: 100vh;
 }
 
-/* ── HEADER ─────────────────────────────────────────────── */
 header {
   border-bottom: 1px solid var(--border);
   padding: 2rem 2rem 1.5rem;
@@ -74,7 +73,6 @@ h1 .sub {
 
 .header-meta a:hover { color: var(--accent); border-color: var(--accent); }
 
-/* ── LAYOUT ─────────────────────────────────────────────── */
 .layout {
   display: grid;
   grid-template-columns: 340px 1fr;
@@ -87,7 +85,6 @@ h1 .sub {
   .controls-panel { border-right: none; border-bottom: 1px solid var(--border); }
 }
 
-/* ── CONTROLS PANEL ─────────────────────────────────────── */
 .controls-panel {
   border-right: 1px solid var(--border);
   padding: 1.5rem;
@@ -182,7 +179,6 @@ input[type=range]::-moz-range-thumb {
   cursor: pointer;
 }
 
-/* ── PRESETS ─────────────────────────────────────────────── */
 .presets {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -215,7 +211,6 @@ input[type=range]::-moz-range-thumb {
   font-size: 10px;
 }
 
-/* ── OUTPUT PANEL ───────────────────────────────────────── */
 .output-panel {
   padding: 1.5rem;
   display: flex;
@@ -223,7 +218,6 @@ input[type=range]::-moz-range-thumb {
   gap: 1.5rem;
 }
 
-/* ── OUTPUT NUMBER ──────────────────────────────────────── */
 .output-primary {
   display: flex;
   align-items: flex-start;
@@ -260,7 +254,6 @@ input[type=range]::-moz-range-thumb {
   margin-top: 0.2rem;
 }
 
-/* ── HEALTH BARS ────────────────────────────────────────── */
 .health-bars {
   flex: 1 1 200px;
 }
@@ -305,7 +298,6 @@ input[type=range]::-moz-range-thumb {
   flex-shrink: 0;
 }
 
-/* ── EQUATION DISPLAY ───────────────────────────────────── */
 .equation-block {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -332,7 +324,6 @@ input[type=range]::-moz-range-thumb {
 .eq-line .val { color: var(--text-bright); font-weight: 500; }
 .eq-line .op  { color: var(--text-dim); }
 
-/* ── CHART ──────────────────────────────────────────────── */
 .chart-section {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -374,7 +365,6 @@ canvas#sparkline {
   flex-shrink: 0;
 }
 
-/* ── DIAGNOSIS ──────────────────────────────────────────── */
 .diagnosis {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -400,7 +390,6 @@ canvas#sparkline {
   margin-bottom: 0.5rem;
 }
 
-/* ── FOOTER ─────────────────────────────────────────────── */
 footer {
   border-top: 1px solid var(--border);
   padding: 1rem 2rem;
@@ -419,13 +408,11 @@ footer a {
 
 footer a:hover { color: var(--accent); }
 
-/* ── TOOLTIP ─────────────────────────────────────────────── */
 .tip {
   cursor: help;
   border-bottom: 1px dashed var(--text-dim);
 }
 
-/* ── TDR dynamics section ───────────────────────────────── */
 .tdr-dynamics {
   background: var(--surface);
   border: 1px solid var(--border);

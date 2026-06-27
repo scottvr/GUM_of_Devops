@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="./doragum.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
 <title>The Grand Unified Model of DevOps/SRE Dynamics</title>
 
 </head>
@@ -29,12 +28,12 @@
 
 <div class="layout">
 
-  <!-- LEFT CONTROLS -->
-  <div class="controls-panel">
+  <!-- LEFT CONTROLS-->  
+ <div class="controls-panel">
 
-    <!-- Presets -->
-    <div class="panel-section">
-      <div class="panel-section-label">Organizational Archetypes</div>
+      <!-- Presets -->
+    <div class="panel-section collapsible" data-collapsible-init="1">
+      <button type="button" class="section-toggle" aria-expanded="true"><span>Organizational Archetypes</span><span class="section-chevron">▾</span></button><div class="section-content">
       <div class="presets">
         <button type="button" class="preset-btn" id="preset-elite" onclick="applyPreset('elite')">
           <span class="preset-name">Elite Performer</span>
@@ -63,7 +62,7 @@
       </div>
       <div class="control-inline">
         <label for="sim-freeze-controls">
-          <input type="checkbox" id="sim-freeze-controls" checked onchange="onFreezeControlsToggle()">
+          <input type="checkbox" id="sim-freeze-controls" checked="" onchange="onFreezeControlsToggle()">
           Freeze controls during simulation
         </label>
       </div>
@@ -79,205 +78,205 @@
           Institutional Momentum Mode (off = Strict Scientific Posture)
         </label>
       </div>
-    </div>
+    </div></div>
 
     <!-- DORA Metrics -->
-    <div class="panel-section">
-      <div class="panel-section-label">DORA Delivery Variables</div>
+    <div class="panel-section collapsible collapsed" data-collapsible-init="1">
+      <button type="button" class="section-toggle" aria-expanded="false"><span>DORA Delivery Variables</span><span class="section-chevron">▾</span></button><div class="section-content">
 
-      <div class="control-row">
+      <div class="control-row" data-var="DF">
         <div class="control-header">
           <span class="control-label"><span class="sym">DF</span> — Deployment Frequency</span>
-          <span class="control-value" id="val-DF">4.0</span>
+          <span class="control-value" id="val-DF">4.00</span>
         </div>
         <div class="control-desc">Deployments per day. Elite: &gt;1/day. Low: &lt;1/month.</div>
         <label class="sr-only" for="sl-DF">Deployment Frequency</label>
-        <input type="range" id="sl-DF" aria-label="Deployment Frequency" min="0.01" max="20" step="0.01" value="4" oninput="update()">
+        <input type="range" id="sl-DF" aria-label="Deployment Frequency" min="0.01" max="20" step="0.01" value="4" oninput="update()" title="Higher deployment frequency is usually favorable." aria-description="Higher deployment frequency is usually favorable.">
       </div>
 
-      <div class="control-row">
+      <div class="control-row" data-var="LT">
         <div class="control-header">
           <span class="control-label"><span class="sym">LT</span> — Lead Time for Changes (hrs)</span>
-          <span class="control-value" id="val-LT">4.0</span>
+          <span class="control-value" id="val-LT">4.00 hr</span>
         </div>
         <div class="control-desc">Hours from commit to production. Elite: &lt;1hr. Low: &gt;1 month.</div>
         <label class="sr-only" for="sl-LT">Lead Time for Changes</label>
-        <input type="range" id="sl-LT" aria-label="Lead Time for Changes" min="0.5" max="720" step="0.5" value="4" oninput="update()">
+        <input type="range" id="sl-LT" aria-label="Lead Time for Changes" min="0.5" max="720" step="0.5" value="4" oninput="update()" title="Lower lead time is favorable." aria-description="Lower lead time is favorable.">
       </div>
 
-      <div class="control-row">
+      <div class="control-row" data-var="CFR">
         <div class="control-header">
           <span class="control-label"><span class="sym">CFR</span> — Change Failure Rate</span>
-          <span class="control-value" id="val-CFR">0.05</span>
+          <span class="control-value" id="val-CFR">0.0500</span>
         </div>
         <div class="control-desc">Fraction of changes causing incidents. Elite: 0–5%. Low: 46–60%.</div>
         <label class="sr-only" for="sl-CFR">Change Failure Rate</label>
-        <input type="range" id="sl-CFR" aria-label="Change Failure Rate" min="0" max="0.6" step="0.01" value="0.05" oninput="update()">
+        <input type="range" id="sl-CFR" aria-label="Change Failure Rate" min="0" max="0.6" step="0.01" value="0.05" oninput="update()" title="Lower change failure rate is favorable." aria-description="Lower change failure rate is favorable.">
       </div>
 
-      <div class="control-row">
+      <div class="control-row" data-var="MTTR">
         <div class="control-header">
           <span class="control-label"><span class="sym">MTTR</span> — Mean Time to Restore (hrs)</span>
-          <span class="control-value" id="val-MTTR">0.5</span>
+          <span class="control-value" id="val-MTTR">0.500 hr</span>
         </div>
         <div class="control-desc">Hours to recover from failure. Elite: &lt;1hr. Low: &gt;1 week.</div>
         <label class="sr-only" for="sl-MTTR">Mean Time to Restore</label>
-        <input type="range" id="sl-MTTR" aria-label="Mean Time to Restore" min="0.1" max="336" step="0.1" value="0.5" oninput="update()">
+        <input type="range" id="sl-MTTR" aria-label="Mean Time to Restore" min="0.1" max="336" step="0.1" value="0.5" oninput="update()" title="Lower restore time is favorable." aria-description="Lower restore time is favorable.">
       </div>
-    </div>
+    </div></div>
 
-    <!-- Organizational perturbation Terms -->
-    <div class="panel-section">
-      <div class="panel-section-label">Organizational Perturbation Terms</div>
+    <!-- Organizational Terms -->
+    <div class="panel-section collapsible collapsed" data-collapsible-init="1">
+      <button type="button" class="section-toggle" aria-expanded="false"><span>Organizational Perturbation Terms</span><span class="section-chevron">▾</span></button><div class="section-content">
 
-      <div class="control-row">
+      <div class="control-row" data-var="M">
         <div class="control-header">
           <span class="control-label"><span class="sym">M</span> — Developer Morale Multiplier</span>
-          <span class="control-value" id="val-M">1.0</span>
+          <span class="control-value" id="val-M">1.00</span>
         </div>
         <div class="control-desc">Ratio of energizing work to chronic toil. &lt;1 = degradation regime.</div>
         <label class="sr-only" for="sl-M">Developer Morale Multiplier</label>
-        <input type="range" id="sl-M" aria-label="Developer Morale Multiplier" min="0.1" max="2.0" step="0.05" value="1.0" oninput="update()">
+        <input type="range" id="sl-M" aria-label="Developer Morale Multiplier" min="0.1" max="2.0" step="0.05" value="1.0" oninput="update()" title="Higher morale multiplier is favorable." aria-description="Higher morale multiplier is favorable.">
       </div>
 
-      <div class="control-row">
+      <div class="control-row" data-var="U">
         <div class="control-header">
           <span class="control-label"><span class="sym">U</span> — Management Urgency</span>
-          <span class="control-value" id="val-U">1.0</span>
+          <span class="control-value" id="val-U">1.00</span>
         </div>
         <div class="control-desc">Externally imposed schedule pressure. Applied as exponent on (1−CFR)^U². Proceed with caution.</div>
         <label class="sr-only" for="sl-U">Management Urgency</label>
-        <input type="range" id="sl-U" aria-label="Management Urgency" min="0.1" max="5.0" step="0.05" value="1.0" oninput="update()">
+        <input type="range" id="sl-U" aria-label="Management Urgency" min="0.1" max="5.0" step="0.05" value="1.0" oninput="update()" title="Urgency is nonlinear: small increases can drive visible activity, sustained high urgency destabilizes." aria-description="Urgency is nonlinear: small increases can drive visible activity, sustained high urgency destabilizes.">
       </div>
 
-      <div class="control-row">
+      <div class="control-row" data-var="Cm">
         <div class="control-header">
           <span class="control-label"><span class="sym">C<sub>m</sub></span> — Competence Mismatch</span>
-          <span class="control-value" id="val-Cm">0.1</span>
+          <span class="control-value" id="val-Cm">0.100</span>
         </div>
         <div class="control-desc">Misalignment of responsibility, authority, and actual capability.</div>
         <label class="sr-only" for="sl-Cm">Competence Mismatch</label>
-        <input type="range" id="sl-Cm" aria-label="Competence Mismatch" min="0" max="1.0" step="0.01" value="0.1" oninput="update()">
+        <input type="range" id="sl-Cm" aria-label="Competence Mismatch" min="0" max="1.0" step="0.01" value="0.1" oninput="update()" title="Lower competence mismatch is favorable." aria-description="Lower competence mismatch is favorable.">
       </div>
 
-      <div class="control-row">
+      <div class="control-row" data-var="E">
         <div class="control-header">
           <span class="control-label"><span class="sym">E</span> — Executive Volatility</span>
-          <span class="control-value" id="val-E">0.1</span>
+          <span class="control-value" id="val-E">0.100</span>
         </div>
         <div class="control-desc">Strategic oscillation, reprioritization churn, initiative reversals.</div>
         <label class="sr-only" for="sl-E">Executive Volatility</label>
-        <input type="range" id="sl-E" aria-label="Executive Volatility" min="0" max="1.0" step="0.01" value="0.1" oninput="update()">
+        <input type="range" id="sl-E" aria-label="Executive Volatility" min="0" max="1.0" step="0.01" value="0.1" oninput="update()" title="Lower executive volatility is favorable." aria-description="Lower executive volatility is favorable.">
       </div>
-    </div>
+    </div></div>
 
     <!-- Debt & Remediation -->
-    <div class="panel-section">
-      <div class="panel-section-label">Debt and Remediation</div>
+    <div class="panel-section collapsible collapsed" data-collapsible-init="1">
+      <button type="button" class="section-toggle" aria-expanded="false"><span>Debt and Remediation</span><span class="section-chevron">▾</span></button><div class="section-content">
 
-      <div class="control-row">
+      <div class="control-row" data-var="TDR">
         <div class="control-header">
           <span class="control-label"><span class="sym">TDR</span> — Technical Debt Ratio</span>
-          <span class="control-value" id="val-TDR">0.1</span>
+          <span class="control-value" id="val-TDR">0.100</span>
         </div>
         <div class="control-desc">Fraction of capacity consumed by historical shortcuts and rework burden.</div>
         <label class="sr-only" for="sl-TDR">Technical Debt Ratio</label>
-        <input type="range" id="sl-TDR" aria-label="Technical Debt Ratio" min="0" max="1.0" step="0.01" value="0.1" oninput="update()">
+        <input type="range" id="sl-TDR" aria-label="Technical Debt Ratio" min="0" max="1.0" step="0.01" value="0.1" oninput="update()" title="Lower technical debt ratio is favorable." aria-description="Lower technical debt ratio is favorable.">
       </div>
 
-      <div class="control-row">
+      <div class="control-row" data-var="R">
         <div class="control-header">
           <span class="control-label"><span class="sym">R</span> — Remediation Rate</span>
-          <span class="control-value" id="val-R">0.1</span>
+          <span class="control-value" id="val-R">0.100</span>
         </div>
         <div class="control-desc">Capacity diverted to debt repayment. Subtracts from visible throughput; benefits are deferred.</div>
         <label class="sr-only" for="sl-R">Remediation Rate</label>
-        <input type="range" id="sl-R" aria-label="Remediation Rate" min="0" max="0.9" step="0.01" value="0.1" oninput="update()">
+        <input type="range" id="sl-R" aria-label="Remediation Rate" min="0" max="0.9" step="0.01" value="0.1" oninput="update()" title="Remediation is a short-term cost and long-term benefit." aria-description="Remediation is a short-term cost and long-term benefit.">
       </div>
-    </div>
+    </div></div>
 
     <!-- Value & Constants -->
-    <div class="panel-section">
-      <div class="panel-section-label">Value and Sensitivity Constants</div>
+    <div class="panel-section collapsible collapsed" data-collapsible-init="1">
+      <button type="button" class="section-toggle" aria-expanded="false"><span>Value and Sensitivity Constants</span><span class="section-chevron">▾</span></button><div class="section-content">
 
-      <div class="control-row">
+      <div class="control-row" data-var="V">
         <div class="control-header">
           <span class="control-label"><span class="sym">V</span> — Business Value per Change</span>
-          <span class="control-value" id="val-V">1.0</span>
+          <span class="control-value" id="val-V">1.00</span>
         </div>
         <div class="control-desc">Normalized realized value delivered per change. Relative unit.</div>
         <label class="sr-only" for="sl-V">Business Value per Change</label>
-        <input type="range" id="sl-V" aria-label="Business Value per Change" min="0.1" max="5.0" step="0.1" value="1.0" oninput="update()">
+        <input type="range" id="sl-V" aria-label="Business Value per Change" min="0.1" max="5.0" step="0.1" value="1.0" oninput="update()" title="Business value per change is scenario-dependent." aria-description="Business value per change is scenario-dependent.">
       </div>
 
-      <div class="control-row">
+      <div class="control-row" data-var="lam">
         <div class="control-header">
           <span class="control-label"><span class="sym">λ</span> — Debt sensitivity</span>
-          <span class="control-value" id="val-lam">1.0</span>
+          <span class="control-value" id="val-lam">1.00</span>
         </div>
         <div class="control-desc">How aggressively TDR attenuates output via e^(−λ·TDR).</div>
         <label class="sr-only" for="sl-lam">Debt Sensitivity</label>
-        <input type="range" id="sl-lam" aria-label="Debt Sensitivity" min="0.1" max="5.0" step="0.1" value="1.0" oninput="update()">
+        <input type="range" id="sl-lam" aria-label="Debt Sensitivity" min="0.1" max="5.0" step="0.1" value="1.0" oninput="update()" title="Debt sensitivity is a model constant, not an intrinsic good/bad direction." aria-description="Debt sensitivity is a model constant, not an intrinsic good/bad direction.">
       </div>
 
-      <div class="control-row">
+      <div class="control-row" data-var="alpha">
         <div class="control-header">
           <span class="control-label"><span class="sym">α</span> — Competence sensitivity</span>
-          <span class="control-value" id="val-alpha">1.0</span>
+          <span class="control-value" id="val-alpha">1.00</span>
         </div>
         <div class="control-desc">Cm's weight in the Ω coherence term.</div>
         <label class="sr-only" for="sl-alpha">Competence Sensitivity</label>
-        <input type="range" id="sl-alpha" aria-label="Competence Sensitivity" min="0.1" max="5.0" step="0.1" value="1.0" oninput="update()">
+        <input type="range" id="sl-alpha" aria-label="Competence Sensitivity" min="0.1" max="5.0" step="0.1" value="1.0" oninput="update()" title="Competence sensitivity is a model constant, not an intrinsic good/bad direction." aria-description="Competence sensitivity is a model constant, not an intrinsic good/bad direction.">
       </div>
 
-      <div class="control-row">
+      <div class="control-row" data-var="beta">
         <div class="control-header">
           <span class="control-label"><span class="sym">β</span> — Volatility sensitivity</span>
-          <span class="control-value" id="val-beta">1.0</span>
+          <span class="control-value" id="val-beta">1.00</span>
         </div>
         <div class="control-desc">E's weight in the Ω coherence term.</div>
         <label class="sr-only" for="sl-beta">Volatility Sensitivity</label>
-        <input type="range" id="sl-beta" aria-label="Volatility Sensitivity" min="0.1" max="5.0" step="0.1" value="1.0" oninput="update()">
+        <input type="range" id="sl-beta" aria-label="Volatility Sensitivity" min="0.1" max="5.0" step="0.1" value="1.0" oninput="update()" title="Volatility sensitivity is a model constant, not an intrinsic good/bad direction." aria-description="Volatility sensitivity is a model constant, not an intrinsic good/bad direction.">
       </div>
-    </div>
+    </div></div>
 
   </div><!-- /controls-panel -->
 
-  <!-- RIGHT (OUTPUT) -->
+  <!-- RIGHT: OUTPUT -->
   <div class="output-panel">
 
-    <!-- Score / health bars -->
+    <!-- Score + health bars -->
     <div class="output-primary">
       <div class="output-score">
         <div class="score-label">Instantaneous realized-output rate</div>
-        <div class="score-value" id="score-value">—</div>
+        <div class="score-value " id="score-value">29.44</div>
         <div class="score-unit">normalized units</div>
       </div>
       <div class="health-bars">
         <div class="health-bar-row">
           <span class="health-bar-label">Throughput</span>
-          <div class="health-bar-track"><div class="health-bar-fill" id="bar-throughput" style="width:0%"></div></div>
-          <span class="health-bar-val" id="bv-throughput">—</span>
+          <div class="health-bar-track"><div class="health-bar-fill danger" id="bar-throughput" style="width: 1.82512%;"></div></div>
+          <span class="health-bar-val" id="bv-throughput">0.548</span>
         </div>
         <div class="health-bar-row">
           <span class="health-bar-label">Coherence Ω</span>
-          <div class="health-bar-track"><div class="health-bar-fill" id="bar-omega" style="width:0%"></div></div>
-          <span class="health-bar-val" id="bv-omega">—</span>
+          <div class="health-bar-track"><div class="health-bar-fill " id="bar-omega" style="width: 81.8731%;"></div></div>
+          <span class="health-bar-val" id="bv-omega">0.819</span>
         </div>
         <div class="health-bar-row">
           <span class="health-bar-label">Debt drag</span>
-          <div class="health-bar-track"><div class="health-bar-fill" id="bar-debt" style="width:0%"></div></div>
-          <span class="health-bar-val" id="bv-debt">—</span>
+          <div class="health-bar-track"><div class="health-bar-fill " id="bar-debt" style="width: 90.4837%;"></div></div>
+          <span class="health-bar-val" id="bv-debt">0.905</span>
         </div>
         <div class="health-bar-row">
           <span class="health-bar-label">Urgency exp</span>
-          <div class="health-bar-track"><div class="health-bar-fill" id="bar-urgency" style="width:0%"></div></div>
-          <span class="health-bar-val" id="bv-urgency">—</span>
+          <div class="health-bar-track"><div class="health-bar-fill " id="bar-urgency" style="width: 92.5381%;"></div></div>
+          <span class="health-bar-val" id="bv-urgency">0.925</span>
         </div>
         <div class="health-bar-row">
           <span class="health-bar-label">Morale M</span>
-          <div class="health-bar-track"><div class="health-bar-fill" id="bar-morale" style="width:0%"></div></div>
-          <span class="health-bar-val" id="bv-morale">—</span>
+          <div class="health-bar-track"><div class="health-bar-fill warn" id="bar-morale" style="width: 50%;"></div></div>
+          <span class="health-bar-val" id="bv-morale">1.00</span>
         </div>
       </div>
     </div>
@@ -285,30 +284,30 @@
     <!-- Equation breakdown -->
     <div class="equation-block">
       <div class="equation-hero">
-        <div class="equation-kicker" id="equation-kicker">A Grand Unified Model</div>
+        <div class="equation-kicker" id="equation-kicker">A Structured Descriptive Model</div>
         <h3>Instantaneous Term Breakdown</h3>
       </div>
       <div class="equation-katex-area" id="equation-katex-area">
-        <div class="eq-main">$$
+        <div class="eq-main"><span><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>P</mi><mrow><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">t</mi></mrow></msub><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mn>1</mn><mi>Z</mi></mfrac><mrow><mo fence="true">[</mo><mfrac><mrow><mi>V</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo>&thinsp;<mi>D</mi><mi>F</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo>&thinsp;<mi>M</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo>&thinsp;<mi mathvariant="normal">Ω</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo>&thinsp;<mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>R</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><mrow><mi>L</mi><mi>T</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>+</mo><mi>M</mi><mi>T</mi><mi>T</mi><mi>R</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>+</mo><mi>ϵ</mi></mrow></mfrac><mo fence="true">]</mo></mrow><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>C</mi><mi>F</mi><mi>R</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><msup><mo stretchy="false">)</mo><mrow><mi>U</mi><mo stretchy="false">(</mo><mi>t</mi><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow></msup><msup><mi>e</mi><mrow><mo>−</mo><mi>λ</mi><mi>T</mi><mi>D</mi><mi>R</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow></msup></mrow><annotation encoding="application/x-tex">
           P_{\mathrm{inst}}(t)=\frac{1}{Z}
           \left[
             \frac{V(t)\,DF(t)\,M(t)\,\Omega(t)\,(1-R(t))}{LT(t)+MTTR(t)+\epsilon}
           \right]
           (1-CFR(t))^{U(t)^2}e^{-\lambda TDR(t)}
-        $$</div>
+        </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.1389em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3175em;"><span class="" style="top: -2.55em; margin-left: -0.1389em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">inst</span></span></span></span></span></span><span class="vlist-s">&ZeroWidthSpace;</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.2778em;"></span></span><span class="base"><span class="strut" style="height: 2.4em; vertical-align: -0.95em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 1.3214em;"><span class="" style="top: -2.314em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.0715em;">Z</span></span></span><span class="" style="top: -3.23em;"><span class="pstrut" style="height: 3em;"></span><span class="frac-line" style="border-bottom-width: 0.04em;"></span></span><span class="" style="top: -3.677em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">&ZeroWidthSpace;</span></span><span class="vlist-r"><span class="vlist" style="height: 0.686em;"><span class=""></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right: 0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top: 0em;"><span class="delimsizing size3">[</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 1.427em;"><span class="" style="top: -2.314em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="mord mathnormal" style="margin-right: 0.1389em;">T</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mord mathnormal" style="margin-right: 0.0077em;">MTTR</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mord mathnormal">ϵ</span></span></span><span class="" style="top: -3.23em;"><span class="pstrut" style="height: 3em;"></span><span class="frac-line" style="border-bottom-width: 0.04em;"></span></span><span class="" style="top: -3.677em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.2222em;">V</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.1667em;"></span><span class="mord mathnormal" style="margin-right: 0.0278em;">D</span><span class="mord mathnormal" style="margin-right: 0.1389em;">F</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.1667em;"></span><span class="mord mathnormal" style="margin-right: 0.109em;">M</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.1667em;"></span><span class="mord">Ω</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.1667em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mord mathnormal" style="margin-right: 0.0077em;">R</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">))</span></span></span></span><span class="vlist-s">&ZeroWidthSpace;</span></span><span class="vlist-r"><span class="vlist" style="height: 0.936em;"><span class=""></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top: 0em;"><span class="delimsizing size3">]</span></span></span><span class="mspace" style="margin-right: 0.1667em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.2222em;"></span></span><span class="base"><span class="strut" style="height: 1.2869em; vertical-align: -0.25em;"></span><span class="mord mathnormal" style="margin-right: 0.0077em;">CFR</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 1.0369em;"><span class="" style="top: -3.113em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right: 0.109em;">U</span><span class="mopen mtight">(</span><span class="mord mathnormal mtight">t</span><span class="mclose mtight"><span class="mclose mtight">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.8913em;"><span class="" style="top: -2.931em; margin-right: 0.0714em;"><span class="pstrut" style="height: 2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.938em;"><span class="" style="top: -3.113em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mathnormal mtight">λ</span><span class="mord mathnormal mtight" style="margin-right: 0.1389em;">T</span><span class="mord mathnormal mtight" style="margin-right: 0.0278em;">D</span><span class="mord mathnormal mtight" style="margin-right: 0.0077em;">R</span><span class="mopen mtight">(</span><span class="mord mathnormal mtight">t</span><span class="mclose mtight">)</span></span></span></span></span></span></span></span></span></span></span></span></span></span></div>
         <div class="eq-side-grid">
           <div class="eq-side-card">
             <div class="eq-side-label">Organizational Coherence</div>
-            $$\Omega(t)=\exp\!\left(-\alpha C_m(t)-\beta E(t)\right)$$
+            <span><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi mathvariant="normal">Ω</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mi>exp</mi><mo>⁡</mo>&thinsp;⁣<mrow><mo fence="true">(</mo><mo>−</mo><mi>α</mi><msub><mi>C</mi><mi>m</mi></msub><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>−</mo><mi>β</mi><mi>E</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\Omega(t)=\exp\!\left(-\alpha C_m(t)-\beta E(t)\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord">Ω</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.2778em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mop">exp</span><span class="mspace" style="margin-right: -0.1667em;"></span><span class="mspace" style="margin-right: 0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top: 0em;">(</span><span class="mord">−</span><span class="mord mathnormal" style="margin-right: 0.0037em;">α</span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.0715em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.1514em;"><span class="" style="top: -2.55em; margin-left: -0.0715em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span><span class="vlist-s">&ZeroWidthSpace;</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mord mathnormal" style="margin-right: 0.0576em;">βE</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mclose delimcenter" style="top: 0em;">)</span></span></span></span></span></span></span>
           </div>
           <div class="eq-side-card">
             <div class="eq-side-label">Long-Horizon Debt Dynamics</div>
-            $$\frac{d}{dt}TDR(t)=\kappa_1U(t)+\kappa_2DF(t)+\kappa_3C_m(t)-\kappa_4R(t)$$
+            <span><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mi>T</mi><mi>D</mi><mi>R</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mi>κ</mi><mn>1</mn></msub><mi>U</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>+</mo><msub><mi>κ</mi><mn>2</mn></msub><mi>D</mi><mi>F</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>+</mo><msub><mi>κ</mi><mn>3</mn></msub><msub><mi>C</mi><mi>m</mi></msub><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>−</mo><msub><mi>κ</mi><mn>4</mn></msub><mi>R</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\frac{d}{dt}TDR(t)=\kappa_1U(t)+\kappa_2DF(t)+\kappa_3C_m(t)-\kappa_4R(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 2.0574em; vertical-align: -0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 1.3714em;"><span class="" style="top: -2.314em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="mord mathnormal">t</span></span></span><span class="" style="top: -3.23em;"><span class="pstrut" style="height: 3em;"></span><span class="frac-line" style="border-bottom-width: 0.04em;"></span></span><span class="" style="top: -3.677em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord mathnormal">d</span></span></span></span><span class="vlist-s">&ZeroWidthSpace;</span></span><span class="vlist-r"><span class="vlist" style="height: 0.686em;"><span class=""></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord mathnormal" style="margin-right: 0.1389em;">T</span><span class="mord mathnormal" style="margin-right: 0.0278em;">D</span><span class="mord mathnormal" style="margin-right: 0.0077em;">R</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.2778em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord"><span class="mord mathnormal">κ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3011em;"><span class="" style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">&ZeroWidthSpace;</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right: 0.109em;">U</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right: 0.2222em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord"><span class="mord mathnormal">κ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3011em;"><span class="" style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">&ZeroWidthSpace;</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right: 0.0278em;">D</span><span class="mord mathnormal" style="margin-right: 0.1389em;">F</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right: 0.2222em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord"><span class="mord mathnormal">κ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3011em;"><span class="" style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">&ZeroWidthSpace;</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.0715em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.1514em;"><span class="" style="top: -2.55em; margin-left: -0.0715em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span><span class="vlist-s">&ZeroWidthSpace;</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.2222em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord"><span class="mord mathnormal">κ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3011em;"><span class="" style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span><span class="vlist-s">&ZeroWidthSpace;</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right: 0.0077em;">R</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span></span></span></span></span></span>
           </div>
         </div>
       </div>
-      <div class="eq-meta" id="eq-meta">Normalization: calibrated to healthy preset (P_inst ≈ 1.0).</div>
-      <div id="eq-expanded" style="margin-top:0.7rem; font-size:12px; color:var(--text-dim);">—</div>
+      <div class="eq-meta" id="eq-meta">Normalization: calibrated to healthy preset (P_inst ≈ 1.0, Z=0.01147).</div>
+      <div id="eq-expanded" style="margin-top:0.7rem; font-size:12px; color:var(--text-dim);"><span style="color:var(--text)">= (1/0.01147) · [</span><span style="color:var(--accent)">1.00·2.47·1.00·0.819·0.900</span><span style="color:var(--text-dim)"> / </span><span style="color:var(--accent)">(4.00+0.500+0.01)</span><span style="color:var(--text)">] · </span><span style="color:var(--accent)">(0.950)^1.51</span><span style="color:var(--text)"> · </span><span style="color:var(--accent)">e^(-1.00·0.100)</span><span style="color:var(--text)"> · </span><span style="color:var(--accent)">U(t)=1.23 DF(t)=2.47</span><span style="color:var(--text-dim)"> = </span><span style="color:var(--text-bright); font-weight:500">29.44</span></div>
     </div>
 
     <div class="viz-mode">
@@ -336,52 +335,125 @@
           </div>
           <div class="sweep-body">
             <div class="sweep-title" id="sweep-title">P_inst vs. Urgency — holding current settings</div>
-            <div class="sweep-thesis" id="sweep-thesis">Urgency-Induced Instability: moderate U may increase visible activity; beyond a system-dependent threshold it raises fragility faster than output. That threshold is reliably discovered through direct experimentation.</div>
+            <div class="sweep-thesis" id="sweep-thesis">Urgency-Induced Instability: moderate U may increase visible activity; beyond a system-dependent threshold it raises fragility faster than output.</div>
             <div class="cfr-toggle" id="cfr-toggle-row" style="display:none">
               Compare at: &nbsp;
               <button type="button" id="cfr-btn-current" class="active" onclick="setCFRMode('current')">current U</button>
               <button type="button" id="cfr-btn-low" onclick="setCFRMode('low')">U = 1.0</button>
               <button type="button" id="cfr-btn-high" onclick="setCFRMode('high')">U = 3.5</button>
             </div>
-            <canvas id="sparkline"></canvas>
+            <canvas id="sparkline" width="963" height="150" style="cursor: ew-resize;"></canvas>
             <div class="chart-legend" id="chart-legend">
-              <div class="legend-item"><div class="legend-dot" style="background:var(--viz-primary)"></div> <span id="legend-curve">P_inst as U sweeps 0.1 → 5</span></div>
+              <div class="legend-item"><div class="legend-dot" style="background:var(--viz-primary)"></div> <span id="legend-curve">P_inst as U sweeps 0.1 -&gt; 5</span></div>
               <div class="legend-item"><div class="legend-dot" style="background:var(--viz-handle)"></div> <span id="legend-handle">Current U — drag chart to sweep</span></div>
             </div>
           </div>
         </div>
 
-    <!-- TDR dynamics -->
-    <div class="tdr-dynamics">
-      <h3>Long-Horizon Debt Dynamics — dTDR/dt</h3>
-      <div style="font-size:11px; color:var(--text-dim); margin-bottom:0.8rem;">
-        At current settings, technical debt is <strong id="tdr-trend-word" style="color:var(--warn)">—</strong>.
-        Rate: <span id="tdr-rate" style="color:var(--text-bright)">—</span>/period.
+        <!-- TDR dynamics -->
+        <div class="tdr-dynamics">
+          <h3>Long-Horizon Debt Dynamics — dTDR/dt</h3>
+          <div class="tdr-formula-note">Integrated explicitly each step: TDR(t+Δt) = TDR(t) + (dTDR/dt)·Δt.</div>
+          <div style="font-size:11px; color:var(--text-dim); margin-bottom:0.8rem;">
+            At current settings, technical debt is <strong id="tdr-trend-word" style="color: var(--danger);">accumulating</strong>.
+            <span id="tdr-rate-label">Debt derivative</span>: <span id="tdr-rate" style="color:var(--text-bright)">+0.301</span>/period.
+          </div>
+          <div class="tdr-grid">
+            <div class="tdr-term">
+              <span class="tdr-sym">+k1·U</span>: urgency-driven debt<br>
+              <span class="tdr-val" id="tdr-k1">+0.300 (k1=0.3·U=1.00)</span>
+            </div>
+            <div class="tdr-term">
+              <span class="tdr-sym">+k2·DF</span>: velocity-driven debt<br>
+              <span class="tdr-val" id="tdr-k2">+0.200 (k2=0.05·DF=4.00)</span>
+            </div>
+            <div class="tdr-term">
+              <span class="tdr-sym">+k3·Cm</span>: mismatch-driven debt<br>
+              <span class="tdr-val" id="tdr-k3">+0.0400 (k3=0.4·Cm=0.100)</span>
+            </div>
+            <div class="tdr-term">
+              <span class="tdr-sym">−k4·R</span>: remediation<br>
+              <span class="tdr-val" id="tdr-k4">-0.0800 (k4=0.8·R=0.100)</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="tdr-grid">
-        <div class="tdr-term">
-          <span class="tdr-sym">+κ₁·U</span>: urgency-driven debt<br>
-          <span class="tdr-val" id="tdr-k1">—</span>
-        </div>
-        <div class="tdr-term">
-          <span class="tdr-sym">+κ₂·DF</span>: velocity-driven debt<br>
-          <span class="tdr-val" id="tdr-k2">—</span>
-        </div>
-        <div class="tdr-term">
-          <span class="tdr-sym">+κ₃·Cₘ</span>: mismatch-driven debt<br>
-          <span class="tdr-val" id="tdr-k3">—</span>
-        </div>
-        <div class="tdr-term">
-          <span class="tdr-sym">−κ₄·R</span>: remediation<br>
-          <span class="tdr-val" id="tdr-k4">—</span>
+
+      <div class="viz-mode-panel" id="panel-time">
+        <div class="time-panel">
+          <div class="time-controls">
+            <div class="time-row">
+              <label for="sim-horizon">Time horizon</label>
+              <input type="range" id="sim-horizon" min="0" max="36" step="1" value="24" oninput="updateSimHorizon()">
+              <span class="time-val" id="sim-horizon-val">24 periods</span>
+            </div>
+            <div class="time-row">
+              <label for="sim-time">Time scrubber</label>
+              <input type="range" id="sim-time" min="0" max="24" step="0.25" value="0" oninput="updateSimTimeFromSlider()">
+              <span class="time-val" id="sim-time-val">t = 0.000</span>
+            </div>
+            <div class="time-actions">
+              <button type="button" id="sim-play-btn" onclick="toggleSimPlay()">Play</button>
+              <label for="sim-speed">Speed</label>
+              <select id="sim-speed" onchange="setSimSpeed(this.value)">
+                <option value="0.25">0.25x</option>
+                <option value="1" selected="">1x</option>
+                <option value="4">4x</option>
+                <option value="16">Ludicrous</option>
+              </select>
+              <label for="sim-mode">Projection mode</label>
+              <select id="sim-mode" onchange="setProjectionMode(this.value)">
+                <option value="debt">Debt only</option>
+                <option value="coupled">Coupled organization</option>
+              </select>
+            </div>
+            <div class="time-actions">
+              <label><input type="checkbox" id="toggle-pinst" checked="" onchange="update()"> P_inst</label>
+              <label><input type="checkbox" id="toggle-pcum" checked="" onchange="update()"> P_cumulative</label>
+              <label><input type="checkbox" id="toggle-tdr" checked="" onchange="update()"> TDR</label>
+              <label><input type="checkbox" id="toggle-coupling" onchange="update()"> Omega/Morale coupling</label>
+            </div>
+            <div class="time-actions">
+              <label><input type="checkbox" id="toggle-urgency-boost" onchange="onUrgencyBoostToggle()"> Enable urgency activity boost</label>
+              <button type="button" onclick="adoptSimulatedState()">Adopt simulated state</button>
+            </div>
+            <div class="integration-step" id="integration-step">Euler Integration Step (dt=0.25)</div>
+          </div>
+          <canvas id="sim-canvas" width="0" height="0"></canvas>
+          <div class="sim-ticker">
+            <div><span class="ticker-label">P_inst</span> <span id="ticker-pinst">29.44</span></div>
+            <div><span class="ticker-label">P_real(t)</span> <span id="ticker-preal">0.000</span></div>
+            <div><span class="ticker-label">TDR(t)</span> <span id="ticker-tdr">0.1000</span></div>
+          </div>
+          <div class="sim-readout" id="sim-readout">At t = 0.000 (Δt=0.25): projected TDR = 0.1000, instantaneous output = 29.44, cumulative P_real(t) = 0.000.</div>
         </div>
       </div>
     </div>
 
-    <!-- Diagnostics -->
+    <div class="tool-row">
+      <button type="button" onclick="pinBaseline()">Pin Baseline</button>
+      <button type="button" onclick="copyPermalink()">Copy Permalink</button>
+    </div>
+
+    <div class="diag-grid">
+      <div class="diag-card">
+        <span class="label">Current vs Baseline</span>
+        <div id="baseline-compare">No baseline pinned yet.</div>
+      </div>
+      <div class="diag-card">
+        <span class="label">Sensitivity Ranking</span>
+        <div id="sensitivity-ranking">1. M (+3.013)<br>2. DF (+1.472)<br>3. LT (-1.308)<br>4. TDR (-0.3013)</div>
+      </div>
+      <div class="diag-card">
+        <span class="label">Multiplicative Waterfall</span>
+        <div id="waterfall-view">Nominal throughput 0.8869<br>x Morale 1.000<br>x Omega 0.8187<br>x Effective DF(t)/DF 0.6173<br>x Remediation capacity 0.9000<br>x CFR/U term 0.9254<br>x Debt drag 0.9048<br>= Realized output 29.44</div>
+      </div>
+    </div>
+
+    <!-- Diagnosis -->
     <div class="diagnosis">
       <span class="label">System Diagnosis</span>
-      <span id="diagnosis-text">Adjusting a slider will reveal the current system state.</span>
+      <span id="diagnosis-text"><strong>Elite delivery posture.</strong> DORA variables dominate behavior.</span>
     </div>
 
   </div><!-- /output-panel -->
@@ -395,14 +467,390 @@
 <div class="toast-stack" id="toast-stack" aria-live="polite" aria-atomic="true"></div>
 
 <script>
-//  GUM
+const EPS = 0.01;
+const K1 = 0.3;
+const K2 = 0.05;
+const K3 = 0.4;
+const K4 = 0.8;
+const SIM_DT = 0.25;
+const HANDLE_R = 8;
 
-const EPS   = 0.01;   // regularization
-const Z     = 1.0;    // normalization (rhetorical)
-const K1    = 0.3;    // urgency → debt
-const K2    = 0.05;   // DF → debt (velocity adds shortcuts)
-const K3    = 0.4;    // Cm → debt
-const K4    = 0.8;    // R → debt reduction
+const SLIDER_META = {
+  DF: { min: 0.01, max: 20 },
+  LT: { min: 0.5, max: 720 },
+  CFR: { min: 0, max: 0.6 },
+  MTTR: { min: 0.1, max: 336 },
+  M: { min: 0.1, max: 2.0 },
+  U: { min: 0.1, max: 5.0 },
+  Cm: { min: 0, max: 1.0 },
+  E: { min: 0, max: 1.0 },
+  TDR: { min: 0, max: 1.0 },
+  R: { min: 0, max: 0.9 },
+  V: { min: 0.1, max: 5.0 },
+  lam: { min: 0.1, max: 5.0 },
+  alpha: { min: 0.1, max: 5.0 },
+  beta: { min: 0.1, max: 5.0 },
+};
+
+const SLIDER_SEMANTICS = {
+  DF:   { better: 'higher',  hint: 'Higher deployment frequency is usually favorable.' },
+  LT:   { better: 'lower',   hint: 'Lower lead time is favorable.' },
+  CFR:  { better: 'lower',   hint: 'Lower change failure rate is favorable.' },
+  MTTR: { better: 'lower',   hint: 'Lower restore time is favorable.' },
+  M:    { better: 'higher',  hint: 'Higher morale multiplier is favorable.' },
+  U:    { better: 'context', hint: 'Urgency is nonlinear: small increases can drive visible activity, sustained high urgency destabilizes.' },
+  Cm:   { better: 'lower',   hint: 'Lower competence mismatch is favorable.' },
+  E:    { better: 'lower',   hint: 'Lower executive volatility is favorable.' },
+  TDR:  { better: 'lower',   hint: 'Lower technical debt ratio is favorable.' },
+  R:    { better: 'tradeoff', hint: 'Remediation is a short-term cost and long-term benefit.' },
+  V:    { better: 'context', hint: 'Business value per change is scenario-dependent.' },
+  lam:  { better: 'context', hint: 'Debt sensitivity is a model constant, not an intrinsic good/bad direction.' },
+  alpha:{ better: 'context', hint: 'Competence sensitivity is a model constant, not an intrinsic good/bad direction.' },
+  beta: { better: 'context', hint: 'Volatility sensitivity is a model constant, not an intrinsic good/bad direction.' },
+};
+
+const presets = {
+  elite: {
+    DF:1.0, LT:0.5, CFR:0.02, MTTR:0.5,
+    M:1.4, U:0.5, Cm:0.05, E:0.05,
+    TDR:0.05, R:0.2, V:1.5, lam:1.0, alpha:1.0, beta:1.0
+  },
+  healthy: {
+    DF:0.25, LT:4, CFR:0.08, MTTR:2,
+    M:1.1, U:1.0, Cm:0.15, E:0.15,
+    TDR:0.2, R:0.15, V:1.0, lam:1.0, alpha:1.0, beta:1.0
+  },
+  stressed: {
+    DF:0.5, LT:8, CFR:0.15, MTTR:4,
+    M:0.75, U:2.5, Cm:0.3, E:0.4,
+    TDR:0.35, R:0.05, V:1.0, lam:1.0, alpha:1.0, beta:1.0
+  },
+  legacy: {
+    DF:0.05, LT:48, CFR:0.25, MTTR:12,
+    M:0.8, U:1.2, Cm:0.3, E:0.2,
+    TDR:0.7, R:0.1, V:0.8, lam:1.5, alpha:1.0, beta:1.0
+  },
+  crisis: {
+    DF:0.1, LT:24, CFR:0.45, MTTR:48,
+    M:0.4, U:4.0, Cm:0.5, E:0.6,
+    TDR:0.5, R:0.0, V:0.5, lam:1.0, alpha:1.5, beta:1.5
+  },
+  entropy: {
+    DF:0.2, LT:336, CFR:0.55, MTTR:120,
+    M:0.2, U:4.8, Cm:0.9, E:0.9,
+    TDR:0.9, R:0.0, V:0.5, lam:3.0, alpha:3.0, beta:3.0
+  }
+};
+
+let normalizationZ = 1.0;
+let chartDragging = false;
+let activeSweep = 'U';
+let cfrMode = 'current';
+let baselineSnapshot = null;
+let suppressUrlSync = false;
+let lastSliderValues = null;
+const sliderPulseTimers = {};
+
+const appState = {
+  vizMode: 'sweep',
+  projectionMode: 'debt',
+  freezeControls: true,
+  doraLens: false,
+  postureMode: 'strict',
+  urgencyBoost: false,
+  simHorizon: 24,
+  simTime: 0,
+  simSpeed: 1,
+  simPlaying: false,
+  simRows: [],
+  rafToken: null,
+  lastTs: null,
+  showSeries: {
+    pInst: true,
+    pCum: true,
+    tdr: true,
+    coupling: false,
+  },
+  floorToastShown: false,
+  dfSaturationToastAt: 0,
+};
+
+const POSTURE_COPY = {
+  strict: {
+    kicker: 'A Structured Descriptive Model',
+    rateLabel: 'Debt derivative',
+    integration: dt => `Euler Integration Step (dt=${dt})`,
+    eqMetaPrefix: 'Normalization: calibrated to healthy preset',
+    criticalTrend: 'SATURATED REGIME',
+    criticalDiagnosis: '<strong>SATURATED REGIME:</strong> Constraint interactions dominate; marginal innovation yield is near zero.',
+    lensOnToast: 'DORA Lens enabled: observed metrics foregrounded.',
+    lensOffToast: 'DORA Lens disabled.',
+    modeOnToast: 'Institutional Momentum Mode enabled.',
+    modeOffToast: 'Strict Scientific Posture enabled.',
+    floorToast: 'Remediation floor active: debt state clamped at zero.',
+    dfToast: 'Debt saturation: sustained velocity exceeds feasible envelope.',
+  },
+  momentum: {
+    kicker: 'A Grand Unified Model',
+    rateLabel: 'Debt Velocity Vector',
+    integration: dt => `Integration Step (dt=${dt})`,
+    eqMetaPrefix: 'Normalization: calibrated to healthy preset',
+    criticalTrend: 'CRITICAL REGIME',
+    criticalDiagnosis: '<strong>CRITICAL REGIME:</strong> Resume Driven Development detected. System functions on institutional momentum; innovation is mathematically improbable.',
+    lensOnToast: 'DORA Lens enabled: observed metrics foregrounded.',
+    lensOffToast: 'DORA Lens disabled.',
+    modeOnToast: 'Institutional Momentum Mode enabled.',
+    modeOffToast: 'Strict Scientific Posture enabled.',
+    floorToast: 'Remediation Floor Active: Debt Fully Cleared.',
+    dfToast: 'Debt Saturation: Cannot sustain high velocity.',
+  }
+};
+
+function renderSliderLabels(v) {
+  setText('val-DF', fmt(v.DF));
+  setText('val-LT', fmt(v.LT) + ' hr');
+  setText('val-CFR', fmt(v.CFR));
+  setText('val-MTTR', fmt(v.MTTR) + ' hr');
+  setText('val-M', fmt(v.M));
+  setText('val-U', fmt(v.U));
+  setText('val-Cm', fmt(v.Cm));
+  setText('val-E', fmt(v.E));
+  setText('val-TDR', fmt(v.TDR));
+  setText('val-R', fmt(v.R));
+  setText('val-V', fmt(v.V));
+  setText('val-lam', fmt(v.lam));
+  setText('val-alpha', fmt(v.alpha));
+  setText('val-beta', fmt(v.beta));
+  applySliderSemanticFeedback(v);
+}
+
+function semanticChangeClass(key, prev, next) {
+  const sem = SLIDER_SEMANTICS[key];
+  if (!sem) return '';
+  const delta = next - prev;
+  if (Math.abs(delta) < 1e-9) return '';
+  if (sem.better === 'higher') return delta > 0 ? 'semantic-good' : 'semantic-bad';
+  if (sem.better === 'lower') return delta < 0 ? 'semantic-good' : 'semantic-bad';
+  if (sem.better === 'tradeoff') return 'semantic-tradeoff';
+  if (sem.better === 'context') {
+    if (key === 'U') {
+      if (delta > 0 && next <= 1.5) return appState.urgencyBoost ? 'semantic-tradeoff' : 'semantic-bad';
+      if (delta < 0) return 'semantic-good';
+      return 'semantic-bad';
+    }
+    return 'semantic-tradeoff';
+  }
+  return '';
+}
+
+function pulseSliderSemantic(key, className) {
+  if (!className) return;
+  const el = document.getElementById('sl-' + key);
+  if (!el) return;
+  el.classList.remove('semantic-good', 'semantic-bad', 'semantic-tradeoff');
+  void el.offsetWidth;
+  el.classList.add(className);
+  clearTimeout(sliderPulseTimers[key]);
+  sliderPulseTimers[key] = setTimeout(() => {
+    el.classList.remove('semantic-good', 'semantic-bad', 'semantic-tradeoff');
+  }, 520);
+}
+
+function applySliderSemanticFeedback(v) {
+  if (!lastSliderValues) {
+    lastSliderValues = { ...v };
+    return;
+  }
+  Object.keys(SLIDER_META).forEach(key => {
+    const prev = +lastSliderValues[key];
+    const next = +v[key];
+    if (!Number.isFinite(prev) || !Number.isFinite(next)) return;
+    const cls = semanticChangeClass(key, prev, next);
+    pulseSliderSemantic(key, cls);
+  });
+  lastSliderValues = { ...v };
+}
+
+function applySliderSemanticHints() {
+  Object.keys(SLIDER_SEMANTICS).forEach(key => {
+    const slider = document.getElementById('sl-' + key);
+    if (!slider) return;
+    const hint = SLIDER_SEMANTICS[key].hint;
+    slider.title = hint;
+    slider.setAttribute('aria-description', hint);
+  });
+}
+
+function initControlRowSemantics() {
+  const sliderToKey = {
+    'sl-DF': 'DF', 'sl-LT': 'LT', 'sl-CFR': 'CFR', 'sl-MTTR': 'MTTR',
+    'sl-M': 'M', 'sl-U': 'U', 'sl-Cm': 'Cm', 'sl-E': 'E',
+    'sl-TDR': 'TDR', 'sl-R': 'R', 'sl-V': 'V', 'sl-lam': 'lam',
+    'sl-alpha': 'alpha', 'sl-beta': 'beta'
+  };
+  Object.entries(sliderToKey).forEach(([id, key]) => {
+    const slider = document.getElementById(id);
+    const row = slider ? slider.closest('.control-row') : null;
+    if (row) row.dataset.var = key;
+  });
+}
+
+function applyDoraLens() {
+  const doraVars = new Set(['DF', 'LT', 'CFR', 'MTTR']);
+  const rows = document.querySelectorAll('.control-row[data-var]');
+  rows.forEach(row => {
+    const v = row.dataset.var;
+    const isDora = doraVars.has(v);
+    row.classList.toggle('lens-dora', appState.doraLens && isDora);
+    row.classList.toggle('lens-latent', appState.doraLens && !isDora);
+  });
+}
+
+function postureCopy() {
+  return appState.postureMode === 'momentum' ? POSTURE_COPY.momentum : POSTURE_COPY.strict;
+}
+
+function applyPostureCopy() {
+  const c = postureCopy();
+  setText('equation-kicker', c.kicker);
+  setText('tdr-rate-label', c.rateLabel);
+  setText('integration-step', c.integration(SIM_DT));
+  setText('eq-meta', `${c.eqMetaPrefix} (P_inst ≈ 1.0, Z=${fmt(normalizationZ,4)}).`);
+}
+
+function initCollapsibleSections() {
+  const sections = Array.from(document.querySelectorAll('.controls-panel .panel-section'));
+  sections.forEach((section, idx) => {
+    if (section.dataset.collapsibleInit === '1') return;
+    const label = section.querySelector(':scope > .panel-section-label');
+    if (!label) return;
+
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'section-toggle';
+    toggle.innerHTML = `<span>${label.textContent}</span><span class="section-chevron">▾</span>`;
+
+    const content = document.createElement('div');
+    content.className = 'section-content';
+    while (label.nextSibling) {
+      content.appendChild(label.nextSibling);
+    }
+
+    const isOpenDefault = idx === 0;
+    section.classList.add('collapsible');
+    section.classList.toggle('collapsed', !isOpenDefault);
+    toggle.setAttribute('aria-expanded', isOpenDefault ? 'true' : 'false');
+    toggle.addEventListener('click', () => {
+      const collapsed = section.classList.toggle('collapsed');
+      toggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+    });
+
+    label.replaceWith(toggle);
+    section.appendChild(content);
+    section.dataset.collapsibleInit = '1';
+  });
+}
+
+function renderKaTeXEquations() {
+  if (typeof renderMathInElement !== 'function') return;
+  const target = document.getElementById('equation-katex-area');
+  if (!target) return;
+  renderMathInElement(target, {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\(', right: '\\)', display: false }
+    ],
+    throwOnError: false
+  });
+}
+
+function onDoraLensToggle() {
+  appState.doraLens = document.getElementById('toggle-dora-lens').checked;
+  applyDoraLens();
+  const c = postureCopy();
+  showToast(appState.doraLens ? c.lensOnToast : c.lensOffToast);
+  syncPermalink();
+}
+
+function onPostureModeToggle() {
+  appState.postureMode = document.getElementById('toggle-posture-mode').checked ? 'momentum' : 'strict';
+  applyPostureCopy();
+  const c = postureCopy();
+  showToast(appState.postureMode === 'momentum' ? c.modeOnToast : c.modeOffToast);
+  update();
+  syncPermalink();
+}
+
+const SWEEP_CONFIG = {
+  U: {
+    sliderKey: 'U',
+    min: 0.1, max: 5.0,
+    label: v => 'U=' + fmt(v.U),
+    title: 'P_inst vs. Urgency — holding current settings',
+    thesis: 'Urgency-Induced Instability: moderate U may increase visible activity; beyond a system-dependent threshold it raises fragility faster than output.',
+    curveLabel: 'P_inst as U sweeps 0.1 -> 5',
+    handleLabel: 'Current U — drag chart to sweep',
+    curveColor: '#49a0ec',
+    showCFRToggle: false,
+    getValue: v => v.U,
+    sweep: (v, x) => Object.assign({}, v, { U: x }),
+  },
+  TDR: {
+    sliderKey: 'TDR',
+    min: 0.0, max: 1.0,
+    label: v => 'TDR=' + fmt(v.TDR),
+    title: 'P_inst vs. Technical Debt Ratio — holding current settings',
+    thesis: 'The Compounding Debt Tax: TDR enters as an exponential toll on every unit of nominal output.',
+    curveLabel: 'P_inst as TDR sweeps 0 -> 1',
+    handleLabel: 'Current TDR — drag chart to sweep',
+    curveColor: '#49a0ec',
+    showCFRToggle: false,
+    getValue: v => v.TDR,
+    sweep: (v, x) => Object.assign({}, v, { TDR: x }),
+  },
+  CFR: {
+    sliderKey: 'CFR',
+    min: 0.0, max: 0.6,
+    label: v => 'CFR=' + fmt(v.CFR),
+    title: 'P_inst vs. Change Failure Rate — fragility under pressure',
+    thesis: 'CFR is amplified nonlinearly by urgency via (1-CFR)^U^2.',
+    curveLabel: 'P_inst at current U',
+    handleLabel: 'Current CFR — drag chart to sweep',
+    curveColor: '#49a0ec',
+    showCFRToggle: true,
+    getValue: v => v.CFR,
+    sweep: (v, x) => Object.assign({}, v, { CFR: x }),
+  },
+  M: {
+    sliderKey: 'M',
+    min: 0.1, max: 2.0,
+    label: v => 'M=' + fmt(v.M),
+    title: 'P_inst vs. Developer Morale — holding current settings',
+    thesis: 'Morale is a direct multiplier. Low morale hides in plain sight until degradation becomes severe.',
+    curveLabel: 'P_inst as M sweeps 0.1 -> 2',
+    handleLabel: 'Current M — drag chart to sweep',
+    curveColor: '#49a0ec',
+    showCFRToggle: false,
+    getValue: v => v.M,
+    sweep: (v, x) => Object.assign({}, v, { M: x }),
+  },
+};
+
+function clamp(x, lo, hi) {
+  return Math.max(lo, Math.min(hi, x));
+}
+
+function fmt(x, digits=3) {
+  if (!Number.isFinite(x)) return '—';
+  if (Math.abs(x) >= 100) return x.toFixed(1);
+  if (Math.abs(x) >= 10) return x.toFixed(2);
+  return x.toPrecision(digits);
+}
+
+function cssVar(name, fallback) {
+  const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  return v || fallback;
+}
 
 function getVars() {
   return {
@@ -448,22 +896,46 @@ function computeRawP(v, opts = { urgencyBoost: false }) {
   return (num / den) * terms.cfrTerm * terms.debtAtt;
 }
 
-function computeTerms(v) {
-  const omega     = computeOmega(v);
-  const urgency_exp = Math.pow(v.U, 2);
-  const cfr_term  = Math.pow(1 - v.CFR, urgency_exp);
-  const debt_att  = Math.exp(-v.lam * v.TDR);
-  const throughput = v.V * v.DF / (v.LT + v.MTTR + EPS);
-  const dTDR      = K1*v.U + K2*v.DF + K3*v.Cm - K4*v.R;
-  return { omega, urgency_exp, cfr_term, debt_att, throughput, dTDR };
+function computePInst(v, opts = { urgencyBoost: false }) {
+  return (1 / normalizationZ) * computeRawP(v, opts);
 }
 
-// DISPLAY
+function computePCum(previous, pInst, dt) {
+  return previous + pInst * dt;
+}
 
-function fmt(x, digits=3) {
-  if (x >= 100) return x.toFixed(1);
-  if (x >= 10)  return x.toFixed(2);
-  return x.toPrecision(digits);
+function computeTerms(v, opts = { urgencyBoost: false }) {
+  const omega = computeOmega(v);
+  const debtAtt = Math.exp(-v.lam * v.TDR);
+  const attenuationDriver = clamp(omega * debtAtt * Math.max(0.2, v.M / 1.2), 0.05, 1.25);
+  const U_t = v.U * (1 + 0.6 * (1 - attenuationDriver));
+  const DF_t = v.DF * attenuationDriver;
+  const urgencyExp = Math.pow(U_t, 2);
+  const cfrTerm = Math.pow(1 - v.CFR, urgencyExp);
+  const activity = opts.urgencyBoost ? urgencyActivityBoost(U_t) : 1;
+  const throughputNominal = v.V * v.DF / (v.LT + v.MTTR + EPS);
+  const throughput = v.V * DF_t / (v.LT + v.MTTR + EPS);
+  const growthDrivers = (K1 * urgencyExp + K2 * DF_t + K3 * v.Cm) * attenuationDriver;
+  const dTDR = growthDrivers - K4 * v.R;
+  return { omega, urgencyExp, cfrTerm, debtAtt, throughput, throughputNominal, dTDR, activity, attenuationDriver, U_t, DF_t };
+}
+
+function stepDebtOnlyState(v, dt, opts = { urgencyBoost: false }) {
+  const t = computeTerms(v, opts);
+  const next = v.TDR + t.dTDR * dt;
+  return { ...v, TDR: clamp(next, 0, 1) };
+}
+
+function stepCoupledState(v, dt, opts = { urgencyBoost: false }) {
+  const base = stepDebtOnlyState(v, dt, opts);
+  const urgencyExcess = Math.max(0, v.U - 1);
+  const debtPressure = Math.max(0, base.TDR - 0.4);
+  return {
+    ...base,
+    M: clamp(base.M - 0.015 * urgencyExcess * dt - 0.01 * debtPressure * dt, 0.1, 2.0),
+    LT: clamp(base.LT * (1 + 0.03 * debtPressure * dt), 0.5, 720),
+    CFR: clamp(base.CFR + 0.005 * urgencyExcess * debtPressure * dt, 0, 0.6),
+  };
 }
 
 function simulateTrajectory(v0, periods = 24, dt = SIM_DT, options = {}) {
@@ -682,117 +1154,265 @@ function update() {
   syncPermalink();
 }
 
-// diags
-
-function buildDiagnosis(v, t, P) {
-  const notes = [];
-
-  if (v.U > 3.0) {
-    notes.push(`<strong>Urgency-Induced Instability:</strong> U=${fmt(v.U)} is applying a failure amplification exponent of ${fmt(t.urgency_exp,3)} to CFR. The literature suggests additional urgency is often prescribed as the corrective measure.`);
-  } else if (v.U > 2.0) {
-    notes.push(`<strong>Elevated urgency</strong> (U=${fmt(v.U)}) is amplifying fragility. The threshold reliably discovered through direct experimentation may be near.`);
-  }
-
-  if (v.M < 0.5) {
-    notes.push(`<strong>Degraded morale regime</strong> (M=${fmt(v.M)}): throughput metrics may remain superficially acceptable while resilience and discretionary problem-solving degrade. These are leading, not lagging, indicators.`);
-  }
-
-  if (v.E > 0.6 && v.Cm > 0.5) {
-    notes.push(`<strong>Maximum organizational entropy:</strong> elevated E and Cₘ predict a coordination-fragmented state. Local effort will increase without system-level convergence.`);
-  }
-
-  if (v.TDR > 0.6) {
-    notes.push(`<strong>Debt dominance:</strong> TDR=${fmt(v.TDR)} yields an attenuation factor of ${fmt(t.debt_att,3)}. In the absence of sustained remediation, a non-trivial fraction of lead time is consumed by rework and caution.`);
-  }
-
-  if (v.R < 0.05 && v.TDR > 0.3) {
-    notes.push(`<strong>Remediation insufficient:</strong> R≈0 under active delivery pressure. Debt trajectory is divergent. Future throughput is being mortgaged.`);
-  }
-
-  if (v.CFR > 0.3 && v.U > 1.5) {
-    notes.push(`<strong>Fragility under pressure:</strong> a CFR of ${fmt(v.CFR)} combined with U=${fmt(v.U)} produces (1−CFR)^(U²) = ${fmt(t.cfr_term,3)}. The combination is nonlinearly costly.`);
-  }
-
-  if (t.omega < 0.5) {
-    notes.push(`<strong>Organizational coherence Ω=${fmt(t.omega,3)}:</strong> responsibility, authority, expertise, and strategic direction are insufficiently aligned. Most monitoring frameworks will not detect this.`);
-  }
-
-  if (P > 5) {
-    notes.push(`<strong>Elite delivery posture.</strong> DORA variables dominate. The model reduces toward a stable high-trust system.`);
-  } else if (P > 1) {
-    notes.push(`<strong>Functional delivery system.</strong> Visible room for improvement in organizational coherence or debt reduction.`);
-  } else if (P > 0.2) {
-    notes.push(`<strong>Sub-optimal delivery.</strong> The system produces output, but organizational attenuation is extracting a significant premium.`);
-  } else {
-    notes.push(`<strong>Critical degradation.</strong> The system is producing negligible realized output. Nominal activity may remain high. The two conditions are, in practice, only loosely coupled.`);
-  }
-
-  return notes.join('<br><br>') || 'System within normal parameters. Adjust variables to explore.';
+function updateWaterfall(v, terms, pInst) {
+  const nominal = terms.throughputNominal;
+  const rows = [
+    `Nominal throughput ${fmt(nominal,4)}`,
+    `x Morale ${fmt(v.M,4)}`,
+    `x Omega ${fmt(terms.omega,4)}`,
+    `x Effective DF(t)/DF ${fmt(terms.attenuationDriver,4)}`,
+    `x Remediation capacity ${fmt(1-v.R,4)}`,
+    `x CFR/U term ${fmt(terms.cfrTerm,4)}`,
+    `x Debt drag ${fmt(terms.debtAtt,4)}`,
+    `= Realized output ${fmt(pInst,4)}`
+  ];
+  document.getElementById('waterfall-view').innerHTML = rows.join('<br>');
 }
 
-// ── SWEEP STATE ───────────────────────────────────────────────────
+function enforceDebtSaturation(v) {
+  const c = postureCopy();
+  const maxVelocity = 15 * Math.exp(-0.5 * v.TDR);
+  if (v.DF <= maxVelocity) return v;
+  const reduced = Math.max(maxVelocity, v.DF * 0.95);
+  document.getElementById('sl-DF').value = reduced;
+  if (!appState.dfSaturationToastAt || Date.now() - appState.dfSaturationToastAt > 2000) {
+    showToast(c.dfToast);
+    appState.dfSaturationToastAt = Date.now();
+  }
+  return getVars();
+}
 
-const HANDLE_R = 8;
-let chartDragging = false;
-let activeSweep = 'U';   // 'U' | 'TDR' | 'CFR' | 'M'
-let cfrMode = 'current'; // 'current' | 'low' | 'high'
+function updateBaselineCompare(v) {
+  const el = document.getElementById('baseline-compare');
+  if (!baselineSnapshot) {
+    el.textContent = 'No baseline pinned yet.';
+    return;
+  }
+  const nowTerms = computeTerms(v, { urgencyBoost: appState.urgencyBoost });
+  const baseTerms = computeTerms(baselineSnapshot.vars, { urgencyBoost: baselineSnapshot.urgencyBoost });
+  const nowP = computePInst(v, { urgencyBoost: appState.urgencyBoost });
+  const baseP = computePInst(baselineSnapshot.vars, { urgencyBoost: baselineSnapshot.urgencyBoost });
+  const pct = (a, b) => b === 0 ? 'n/a' : ((100 * (a - b)) / Math.abs(b)).toFixed(1) + '%';
+  el.innerHTML =
+    `P_inst: ${pct(nowP, baseP)}<br>` +
+    `Omega: ${pct(nowTerms.omega, baseTerms.omega)}<br>` +
+    `Debt drag: ${pct(nowTerms.debtAtt, baseTerms.debtAtt)}<br>` +
+    `Urgency term: ${pct(nowTerms.cfrTerm, baseTerms.cfrTerm)}`;
+}
 
-const SWEEP_CONFIG = {
-  U: {
-    sliderKey: 'U',
-    min: 0.1, max: 5.0,
-    label: v => 'U=' + fmt(v.U),
-    xLabel: min => 'U=0.1',
-    xLabelMax: () => 'U=5.0',
-    title: 'P\u1D63 vs. Urgency \u2014 holding current settings',
-    thesis: 'Urgency-Induced Instability: moderate U may increase visible activity; beyond a system-dependent threshold it raises fragility faster than output. That threshold is reliably discovered through direct experimentation.',
-    curveLabel: 'P\u1D63 as U sweeps 0.1 \u2192 5',
-    handleLabel: 'Current U \u2014 drag chart to sweep',
-    curveColor: '#5af078',
-    showCFRToggle: false,
-    getValue: v => v.U,
-    sweep: (v, x) => Object.assign({}, v, { U: x }),
-  },
-  TDR: {
-    sliderKey: 'TDR',
-    min: 0.0, max: 1.0,
-    label: v => 'TDR=' + fmt(v.TDR),
-    title: 'P\u1D63 vs. Technical Debt Ratio \u2014 holding current settings',
-    thesis: 'The Compounding Debt Tax: TDR enters as e\u207B\u02E1\u22C5\u1D40\u1D30\u1D3F — an exponential toll on every unit of nominal output. Remediation reduces visible throughput now so the future can exist at all.',
-    curveLabel: 'P\u1D63 as TDR sweeps 0 \u2192 1',
-    handleLabel: 'Current TDR \u2014 drag chart to sweep',
-    curveColor: '#5af078',
-    showCFRToggle: false,
-    getValue: v => v.TDR,
-    sweep: (v, x) => Object.assign({}, v, { TDR: x }),
-  },
-  CFR: {
-    sliderKey: 'CFR',
-    min: 0.0, max: 0.6,
-    label: v => 'CFR=' + fmt(v.CFR),
-    title: 'P\u1D63 vs. Change Failure Rate \u2014 fragility under pressure',
-    thesis: 'CFR is amplified nonlinearly by urgency via (1\u2212CFR)^U\u00B2. Toggle the comparison lines to see how the same failure rate costs far more under pressure than in a calm system.',
-    curveLabel: 'P\u1D63 at current U',
-    handleLabel: 'Current CFR \u2014 drag chart to sweep',
-    curveColor: '#5af078',
-    showCFRToggle: true,
-    getValue: v => v.CFR,
-    sweep: (v, x) => Object.assign({}, v, { CFR: x }),
-  },
-  M: {
-    sliderKey: 'M',
-    min: 0.1, max: 2.0,
-    label: v => 'M=' + fmt(v.M),
-    title: 'P\u1D63 vs. Developer Morale \u2014 holding current settings',
-    thesis: 'Morale is a linear multiplier — the curve is a straight line, which is the point. Degradation is undramatic, which is why organizations miss it until it is severe. M\u202F<\u202F1 is a leading indicator invisible to most monitoring frameworks.',
-    curveLabel: 'P\u1D63 as M sweeps 0.1 \u2192 2',
-    handleLabel: 'Current M \u2014 drag chart to sweep',
-    curveColor: '#5af078',
-    showCFRToggle: false,
-    getValue: v => v.M,
-    sweep: (v, x) => Object.assign({}, v, { M: x }),
-  },
-};
+function updateSensitivity(v) {
+
+
+  const keys = ['U', 'LT', 'TDR', 'M', 'CFR', 'DF', 'R'];
+  const baseline = computePInst(v, { urgencyBoost: appState.urgencyBoost });
+  const out = [];
+  keys.forEach(key => {
+    const meta = SLIDER_META[key];
+    const d = Math.max(0.0001, Math.abs(v[key]) * 0.05);
+    const plus = { ...v, [key]: clamp(v[key] + d, meta.min, meta.max) };
+    const minus = { ...v, [key]: clamp(v[key] - d, meta.min, meta.max) };
+    const pPlus = computePInst(plus, { urgencyBoost: appState.urgencyBoost });
+    const pMinus = computePInst(minus, { urgencyBoost: appState.urgencyBoost });
+    const sens = Math.abs((pPlus - pMinus) / 2);
+    out.push({ key, sens, sign: pPlus > baseline ? '+' : '-' });
+  });
+  out.sort((a, b) => b.sens - a.sens);
+  document.getElementById('sensitivity-ranking').innerHTML = out.slice(0, 4)
+    .map((row, idx) => `${idx + 1}. ${row.key} (${row.sign}${fmt(row.sens,4)})`)
+    .join('<br>');
+}
+
+function pinBaseline() {
+  baselineSnapshot = {
+    vars: getVars(),
+    urgencyBoost: appState.urgencyBoost,
+  };
+
+
+  showToast('Baseline pinned for comparison.');
+  update();
+}
+
+function showToast(msg) {
+  const stack = document.getElementById('toast-stack');
+  const node = document.createElement('div');
+  node.className = 'toast';
+  node.textContent = msg;
+  stack.appendChild(node);
+  setTimeout(() => node.classList.add('visible'), 10);
+  setTimeout(() => {
+    node.classList.remove('visible');
+    setTimeout(() => node.remove(), 250);
+  }, 2200);
+}
+
+function setVizMode(mode) {
+  appState.vizMode = mode;
+  document.getElementById('viz-tab-sweep').classList.toggle('active', mode === 'sweep');
+  document.getElementById('viz-tab-time').classList.toggle('active', mode === 'time');
+  document.getElementById('panel-sweep').classList.toggle('active', mode === 'sweep');
+  document.getElementById('panel-time').classList.toggle('active', mode === 'time');
+  if (mode === 'time') renderTimeProjectionFrame();
+  else renderMainOutput(getVars());
+  syncPermalink();
+}
+
+function setProjectionMode(mode) {
+  appState.projectionMode = mode;
+  showToast(mode === 'coupled' ? 'Realistic dysfunction coupling enabled.' : 'Debt-only projection mode enabled.');
+  update();
+}
+
+function onUrgencyBoostToggle() {
+  appState.urgencyBoost = document.getElementById('toggle-urgency-boost').checked;
+  showToast(appState.urgencyBoost ? 'Urgency activity boost enabled.' : 'Urgency activity boost disabled.');
+  update();
+}
+
+function onFreezeControlsToggle() {
+  appState.freezeControls = document.getElementById('sim-freeze-controls').checked;
+  showToast(appState.freezeControls ? 'Simulation keeps controls fixed.' : 'Simulation now moves live controls.');
+  update();
+}
+
+function updateSimHorizon() {
+  appState.simHorizon = +document.getElementById('sim-horizon').value;
+  setText('sim-horizon-val', `${appState.simHorizon} periods`);
+  appState.simTime = Math.min(appState.simTime, appState.simHorizon);
+  update();
+}
+
+function updateSimTimeFromSlider() {
+  appState.simTime = +document.getElementById('sim-time').value;
+  updateSimReadout();
+  drawSimChart();
+  renderTimeProjectionFrame();
+  syncPermalink();
+}
+
+function updateSimReadout() {
+  const c = postureCopy();
+  setText('sim-time-val', `t = ${fmt(appState.simTime,4)}`);
+  const row = rowAtTime(appState.simRows, appState.simTime);
+  if (!row) return;
+  if (row.floorActive && !appState.floorToastShown) {
+    showToast(c.floorToast);
+    appState.floorToastShown = true;
+  }
+  if (!row.floorActive) appState.floorToastShown = false;
+  setText('ticker-pinst', fmt(row.P_inst, 4));
+  setText('ticker-preal', fmt(row.P_cum, 4));
+  setText('ticker-tdr', fmt(row.TDR, 4));
+  setText('sim-readout',
+    `At t = ${fmt(row.time,4)} (Δt=${SIM_DT}): projected TDR = ${fmt(row.TDR,4)}, instantaneous output = ${fmt(row.P_inst,4)}, cumulative P_real(t) = ${fmt(row.P_cum,4)}.`);
+}
+
+function setSimSpeed(v) {
+  appState.simSpeed = +v;
+  syncPermalink();
+}
+
+function toggleSimPlay() {
+  appState.simPlaying = !appState.simPlaying;
+  document.getElementById('sim-play-btn').textContent = appState.simPlaying ? 'Pause' : 'Play';
+  document.getElementById('integration-step').classList.toggle('active', appState.simPlaying);
+  if (appState.simPlaying) {
+    appState.lastTs = null;
+    if (appState.rafToken) cancelAnimationFrame(appState.rafToken);
+    appState.rafToken = requestAnimationFrame(tickSim);
+  } else if (appState.rafToken) {
+    cancelAnimationFrame(appState.rafToken);
+    appState.rafToken = null;
+  }
+}
+
+function tickSim(ts) {
+  if (!appState.simPlaying) return;
+  if (appState.lastTs == null) appState.lastTs = ts;
+  const dtSec = (ts - appState.lastTs) / 1000;
+  appState.lastTs = ts;
+  appState.simTime = clamp(appState.simTime + dtSec * appState.simSpeed, 0, appState.simHorizon);
+  document.getElementById('sim-time').value = appState.simTime;
+  updateSimReadout();
+  drawSimChart();
+  renderTimeProjectionFrame();
+  if (appState.simTime >= appState.simHorizon) {
+    appState.simPlaying = false;
+    document.getElementById('sim-play-btn').textContent = 'Play';
+    document.getElementById('integration-step').classList.remove('active');
+    appState.rafToken = null;
+    syncPermalink();
+    return;
+  }
+  appState.rafToken = requestAnimationFrame(tickSim);
+}
+
+function drawSimChart() {
+  const canvas = document.getElementById('sim-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.offsetWidth;
+  const H = canvas.offsetHeight;
+  canvas.width = W;
+  canvas.height = H;
+  const rows = appState.simRows;
+  if (!rows.length) return;
+
+  const selected = [];
+  if (appState.showSeries.pInst) selected.push({ key: 'P_inst', color: cssVar('--viz-primary', '#49a0ec') });
+  if (appState.showSeries.pCum) selected.push({ key: 'P_cum', color: cssVar('--viz-handle', '#e8a838') });
+  if (appState.showSeries.tdr) selected.push({ key: 'TDR', color: cssVar('--viz-compare', '#6f54d6') });
+  if (appState.showSeries.coupling) selected.push({ key: 'omega', color: cssVar('--accent', '#0b3954') });
+  if (!selected.length) return;
+
+  const values = selected.flatMap(s => rows.map(r => r[s.key]));
+  const maxVal = Math.max(...values, 1e-6) * 1.1;
+  const xOf = t => (t / appState.simHorizon) * W;
+  const yOf = val => H - (val / maxVal) * H;
+
+  ctx.clearRect(0, 0, W, H);
+  ctx.strokeStyle = '#d5d8df';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const y = H - (i / 4) * H;
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+  }
+
+  selected.forEach(s => {
+    ctx.beginPath();
+    ctx.strokeStyle = s.color;
+    ctx.lineWidth = 2;
+    rows.forEach((r, idx) => {
+      const x = xOf(r.time);
+      const y = yOf(r[s.key]);
+      if (idx === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+  });
+
+  const scrubX = xOf(appState.simTime);
+  ctx.strokeStyle = '#20293a';
+  ctx.setLineDash([4, 3]);
+  ctx.beginPath();
+  ctx.moveTo(scrubX, 0);
+  ctx.lineTo(scrubX, H);
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+function adoptSimulatedState() {
+  const row = rowAtTime(appState.simRows, appState.simTime);
+  if (!row) return;
+  document.getElementById('sl-TDR').value = row.TDR;
+  if (appState.projectionMode === 'coupled') {
+    document.getElementById('sl-M').value = row.M;
+    document.getElementById('sl-LT').value = row.LT;
+    document.getElementById('sl-CFR').value = row.CFR;
+  }
+  showToast('Projected state copied to live controls.');
+  update();
+}
 
 function setSweep(key) {
   activeSweep = key;
@@ -815,8 +1435,6 @@ function setCFRMode(mode) {
   });
   drawChart(getVars());
 }
-
-// RENDER CHART
 
 function drawChart(v) {
   const canvas = document.getElementById('sparkline');
@@ -949,8 +1567,6 @@ function drawChart(v) {
   ctx.textAlign = 'left';
   ctx.fillText(fmt(pMax, 3), 2, 12);
 }
-
-// chart drag
 
 function canvasXtoSweepVal(canvas, clientX) {
   const cfg = SWEEP_CONFIG[activeSweep];
@@ -1119,51 +1735,12 @@ function applyInitialUiState() {
   setVizMode(appState.vizMode);
   setSweep(activeSweep);
   setCFRMode(cfrMode);
-// pRESETS
-
-const presets = {
-  elite: {
-    DF:1.0, LT:0.5, CFR:0.02, MTTR:0.5,
-    M:1.4, U:0.5, Cm:0.05, E:0.05,
-    TDR:0.05, R:0.2, V:1.5, lam:1.0, alpha:1.0, beta:1.0
-  },
-  healthy: {
-    DF:0.25, LT:4, CFR:0.08, MTTR:2,
-    M:1.1, U:1.0, Cm:0.15, E:0.15,
-    TDR:0.2, R:0.15, V:1.0, lam:1.0, alpha:1.0, beta:1.0
-  },
-  stressed: {
-    DF:0.5, LT:8, CFR:0.15, MTTR:4,
-    M:0.75, U:2.5, Cm:0.3, E:0.4,
-    TDR:0.35, R:0.05, V:1.0, lam:1.0, alpha:1.0, beta:1.0
-  },
-  legacy: {
-    DF:0.05, LT:48, CFR:0.25, MTTR:12,
-    M:0.8, U:1.2, Cm:0.3, E:0.2,
-    TDR:0.7, R:0.1, V:0.8, lam:1.5, alpha:1.0, beta:1.0
-  },
-  crisis: {
-    DF:0.1, LT:24, CFR:0.45, MTTR:48,
-    M:0.4, U:4.0, Cm:0.5, E:0.6,
-    TDR:0.5, R:0.0, V:0.5, lam:1.0, alpha:1.5, beta:1.5
-  },
-  entropy: {
-    DF:0.2, LT:336, CFR:0.55, MTTR:120,
-    M:0.2, U:4.8, Cm:0.9, E:0.9,
-    TDR:0.9, R:0.0, V:0.5, lam:3.0, alpha:3.0, beta:3.0
-  }
-};
-
-function applyPreset(name) {
-  const p = presets[name];
-  for (const [k, val] of Object.entries(p)) {
-    const el = document.getElementById('sl-' + k);
-    if (el) el.value = val;
-  }
-  update();
 }
 
-//  INIT
+function calibrateNormalization() {
+  normalizationZ = computeRawP(presets.healthy, { urgencyBoost: false }) || 1.0;
+  applyPostureCopy();
+}
 
 window.addEventListener('resize', () => {
   drawChart(getVars());
@@ -1178,5 +1755,5 @@ applyInitialUiState();
 update();
 window.addEventListener('load', renderKaTeXEquations);
 </script>
-</body>
-</html>
+
+</body></html>

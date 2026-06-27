@@ -721,32 +721,51 @@ function applyPostureCopy() {
 function initCollapsibleSections() {
   const sections = Array.from(document.querySelectorAll('.controls-panel .panel-section'));
   sections.forEach((section, idx) => {
-    if (section.dataset.collapsibleInit === '1') return;
     const label = section.querySelector(':scope > .panel-section-label');
-    if (!label) return;
+    let toggle = section.querySelector(':scope > .section-toggle');
+    let content = section.querySelector(':scope > .section-content');
 
-    const toggle = document.createElement('button');
-    toggle.type = 'button';
-    toggle.className = 'section-toggle';
-    toggle.innerHTML = `<span>${label.textContent}</span><span class="section-chevron">▾</span>`;
-
-    const content = document.createElement('div');
-    content.className = 'section-content';
-    while (label.nextSibling) {
-      content.appendChild(label.nextSibling);
+    if (!toggle) {
+      if (!label) return;
+      toggle = document.createElement('button');
+      toggle.type = 'button';
+      toggle.className = 'section-toggle';
+      toggle.innerHTML = `<span>${label.textContent}</span><span class="section-chevron">▾</span>`;
+      label.replaceWith(toggle);
     }
 
-    const isOpenDefault = idx === 0;
-    section.classList.add('collapsible');
-    section.classList.toggle('collapsed', !isOpenDefault);
-    toggle.setAttribute('aria-expanded', isOpenDefault ? 'true' : 'false');
-    toggle.addEventListener('click', () => {
-      const collapsed = section.classList.toggle('collapsed');
-      toggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
-    });
+    if (!content) {
+      content = document.createElement('div');
+      content.className = 'section-content';
+      let node = toggle.nextSibling;
+      while (node) {
+        const next = node.nextSibling;
+        content.appendChild(node);
+        node = next;
+      }
+      section.appendChild(content);
+    }
 
-    label.replaceWith(toggle);
-    section.appendChild(content);
+    section.classList.add('collapsible');
+    const hasExplicitState = section.classList.contains('collapsed') || toggle.hasAttribute('aria-expanded');
+    if (!hasExplicitState) {
+      section.classList.toggle('collapsed', idx !== 0);
+    }
+
+    const syncExpanded = () => {
+      const isCollapsed = section.classList.contains('collapsed');
+      toggle.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+    };
+    syncExpanded();
+
+    if (toggle.dataset.collapseBound !== '1') {
+      toggle.addEventListener('click', () => {
+        section.classList.toggle('collapsed');
+        syncExpanded();
+      });
+      toggle.dataset.collapseBound = '1';
+    }
+
     section.dataset.collapsibleInit = '1';
   });
 }

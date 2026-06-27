@@ -997,6 +997,128 @@ function initChartDrag() {
   window.addEventListener('touchend', () => { chartDragging = false; });
 }
 
+function applyPreset(name) {
+  const p = presets[name];
+  document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+  const activeBtn = document.getElementById('preset-' + name);
+  if (activeBtn) activeBtn.classList.add('active');
+  setVars(p);
+  update();
+}
+
+function toQueryState() {
+  const v = getVars();
+  const q = {};
+  Object.keys(SLIDER_META).forEach(k => q[k] = v[k]);
+  q.tab = appState.vizMode;
+  q.projectionMode = appState.projectionMode;
+  q.freeze = appState.freezeControls ? 1 : 0;
+  q.doraLens = appState.doraLens ? 1 : 0;
+  q.posture = appState.postureMode;
+  q.urgencyBoost = appState.urgencyBoost ? 1 : 0;
+  q.horizon = appState.simHorizon;
+  q.time = +appState.simTime.toFixed(3);
+  q.speed = appState.simSpeed;
+  q.sweep = activeSweep;
+  q.cfrMode = cfrMode;
+  q.series = [
+    appState.showSeries.pInst ? 'pinst' : '',
+    appState.showSeries.pCum ? 'pcum' : '',
+    appState.showSeries.tdr ? 'tdr' : '',
+    appState.showSeries.coupling ? 'coupling' : ''
+  ].filter(Boolean).join(',');
+  return q;
+}
+
+function syncPermalink() {
+  if (suppressUrlSync) return;
+  const params = new URLSearchParams();
+  const q = toQueryState();
+  Object.keys(q).forEach(k => params.set(k, String(q[k])));
+  history.replaceState(null, '', `${location.pathname}?${params.toString()}`);
+}
+
+function hydrateFromUrl() {
+  const sp = new URLSearchParams(location.search);
+  if (!sp.size) return;
+  suppressUrlSync = true;
+  Object.keys(SLIDER_META).forEach(key => {
+    if (!sp.has(key)) return;
+    const v = +sp.get(key);
+    if (!Number.isFinite(v)) return;
+    const meta = SLIDER_META[key];
+    document.getElementById('sl-' + key).value = clamp(v, meta.min, meta.max);
+  });
+  const tab = sp.get('tab');
+  if (tab === 'time' || tab === 'sweep') appState.vizMode = tab;
+  const mode = sp.get('projectionMode');
+  if (mode === 'debt' || mode === 'coupled') appState.projectionMode = mode;
+  const freeze = sp.get('freeze');
+  if (freeze === '0' || freeze === '1' || freeze === 'true' || freeze === 'false') {
+    appState.freezeControls = freeze === '1' || freeze === 'true';
+  }
+  const lens = sp.get('doraLens');
+  if (lens === '0' || lens === '1' || lens === 'true' || lens === 'false') {
+    appState.doraLens = lens === '1' || lens === 'true';
+  }
+  const posture = sp.get('posture');
+  if (posture === 'strict' || posture === 'momentum') appState.postureMode = posture;
+  const ub = sp.get('urgencyBoost');
+  appState.urgencyBoost = ub === '1' || ub === 'true';
+  const horizon = +sp.get('horizon');
+  if (Number.isFinite(horizon)) appState.simHorizon = clamp(horizon, 0, 36);
+  const stime = +sp.get('time');
+  if (Number.isFinite(stime)) appState.simTime = Math.max(0, stime);
+  const speed = +sp.get('speed');
+  if (Number.isFinite(speed)) appState.simSpeed = speed;
+  const sweep = sp.get('sweep');
+  if (SWEEP_CONFIG[sweep]) activeSweep = sweep;
+  const modeCfr = sp.get('cfrMode');
+  if (['current', 'low', 'high'].includes(modeCfr)) cfrMode = modeCfr;
+  const series = (sp.get('series') || '').split(',').filter(Boolean);
+  if (series.length) {
+    appState.showSeries.pInst = series.includes('pinst');
+    appState.showSeries.pCum = series.includes('pcum');
+    appState.showSeries.tdr = series.includes('tdr');
+    appState.showSeries.coupling = series.includes('coupling');
+  }
+  suppressUrlSync = false;
+}
+
+function copyPermalink() {
+  const url = location.href;
+  if (!navigator.clipboard || !navigator.clipboard.writeText) {
+    showToast('Clipboard API unavailable in this browser context.');
+    return;
+  }
+  navigator.clipboard.writeText(url).then(() => {
+    showToast('Permalink copied to clipboard.');
+  }).catch(() => {
+    showToast('Could not copy permalink automatically.');
+  });
+}
+
+function applyInitialUiState() {
+  document.getElementById('sim-horizon').value = appState.simHorizon;
+  document.getElementById('sim-horizon-val').textContent = `${appState.simHorizon} periods`;
+  document.getElementById('sim-time').value = appState.simTime;
+  document.getElementById('sim-speed').value = String(appState.simSpeed);
+  document.getElementById('sim-mode').value = appState.projectionMode;
+  document.getElementById('sim-freeze-controls').checked = appState.freezeControls;
+  document.getElementById('toggle-dora-lens').checked = appState.doraLens;
+  document.getElementById('toggle-posture-mode').checked = appState.postureMode === 'momentum';
+  document.getElementById('toggle-urgency-boost').checked = appState.urgencyBoost;
+  document.getElementById('toggle-pinst').checked = appState.showSeries.pInst;
+  document.getElementById('toggle-pcum').checked = appState.showSeries.pCum;
+  document.getElementById('toggle-tdr').checked = appState.showSeries.tdr;
+  document.getElementById('toggle-coupling').checked = appState.showSeries.coupling;
+  applyPostureCopy();
+  initControlRowSemantics();
+  applySliderSemanticHints();
+  applyDoraLens();
+  setVizMode(appState.vizMode);
+  setSweep(activeSweep);
+  setCFRMode(cfrMode);
 // pRESETS
 
 const presets = {

@@ -42,7 +42,7 @@
       </div>
       <div class="control-inline">
         <label for="toggle-posture-mode">
-          <input type="checkbox" id="toggle-posture-mode" onchange="onPostureModeToggle()">
+          <input type="checkbox" id="toggle-posture-mode" checked="" onchange="onPostureModeToggle()">
           Institutional Momentum Mode (off = Strict Scientific Posture)
         </label>
       </div>
@@ -60,8 +60,8 @@
         </label>
       </div>
       <div class="control-actions">
-        <button type="button" onclick="pinBaseline()">Pin Baseline</button>
-        <button type="button" onclick="copyPermalink()">Copy Permalink</button>
+        <button type="button" id="action-pin-baseline" onclick="pinBaseline()">Pin Baseline</button>
+        <button type="button" id="action-copy-permalink" onclick="copyPermalink()">Copy Permalink</button>
       </div>
     </div></div>
 
@@ -107,7 +107,7 @@
         </div>
         <div class="control-desc">Deployments per day. Elite: &gt;1/day. Low: &lt;1/month.</div>
         <label class="sr-only" for="sl-DF">Deployment Frequency</label>
-        <input type="range" id="sl-DF" aria-label="Deployment Frequency" min="0.01" max="20" step="0.01" value="4" oninput="update()" title="Higher deployment frequency is usually favorable." aria-description="Higher deployment frequency is usually favorable.">
+        <input type="range" id="sl-DF" aria-label="Deployment Frequency" min="0.01" max="20" step="0.01" value="4" oninput="update()">
       </div>
 
       <div class="control-row" data-var="LT">
@@ -117,7 +117,7 @@
         </div>
         <div class="control-desc">Hours from commit to production. Elite: &lt;1hr. Low: &gt;1 month.</div>
         <label class="sr-only" for="sl-LT">Lead Time for Changes</label>
-        <input type="range" id="sl-LT" aria-label="Lead Time for Changes" min="0.5" max="720" step="0.5" value="4" oninput="update()" title="Lower lead time is favorable." aria-description="Lower lead time is favorable.">
+        <input type="range" id="sl-LT" aria-label="Lead Time for Changes" min="0.5" max="720" step="0.5" value="4" oninput="update()">
       </div>
 
       <div class="control-row" data-var="CFR">
@@ -127,7 +127,7 @@
         </div>
         <div class="control-desc">Fraction of changes causing incidents. Elite: 0–5%. Low: 46–60%.</div>
         <label class="sr-only" for="sl-CFR">Change Failure Rate</label>
-        <input type="range" id="sl-CFR" aria-label="Change Failure Rate" min="0" max="0.6" step="0.01" value="0.05" oninput="update()" title="Lower change failure rate is favorable." aria-description="Lower change failure rate is favorable.">
+        <input type="range" id="sl-CFR" aria-label="Change Failure Rate" min="0" max="0.6" step="0.01" value="0.05" oninput="update()">
       </div>
 
       <div class="control-row" data-var="MTTR">
@@ -137,7 +137,7 @@
         </div>
         <div class="control-desc">Hours to recover from failure. Elite: &lt;1hr. Low: &gt;1 week.</div>
         <label class="sr-only" for="sl-MTTR">Mean Time to Restore</label>
-        <input type="range" id="sl-MTTR" aria-label="Mean Time to Restore" min="0.1" max="336" step="0.1" value="0.5" oninput="update()" title="Lower restore time is favorable." aria-description="Lower restore time is favorable.">
+        <input type="range" id="sl-MTTR" aria-label="Mean Time to Restore" min="0.1" max="336" step="0.1" value="0.5" oninput="update()">
       </div>
     </div></div>
 
@@ -152,7 +152,7 @@
         </div>
         <div class="control-desc">Ratio of energizing work to chronic toil. &lt;1 = degradation regime.</div>
         <label class="sr-only" for="sl-M">Developer Morale Multiplier</label>
-        <input type="range" id="sl-M" aria-label="Developer Morale Multiplier" min="0.1" max="2.0" step="0.05" value="1.0" oninput="update()" title="Higher morale multiplier is favorable." aria-description="Higher morale multiplier is favorable.">
+        <input type="range" id="sl-M" aria-label="Developer Morale Multiplier" min="0.1" max="2.0" step="0.05" value="1.0" oninput="update()">
       </div>
 
       <div class="control-row" data-var="U">
@@ -162,7 +162,7 @@
         </div>
         <div class="control-desc">Externally imposed schedule pressure. Applied as exponent on (1−CFR)^U². Proceed with caution.</div>
         <label class="sr-only" for="sl-U">Management Urgency</label>
-        <input type="range" id="sl-U" aria-label="Management Urgency" min="0.1" max="5.0" step="0.05" value="1.0" oninput="update()" title="Urgency is nonlinear: small increases can drive visible activity, sustained high urgency destabilizes." aria-description="Urgency is nonlinear: small increases can drive visible activity, sustained high urgency destabilizes.">
+        <input type="range" id="sl-U" aria-label="Management Urgency" min="0.1" max="5.0" step="0.05" value="1.0" oninput="update()">
       </div>
 
       <div class="control-row" data-var="Cm">
@@ -172,7 +172,7 @@
         </div>
         <div class="control-desc">Misalignment of responsibility, authority, and actual capability.</div>
         <label class="sr-only" for="sl-Cm">Competence Mismatch</label>
-        <input type="range" id="sl-Cm" aria-label="Competence Mismatch" min="0" max="1.0" step="0.01" value="0.1" oninput="update()" title="Lower competence mismatch is favorable." aria-description="Lower competence mismatch is favorable.">
+        <input type="range" id="sl-Cm" aria-label="Competence Mismatch" min="0" max="1.0" step="0.01" value="0.1" oninput="update()">
       </div>
 
       <div class="control-row" data-var="E">
@@ -182,7 +182,7 @@
         </div>
         <div class="control-desc">Strategic oscillation, reprioritization churn, initiative reversals.</div>
         <label class="sr-only" for="sl-E">Executive Volatility</label>
-        <input type="range" id="sl-E" aria-label="Executive Volatility" min="0" max="1.0" step="0.01" value="0.1" oninput="update()" title="Lower executive volatility is favorable." aria-description="Lower executive volatility is favorable.">
+        <input type="range" id="sl-E" aria-label="Executive Volatility" min="0" max="1.0" step="0.01" value="0.1" oninput="update()">
       </div>
     </div></div>
 
@@ -197,7 +197,7 @@
         </div>
         <div class="control-desc">Fraction of capacity consumed by historical shortcuts and rework burden.</div>
         <label class="sr-only" for="sl-TDR">Technical Debt Ratio</label>
-        <input type="range" id="sl-TDR" aria-label="Technical Debt Ratio" min="0" max="1.0" step="0.01" value="0.1" oninput="update()" title="Lower technical debt ratio is favorable." aria-description="Lower technical debt ratio is favorable.">
+        <input type="range" id="sl-TDR" aria-label="Technical Debt Ratio" min="0" max="1.0" step="0.01" value="0.1" oninput="update()">
       </div>
 
       <div class="control-row" data-var="R">
@@ -207,7 +207,7 @@
         </div>
         <div class="control-desc">Capacity diverted to debt repayment. Subtracts from visible throughput; benefits are deferred.</div>
         <label class="sr-only" for="sl-R">Remediation Rate</label>
-        <input type="range" id="sl-R" aria-label="Remediation Rate" min="0" max="0.9" step="0.01" value="0.1" oninput="update()" title="Remediation is a short-term cost and long-term benefit." aria-description="Remediation is a short-term cost and long-term benefit.">
+        <input type="range" id="sl-R" aria-label="Remediation Rate" min="0" max="0.9" step="0.01" value="0.1" oninput="update()">
       </div>
     </div></div>
 
@@ -222,7 +222,7 @@
         </div>
         <div class="control-desc">Normalized realized value delivered per change. Relative unit.</div>
         <label class="sr-only" for="sl-V">Business Value per Change</label>
-        <input type="range" id="sl-V" aria-label="Business Value per Change" min="0.1" max="5.0" step="0.1" value="1.0" oninput="update()" title="Business value per change is scenario-dependent." aria-description="Business value per change is scenario-dependent.">
+        <input type="range" id="sl-V" aria-label="Business Value per Change" min="0.1" max="5.0" step="0.1" value="1.0" oninput="update()">
       </div>
 
       <div class="control-row" data-var="lam">
@@ -232,7 +232,7 @@
         </div>
         <div class="control-desc">How aggressively TDR attenuates output via e^(−λ·TDR).</div>
         <label class="sr-only" for="sl-lam">Debt Sensitivity</label>
-        <input type="range" id="sl-lam" aria-label="Debt Sensitivity" min="0.1" max="5.0" step="0.1" value="1.0" oninput="update()" title="Debt sensitivity is a model constant, not an intrinsic good/bad direction." aria-description="Debt sensitivity is a model constant, not an intrinsic good/bad direction.">
+        <input type="range" id="sl-lam" aria-label="Debt Sensitivity" min="0.1" max="5.0" step="0.1" value="1.0" oninput="update()">
       </div>
 
       <div class="control-row" data-var="alpha">
@@ -242,7 +242,7 @@
         </div>
         <div class="control-desc">Cm's weight in the Ω coherence term.</div>
         <label class="sr-only" for="sl-alpha">Competence Sensitivity</label>
-        <input type="range" id="sl-alpha" aria-label="Competence Sensitivity" min="0.1" max="5.0" step="0.1" value="1.0" oninput="update()" title="Competence sensitivity is a model constant, not an intrinsic good/bad direction." aria-description="Competence sensitivity is a model constant, not an intrinsic good/bad direction.">
+        <input type="range" id="sl-alpha" aria-label="Competence Sensitivity" min="0.1" max="5.0" step="0.1" value="1.0" oninput="update()">
       </div>
 
       <div class="control-row" data-var="beta">
@@ -252,7 +252,7 @@
         </div>
         <div class="control-desc">E's weight in the Ω coherence term.</div>
         <label class="sr-only" for="sl-beta">Volatility Sensitivity</label>
-        <input type="range" id="sl-beta" aria-label="Volatility Sensitivity" min="0.1" max="5.0" step="0.1" value="1.0" oninput="update()" title="Volatility sensitivity is a model constant, not an intrinsic good/bad direction." aria-description="Volatility sensitivity is a model constant, not an intrinsic good/bad direction.">
+        <input type="range" id="sl-beta" aria-label="Volatility Sensitivity" min="0.1" max="5.0" step="0.1" value="1.0" oninput="update()">
       </div>
     </div></div>
 
@@ -330,6 +330,7 @@
       <div class="viz-mode-tabs">
         <button type="button" class="viz-mode-tab active" id="viz-tab-sweep" onclick="setVizMode('sweep')">Parameter Sweep</button>
         <button type="button" class="viz-mode-tab" id="viz-tab-time" onclick="setVizMode('time')">Time Simulation</button>
+        <button type="button" class="viz-mode-tab experimental-only" id="viz-tab-advanced" onclick="setVizMode('advanced')" hidden>Advanced Plot</button>
       </div>
 
       <div class="viz-mode-panel active" id="panel-sweep">
@@ -400,12 +401,12 @@
           <div class="time-controls">
             <div class="time-row">
               <label for="sim-horizon">Time horizon</label>
-              <input type="range" id="sim-horizon" min="0" max="36" step="1" value="24" oninput="updateSimHorizon()" title="Simulation horizon in model periods." aria-description="Simulation horizon in model periods.">
+              <input type="range" id="sim-horizon" min="0" max="36" step="1" value="24" oninput="updateSimHorizon()">
               <span class="time-val" id="sim-horizon-val">24 periods</span>
             </div>
             <div class="time-row">
               <label for="sim-time">Time scrubber</label>
-              <input type="range" id="sim-time" min="0" max="24" step="0.25" value="0" oninput="updateSimTimeFromSlider()" title="Scrub projected state over simulated time." aria-description="Scrub projected state over simulated time.">
+              <input type="range" id="sim-time" min="0" max="24" step="0.25" value="0" oninput="updateSimTimeFromSlider()">
               <span class="time-val" id="sim-time-val">t = 0.000</span>
             </div>
             <div class="time-actions">
@@ -431,7 +432,7 @@
             </div>
             <div class="time-actions">
               <label><input type="checkbox" id="toggle-urgency-boost" onchange="onUrgencyBoostToggle()"> Enable urgency activity boost</label>
-              <button type="button" onclick="adoptSimulatedState()">Adopt simulated state</button>
+              <button type="button" id="action-adopt-simulated" onclick="adoptSimulatedState()">Adopt simulated state</button>
             </div>
             <div class="sim-assumption-banner" id="df-dynamics-banner">DF dynamics mode: Conservative (OG GUM). DF is treated as an observed policy input; latent terms do not rewrite DF.</div>
             <div class="integration-step" id="integration-step">Euler Integration Step (dt=0.25)</div>
@@ -445,6 +446,38 @@
             <div><span class="ticker-label">DF_eff(t)</span> <span id="ticker-df-eff">4.000</span></div>
           </div>
           <div class="sim-readout" id="sim-readout">At t = 0.000 (Δt=0.25): projected TDR = 0.1000, instantaneous output = 29.44, cumulative P_real(t) = 0.000.</div>
+        </div>
+      </div>
+
+      <div class="viz-mode-panel experimental-only" id="panel-advanced" hidden>
+        <div class="advanced-panel">
+          <div class="advanced-controls">
+            <div class="advanced-control-row">
+              <label for="adv-x-key">X-axis term</label>
+              <select id="adv-x-key" onchange="onAdvancedXKeyChange()">
+                <option value="t">t (time)</option>
+                <option value="U">U (urgency)</option>
+                <option value="TDR">TDR (debt)</option>
+                <option value="CFR">CFR (fragility)</option>
+                <option value="M">M (morale)</option>
+                <option value="DF">DF (deploy frequency)</option>
+                <option value="LT">LT (lead time)</option>
+                <option value="R">R (remediation)</option>
+              </select>
+              <label><input type="checkbox" id="adv-normalize" checked onchange="onAdvancedNormalizeToggle()"> Normalize Y series</label>
+              <button type="button" id="adv-auto-btn" onclick="toggleAdvancedAuto()">Auto sweep</button>
+            </div>
+            <div class="advanced-control-row advanced-series">
+              <label><input type="checkbox" id="adv-y-pinst" checked onchange="onAdvancedSeriesToggle()"> P_inst</label>
+              <label><input type="checkbox" id="adv-y-pcum" onchange="onAdvancedSeriesToggle()"> P_cum</label>
+              <label><input type="checkbox" id="adv-y-tdr" checked onchange="onAdvancedSeriesToggle()"> TDR</label>
+              <label><input type="checkbox" id="adv-y-omega" onchange="onAdvancedSeriesToggle()"> Omega</label>
+              <label><input type="checkbox" id="adv-y-df_eff" onchange="onAdvancedSeriesToggle()"> DF_eff</label>
+              <label><input type="checkbox" id="adv-y-m" onchange="onAdvancedSeriesToggle()"> M</label>
+            </div>
+          </div>
+          <canvas id="advanced-canvas" width="0" height="0"></canvas>
+          <div class="sim-readout" id="advanced-readout">Advanced plot is experimental. Enable with <code>?exp=1</code>, then choose x/y terms and drag on the graph to scrub.</div>
         </div>
       </div>
     </div>
@@ -485,7 +518,7 @@
   <div class="paper-links">
     <a href="https://github.com/scottvr/GUM_of_Devops/" target="_blank" rel="noopener noreferrer">Paper Repo</a>
     <a href="https://sigbovik.org/2026/proceedings.pdf" target="_blank" rel="noopener noreferrer">SIGBOVIK 2026 Proceedings PDF</a>
-    <button type="button" onclick="openKeySectionsModal()">Read Key Sections (4.1, 5.1-5.3, 6, 6.1, 7)</button>
+    <button type="button" id="action-read-key-sections" onclick="openKeySectionsModal()">Read Key Sections (4.1, 5.1-5.3, 6, 6.1, 7)</button>
   </div>
 </footer>
 
@@ -495,7 +528,7 @@
   <div class="paper-modal" role="dialog" aria-modal="true" aria-labelledby="paper-modal-title" onclick="event.stopPropagation()">
     <div class="paper-modal-head">
       <h2 id="paper-modal-title">GUM Reader Excerpts</h2>
-      <button type="button" class="paper-modal-close" onclick="closeKeySectionsModal()">Close</button>
+      <button type="button" class="paper-modal-close" id="paper-modal-close-btn" onclick="closeKeySectionsModal()">Close</button>
     </div>
     <div class="paper-modal-body" id="paper-modal-body">
       <h3>4.1 Technical Debt as a Compounding Drag Term</h3>
@@ -538,6 +571,28 @@ const K3 = 0.4;
 const K4 = 0.8;
 const SIM_DT = 0.25;
 const HANDLE_R = 8;
+const URL_PARAMS = new URLSearchParams(location.search);
+const EXPERIMENTAL_ENABLED = URL_PARAMS.get('exp') === '1';
+
+const ADVANCED_X_META = {
+  t: { label: 't', min: 0, maxKey: 'simHorizon' },
+  U: { label: 'U' },
+  TDR: { label: 'TDR' },
+  CFR: { label: 'CFR' },
+  M: { label: 'M' },
+  DF: { label: 'DF' },
+  LT: { label: 'LT' },
+  R: { label: 'R' },
+};
+
+const ADVANCED_SERIES_META = {
+  pinst: { label: 'P_inst', color: '#2f8fd8' },
+  pcum: { label: 'P_cum', color: '#7a57d1' },
+  tdr: { label: 'TDR', color: '#d06441' },
+  omega: { label: 'Omega', color: '#2ea070' },
+  df_eff: { label: 'DF_eff', color: '#b0881f' },
+  m: { label: 'M', color: '#5a677d' },
+};
 
 const SLIDER_META = {
   DF: { min: 0.01, max: 20 },
@@ -572,6 +627,78 @@ const SLIDER_SEMANTICS = {
   alpha:{ better: 'context', hint: 'Competence sensitivity is a model constant, not an intrinsic good/bad direction.' },
   beta: { better: 'context', hint: 'Volatility sensitivity is a model constant, not an intrinsic good/bad direction.' },
 };
+
+const TOOLTIP_TEXT_COMMON = {
+  'sim-freeze-controls': 'Keep sliders fixed while the simulation runs; disable to allow projected values to update controls.',
+  'toggle-dora-lens': 'Show/hide DORA-forward wording where applicable.',
+  'toggle-posture-mode': 'Toggle wording posture between strict scientific phrasing and institutional-momentum framing.',
+  'df-dynamics-mode': 'Choose how DF is modeled over time: conservative (policy input) or endogenous (attenuated effective DF).',
+  'toggle-quiet-toasts': 'Use shorter, less prominent toasts to reduce distraction.',
+  'action-pin-baseline': 'Capture current state context to compare future changes against it.',
+  'action-copy-permalink': 'Copy a URL encoding current settings and collapsed-section state.',
+  'preset-elite': 'Load an optimistic high-performing preset.',
+  'preset-healthy': 'Load a balanced healthy baseline preset.',
+  'preset-stressed': 'Load a stressed-system preset.',
+  'preset-legacy': 'Load a legacy-platform debt-heavy preset.',
+  'preset-crisis': 'Load a crisis-mode preset with high fragility and debt.',
+  'preset-entropy': 'Load a saturated entropy regime preset.',
+  'viz-tab-sweep': 'Explore one selected input term across its range while other values stay fixed.',
+  'viz-tab-time': 'Simulate projected behavior over time using the current policy inputs.',
+  'viz-tab-advanced': 'Experimental combined plotter with selectable x-axis and multi-series y plotting.',
+  'tab-U': 'Sweep management urgency U across its domain.',
+  'tab-TDR': 'Sweep technical debt ratio TDR across its domain.',
+  'tab-CFR': 'Sweep change failure rate CFR across its domain.',
+  'tab-M': 'Sweep morale multiplier M across its domain.',
+  'cfr-btn-current': 'Use the current urgency value for CFR comparison.',
+  'cfr-btn-low': 'Compare CFR curve at fixed urgency U=1.0.',
+  'cfr-btn-high': 'Compare CFR curve at fixed urgency U=3.5.',
+  'sparkline': 'Drag horizontally to scrub the active sweep parameter value.',
+  'sim-horizon': 'Set simulation horizon in model periods.',
+  'sim-time': 'Scrub projected state by simulated time t.',
+  'sim-play-btn': 'Play or pause automatic time progression.',
+  'sim-speed': 'Set playback speed for time simulation.',
+  'sim-mode': 'Projection mode: debt-only or coupled organization dynamics.',
+  'toggle-pinst': 'Show/hide instantaneous output series P_inst in time chart.',
+  'toggle-pcum': 'Show/hide cumulative output series P_cum in time chart.',
+  'toggle-tdr': 'Show/hide technical debt ratio series in time chart.',
+  'toggle-coupling': 'Show/hide coherence coupling (Omega) series in time chart.',
+  'toggle-urgency-boost': 'Apply or remove urgency activity boost in output calculations.',
+  'action-adopt-simulated': 'Write selected simulated state values into current controls.',
+  'sim-canvas': 'Time-series chart of selected variables; vertical guide marks current t.',
+  'adv-x-key': 'Choose x-axis driver for experimental combined plotting.',
+  'adv-normalize': 'Normalize each selected y series to its own local range.',
+  'adv-auto-btn': 'Auto-sweep the chosen x term back and forth.',
+  'adv-y-pinst': 'Toggle P_inst in advanced plot.',
+  'adv-y-pcum': 'Toggle cumulative output P_cum in advanced plot (time x-axis only).',
+  'adv-y-tdr': 'Toggle TDR series in advanced plot.',
+  'adv-y-omega': 'Toggle Omega coherence series in advanced plot.',
+  'adv-y-df_eff': 'Toggle effective deployment frequency DF_eff in advanced plot.',
+  'adv-y-m': 'Toggle morale multiplier M in advanced plot.',
+  'advanced-canvas': 'Drag horizontally to scrub selected x value in advanced plot.',
+  'action-read-key-sections': 'Open curated paper excerpts in an on-page modal reader.',
+  'paper-modal-close-btn': 'Close the key sections modal.',
+};
+
+const TOOLTIP_TEXT_BY_POSTURE = {
+  strict: {
+    'toggle-posture-mode': 'Toggle wording posture between strict scientific phrasing and institutional-momentum framing.',
+    'action-pin-baseline': 'Capture current state context to compare future changes against it.',
+    'action-adopt-simulated': 'Write selected simulated state values into current controls.',
+    'toggle-urgency-boost': 'Apply or remove urgency activity boost in output calculations.',
+    'viz-tab-advanced': 'Experimental combined plotter with selectable x-axis and multi-series y plotting.',
+  },
+  momentum: {
+    'toggle-posture-mode': 'Switch to Institutional Momentum Mode copy where deadpan satire is allowed to surface.',
+    'action-pin-baseline': 'Pin the current institutional reality so future chaos has a reference frame.',
+    'action-adopt-simulated': 'Import simulated organizational consequences into live controls.',
+    'toggle-urgency-boost': 'Toggle urgency theater amplification in the visible output term.',
+    'viz-tab-advanced': 'Experimental observatory: compose terms, scrub time, and watch narratives collide.',
+  },
+};
+
+const TOOLTIP_SELECTOR_TEXT = [
+  { selector: '.section-toggle', text: 'Expand or collapse this control section.' },
+];
 
 const presets = {
   elite: {
@@ -644,6 +771,14 @@ const appState = {
   lastYAxisMax: null,
   yAxisPulseUntil: 0,
   yAxisScaleToastAt: 0,
+  experimental: EXPERIMENTAL_ENABLED,
+  advanced: {
+    xKey: 't',
+    normalize: true,
+    auto: false,
+    autoDir: 1,
+    autoTimer: null,
+  },
 };
 
 const POSTURE_COPY = {
@@ -743,13 +878,101 @@ function applySliderSemanticFeedback(v) {
 }
 
 function applySliderSemanticHints() {
+  applyTooltipRegistry();
+}
+
+function activeTooltipProfile() {
+  const mode = appState.postureMode === 'momentum' ? 'momentum' : 'strict';
+  return {
+    ...TOOLTIP_TEXT_COMMON,
+    ...(TOOLTIP_TEXT_BY_POSTURE[mode] || {}),
+  };
+}
+
+function applyTooltipRegistry() {
+  const merged = activeTooltipProfile();
   Object.keys(SLIDER_SEMANTICS).forEach(key => {
-    const slider = document.getElementById('sl-' + key);
-    if (!slider) return;
-    const hint = SLIDER_SEMANTICS[key].hint;
-    slider.title = hint;
-    slider.setAttribute('aria-description', hint);
+    merged['sl-' + key] = SLIDER_SEMANTICS[key].hint;
   });
+  Object.entries(merged).forEach(([id, text]) => {
+    const el = document.getElementById(id);
+    if (!el || !text) return;
+    el.title = text;
+    el.setAttribute('aria-description', text);
+  });
+  TOOLTIP_SELECTOR_TEXT.forEach(({ selector, text }) => {
+    if (!selector || !text) return;
+    document.querySelectorAll(selector).forEach(el => {
+      el.title = text;
+      el.setAttribute('aria-description', text);
+    });
+  });
+}
+
+function ensureAllDomElementsHaveIds() {
+  const used = new Set(Array.from(document.querySelectorAll('[id]')).map(el => el.id).filter(Boolean));
+  let counter = 1;
+  const nextId = tag => {
+    let candidate = `auto-${tag}-${counter}`;
+    while (used.has(candidate)) {
+      counter += 1;
+      candidate = `auto-${tag}-${counter}`;
+    }
+    used.add(candidate);
+    counter += 1;
+    return candidate;
+  };
+  [document.documentElement, document.body, ...document.querySelectorAll('body *')].forEach(el => {
+    if (!el) return;
+    if (!el.id) {
+      el.id = nextId(el.tagName.toLowerCase());
+    }
+  });
+}
+
+function elementTrail(el) {
+  const parent = el.parentElement;
+  if (!parent) return '<none>';
+  const parentId = parent.id ? `#${parent.id}` : '(no-id)';
+  return `${parent.tagName.toLowerCase()}${parentId}`;
+}
+
+function isPotentiallyHoverable(el) {
+  if (!(el instanceof Element)) return false;
+  const tag = el.tagName.toLowerCase();
+  const interactiveTags = new Set(['a', 'button', 'input', 'select', 'textarea', 'summary', 'canvas', 'label']);
+  if (interactiveTags.has(tag)) return true;
+  if (el.hasAttribute('onclick') || el.hasAttribute('onmouseenter') || el.hasAttribute('onmouseover')) return true;
+  if (el.tabIndex >= 0) return true;
+  if (el.getAttribute('role') === 'button' || el.getAttribute('role') === 'link') return true;
+  const cs = getComputedStyle(el);
+  if (cs.cursor === 'pointer') return true;
+  return false;
+}
+
+function auditTooltipCoverage() {
+  const tooltips = activeTooltipProfile();
+  Object.keys(SLIDER_SEMANTICS).forEach(key => {
+    tooltips['sl-' + key] = SLIDER_SEMANTICS[key].hint;
+  });
+  let missingCount = 0;
+  let hoverableMissing = 0;
+  let nonHoverableMissing = 0;
+  document.querySelectorAll('body *').forEach(el => {
+    const id = el.id || '<missing-id>';
+    const tag = el.tagName.toLowerCase();
+    const hasRegistryTooltip = Boolean(id && tooltips[id]);
+    const hasAppliedTooltip = Boolean(el.title && el.title.trim().length);
+    if (!hasRegistryTooltip && !hasAppliedTooltip) {
+      const hoverable = isPotentiallyHoverable(el);
+      const kind = hoverable ? 'hoverable' : 'non-hoverable';
+      missingCount += 1;
+      if (hoverable) hoverableMissing += 1;
+      else nonHoverableMissing += 1;
+      console.log(`element #${id} of type <${tag}> child of ${elementTrail(el)} has no tooltip text (${kind}). Add one.`);
+    }
+  });
+  console.log(`[tooltip-audit] missing=${missingCount}, hoverable=${hoverableMissing}, non-hoverable=${nonHoverableMissing}`);
 }
 
 function initControlRowSemantics() {
@@ -925,6 +1148,7 @@ function onDoraLensToggle() {
 function onPostureModeToggle() {
   appState.postureMode = document.getElementById('toggle-posture-mode').checked ? 'momentum' : 'strict';
   applyPostureCopy();
+  applyTooltipRegistry();
   const c = postureCopy();
   showToast(appState.postureMode === 'momentum' ? c.modeOnToast : c.modeOffToast);
   update();
@@ -1057,7 +1281,7 @@ function formatPresetLabel(name) {
 }
 
 function uiStateContextLabel() {
-  const tab = appState.vizMode === 'time' ? 'Time simulation' : 'Parameter sweep';
+  const tab = appState.vizMode === 'time' ? 'Time simulation' : appState.vizMode === 'advanced' ? 'Advanced plot' : 'Parameter sweep';
   const projection = appState.projectionMode === 'coupled' ? 'coupled' : 'debt-only';
   const freeze = appState.freezeControls ? 'freeze ON' : 'freeze OFF';
   return `${tab}, ${projection}, ${freeze}, t=${fmt(appState.simTime,4)}`;
@@ -1066,7 +1290,7 @@ function uiStateContextLabel() {
 function renderStateChip() {
   const el = document.getElementById('state-chip');
   if (!el) return;
-  const view = appState.vizMode === 'time' ? 'Time simulation' : 'Parameter sweep';
+  const view = appState.vizMode === 'time' ? 'Time simulation' : appState.vizMode === 'advanced' ? 'Advanced plot' : 'Parameter sweep';
   const projection = appState.projectionMode === 'coupled' ? 'coupled' : 'debt-only';
   const dfMode = appState.dfDynamicsMode === 'endogenous' ? 'endogenous' : 'conservative';
   const freeze = appState.freezeControls ? 'ON' : 'OFF';
@@ -1089,6 +1313,324 @@ function renderDFDynamicsBanner() {
     el.textContent = 'DF dynamics mode: Endogenous (Exploratory). DF_eff(t) is attenuated by latent terms and can diverge from DF_policy.';
   } else {
     el.textContent = 'DF dynamics mode: Conservative (OG GUM). DF is treated as an observed policy input; latent terms do not rewrite DF.';
+  }
+}
+
+function initExperimentalUi() {
+  if (!appState.experimental) return;
+  document.querySelectorAll('.experimental-only').forEach(el => {
+    el.hidden = false;
+  });
+}
+
+function currentAdvancedSeriesKeys() {
+  const keys = [];
+  Object.keys(ADVANCED_SERIES_META).forEach(key => {
+    const cb = document.getElementById('adv-y-' + key);
+    if (cb && cb.checked) keys.push(key);
+  });
+  return keys;
+}
+
+function onAdvancedXKeyChange() {
+  if (!appState.experimental) return;
+  const sel = document.getElementById('adv-x-key');
+  if (!sel || !ADVANCED_X_META[sel.value]) return;
+  appState.advanced.xKey = sel.value;
+  const pCumBox = document.getElementById('adv-y-pcum');
+  if (pCumBox) {
+    const enablePCum = sel.value === 't';
+    pCumBox.disabled = !enablePCum;
+    if (!enablePCum) pCumBox.checked = false;
+  }
+  drawAdvancedChart(getVars());
+  syncPermalink();
+}
+
+function onAdvancedNormalizeToggle() {
+  if (!appState.experimental) return;
+  appState.advanced.normalize = document.getElementById('adv-normalize').checked;
+  drawAdvancedChart(getVars());
+  syncPermalink();
+}
+
+function onAdvancedSeriesToggle() {
+  if (!appState.experimental) return;
+  drawAdvancedChart(getVars());
+  syncPermalink();
+}
+
+function toggleAdvancedAuto() {
+  if (!appState.experimental) return;
+  appState.advanced.auto = !appState.advanced.auto;
+  const btn = document.getElementById('adv-auto-btn');
+  if (btn) btn.textContent = appState.advanced.auto ? 'Stop auto' : 'Auto sweep';
+  if (appState.advanced.auto) {
+    if (appState.advanced.autoTimer) clearInterval(appState.advanced.autoTimer);
+    appState.advanced.autoTimer = setInterval(tickAdvancedAuto, 80);
+    showToast(`Advanced auto sweep enabled (${appState.advanced.xKey}).`);
+  } else {
+    if (appState.advanced.autoTimer) clearInterval(appState.advanced.autoTimer);
+    appState.advanced.autoTimer = null;
+    showToast('Advanced auto sweep disabled.');
+  }
+  syncPermalink();
+}
+
+function getAdvancedXAxisConfig(v) {
+  const key = appState.advanced.xKey;
+  if (key === 't') {
+    return {
+      key,
+      min: 0,
+      max: appState.simHorizon,
+      current: appState.simTime,
+      label: 't',
+    };
+  }
+  const meta = SLIDER_META[key];
+  const safe = meta || { min: 0, max: 1 };
+  return {
+    key,
+    min: safe.min,
+    max: safe.max,
+    current: v[key],
+    label: key,
+  };
+}
+
+function computeAdvancedSeriesPoint(v, row) {
+  const terms = row ? {
+    omega: row.omega,
+    DF_t: row.DF_eff,
+  } : computeTerms(v, { urgencyBoost: appState.urgencyBoost });
+  return {
+    pinst: row ? row.P_inst : computePInst(v, { urgencyBoost: appState.urgencyBoost }),
+    pcum: row ? row.P_cum : 0,
+    tdr: row ? row.TDR : v.TDR,
+    omega: terms.omega,
+    df_eff: row ? row.DF_eff : terms.DF_t,
+    m: row ? row.M : v.M,
+  };
+}
+
+function buildAdvancedPlotPoints(v) {
+  const xCfg = getAdvancedXAxisConfig(v);
+  if (xCfg.key === 't') {
+    return appState.simRows.map(row => ({
+      x: row.time,
+      values: computeAdvancedSeriesPoint(v, row),
+    }));
+  }
+  const steps = 90;
+  const out = [];
+  for (let i = 0; i <= steps; i++) {
+    const x = xCfg.min + ((xCfg.max - xCfg.min) * i) / steps;
+    const vv = { ...v, [xCfg.key]: x };
+    out.push({ x, values: computeAdvancedSeriesPoint(vv, null) });
+  }
+  return out;
+}
+
+function applyAdvancedFromCanvas(clientX) {
+  if (!appState.experimental) return;
+  const canvas = document.getElementById('advanced-canvas');
+  if (!canvas || !canvas.width) return;
+  const rect = canvas.getBoundingClientRect();
+  const xPx = clamp(clientX - rect.left, 0, canvas.width);
+  const baseVars = getVars();
+  const xCfg = getAdvancedXAxisConfig(baseVars);
+  const xVal = xCfg.min + (xPx / canvas.width) * (xCfg.max - xCfg.min);
+  if (xCfg.key === 't') {
+    appState.simTime = clamp(xVal, 0, appState.simHorizon);
+    const simSlider = document.getElementById('sim-time');
+    if (simSlider) simSlider.value = appState.simTime;
+  } else {
+    const slider = document.getElementById('sl-' + xCfg.key);
+    if (slider) slider.value = clamp(xVal, xCfg.min, xCfg.max);
+  }
+  update();
+}
+
+function initAdvancedChartDrag() {
+  const canvas = document.getElementById('advanced-canvas');
+  if (!canvas) return;
+  let dragging = false;
+  canvas.addEventListener('mousedown', e => {
+    dragging = true;
+    applyAdvancedFromCanvas(e.clientX);
+    e.preventDefault();
+  });
+  canvas.addEventListener('mousemove', e => {
+    if (dragging) applyAdvancedFromCanvas(e.clientX);
+  });
+  window.addEventListener('mouseup', () => {
+    dragging = false;
+  });
+  canvas.addEventListener('touchstart', e => {
+    dragging = true;
+    applyAdvancedFromCanvas(e.touches[0].clientX);
+    e.preventDefault();
+  }, { passive: false });
+  canvas.addEventListener('touchmove', e => {
+    if (!dragging) return;
+    applyAdvancedFromCanvas(e.touches[0].clientX);
+    e.preventDefault();
+  }, { passive: false });
+  window.addEventListener('touchend', () => {
+    dragging = false;
+  });
+}
+
+function tickAdvancedAuto() {
+  if (!appState.advanced.auto || !appState.experimental) return;
+  const v = getVars();
+  const xCfg = getAdvancedXAxisConfig(v);
+  const span = Math.max(EPS, xCfg.max - xCfg.min);
+  const step = span / 120;
+  if (xCfg.key === 't') {
+    let next = appState.simTime + step * appState.advanced.autoDir;
+    if (next > xCfg.max) { next = xCfg.max; appState.advanced.autoDir = -1; }
+    if (next < xCfg.min) { next = xCfg.min; appState.advanced.autoDir = 1; }
+    appState.simTime = next;
+    const simSlider = document.getElementById('sim-time');
+    if (simSlider) simSlider.value = appState.simTime;
+  } else {
+    const slider = document.getElementById('sl-' + xCfg.key);
+    if (!slider) return;
+    let next = (+slider.value) + step * appState.advanced.autoDir;
+    if (next > xCfg.max) { next = xCfg.max; appState.advanced.autoDir = -1; }
+    if (next < xCfg.min) { next = xCfg.min; appState.advanced.autoDir = 1; }
+    slider.value = next;
+  }
+  update();
+}
+
+function drawAdvancedChart(v) {
+  if (!appState.experimental) return;
+  const panel = document.getElementById('panel-advanced');
+  if (!panel) return;
+  const canvas = document.getElementById('advanced-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.offsetWidth;
+  const H = canvas.offsetHeight;
+  if (W <= 2 || H <= 2) return;
+  canvas.width = W;
+  canvas.height = H;
+  ctx.clearRect(0, 0, W, H);
+  const xCfg = getAdvancedXAxisConfig(v);
+  const seriesKeys = currentAdvancedSeriesKeys();
+  if (!seriesKeys.length) {
+    const readout = document.getElementById('advanced-readout');
+    if (readout) readout.textContent = 'Select at least one Y series.';
+    return;
+  }
+  const points = buildAdvancedPlotPoints(v);
+  if (!points.length) return;
+
+  const stats = {};
+  seriesKeys.forEach(key => {
+    const vals = points.map(p => p.values[key]).filter(Number.isFinite);
+    const min = Math.min(...vals);
+    const max = Math.max(...vals);
+    stats[key] = { min, max, span: Math.max(EPS, max - min) };
+  });
+  let globalMin = Infinity;
+  let globalMax = -Infinity;
+  if (!appState.advanced.normalize) {
+    seriesKeys.forEach(key => {
+      globalMin = Math.min(globalMin, stats[key].min);
+      globalMax = Math.max(globalMax, stats[key].max);
+    });
+  }
+  const globalSpan = Math.max(EPS, globalMax - globalMin);
+  const xSpan = Math.max(EPS, xCfg.max - xCfg.min);
+  const xOf = x => ((x - xCfg.min) / xSpan) * W;
+  const yOf = (key, val) => {
+    if (appState.advanced.normalize) {
+      const st = stats[key];
+      return H - ((val - st.min) / st.span) * H;
+    }
+    return H - ((val - globalMin) / globalSpan) * H;
+  };
+
+  ctx.strokeStyle = '#d5d8df';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const gy = H - (i / 4) * H;
+    ctx.beginPath();
+    ctx.moveTo(0, gy);
+    ctx.lineTo(W, gy);
+    ctx.stroke();
+  }
+
+  seriesKeys.forEach(key => {
+    ctx.beginPath();
+    ctx.strokeStyle = ADVANCED_SERIES_META[key].color;
+    ctx.lineWidth = 2;
+    points.forEach((pt, i) => {
+      const px = xOf(pt.x);
+      const py = yOf(key, pt.values[key]);
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    });
+    ctx.stroke();
+  });
+
+  const cursorXVal = clamp(xCfg.current, xCfg.min, xCfg.max);
+  const cursorX = xOf(cursorXVal);
+  ctx.strokeStyle = cssVar('--viz-handle', '#e8a838');
+  ctx.setLineDash([4, 3]);
+  ctx.beginPath();
+  ctx.moveTo(cursorX, 0);
+  ctx.lineTo(cursorX, H);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  const nearest = points.reduce((best, pt) => Math.abs(pt.x - cursorXVal) < Math.abs(best.x - cursorXVal) ? pt : best, points[0]);
+  const labels = seriesKeys.map(key => {
+    const y = yOf(key, nearest.values[key]);
+    return {
+      key,
+      y,
+      text: `${ADVANCED_SERIES_META[key].label}=${fmt(nearest.values[key], 3)}`,
+      color: ADVANCED_SERIES_META[key].color,
+    };
+  }).sort((a, b) => a.y - b.y);
+  const gap = 13;
+  for (let i = 1; i < labels.length; i++) {
+    if (labels[i].y - labels[i - 1].y < gap) {
+      labels[i].y = labels[i - 1].y + gap;
+    }
+  }
+  for (let i = labels.length - 2; i >= 0; i--) {
+    if (labels[i + 1].y > H - 8 && labels[i].y > labels[i + 1].y - gap) {
+      labels[i].y = labels[i + 1].y - gap;
+    }
+  }
+
+  const sideRight = cursorX < W * 0.68;
+  const xText = `${xCfg.label}=${fmt(nearest.x, 3)}`;
+  ctx.font = '10px IBM Plex Mono, monospace';
+  ctx.fillStyle = cssVar('--viz-handle', '#e8a838');
+  ctx.textAlign = sideRight ? 'left' : 'right';
+  ctx.fillText(xText, sideRight ? cursorX + 8 : cursorX - 8, 12);
+  labels.forEach(lbl => {
+    const pointY = yOf(lbl.key, nearest.values[lbl.key]);
+    ctx.beginPath();
+    ctx.arc(cursorX, pointY, 3, 0, Math.PI * 2);
+    ctx.fillStyle = lbl.color;
+    ctx.fill();
+    ctx.fillStyle = lbl.color;
+    ctx.textAlign = sideRight ? 'left' : 'right';
+    ctx.fillText(lbl.text, sideRight ? cursorX + 8 : cursorX - 8, clamp(lbl.y, 10, H - 4));
+  });
+
+  const readout = document.getElementById('advanced-readout');
+  if (readout) {
+    const norm = appState.advanced.normalize ? 'normalized Y' : 'shared Y scale';
+    readout.textContent = `Advanced plot (${norm}). X=${xCfg.label}, cursor ${xCfg.label}=${fmt(nearest.x, 3)}, series: ${seriesKeys.map(k => ADVANCED_SERIES_META[k].label).join(', ')}.`;
   }
 }
 
@@ -1367,6 +1909,7 @@ function update(options = {}) {
 
   drawChart(policyVars);
   drawSimChart();
+  drawAdvancedChart(policyVars);
   updateSimReadout();
   updateBaselineCompare(policyVars);
   updateSensitivity(policyVars);
@@ -1485,15 +2028,23 @@ function showToast(msg) {
 }
 
 function setVizMode(mode) {
+  if (mode === 'advanced' && !appState.experimental) mode = 'sweep';
   appState.vizMode = mode;
   document.getElementById('viz-tab-sweep').classList.toggle('active', mode === 'sweep');
   document.getElementById('viz-tab-time').classList.toggle('active', mode === 'time');
+  const advTab = document.getElementById('viz-tab-advanced');
+  if (advTab) advTab.classList.toggle('active', mode === 'advanced');
   document.getElementById('panel-sweep').classList.toggle('active', mode === 'sweep');
   document.getElementById('panel-time').classList.toggle('active', mode === 'time');
+  const advPanel = document.getElementById('panel-advanced');
+  if (advPanel) advPanel.classList.toggle('active', mode === 'advanced');
   if (mode === 'time') {
     renderTimeProjectionFrame({ allowControlSync: false });
     drawSimChart();
     updateSimReadout();
+  } else if (mode === 'advanced') {
+    drawAdvancedChart(getVars());
+    renderMainOutput(getVars());
   } else {
     drawChart(getVars());
     renderMainOutput(getVars());
@@ -1985,6 +2536,12 @@ function toQueryState() {
   q.speed = appState.simSpeed;
   q.sweep = activeSweep;
   q.cfrMode = cfrMode;
+  if (appState.experimental) {
+    q.exp = 1;
+    q.advX = appState.advanced.xKey;
+    q.advNormalize = appState.advanced.normalize ? 1 : 0;
+    q.advY = currentAdvancedSeriesKeys().join(',');
+  }
   q.collapsed = getCollapsedSectionState();
   q.series = [
     appState.showSeries.pInst ? 'pinst' : '',
@@ -2015,7 +2572,7 @@ function hydrateFromUrl() {
     document.getElementById('sl-' + key).value = clamp(v, meta.min, meta.max);
   });
   const tab = sp.get('tab');
-  if (tab === 'time' || tab === 'sweep') appState.vizMode = tab;
+  if (tab === 'time' || tab === 'sweep' || tab === 'advanced') appState.vizMode = tab;
   const mode = sp.get('projectionMode');
   if (mode === 'debt' || mode === 'coupled') appState.projectionMode = mode;
   const dfDynamics = sp.get('dfDynamics');
@@ -2046,8 +2603,21 @@ function hydrateFromUrl() {
   if (SWEEP_CONFIG[sweep]) activeSweep = sweep;
   const modeCfr = sp.get('cfrMode');
   if (['current', 'low', 'high'].includes(modeCfr)) cfrMode = modeCfr;
+  const advX = sp.get('advX');
+  if (ADVANCED_X_META[advX]) appState.advanced.xKey = advX;
+  const advNorm = sp.get('advNormalize');
+  if (advNorm === '0' || advNorm === '1' || advNorm === 'true' || advNorm === 'false') {
+    appState.advanced.normalize = advNorm === '1' || advNorm === 'true';
+  }
   const collapsed = sp.get('collapsed');
   if (collapsed && /^[01]+$/.test(collapsed)) pendingCollapsedState = collapsed;
+  const advY = (sp.get('advY') || '').split(',').filter(Boolean);
+  if (advY.length) {
+    Object.keys(ADVANCED_SERIES_META).forEach(key => {
+      const cb = document.getElementById('adv-y-' + key);
+      if (cb) cb.checked = advY.includes(key);
+    });
+  }
   const series = (sp.get('series') || '').split(',').filter(Boolean);
   if (series.length) {
     appState.showSeries.pInst = series.includes('pinst');
@@ -2072,6 +2642,7 @@ function copyPermalink() {
 }
 
 function applyInitialUiState() {
+  if (appState.vizMode === 'advanced' && !appState.experimental) appState.vizMode = 'sweep';
   document.getElementById('sim-horizon').value = appState.simHorizon;
   document.getElementById('sim-horizon-val').textContent = `${appState.simHorizon} periods`;
   document.getElementById('sim-time').value = appState.simTime;
@@ -2087,6 +2658,13 @@ function applyInitialUiState() {
   document.getElementById('toggle-pcum').checked = appState.showSeries.pCum;
   document.getElementById('toggle-tdr').checked = appState.showSeries.tdr;
   document.getElementById('toggle-coupling').checked = appState.showSeries.coupling;
+  if (appState.experimental) {
+    const advX = document.getElementById('adv-x-key');
+    const advNorm = document.getElementById('adv-normalize');
+    if (advX) advX.value = appState.advanced.xKey;
+    if (advNorm) advNorm.checked = appState.advanced.normalize;
+    onAdvancedXKeyChange();
+  }
   applyPostureCopy();
   initControlRowSemantics();
   applySliderSemanticHints();
@@ -2106,15 +2684,20 @@ function calibrateNormalization() {
 window.addEventListener('resize', () => {
   drawChart(getVars());
   drawSimChart();
+  drawAdvancedChart(getVars());
 });
 
 hydrateFromUrl();
 calibrateNormalization();
+initExperimentalUi();
 initCollapsibleSections();
+ensureAllDomElementsHaveIds();
 initChartDrag();
+initAdvancedChartDrag();
 applyInitialUiState();
 update();
 window.addEventListener('load', renderKaTeXEquations);
+auditTooltipCoverage();
 </script>
 
 </body></html>

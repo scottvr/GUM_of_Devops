@@ -852,6 +852,55 @@
     gap: 0.8rem;
   }
 
+  .advanced-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .advanced-controls {
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    padding: 0.55rem 0.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .advanced-control-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .advanced-series label {
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 10px;
+  }
+
+  .advanced-controls select,
+  .advanced-controls button {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    padding: 0.22rem 0.45rem;
+    font-size: 10px;
+  }
+
+  #advanced-canvas {
+    width: 100%;
+    height: 200px;
+    border: 1px solid var(--border);
+    background: white;
+    cursor: ew-resize;
+  }
+
   .time-controls {
     display: flex;
     flex-direction: column;

@@ -3,3 +3,5 @@
 .DS_Store
 **/./dump.txt
 2.0/*
+node_modules/
+package-lock.json

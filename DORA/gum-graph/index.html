@@ -4,9 +4,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="./doragum.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-  <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <link rel="stylesheet" href="./vendor/katex/katex.min.css">
+  <script defer="" src="./vendor/katex/katex.min.js"></script>
+  <script defer="" src="./vendor/katex/contrib/auto-render.min.js"></script>
 <title>The Grand Unified Model of DevOps/SRE Dynamics</title>
 
 </head>
@@ -160,9 +160,10 @@
           <span class="control-label"><span class="sym">U</span> — Management Urgency</span>
           <span class="control-value" id="val-U">1.00</span>
         </div>
-        <div class="control-desc">Externally imposed schedule pressure. Applied as exponent on (1−CFR)^U². Proceed with caution.</div>
+        <div class="control-desc">Externally imposed schedule pressure. Enters as exponent (1−CFR)^(U_eff²). Proceed with caution.</div>
         <label class="sr-only" for="sl-U">Management Urgency</label>
         <input type="range" id="sl-U" aria-label="Management Urgency" min="0.1" max="5.0" step="0.05" value="1.0" oninput="update()">
+        <div class="control-desc" id="u-felt-note">Currently felt as U_eff = 1.00.</div>
       </div>
 
       <div class="control-row" data-var="Cm">
@@ -270,7 +271,7 @@
       </div>
       <div class="health-bars">
         <div class="health-bar-row">
-          <span class="health-bar-label">Throughput</span>
+          <span class="health-bar-label" title="Raw value-throughput term relative to the healthy preset (1.0x = healthy).">Throughput</span>
           <div class="health-bar-track"><div class="health-bar-fill danger" id="bar-throughput" style="width: 1.82512%;"></div></div>
           <span class="health-bar-val" id="bv-throughput">0.548</span>
         </div>
@@ -370,27 +371,27 @@
         <!-- TDR dynamics -->
         <div class="tdr-dynamics">
           <h3>Long-Horizon Debt Dynamics — dTDR/dt</h3>
-          <div class="tdr-formula-note">Integrated explicitly each step: TDR(t+Δt) = TDR(t) + (dTDR/dt)·Δt.</div>
+          <div class="tdr-formula-note">Integrated explicitly each step: TDR(t+Δt) = TDR(t) + (dTDR/dt)·Δt. The κ's are the paper's; the growth inputs are what the organization actually experiences — felt urgency U_eff and effective DF, weighted by the attenuation state <span id="tdr-att-driver">A(t) = 1.000</span>.</div>
           <div style="font-size:11px; color:var(--text-dim); margin-bottom:0.8rem;">
             At current settings, technical debt is <strong id="tdr-trend-word" style="color: var(--danger);">accumulating</strong>.
             <span id="tdr-rate-label">Debt derivative</span>: <span id="tdr-rate" style="color:var(--text-bright)">+0.301</span>/period.
           </div>
           <div class="tdr-grid">
             <div class="tdr-term">
-              <span class="tdr-sym">+k1·U</span>: urgency-driven debt<br>
-              <span class="tdr-val" id="tdr-k1">+0.300 (k1=0.3·U=1.00)</span>
+              <span class="tdr-sym">+k1·U_eff²·A</span>: urgency-driven debt<br>
+              <span class="tdr-val" id="tdr-k1">+0.300</span>
             </div>
             <div class="tdr-term">
-              <span class="tdr-sym">+k2·DF</span>: velocity-driven debt<br>
-              <span class="tdr-val" id="tdr-k2">+0.200 (k2=0.05·DF=4.00)</span>
+              <span class="tdr-sym">+k2·DF_eff·A</span>: velocity-driven debt<br>
+              <span class="tdr-val" id="tdr-k2">+0.200</span>
             </div>
             <div class="tdr-term">
-              <span class="tdr-sym">+k3·Cm</span>: mismatch-driven debt<br>
-              <span class="tdr-val" id="tdr-k3">+0.0400 (k3=0.4·Cm=0.100)</span>
+              <span class="tdr-sym">+k3·Cm·A</span>: mismatch-driven debt<br>
+              <span class="tdr-val" id="tdr-k3">+0.0400</span>
             </div>
             <div class="tdr-term">
               <span class="tdr-sym">−k4·R</span>: remediation<br>
-              <span class="tdr-val" id="tdr-k4">-0.0800 (k4=0.8·R=0.100)</span>
+              <span class="tdr-val" id="tdr-k4">-0.0800</span>
             </div>
           </div>
         </div>
@@ -491,7 +492,7 @@
         <div id="baseline-compare">No baseline pinned yet.</div>
       </div>
       <div class="diag-card">
-        <span class="label">Sensitivity Ranking</span>
+        <span class="label" title="Local one-at-a-time sensitivity: % change in P_inst from a ±5% nudge of each input, ranked by magnitude.">Sensitivity Ranking</span>
         <div id="sensitivity-ranking">1. M (+3.013)<br>2. DF (+1.472)<br>3. LT (-1.308)<br>4. TDR (-0.3013)</div>
       </div>
       <div class="diag-card">
@@ -518,7 +519,7 @@
   </div>
   <div class="paper-links">
     <a href="https://github.com/scottvr/GUM_of_Devops/" target="_blank" rel="noopener noreferrer">Paper Repo</a>
-    <a href="https://sigbovik.org/2026/proceedings.pdf" target="_blank" rel="noopener noreferrer">SIGBOVIK 2026 Proceedings PDF</a>
+    <a href="https://sigbovik.org/2026/proceedings.pdf#page=897" target="_blank" rel="noopener noreferrer">SIGBOVIK 2026 Proceedings PDF</a>
     <button type="button" id="action-read-key-sections" onclick="openKeySectionsModal()">Read Key Sections (4.1, 5.1-5.3, 6, 6.1, 7)</button>
   </div>
 </footer>
@@ -574,6 +575,7 @@ const SIM_DT = 0.25;
 const HANDLE_R = 8;
 const URL_PARAMS = new URLSearchParams(location.search);
 const EXPERIMENTAL_ENABLED = URL_PARAMS.get('exp') === '1';
+const DEBUG_ENABLED = URL_PARAMS.get('debug') === '1';
 
 const ADVANCED_X_META = {
   t: { label: 't', min: 0, maxKey: 'simHorizon' },
@@ -735,6 +737,7 @@ const presets = {
 };
 
 let normalizationZ = 1.0;
+let throughputRef = 1.0;
 let chartDragging = false;
 let activeSweep = 'U';
 let cfrMode = 'current';
@@ -801,7 +804,7 @@ const POSTURE_COPY = {
     kicker: 'A Grand Unified Model',
     rateLabel: 'Debt Velocity Vector',
     integration: dt => `Integration Step (dt=${dt})`,
-    eqMetaPrefix: 'Normalization: calibrated to healthy preset',
+    eqMetaPrefix: 'Z keeps the expression dimensionally and rhetorically manageable — calibrated to the healthy preset',
     criticalTrend: 'CRITICAL REGIME',
     criticalDiagnosis: '<strong>CRITICAL REGIME:</strong> Resume Driven Development detected. System functions on institutional momentum; innovation is mathematically improbable.',
     lensOnToast: 'DORA Lens enabled: observed metrics foregrounded.',
@@ -1765,7 +1768,7 @@ function setText(id, val) {
   if (el) el.textContent = val;
 }
 
-function setBar(name, val, max, lowT, highT) {
+function setBar(name, val, max, lowT, highT, suffix = '') {
   const fill = document.getElementById('bar-' + name);
   const text = document.getElementById('bv-' + name);
   if (!fill || !text) return;
@@ -1773,7 +1776,7 @@ function setBar(name, val, max, lowT, highT) {
   fill.style.width = w + '%';
   const ratio = val / max;
   fill.className = 'health-bar-fill ' + (ratio < lowT ? 'danger' : ratio < highT ? 'warn' : '');
-  text.textContent = fmt(val, 3);
+  text.textContent = fmt(val, 3) + suffix;
 }
 
 function buildDiagnosis(v, t, pInst) {
@@ -1853,11 +1856,22 @@ function renderMainOutput(v) {
   scoreEl.textContent = fmt(pInst, 4);
   scoreEl.className = 'score-value ' + (pInst < 0.3 ? 'danger' : pInst < 1.0 ? 'warn' : '');
 
-  setBar('throughput', terms.throughput, 30, 0.1, 1.0);
+  // Throughput is reported relative to the healthy preset's nominal
+  // throughput (same normalization philosophy as Z): 1.0x = healthy.
+  setBar('throughput', terms.throughput / throughputRef, 1.25, 0.08, 0.48, 'x');
   setBar('omega', terms.omega, 1, 0.3, 0.6);
   setBar('debt', terms.debtAtt, 1, 0.3, 0.6);
   setBar('urgency', terms.cfrTerm, 1, 0.3, 0.6);
   setBar('morale', v.M, 2, 0.4, 0.7);
+
+  const feltNote = document.getElementById('u-felt-note');
+  if (feltNote) {
+    const amp = v.U > 0 ? terms.U_t / v.U : 1;
+    feltNote.textContent = amp > 1.02
+      ? `Currently felt as U_eff = ${fmt(terms.U_t)} (x${fmt(amp)}) — dysfunction amplifies the urgency that produces it.`
+      : `Currently felt as U_eff = ${fmt(terms.U_t)}.`;
+    feltNote.style.color = amp > 1.35 ? 'var(--danger)' : '';
+  }
 
   document.getElementById('eq-expanded').innerHTML =
     `<span style="color:var(--text)">= (1/${fmt(normalizationZ,4)}) · [</span>` +
@@ -1869,15 +1883,17 @@ function renderMainOutput(v) {
     `<span style="color:var(--text)"> · </span>` +
     `<span style="color:var(--accent)">e^(-${fmt(v.lam)}·${fmt(v.TDR)})</span>` +
     (appState.urgencyBoost ? `<span style="color:var(--text)"> · </span><span style="color:var(--accent)">activity=${fmt(terms.activity,3)}</span>` : '') +
-    `<span style="color:var(--text)"> · </span><span style="color:var(--accent)">U(t)=${fmt(terms.U_t)} DF(t)=${fmt(terms.DF_t)}</span>` +
-    `<span style="color:var(--text-dim)"> = </span><span style="color:var(--text-bright); font-weight:500">${fmt(pInst, 4)}</span>`;
+    `<span style="color:var(--text-dim)"> = </span><span style="color:var(--text-bright); font-weight:500">${fmt(pInst, 4)}</span>` +
+    `<span style="color:var(--text-dim)"> &nbsp;—&nbsp; felt urgency U_eff=${fmt(terms.U_t)} (policy U=${fmt(v.U)}), DF_eff=${fmt(terms.DF_t)}</span>`;
 
   const c = postureCopy();
   const dTDR = terms.dTDR;
-  setText('tdr-k1', `+${fmt(K1 * v.U, 3)} (k1=${K1}·U=${fmt(v.U)})`);
-  setText('tdr-k2', `+${fmt(K2 * v.DF, 3)} (k2=${K2}·DF=${fmt(v.DF)})`);
-  setText('tdr-k3', `+${fmt(K3 * v.Cm, 3)} (k3=${K3}·Cm=${fmt(v.Cm)})`);
+  const A = terms.attenuationDriver;
+  setText('tdr-k1', `+${fmt(K1 * terms.urgencyExp * A, 3)} (k1=${K1}·U_eff²=${fmt(terms.urgencyExp,3)}·A)`);
+  setText('tdr-k2', `+${fmt(K2 * terms.DF_t * A, 3)} (k2=${K2}·DF_eff=${fmt(terms.DF_t)}·A)`);
+  setText('tdr-k3', `+${fmt(K3 * v.Cm * A, 3)} (k3=${K3}·Cm=${fmt(v.Cm)}·A)`);
   setText('tdr-k4', `-${fmt(K4 * v.R, 3)} (k4=${K4}·R=${fmt(v.R)})`);
+  setText('tdr-att-driver', `A(t) = ${fmt(A, 3)}`);
   const trendWord = document.getElementById('tdr-trend-word');
   if (v.TDR > 0.9 && v.R < 0.08 && terms.U_t > 3) {
     trendWord.textContent = c.criticalTrend;
@@ -2008,7 +2024,7 @@ function updateSensitivity(v) {
 
 
   const keys = ['U', 'LT', 'TDR', 'M', 'CFR', 'DF', 'R'];
-  const baseline = computePInst(v, { urgencyBoost: appState.urgencyBoost });
+  const baseline = Math.max(computePInst(v, { urgencyBoost: appState.urgencyBoost }), 1e-300);
   const out = [];
   keys.forEach(key => {
     const meta = SLIDER_META[key];
@@ -2017,12 +2033,14 @@ function updateSensitivity(v) {
     const minus = { ...v, [key]: clamp(v[key] - d, meta.min, meta.max) };
     const pPlus = computePInst(plus, { urgencyBoost: appState.urgencyBoost });
     const pMinus = computePInst(minus, { urgencyBoost: appState.urgencyBoost });
-    const sens = Math.abs((pPlus - pMinus) / 2);
-    out.push({ key, sens, sign: pPlus > baseline ? '+' : '-' });
+    // Percent change in P_inst per +5% nudge — scale-invariant, so the
+    // ranking stays readable whether P_inst is 69 or 1e-26.
+    const pct = ((pPlus - pMinus) / 2 / baseline) * 100;
+    out.push({ key, pct });
   });
-  out.sort((a, b) => b.sens - a.sens);
+  out.sort((a, b) => Math.abs(b.pct) - Math.abs(a.pct));
   document.getElementById('sensitivity-ranking').innerHTML = out.slice(0, 4)
-    .map((row, idx) => `${idx + 1}. ${row.key} (${row.sign}${fmt(row.sens,4)})`)
+    .map((row, idx) => `${idx + 1}. ${row.key} (${row.pct >= 0 ? '+' : ''}${fmt(row.pct, 3)}%)`)
     .join('<br>');
 }
 
@@ -2753,7 +2771,23 @@ function applyInitialUiState() {
 
 function calibrateNormalization() {
   normalizationZ = computeRawP(presets.healthy, { urgencyBoost: false }) || 1.0;
+  throughputRef = computeTerms(presets.healthy, { urgencyBoost: false }).throughputNominal || 1.0;
   applyPostureCopy();
+}
+
+function stampPresetOutputs() {
+  Object.keys(presets).forEach(name => {
+    const btn = document.getElementById('preset-' + name);
+    if (!btn) return;
+    const p = computePInst(presets[name], { urgencyBoost: false });
+    let chip = btn.querySelector('.preset-pinst');
+    if (!chip) {
+      chip = document.createElement('span');
+      chip.className = 'preset-pinst';
+      btn.appendChild(chip);
+    }
+    chip.textContent = `P = ${fmt(p, 3)}`;
+  });
 }
 
 window.addEventListener('resize', () => {
@@ -2765,6 +2799,7 @@ window.addEventListener('resize', () => {
 setVars(presets.healthy);
 hydrateFromUrl();
 calibrateNormalization();
+stampPresetOutputs();
 initExperimentalUi();
 initCollapsibleSections();
 ensureAllDomElementsHaveIds();
@@ -2773,7 +2808,7 @@ initAdvancedChartDrag();
 applyInitialUiState();
 update();
 window.addEventListener('load', renderKaTeXEquations);
-auditTooltipCoverage();
+if (DEBUG_ENABLED) auditTooltipCoverage();
 </script>
 
 </body></html>

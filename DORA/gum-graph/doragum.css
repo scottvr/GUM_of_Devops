@@ -374,6 +374,19 @@
     font-size: 10px;
   }
 
+  .preset-btn .preset-pinst {
+    display: block;
+    margin-top: 2px;
+    font-size: 9px;
+    color: var(--text-dim);
+    letter-spacing: 0.02em;
+  }
+
+  .preset-btn.active .preset-pinst,
+  .preset-btn:hover .preset-pinst {
+    color: var(--accent);
+  }
+
   .control-inline {
     margin-top: 0.6rem;
     font-size: 10px;

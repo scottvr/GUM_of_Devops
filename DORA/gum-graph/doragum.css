@@ -1072,6 +1072,28 @@
     margin-bottom: 0.4rem;
   }
 
+#gum-tooltip {
+  position: fixed;
+  z-index: 55;
+  max-width: 300px;
+  padding: 0.45rem 0.6rem;
+  background: var(--accent);
+  color: white;
+  font-size: 11px;
+  line-height: 1.45;
+  border-radius: 5px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(3px);
+  transition: opacity 0.12s ease, transform 0.12s ease;
+}
+
+#gum-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .toast-stack {
   position: fixed;
   left: 50%;

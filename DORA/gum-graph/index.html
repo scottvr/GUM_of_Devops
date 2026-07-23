@@ -576,6 +576,7 @@ const HANDLE_R = 8;
 const URL_PARAMS = new URLSearchParams(location.search);
 const EXPERIMENTAL_ENABLED = URL_PARAMS.get('exp') === '1';
 const DEBUG_ENABLED = URL_PARAMS.get('debug') === '1';
+const TOOLTIP_DELAY_MS = 150;
 
 const ADVANCED_X_META = {
   t: { label: 't', min: 0, maxKey: 'simHorizon' },
@@ -909,10 +910,20 @@ function applyLabelTooltip(el, text) {
     const descEl = row.querySelector('.control-desc');
     if (descEl && !seen.has(descEl)) { targets.push(descEl); seen.add(descEl); }
   }
-  targets.forEach(t => {
-    t.title = text;
-    t.setAttribute('aria-description', text);
-  });
+  targets.forEach(t => setTip(t, text));
+}
+
+// Custom fast-delay tooltips: text lives in data-tip, rendered by the
+// #gum-tooltip layer after TOOLTIP_DELAY_MS. Native title attributes are
+// removed so the browser's slow built-in tooltip never doubles up.
+function setTip(el, text) {
+  el.dataset.tip = text;
+  el.setAttribute('aria-description', text);
+  el.removeAttribute('title');
+}
+
+function convertStaticTitlesToTips() {
+  document.querySelectorAll('[title]').forEach(el => setTip(el, el.getAttribute('title')));
 }
 
 function applyTooltipRegistry() {
@@ -923,17 +934,70 @@ function applyTooltipRegistry() {
   Object.entries(merged).forEach(([id, text]) => {
     const el = document.getElementById(id);
     if (!el || !text) return;
-    el.title = text;
-    el.setAttribute('aria-description', text);
+    setTip(el, text);
     applyLabelTooltip(el, text);
   });
   TOOLTIP_SELECTOR_TEXT.forEach(({ selector, text }) => {
     if (!selector || !text) return;
-    document.querySelectorAll(selector).forEach(el => {
-      el.title = text;
-      el.setAttribute('aria-description', text);
-    });
+    document.querySelectorAll(selector).forEach(el => setTip(el, text));
   });
+}
+
+function initTooltipLayer() {
+  const tip = document.createElement('div');
+  tip.id = 'gum-tooltip';
+  tip.setAttribute('role', 'tooltip');
+  tip.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(tip);
+
+  let timer = null;
+  let target = null;
+
+  const hide = () => {
+    if (timer) { clearTimeout(timer); timer = null; }
+    target = null;
+    tip.classList.remove('visible');
+    tip.setAttribute('aria-hidden', 'true');
+  };
+
+  const show = (el) => {
+    const text = el.dataset.tip;
+    if (!text) return;
+    tip.textContent = text;
+    tip.classList.add('visible');
+    tip.setAttribute('aria-hidden', 'false');
+    const r = el.getBoundingClientRect();
+    const tr = tip.getBoundingClientRect();
+    let x = r.left + Math.min(r.width / 2, 120) - tr.width / 2;
+    let y = r.bottom + 8;
+    x = clamp(x, 8, window.innerWidth - tr.width - 8);
+    if (y + tr.height > window.innerHeight - 8) y = r.top - tr.height - 8;
+    tip.style.left = x + 'px';
+    tip.style.top = y + 'px';
+  };
+
+  const arm = (el, delay) => {
+    if (el === target) return;
+    hide();
+    target = el;
+    timer = setTimeout(() => { if (target === el) show(el); }, delay);
+  };
+
+  document.addEventListener('mouseover', e => {
+    const el = e.target.closest ? e.target.closest('[data-tip]') : null;
+    if (!el) { if (target) hide(); return; }
+    arm(el, TOOLTIP_DELAY_MS);
+  });
+  document.addEventListener('mouseout', e => {
+    if (target && !(e.relatedTarget && target.contains(e.relatedTarget))) hide();
+  });
+  document.addEventListener('focusin', e => {
+    const el = e.target.closest ? e.target.closest('[data-tip]') : null;
+    if (el) arm(el, 0);
+  });
+  document.addEventListener('focusout', hide);
+  document.addEventListener('mousedown', hide);
+  document.addEventListener('scroll', hide, true);
 }
 
 function ensureAllDomElementsHaveIds() {
@@ -989,7 +1053,7 @@ function auditTooltipCoverage() {
     const id = el.id || '<missing-id>';
     const tag = el.tagName.toLowerCase();
     const hasRegistryTooltip = Boolean(id && tooltips[id]);
-    const hasAppliedTooltip = Boolean(el.title && el.title.trim().length);
+    const hasAppliedTooltip = Boolean(el.dataset.tip && el.dataset.tip.trim().length);
     if (!hasRegistryTooltip && !hasAppliedTooltip) {
       const hoverable = isPotentiallyHoverable(el);
       const kind = hoverable ? 'hoverable' : 'non-hoverable';
@@ -2805,6 +2869,8 @@ initCollapsibleSections();
 ensureAllDomElementsHaveIds();
 initChartDrag();
 initAdvancedChartDrag();
+convertStaticTitlesToTips();
+initTooltipLayer();
 applyInitialUiState();
 update();
 window.addEventListener('load', renderKaTeXEquations);

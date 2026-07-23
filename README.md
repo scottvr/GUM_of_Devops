@@ -6,7 +6,7 @@
 ---
 
 #  The Grand Unified Model of DevOps
-## A Technical Account of Metrics, Entropy, and Organizational Volatility
+## A Technical Account of Metrics, Organizational Volatility, and Entropy
 
 Scott VanRavenswaay | March 2026
 

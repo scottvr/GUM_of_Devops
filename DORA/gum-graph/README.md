@@ -136,7 +136,7 @@ of these numbers is in units of 'healthy organizations'.)*
 
 >Shipping more is genuinely good - it's in the numerator. It is
 >also a debt-accrual term. The model permits both facts at once, which is
->more than most quarterly reviews manage."
+>more than most quarterly reviews manage.
 
 ### LT - Lead Time for Changes (hrs)
 - **Model:** Denominator - pure temporal friction. Nothing rescues you from a
@@ -145,7 +145,7 @@ of these numbers is in units of 'healthy organizations'.)*
   high (negative) in the Sensitivity card.
 
 >Lead time is friction. It has no redeeming exponent, no clever
->coupling. It just divides your output, hour by hour."
+>coupling. It just divides your output, hour by hour.
 
 ### CFR - Change Failure Rate
 - **Model:** Enters as the *base* of (1−CFR)^(U_eff²). Alone, at low urgency,
@@ -155,7 +155,7 @@ of these numbers is in units of 'healthy organizations'.)*
   persuasive chart in the app.
 
 >Failure rate is not a cost. It's a *base*. Management urgency is
->the exponent. You can have either one safely. You cannot have both."
+>the exponent. You can have either one safely. You cannot have both.
 
 ### MTTR - Mean Time to Restore (hrs)
 - **Model:** Adds to the denominator alongside LT - recovery time is

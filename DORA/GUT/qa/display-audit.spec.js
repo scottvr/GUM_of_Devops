@@ -1,6 +1,8 @@
 const { test, expect } = require('@playwright/test');
+const path = require('path');
+const { pathToFileURL } = require('url');
 
-const PAGE_URL = 'file://../index.html';
+const PAGE_URL = pathToFileURL(path.join(__dirname, '..', 'index.html')).href;
 
 function hasText(v) {
   return typeof v === 'string' && v.trim().length > 0;

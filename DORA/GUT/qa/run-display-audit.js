@@ -1,8 +1,9 @@
 const fs = require('fs');
 const path = require('path');
+const { pathToFileURL } = require('url');
 const { chromium } = require('../node_modules/playwright');
 
-const PAGE_URL = 'file://../index.html';
+const PAGE_URL = pathToFileURL(path.join(__dirname, '..', 'index.html')).href;
 const OUT_DIR = '/private/tmp/gum-audit';
 
 (async () => {

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="The Grand Unified Model of DevOps/SRE Dynamics — the paper, the GUT interactive model explorer, and its field guide.">
 <title>The GUM of DevOps — The Grand Unified Model of DevOps/SRE Dynamics</title>
-<link rel="stylesheet" href="./DORA/GUT/doragum.css">
+<link rel="stylesheet" href="css/doragum.css">
 <style>
   /* Page-specific overrides on top of the shared GUT documentation theme. */
   .readme-page .github-markdown-content h1:first-of-type::before {
@@ -22,6 +22,16 @@
   }
   .readme-page .github-markdown-content {
     max-width: none;
+  }
+
+  /* LaTeX-like body prose for the multi-line blocks: justified, with
+     hyphenation (needs the page's lang="en") and whole-paragraph line
+     breaking so the wider column doesn't open ragged gaps. Only applied
+     to the long paragraphs, not short lines like the subtitle/keywords. */
+  .readme-page .github-markdown-content .paper-prose {
+    text-align: justify;
+    text-wrap: pretty;
+    hyphens: auto;
   }
 
   .readme-nav-actions {
@@ -151,7 +161,7 @@
         </blockquote>
 
         <h2>Abstract</h2>
-        <p>The DevOps movement has provided a widely adopted conceptual framework
+        <p class="paper-prose">The DevOps movement has provided a widely adopted conceptual framework
 for software delivery, emphasizing continuous feedback, reduced
 batch size, and rapid recovery from failure. At the same time, the
 industry&rsquo;s dominant performance vocabulary, especially the DORA metrics,
@@ -182,7 +192,7 @@ Competence Mismatch, MTTR, Compounding Drag</p>
         </div>
 
         <h2>Explore the Model</h2>
-        <p>The GUT — the Grand Unified Tool — is an interactive explorer for the
+        <p class="paper-prose">The GUT — the Grand Unified Tool — is an interactive explorer for the
 model: every term in the realized-output functional as a live control,
 with parameter sweeps, time simulation of the debt dynamics, and six
 organizational archetypes spanning twenty-eight orders of magnitude of

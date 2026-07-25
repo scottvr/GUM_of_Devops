@@ -1229,3 +1229,314 @@
       grid-template-columns: 1fr;
     }
   }
+
+/* Standalone README / presentation field guide
+   ----------------------------------------------
+   All documentation rules are scoped to .readme-page so this stylesheet can
+   serve both index.html and README.html without changing the explorer UI. */
+
+body.readme-page {
+  --readme-measure: 78ch;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--viz-primary), white 93%) 0, transparent 18rem),
+    var(--surface);
+  color: var(--text);
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.readme-page .skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  padding: 0.55rem 0.8rem;
+  background: var(--accent);
+  color: white;
+  text-decoration: none;
+  transform: translateY(-180%);
+  transition: transform 0.15s ease;
+}
+
+.readme-page .skip-link:focus {
+  transform: translateY(0);
+}
+
+.readme-page .readme-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 3.75rem;
+  padding: 0.65rem max(1rem, calc((100vw - 1120px) / 2));
+  border-bottom: 1px solid color-mix(in srgb, var(--border), var(--accent) 10%);
+  background: color-mix(in srgb, white, transparent 7%);
+  box-shadow: 0 8px 24px rgba(11, 57, 84, 0.06);
+  backdrop-filter: blur(12px);
+}
+
+.readme-page .readme-nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-width: 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.readme-page .readme-nav-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2rem;
+  flex: 0 0 auto;
+  border-radius: 2px;
+  background: var(--accent);
+  color: white;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+.readme-page .readme-nav-action {
+  flex: 0 0 auto;
+  padding: 0.38rem 0.62rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  color: var(--accent);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.7rem;
+  text-decoration: none;
+}
+
+.readme-page .readme-nav-action:hover {
+  color: var(--viz-compare);
+}
+
+.readme-page .readme-nav a:focus-visible,
+.readme-page .github-markdown-content a:focus-visible {
+  outline: 2px solid var(--viz-handle);
+  outline-offset: 3px;
+}
+
+.readme-page .github-markdown-body {
+  width: min(100% - 2rem, 960px);
+  margin: clamp(1rem, 4vw, 3.5rem) auto;
+  border: 1px solid color-mix(in srgb, var(--border), white 12%);
+  background: var(--bg);
+  box-shadow: 0 18px 50px rgba(34, 30, 39, 0.08);
+}
+
+.readme-page .github-markdown-content {
+  max-width: var(--readme-measure);
+  margin: 0 auto;
+  padding: clamp(1.4rem, 5vw, 4.5rem);
+}
+
+.readme-page .github-markdown-content > :first-child {
+  margin-top: 0;
+}
+
+.readme-page .github-markdown-content > :last-child {
+  margin-bottom: 0;
+}
+
+.readme-page .github-markdown-content h1,
+.readme-page .github-markdown-content h2,
+.readme-page .github-markdown-content h3 {
+  scroll-margin-top: 5rem;
+  color: var(--text-bright);
+}
+
+.readme-page .github-markdown-content h1 {
+  margin: 3.8rem 0 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--accent);
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-size: clamp(1.7rem, 4vw, 2.65rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.readme-page .github-markdown-content h1:first-of-type {
+  position: relative;
+  margin-bottom: 1.25rem;
+  padding-top: 1.6rem;
+  border-bottom-color: var(--viz-primary);
+}
+
+.readme-page .github-markdown-content h1:first-of-type::before {
+  content: "GUM GRAPH · FIELD GUIDE";
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: var(--viz-compare);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+}
+
+.readme-page .github-markdown-content h2 {
+  margin: 3rem 0 0.8rem;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+
+.readme-page .github-markdown-content h3 {
+  margin: 2rem 0 0.55rem;
+  font-family: "IBM Plex Sans", "Roboto", sans-serif;
+  font-size: 1.03rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.readme-page .github-markdown-content p {
+  margin: 0 0 1rem;
+}
+
+.readme-page .github-markdown-content a {
+  color: var(--accent);
+  text-decoration-color: var(--accent-dim);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.readme-page .github-markdown-content a:hover {
+  color: var(--viz-compare);
+  text-decoration-color: currentColor;
+}
+
+.readme-page .github-markdown-content strong {
+  color: var(--text-bright);
+  font-weight: 600;
+}
+
+.readme-page .github-markdown-content ul,
+.readme-page .github-markdown-content ol {
+  margin: 0 0 1.2rem;
+  padding-left: 1.5rem;
+}
+
+.readme-page .github-markdown-content li {
+  margin: 0.38rem 0;
+  padding-left: 0.2rem;
+}
+
+.readme-page .github-markdown-content li::marker {
+  color: var(--viz-compare);
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+}
+
+.readme-page .github-markdown-content blockquote {
+  position: relative;
+  margin: 1.25rem 0 1.65rem;
+  padding: 1rem 1.15rem 1rem 1.35rem;
+  border-left: 4px solid var(--viz-handle);
+  background: color-mix(in srgb, var(--warn), white 78%);
+  color: color-mix(in srgb, var(--text), var(--accent) 12%);
+  font-family: "IBM Plex Sans", "Roboto", sans-serif;
+  font-size: 0.95rem;
+  font-style: italic;
+}
+
+.readme-page .github-markdown-content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.readme-page .github-markdown-content hr {
+  height: 1px;
+  margin: 3.2rem 0;
+  border: 0;
+  background: linear-gradient(90deg, var(--viz-primary), var(--viz-compare), transparent);
+}
+
+.readme-page .github-markdown-content table {
+  display: block;
+  width: 100%;
+  margin: 1.25rem 0 1.75rem;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.readme-page .github-markdown-content th,
+.readme-page .github-markdown-content td {
+  min-width: 9rem;
+  padding: 0.68rem 0.75rem;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.readme-page .github-markdown-content th {
+  background: var(--accent);
+  color: white;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.035em;
+}
+
+.readme-page .github-markdown-content tbody tr:nth-child(even) {
+  background: var(--surface);
+}
+
+.readme-page .github-markdown-content code {
+  padding: 0.12em 0.32em;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  background: var(--surface);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.86em;
+}
+
+@media (max-width: 600px) {
+  .readme-page .readme-nav {
+    min-height: 3.25rem;
+  }
+
+  .readme-page .readme-nav-brand > span:last-child {
+    display: none;
+  }
+
+  .readme-page .github-markdown-body {
+    width: 100%;
+    margin: 0;
+    border-right: 0;
+    border-left: 0;
+    box-shadow: none;
+  }
+
+  .readme-page .github-markdown-content h1 {
+    margin-top: 3rem;
+  }
+
+  .readme-page .github-markdown-content h2 {
+    margin-top: 2.4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .readme-page *,
+  .readme-page *::before,
+  .readme-page *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

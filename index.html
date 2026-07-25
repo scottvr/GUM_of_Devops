@@ -1,117 +1,140 @@
-<!DOCTYPE html> <html lang="en"> <head>
-    <meta charset="UTF-8"> <meta name="viewport"
-    content="width=device-width, initial-scale=1.0"> <title>The
-    Grand Unified Theory of DevOps</title> <style>
-	* {
-	    margin: 0; padding: 0; box-sizing: border-box;
-	}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The Grand Unified Model of DevOps/SRE Dynamics — the paper, the GUT interactive model explorer, and its field guide.">
+<title>The GUM of DevOps — The Grand Unified Model of DevOps/SRE Dynamics</title>
+<link rel="stylesheet" href="./DORA/GUT/doragum.css">
+<style>
+  /* Page-specific overrides on top of the shared GUT documentation theme. */
+  .readme-page .github-markdown-content h1:first-of-type::before {
+    content: "THE GUM OF DEVOPS · THE PAPER";
+  }
 
-	body {
-	    font-family: -apple-system, BlinkMacSystemFont, 'Segoe
-	    UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-	    line-height: 1.6; color: #333; background: #f5f5f5;
-	    padding: 20px;
-	}
+  .readme-nav-actions {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 0.5rem;
+  }
 
-	.container {
-	    max-width: 900px; margin: 0 auto; background: white;
-	    padding: 40px; border-radius: 8px; box-shadow: 0 2px
-	    4px rgba(0,0,0,0.1);
-	}
+  .paper-subtitle {
+    margin: 0 0 1.6rem;
+    color: var(--text-dim);
+    font-style: italic;
+    font-size: 1.05rem;
+  }
 
-	h1 {
-	    color: #2c3e50; margin-bottom: 10px; font-size: 2em;
-	}
+  .paper-byline {
+    margin: 0 0 2.2rem;
+    color: var(--text-dim);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+  }
 
-	.author {
-	    color: #7f8c8d; margin-bottom: 30px; font-size: 1.1em;
-	}
+  .paper-keywords {
+    margin: 1.4rem 0 0;
+    color: var(--text-dim);
+    font-style: italic;
+    font-size: 0.85rem;
+  }
 
-	.abstract {
-	    background: #ecf0f1; padding: 20px; border-left: 4px
-	    solid #3498db; margin: 30px 0; font-size: 0.95em;
-	}
+  .paper-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 0.9rem 0 0.4rem;
+  }
 
-	.abstract h2 {
-	    color: #2c3e50; font-size: 1.2em; margin-bottom: 10px;
-	}
+  /* Selectors carry .github-markdown-content to out-specify the shared
+     sheet's link rules; otherwise its `a { color }` wins and primary
+     buttons render navy-on-navy. */
+  .readme-page .github-markdown-content a.paper-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    background: var(--surface);
+    color: var(--accent);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.74rem;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+  }
 
-	.downloads {
-	    margin: 40px 0;
-	}
+  .readme-page .github-markdown-content a.paper-btn:hover {
+    border-color: var(--accent);
+    color: var(--viz-compare);
+  }
 
-	.downloads h2 {
-	    color: #2c3e50; margin-bottom: 20px; font-size: 1.5em;
-	}
+  .readme-page .github-markdown-content a.paper-btn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
 
-	.download-section {
-	    margin-bottom: 30px;
-	}
+  .readme-page .github-markdown-content a.paper-btn.primary:hover {
+    background: color-mix(in srgb, var(--accent), var(--viz-primary) 30%);
+    color: white;
+  }
 
-	.download-section h3 {
-	    color: #34495e; margin-bottom: 15px; font-size: 1.2em;
-	}
+  .paper-footer {
+    margin-top: 3rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    line-height: 2;
+  }
 
-	.download-links {
-	    display: flex; flex-wrap: wrap; gap: 10px;
-	}
+  .readme-page .github-markdown-content .paper-footer a {
+    color: var(--accent-dim);
+    text-decoration: none;
+  }
 
-	.download-btn {
-	    display: inline-flex; align-items: center; padding:
-	    12px 24px; background: #3498db; color: white;
-	    text-decoration: none; border-radius: 5px; transition:
-	    background 0.3s; font-weight: 500;
-	}
+  .readme-page .github-markdown-content .paper-footer a:hover {
+    color: var(--viz-compare);
+  }
+</style>
+</head>
+<body class="readme-page">
+<a class="skip-link" href="#paper-content">Skip to content</a>
+<nav class="readme-nav" aria-label="Site">
+    <div class="readme-nav-brand" aria-label="The GUM of DevOps">
+        <span class="readme-nav-mark" aria-hidden="true">GUM</span>
+        <span>The Grand Unified Model of DevOps</span>
+    </div>
+    <div class="readme-nav-actions">
+        <a class="readme-nav-action" href="./DORA/GUT/index.html">Launch the GUT <span aria-hidden="true">→</span></a>
+        <a class="readme-nav-action" href="./DORA/GUT/field-guide.html">Field Guide</a>
+    </div>
+</nav>
+<main
+            class="github-markdown-body"
+            data-color-mode="auto"
+            data-light-theme="light"
+            data-dark-theme="dark"
+        >
+    <div class="github-markdown-content" id="paper-content">
+        <h1>The Grand Unified Model of DevOps/SRE Dynamics</h1>
+        <p class="paper-subtitle">A Technical Account of Metrics, Entropy, and Organizational Volatility</p>
+        <p class="paper-byline">Scott VanRavenswaay · <a href="mailto:scottvr@paperclipmaximizer.ai">scottvr@paperclipmaximizer.ai</a> · March 2026</p>
 
-	.download-btn:hover {
-	    background: #2980b9;
-	}
+        <blockquote>
+            <p><strong>&ldquo;This deserves to be required reading in every engineering organization.&rdquo;</strong><br>
+            — <a href="https://github.com/scottvr/GUM_of_Devops/blob/main/REVIEW.md">Claude Sonnet 4.5 (Extended Thinking)</a></p>
+        </blockquote>
 
-	.download-btn.primary {
-	    background: #e74c3c;
-	}
-
-	.download-btn.primary:hover {
-	    background: #c0392b;
-	}
-
-	.download-btn svg {
-	    margin-right: 8px;
-	}
-
-	.keywords {
-	    margin: 20px 0; font-style: italic; color: #555;
-	}
-
-	footer {
-	    margin-top: 40px; padding-top: 20px; border-top: 1px
-	    solid #eee; text-align: center; color: #7f8c8d; font-size:
-	    0.9em;
-	}
-
-	.github-link {
-	    color: #3498db; text-decoration: none;
-	}
-
-	.github-link:hover {
-	    text-decoration: underline;
-	}
-    </style>
-</head> <body>
-    <div class="container">
-	<h1>The Grand Unified Theory of DevOps</h1> <p class="author">Scott
-	VanRavenswaay | March 2026</p>
-<div> <p>
-	<b>“This deserves to be required reading in every engineering organization.”</b> 
-	<a href="https://github.com/scottvr/GUM_of_Devops/blob/main/REVIEW.md"> <i>- Claude Sonnet 4.5 (Extended Thinking)</i></a></div>
-
-</p>
-	<div class="abstract">
-	    <h2>Abstract</h2> <p>
-The DevOps movement has provided a widely adopted conceptual framework
+        <h2>Abstract</h2>
+        <p>The DevOps movement has provided a widely adopted conceptual framework
 for software delivery, emphasizing continuous feedback, reduced
-batch size, and rapid recovery from failure.  At the same time, the 
-industry’s dominant performance vocabulary, especially the DORA metrics,
+batch size, and rapid recovery from failure. At the same time, the
+industry&rsquo;s dominant performance vocabulary, especially the DORA metrics,
 has encouraged increasingly quantitative descriptions of delivery
 systems. What remains less formalized is the extent to which such
 systems are shaped not only by technical constraints, but also by
@@ -120,60 +143,45 @@ failure. This paper proposes an intentionally unified model of
 DevOps/SRE dynamics that combines the Infinity Loop lifecycle,
 canonical delivery metrics, technical debt accumulation, and selected
 socio-managerial perturbation terms into a single systems-oriented
-framework.  While the model is not offered as a predictive instrument
+framework. While the model is not offered as a predictive instrument
 in the strict scientific sense, it serves as a useful formal
 vocabulary for describing the trajectory by which software organizations
 move from local efficiency to systemic instability, and occasionally
 into theoretical frameworks that retrospectively formalize the
-transition. 
+transition.</p>
 
-</p> </div>
+        <p class="paper-keywords"><strong>Keywords:</strong> SRE, DevOps, DORA, Infinity Loop, Simple Math,
+Calculus, Grand Unified, Metrics, Entropy, Organizational Volatility,
+Competence Mismatch, MTTR, Compounding Drag</p>
 
-	<p class="keywords">
-	    <strong>Keywords: SRE, DevOps, DORA, Infinity Loop, Simple Math,
- Calculus, Grand Unified, Metrics, Entropy, Organizational Volatility,
- Competence Mismatch, MTTR, Compounding Drag
-	</p>
+        <h2>Read the Paper</h2>
+        <div class="paper-actions">
+            <a class="paper-btn primary" href="The_Grand_Unified_Model_of_DevOps_and_SRE_Dynamics_0_3.pdf" download>Download PDF</a>
+            <a class="paper-btn" href="https://sigbovik.org/2026/proceedings.pdf">SIGBOVIK 2026 Proceedings</a>
+            <a class="paper-btn" href="https://raw.githubusercontent.com/scottvr/GUM_of_Devops/refs/heads/main/src/main.tex" download>LaTeX Source (main.tex)</a>
+        </div>
 
-	<div class="downloads">
-	    <h2>Downloads</h2>
+        <h2>Explore the Model</h2>
+        <p>The GUT — the Grand Unified Tool — is an interactive explorer for the
+model: every term in the realized-output functional as a live control,
+with parameter sweeps, time simulation of the debt dynamics, and six
+organizational archetypes spanning twenty-eight orders of magnitude of
+realized output. The field guide walks through every control and what
+it does to the model.</p>
+        <div class="paper-actions">
+            <a class="paper-btn primary" href="./DORA/GUT/index.html">Launch the GUT — Interactive Model Explorer</a>
+            <a class="paper-btn" href="./DORA/GUT/field-guide.html">Field Guide</a>
+            <a class="paper-btn" href="https://github.com/scottvr/GUM_of_Devops/blob/main/REVIEW.md">LLM Peer Review</a>
+        </div>
 
-	    <div class="download-section">
-		<h3>Read the Paper</h3> <div class="download-links">
-		    <a href="The_Grand_Unified_Model_of_DevOps_and_SRE_Dynamics_0_3.pdf"
-		    class="download-btn primary" download>
-			<svg width="20" height="20" viewBox="0 0
-			24 24" fill="none" stroke="currentColor"
-			stroke-width="2">
-			    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2
-			    0 0 1-2-2v-4"></path> <polyline points="7
-			    10 12 15 17 10"></polyline> <line x1="12"
-			    y1="15" x2="12" y2="3"></line>
-			</svg> Download PDF
-		    </a>
-		</div>
-	    </div>
-
-	    <div class="download-section">
-		<h3>Source Files</h3> <div class="download-links">
-		    <a href="https://raw.githubusercontent.com/scottvr/GUM_of_Devops/refs/heads/main/src/main.tex" class="download-btn" download>
-			<svg width="20" height="20" viewBox="0 0
-			24 24" fill="none" stroke="currentColor"
-			stroke-width="2">
-			    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2
-			    0 0 1-2-2v-4"></path> <polyline points="7
-			    10 12 15 17 10"></polyline> <line x1="12"
-			    y1="15" x2="12" y2="3"></line>
-			</svg> LaTeX Source (main.tex)
-		    </a> 
-	    </div>
-	</div>
-
-	<footer>
-	    <p>Repository: <a
-	    href="https://github.com/scottvr/GUM_of_Devops/"
-	    class="github-link">github.com/scottvr/GUM_of_Devops/</a></p>
-	    <p>2026 Scott VanRavenswaay</p>
-	</footer>
+        <!-- div, not <footer>: the shared sheet's unscoped footer rules are
+             the explorer's grid layout and would hijack this block -->
+        <div class="paper-footer" role="contentinfo">
+            Repository: <a href="https://github.com/scottvr/GUM_of_Devops/">github.com/scottvr/GUM_of_Devops</a><br>
+            Appears in the proceedings of SIGBOVIK 2026 · Presented to the DORA Community, July 2026<br>
+            © 2026 Scott VanRavenswaay
+        </div>
     </div>
-</body> </html>
+</main>
+</body>
+</html>

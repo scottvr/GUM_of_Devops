@@ -1417,7 +1417,7 @@ body.readme-page {
 }
 
 .readme-page .github-markdown-content h1:first-of-type::before {
-  content: "GUM GRAPH · FIELD GUIDE";
+  content: "GUM GRAPH (GUT) · FIELD GUIDE";
   position: absolute;
   top: 0;
   left: 0;

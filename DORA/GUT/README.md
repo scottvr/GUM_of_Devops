@@ -1,4 +1,4 @@
-# how to read the "gum-graph" html visualizer/explorer
+# how to read the "GUT" html visualizer/explorer
 The html/js app is designed to visualize the math and meaning from the paper.
 This README is dual-function; to document the app, and as my presentataion notes
 when walking through it.

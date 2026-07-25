@@ -1,6 +1,6 @@
 Files for DORA Community presentation.
 Jul 23 2026 Lean coffee 
 
-[GUM interactive graph](https://blehg.paperclipmaximizer.ai/GUM_of_Devops/DORA/gum-graph/)  
+[GUT - the Grand Unified Tool (GUM interactive graph)](https://blehg.paperclipmaximizer.ai/GUM_of_Devops/DORA/GUT/)  
 
-[GUM graph README](https://github.com/scottvr/GUM_of_Devops/blob/main/DORA/gum-graph/README.md)   
+[GUT README](https://github.com/scottvr/GUM_of_Devops/blob/main/DORA/GUT/README.md)   

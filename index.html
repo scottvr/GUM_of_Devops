@@ -12,6 +12,18 @@
     content: "THE GUM OF DEVOPS · THE PAPER";
   }
 
+  /* The shared theme constrains content to a narrow academic reading
+     measure (78ch) inside a 960px card. This landing page is a hub, not a
+     long read, so it gets a wider berth: the card aligns to the nav's
+     1120px column and the content fills it (which also stops the mono
+     footer line from wrapping mid-phrase). */
+  .readme-page .github-markdown-body {
+    width: min(100% - 2rem, 1120px);
+  }
+  .readme-page .github-markdown-content {
+    max-width: none;
+  }
+
   .readme-nav-actions {
     display: flex;
     flex: 0 0 auto;
@@ -82,23 +94,31 @@
     color: white;
   }
 
-  .paper-footer {
+  /* Footer mirrors the GUT explorer's: a horizontal meta / links bar
+     driven by the shared unscoped footer/.footer-meta/.paper-links rules.
+     These overrides only give it a top margin, zero its own side padding
+     so it aligns with the card's text column, and restore the footer link
+     colors that the content-scoped `a` rule would otherwise override. */
+  .readme-page .github-markdown-content footer {
     margin-top: 3rem;
-    padding-top: 1.2rem;
-    border-top: 1px solid var(--border);
-    color: var(--text-dim);
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 0.72rem;
-    line-height: 2;
+    padding-left: 0;
+    padding-right: 0;
   }
 
-  .readme-page .github-markdown-content .paper-footer a {
+  .readme-page .github-markdown-content .footer-meta a,
+  .readme-page .github-markdown-content .paper-links a {
     color: var(--accent-dim);
     text-decoration: none;
   }
 
-  .readme-page .github-markdown-content .paper-footer a:hover {
-    color: var(--viz-compare);
+  .readme-page .github-markdown-content .paper-links .paper-link-primary {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .readme-page .github-markdown-content .footer-meta a:hover,
+  .readme-page .github-markdown-content .paper-links a:hover {
+    color: var(--accent);
   }
 </style>
 </head>
@@ -174,13 +194,21 @@ it does to the model.</p>
             <a class="paper-btn" href="https://github.com/scottvr/GUM_of_Devops/blob/main/REVIEW.md">LLM Peer Review</a>
         </div>
 
-        <!-- div, not <footer>: the shared sheet's unscoped footer rules are
-             the explorer's grid layout and would hijack this block -->
-        <div class="paper-footer" role="contentinfo">
-            Repository: <a href="https://github.com/scottvr/GUM_of_Devops/">github.com/scottvr/GUM_of_Devops</a><br>
-            Appears in the proceedings of SIGBOVIK 2026 · Presented to the DORA Community, July 2026<br>
-            © 2026 Scott VanRavenswaay
-        </div>
+        <!-- Uses the shared unscoped footer/.footer-meta/.paper-links rules
+             on purpose, so it matches the GUT explorer's footer bar. -->
+        <footer>
+            <div class="footer-meta">
+                <span>Scott VanRavenswaay</span>
+                <a href="mailto:scottvr@paperclipmaximizer.ai">scottvr@paperclipmaximizer.ai</a>
+                <span>Presented to the DORA Community, July 2026</span>
+            </div>
+            <nav class="paper-links" aria-label="Project resources">
+                <a class="paper-link-primary" href="./DORA/GUT/index.html">Launch the GUT</a>
+                <a href="./DORA/GUT/field-guide.html">Field Guide</a>
+                <a href="https://github.com/scottvr/GUM_of_Devops/" target="_blank" rel="noopener noreferrer">Repository</a>
+                <a href="https://sigbovik.org/2026/proceedings.pdf#page=897" target="_blank" rel="noopener noreferrer">SIGBOVIK Proceedings</a>
+            </nav>
+        </footer>
     </div>
 </main>
 </body>

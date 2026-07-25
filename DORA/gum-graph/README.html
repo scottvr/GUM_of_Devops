@@ -1,0 +1,380 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/default.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markdown-it-texmath/css/texmath.min.css">
+<link rel="stylesheet" href="file:////Users/bundle-tron9k/.vscode/extensions/goessner.mdmath-2.7.4/themes/default/style.css">
+
+</head>
+<body class="markdown-body">
+<div
+            class="github-markdown-body"
+            data-color-mode="auto"
+            data-light-theme="light"
+            data-dark-theme="dark"
+        >
+            <div class="github-markdown-content"><span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;default&quot;,&quot;lightModeTheme&quot;:&quot;default&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+                <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<h1 dir="auto" id="how-to-read-the-gum-graph-html-visualizerexplorer">how to read the &quot;gum-graph&quot; html visualizer/explorer</h1>
+<p dir="auto">The html/js app is designed to visualize the math and meaning from the paper.
+This README is dual-function; to document the app, and as my presentataion notes
+when walking through it.</p>
+<h2 dir="auto" id="the-z-term">the Z term</h2>
+<p dir="auto">Healthy - normalized to 1.000
+everything else measured in units of &quot;how many orgs of damage is this decision worth?&quot;</p>
+<h1 dir="auto" id="navigation">Navigation</h1>
+<h2 dir="auto" id="session-controls">Session Controls</h2>
+<p dir="auto">how the <em>app/demo</em> behaves, <strong>not</strong> what the org does.</p>
+<h3 dir="auto" id="freeze-controls-during-simulation---checkbox-default-on">Freeze controls during simulation - checkbox, default ON</h3>
+<ul dir="auto">
+<li dir="auto"><strong>What:</strong> When ON, the time simulation projects forward without writing its
+projected values back into the sliders. When OFF, scrubbing time lets the
+projection rewrite TDR (and in coupled mode M, LT, CFR) in the controls.</li>
+<li dir="auto"><strong>Model effect:</strong> None - this is about who owns the sliders, you or the future.</li>
+<li dir="auto"><strong>On screen:</strong> With freeze OFF in the Time tab, sliders visibly walk as you
+scrub. Toast + state chip confirm which regime you're in.</li>
+</ul>
+<blockquote dir="auto">
+<p dir="auto">Freeze is the difference between <em>forecasting</em> the organization and
+<em>becoming</em> it. We'll leave it on; we've all seen what happens otherwise.</p>
+</blockquote>
+<h3 dir="auto" id="dora-lens---checkbox-default-on">DORA Lens - checkbox, default ON</h3>
+<ul dir="auto">
+<li dir="auto"><strong>What:</strong> Visual highlighting of the observed vs. latent split.</li>
+<li dir="auto"><strong>Model effect:</strong> None. Purely epistemological.</li>
+<li dir="auto"><strong>On screen:</strong> The four DORA rows get an amber edge and tint; everything
+latent (morale, urgency, mismatch, volatility, debt, remediation) dims to
+55% opacity.</li>
+</ul>
+<blockquote dir="auto">
+<p dir="auto">This is what your metrics vendor can see. Note that the dimmed
+rows are still <em>in the equation</em> - dimming a variable does not remove it
+fom your organization. It only removes it from your dashboard.</p>
+</blockquote>
+<h3 dir="auto" id="institutional-momentum-mode---checkbox-default-on-off--strict-scientific-posture">Institutional Momentum Mode - checkbox, default ON (off = Strict Scientific Posture)</h3>
+<ul dir="auto">
+<li dir="auto"><strong>What:</strong> Swaps the copy register across the page. Strict is the deadpan
+straight man; Momentum lets the satire surface.</li>
+<li dir="auto"><strong>Model effect:</strong> None - same math, different honesty.</li>
+<li dir="auto"><strong>On screen:</strong> Kicker flips between &quot;A Structured Descriptive Model&quot; and
+&quot;A Grand Unified Model&quot;; &quot;Debt derivative&quot; becomes &quot;Debt Velocity Vector&quot;;
+the critical-regime diagnosis gains &quot;Resume Driven Development detected&quot;;
+the Z line gains its rhetorical-manageability confession.</li>
+</ul>
+<blockquote dir="auto">
+<p dir="auto">The model has two postures: the one for the methods section and
+the one for the retro. The numbers are identical in both, which is rather
+the point.</p>
+</blockquote>
+<h3 dir="auto" id="df-dynamics-mode---select-conservative-og-gum--endogenous-exploratory">DF dynamics mode - select: Conservative (OG GUM) / Endogenous (Exploratory)</h3>
+<ul dir="auto">
+<li dir="auto"><strong>What:</strong> Whether deployment frequency is an <em>input you claim</em> or an
+<em>outcome you earn</em>.</li>
+<li dir="auto"><strong>Model effect:</strong> Conservative: DF_eff = the slider - DF is an observed
+policy input, faithful to the paper; latent terms never rewrite it.
+Endogenous: DF_eff = DF × A(t), the attenuation state - dysfunction erodes
+how often you actually ship, no matter what the roadmap says.</li>
+<li dir="auto"><strong>On screen:</strong> Assumption banner text changes; in the Time tab the DF_policy
+and DF_eff tickers diverge; the waterfall's &quot;Effective DF(t)/DF&quot; factor
+drops below 1.000; velocity-driven debt accrual shrinks accordingly.</li>
+</ul>
+<blockquote dir="auto">
+<p dir="auto">Conservative mode believes your stated deploy frequency.
+Endogenous mode has met your organization.</p>
+</blockquote>
+<h3 dir="auto" id="quiet-toasts---checkbox-default-off">Quiet toasts - checkbox, default OFF</h3>
+<ul dir="auto">
+<li dir="auto"><strong>What:</strong> Toast style: center-stage announcements vs. small bottom-right
+murmurs with shorter lifetimes.</li>
+<li dir="auto"><strong>Model effect:</strong> None.</li>
+</ul>
+<blockquote dir="auto">
+<p dir="auto">Notifications, like urgency, are configurable in
+amplitude but not in existence.</p>
+</blockquote>
+<h3 dir="auto" id="pin-baseline--copy-permalink---buttons">Pin Baseline / Copy Permalink - buttons</h3>
+<ul dir="auto">
+<li dir="auto"><strong>What:</strong> Pin captures the complete current state as a comparison anchor;
+the Current vs Baseline card then shows absolute values and signed % deltas
+for P_inst, Ω, debt attenuation, and the urgency term as you move things.
+Permalink serializes <em>everything</em> - sliders, tabs, toggles, scrub time, even
+which sections are collapsed - into the URL.</li>
+<li dir="auto"><strong>Model effect:</strong> None; instrumentation of the instrument.</li>
+</ul>
+<blockquote dir="auto">
+<p dir="auto">Pin Baseline is for before-and-after experiments: pin the org you
+have, then apply management. The permalink means any organizational
+pathology you can configure, you can also share. This is either a feature
+or a threat, depending on your role.</p>
+</blockquote>
+<hr dir="auto">
+<h2 dir="auto" id="organizational-archetypes">Organizational Archetypes</h2>
+<p dir="auto"><em>(Six presets spanning ~28 orders of magnitude of realized output. Every one
+of these numbers is in units of 'healthy organizations'.)</em></p>
+<table dir="auto">
+<thead dir="auto">
+<tr dir="auto">
+<th>Preset</th>
+<th>P_inst</th>
+<th>Felt urgency U_eff</th>
+<th>Throughput vs healthy</th>
+</tr>
+</thead>
+<tbody dir="auto">
+<tr dir="auto">
+<td>Elite Performer</td>
+<td>69.0</td>
+<td>0.50 (policy 0.50 - <em>dampened</em>)</td>
+<td>35.7×</td>
+</tr>
+<tr dir="auto">
+<td>High Performer</td>
+<td><strong>1.000</strong> (the anchor)</td>
+<td>1.27 (policy 1.00)</td>
+<td>1.00×</td>
+</tr>
+<tr dir="auto">
+<td>Under Pressure</td>
+<td>0.056</td>
+<td>3.67 (policy 2.50)</td>
+<td><strong>1.00×</strong></td>
+</tr>
+<tr dir="auto">
+<td>Legacy Bog</td>
+<td>0.0019</td>
+<td>1.82 (policy 1.20)</td>
+<td>0.016×</td>
+</tr>
+<tr dir="auto">
+<td>Incident Loop</td>
+<td>9.0 × 10⁻¹⁴</td>
+<td>6.28 (policy 4.00)</td>
+<td>0.017×</td>
+</tr>
+<tr dir="auto">
+<td>Max Entropy</td>
+<td>1.3 × 10⁻²⁶</td>
+<td>7.54 (policy 4.80)</td>
+<td>0.0053×</td>
+</tr>
+</tbody>
+</table>
+<ul dir="auto">
+<li dir="auto"><strong>Elite Performer</strong> - &quot;High trust, low chaos.&quot; Note U_eff ≤ policy U: a
+healthy attenuation state <em>dampens</em> imposed urgency slightly.</li>
+</ul>
+<blockquote dir="auto">
+<p dir="auto">In a coherent organization, a deadline is just information.</p>
+</blockquote>
+<ul dir="auto">
+<li dir="auto"><strong>High Performer</strong> - the calibration anchor; loads by default.</li>
+</ul>
+<blockquote dir="auto">
+<p dir="auto">We normalized reality to the healthiest org we could responsibly imagine.
+Everything else on this list is a fraction of one of these.</p>
+</blockquote>
+<ul dir="auto">
+<li dir="auto"><strong>Under Pressure</strong> - the thesis demo. Throughput bar reads <em>exactly</em> 1.00×,
+identical to High Performer - the pipeline term is blind to distress -
+while realized output is 18× lower, all of it lost through the attenuation
+terms.</li>
+</ul>
+<blockquote dir="auto">
+<p dir="auto">Same pipeline. Same deploy cadence. The dashboards agree
+everything is fine. This is Proposition 2 rendered as a bar chart: an
+increase in deployment-related activity does not, by itself, imply an
+increase in realized delivery value.</p>
+</blockquote>
+<ul dir="auto">
+<li dir="auto"><strong>Legacy Bog</strong> - debt-dominant but <em>calm</em> (low U, low E). Lead time of 48
+hours does the strangling; TDR 0.7 taxes what's left.</li>
+</ul>
+<blockquote dir="auto">
+<p dir="auto">Nobody here is panicking. That is the only nice thing the model has to say about it.</p>
+</blockquote>
+<ul dir="auto">
+<li dir="auto"><strong>Incident Loop</strong> - CFR 0.45 under U 4.0 puts an exponent of ~39 on the
+failure term: (0.55)^39 ≈ 10⁻¹¹.</li>
+</ul>
+<blockquote dir="auto">
+<p dir="auto">A 45% change-failure rate is survivable. A 45% change-failure rate
+<em>under maximum urgency</em> is an extinction event.
+Urgency doesn't change your failure rate - it changes what your failure rate costs.</p>
+</blockquote>
+<ul dir="auto">
+<li dir="auto"><strong>Max Entropy</strong> - subtitle &quot;The literature review.&quot; Let the 1.3 × 10⁻²⁶</li>
+</ul>
+<blockquote dir="auto">
+<p dir="auto">sit in silence for a beat. -nothing. The number is the joke.</p>
+</blockquote>
+<hr dir="auto">
+<h2 dir="auto" id="dora-delivery-variables">DORA Delivery Variables</h2>
+<p dir="auto"><em>(The observed layer - what the industry already measures, kept faithfully.)</em></p>
+<h3 dir="auto" id="df---deployment-frequency">DF - Deployment Frequency</h3>
+<ul dir="auto">
+<li dir="auto"><strong>Model:</strong> Linear multiplier in the numerator - cadence scales output. But
+it also feeds debt: κ₂·DF_eff in the debt derivative - velocity mints debt.
+In endogenous mode, dysfunction erodes it.</li>
+<li dir="auto"><strong>On screen:</strong> Throughput bar, waterfall's nominal-throughput line, and the
+&quot;+k2·DF_eff·A: velocity-driven debt&quot; grid cell all move.</li>
+</ul>
+<blockquote dir="auto">
+<p dir="auto">Shipping more is genuinely good - it's in the numerator. It is
+also a debt-accrual term. The model permits both facts at once, which is
+more than most quarterly reviews manage.</p>
+</blockquote>
+<h3 dir="auto" id="lt---lead-time-for-changes-hrs">LT - Lead Time for Changes (hrs)</h3>
+<ul dir="auto">
+<li dir="auto"><strong>Model:</strong> Denominator - pure temporal friction. Nothing rescues you from a
+long lead time; it divides everything.</li>
+<li dir="auto"><strong>On screen:</strong> Drag it right and the score falls smoothly; LT usually ranks
+high (negative) in the Sensitivity card.</li>
+</ul>
+<blockquote dir="auto">
+<p dir="auto">Lead time is friction. It has no redeeming exponent, no clever
+coupling. It just divides your output, hour by hour.</p>
+</blockquote>
+<h3 dir="auto" id="cfr---change-failure-rate">CFR - Change Failure Rate</h3>
+<ul dir="auto">
+<li dir="auto"><strong>Model:</strong> Enters as the <em>base</em> of (1−CFR)^(U_eff²). Alone, at low urgency,
+it's nearly benign. Under urgency the exponent detonates it.</li>
+<li dir="auto"><strong>On screen:</strong> The CFR sweep tab has &quot;Compare at U=1.0 / U=3.5&quot; buttons -
+the same CFR curve drawn in two urgency regimes. Use this. It is the most
+persuasive chart in the app.</li>
+</ul>
+<blockquote dir="auto">
+<p dir="auto">Failure rate is not a cost. It's a <em>base</em>. Management urgency is
+the exponent. You can have either one safely. You cannot have both.</p>
+</blockquote>
+<h3 dir="auto" id="mttr---mean-time-to-restore-hrs">MTTR - Mean Time to Restore (hrs)</h3>
+<ul dir="auto">
+<li dir="auto"><strong>Model:</strong> Adds to the denominator alongside LT - recovery time is
+friction on the same axis as delivery time.</li>
+</ul>
+<blockquote dir="auto">
+<p dir="auto">The model doesn't distinguish time spent shipping from time spent
+un-shipping. Neither does your calendar.</p>
+</blockquote>
+<hr dir="auto">
+<h2 dir="auto" id="organizational-perturbation-terms">Organizational Perturbation Terms</h2>
+<p dir="auto"><em>(The latent layer - what affects delivery but doesn't appear on dashboards.
+With DORA Lens on, these are literally dimmed. They are not less real.)</em></p>
+<h3 dir="auto" id="m---developer-morale-multiplier">M - Developer Morale Multiplier</h3>
+<ul dir="auto">
+<li dir="auto"><strong>Model:</strong> Direct linear multiplier on output. But also a component of the
+attenuation state A(t) - low morale amplifies felt urgency and accelerates
+debt integration. Below 1.0 the paper calls it the degradation regime.</li>
+<li dir="auto"><strong>On screen:</strong> Morale bar; the M sweep tab draws a dashed &quot;M=1 threshold&quot;
+line; in coupled-mode time simulation, M <em>erodes autonomously</em> under
+sustained urgency and debt pressure - you can watch it fall without
+touching the slider.</li>
+</ul>
+<blockquote dir="auto">
+<p dir="auto">Morale is the only variable here that multiplies everything and
+is measured by nothing. The model gives it a symbol. Your org gives it an
+annual survey.</p>
+</blockquote>
+<h3 dir="auto" id="u---management-urgency">U - Management Urgency</h3>
+<ul dir="auto">
+<li dir="auto"><strong>Model:</strong> The interesting one. U appears <em>nowhere in the numerator</em> - added
+pressure adds no output. It acts purely as an exponent on (1−CFR), and via
+felt urgency U_eff = U·(1 + 0.6·(1−A)): the worse your attenuation state,
+the more each unit of imposed urgency is experienced as. Healthy orgs
+dampen it (Elite: ×0.998); degraded orgs amplify it (Max Entropy: ×1.57).
+Also mints debt at κ₁·U_eff².</li>
+<li dir="auto"><strong>On screen:</strong> The live note under the slider (&quot;Currently felt as U_eff =
+…&quot;) turns red past ×1.35 amplification. The expanded equation shows the
+policy/felt pair. The U sweep is the default chart.</li>
+</ul>
+<blockquote dir="auto">
+<p dir="auto">Urgency is the only management input with no direct production
+term - it only changes what your fragility costs. And note the felt-urgency
+line: dysfunction amplifies the urgency that produces it. This is the
+model's one genuine feedback loop, and every practitioner in this call has
+lived inside it.</p>
+</blockquote>
+<h3 dir="auto" id="cm---competence-mismatch">Cm - Competence Mismatch</h3>
+<ul dir="auto">
+<li dir="auto"><strong>Model:</strong> Exponential suppressor inside Ω = exp(−α·Cm − β·E), and a debt
+source (κ₃·Cm - mismatch-driven debt: wrong decisions compound).</li>
+<li dir="auto"><strong>On screen:</strong> Coherence Ω bar falls; mismatch-driven debt cell rises.</li>
+</ul>
+<blockquote dir="auto">
+<p dir="auto">Competence mismatch both suppresses today's output and mints
+tomorrow's debt - misalignment between authority and ability is the only
+term in this model that charges you twice, with full procedural legitimacy.</p>
+</blockquote>
+<h3 dir="auto" id="e---executive-volatility">E - Executive Volatility</h3>
+<ul dir="auto">
+<li dir="auto"><strong>Model:</strong> Exponential suppressor inside Ω only. Deliberately <em>not</em> a debt
+source - matching the paper's debt equation, which has no κ·E term.</li>
+</ul>
+<blockquote dir="auto">
+<p dir="auto">Volatility doesn't accrue debt - it doesn't stay pointed at
+anything long enough to. It just scrambles direction faster than the system
+can converge. Mismatch compounds; volatility dissipates.</p>
+</blockquote>
+<hr dir="auto">
+<h2 dir="auto" id="debt-and-remediation">Debt and Remediation</h2>
+<h3 dir="auto" id="tdr---technical-debt-ratio">TDR - Technical Debt Ratio</h3>
+<ul dir="auto">
+<li dir="auto"><strong>Model:</strong> The compounding drag: e^(−λ·TDR) multiplies everything. Also the
+app's one true <em>state variable</em> - in the Time tab it evolves via
+dTDR/dt = (κ₁U_eff² + κ₂DF_eff + κ₃Cm)·A − κ₄R.</li>
+<li dir="auto"><strong>On screen:</strong> Debt-drag bar; the four-cell derivative grid (which sums to
+the displayed rate - auditable live); &quot;accumulating / slowly growing /
+being paid down&quot; trend word.</li>
+</ul>
+<blockquote dir="auto">
+<p dir="auto">Debt is not a penalty, it's an interest rate. The slider is where
+you are; the derivative underneath is where you're going. Most orgs report
+the first and are surprised by the second on a recurring basis.</p>
+</blockquote>
+<h3 dir="auto" id="r---remediation-rate">R - Remediation Rate</h3>
+<ul dir="auto">
+<li dir="auto"><strong>Model:</strong> The deliberate asymmetry. (1−R) taxes visible throughput <em>now</em>;
+−κ₄·R pays debt down <em>later</em>. Raising R makes today's number worse,
+guaranteed, and tomorrow's trajectory better, invisibly.</li>
+<li dir="auto"><strong>On screen:</strong> Raise R: score dips immediately; the debt derivative goes
+negative; run the time simulation and watch the trajectories cross.
+Warning: the Sensitivity card - which is local and instantaneous - will
+dutifully report R as <em>harmful</em>. It is telling the truth about this
+quarter.</li>
+</ul>
+<blockquote dir="auto">
+<p dir="auto">Here's the trap fully armed: every short-horizon measurement in
+this tool says remediation is bad. The sensitivity ranking says cut it.
+The score says cut it. Only the integral disagrees - and nobody reports
+the integral.</p>
+</blockquote>
+<hr dir="auto">
+<h2 dir="auto" id="value-and-sensitivity-constants">Value and Sensitivity Constants</h2>
+<p dir="auto"><em>(The knobs behind the curtain. these are
+chosen with the same rigor as the phenomena they represent - illustratively.)</em></p>
+<ul dir="auto">
+<li dir="auto"><strong>V - Business Value per Change:</strong> Scalar on the numerator. &quot;Whether the
+deploys were worth deploying - a term the model includes and dashboards
+don't.&quot;</li>
+<li dir="auto"><strong>λ - Debt sensitivity:</strong> How brutally TDR taxes output (steepness of
+e^(−λ·TDR)). &quot;How much your architecture forgives.&quot;</li>
+<li dir="auto"><strong>α / β - Competence / Volatility sensitivity:</strong> The Ω weights - how hard
+your particular organization's physics punish mismatch vs. churn.</li>
+</ul>
+<p dir="auto">Every org has its own exchange rate between confusion and chaos; these are yours.</p>
+<h2 dir="auto" id="the-90-second-walkthrough">The 90-second walkthrough</h2>
+<ol dir="auto">
+<li dir="auto">Click <strong>High Performer</strong> -&gt; &quot;1.000. This is the unit of reality.&quot;</li>
+<li dir="auto">Drag the <strong>U sweep chart</strong> rightward -&gt; curve collapses -&gt; &quot;urgency-induced
+instability: the exponent at work.&quot;</li>
+<li dir="auto"><strong>Time Simulation</strong> tab -&gt; <strong>Play</strong> at 1× -&gt; debt accumulates, P_inst decays,
+diagnosis degrades -&gt; &quot;the integral nobody reports.&quot;</li>
+<li dir="auto">Click <strong>Max Entropy</strong> -&gt; pause -&gt; let 1.3 × 10⁻²⁶ speak.</li>
+<li dir="auto">Click <strong>High Performer</strong> again -&gt; &quot;and this is why R exists.&quot;</li>
+</ol>
+</div>
+        </div>
+</body>
+</html>

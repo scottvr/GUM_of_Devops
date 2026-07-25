@@ -3,4 +3,4 @@ Jul 23 2026 Lean coffee
 
 [GUT - the Grand Unified Tool (GUM interactive graph)](https://blehg.paperclipmaximizer.ai/GUM_of_Devops/DORA/GUT/)  
 
-[GUT README](https://blehg.paperclipmaximizer.ai/GUM_of_Devops/DORA/GUT/README.html)   
+[GUT README](https://blehg.paperclipmaximizer.ai/GUM_of_Devops/DORA/GUT/field-guide.html)   

@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-const PAGE_URL = 'file:///Users/bundle-tron9k/GUM_of_Devops/DORA/GUT/index.html';
+const PAGE_URL = 'file://../index.html';
 
 function hasText(v) {
   return typeof v === 'string' && v.trim().length > 0;

@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { chromium } = require('../node_modules/playwright');
 
-const PAGE_URL = 'file:///Users/bundle-tron9k/GUM_of_Devops/DORA/GUT/index.html';
+const PAGE_URL = 'file://../index.html';
 const OUT_DIR = '/private/tmp/gum-audit';
 
 (async () => {

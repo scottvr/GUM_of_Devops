@@ -1275,7 +1275,7 @@
 /* Standalone README / presentation field guide
    ----------------------------------------------
    All documentation rules are scoped to .readme-page so this stylesheet can
-   serve both index.html and README.html without changing the explorer UI. */
+   serve both index.html and field-guide.html without changing the explorer UI. */
 
 body.readme-page {
   --readme-measure: 78ch;

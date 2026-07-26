@@ -35,7 +35,7 @@ how the *app/demo* behaves, **not** what the org does.
 
 ### Institutional Momentum Mode - checkbox, default ON (off = Strict Scientific Posture)
 - **What:** Swaps the copy register across the page. Strict is the deadpan
-  straight man; Momentum lets the satire surface.
+  straight man (boss mode); Momentum lets the satire surface.
 - **Model effect:** None - same math, different honesty.
 - **On screen:** Kicker flips between "A Structured Descriptive Model" and
   "A Grand Unified Model"; "Debt derivative" becomes "Debt Velocity Vector";

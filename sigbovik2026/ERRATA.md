@@ -26,9 +26,6 @@ conveniently into alignment with Google's own Site Reliability Engineering (SRE)
 of "sysadmins" a finally respectable title which incorporates the word "Reliability". The fifth metric had not only changed 
 scope but, like the sysadmin before it, had also undergone a rebrand.
 
-[typo-laden rant that was previously here moved to its own document such that the author might recover from sleep-deprivation and 
-perhaps revise it to be more suitable for reading](rant-wasidrunkorsomething.md)
-
 Nevertheless, once Reliability was thoroughly entrenched as the indisputable "Fifth Key Metric" across the corporate landscape, DORA 
 initiated a sweeping epistemological walk-back.  Beginning around 2021, subsequent publications began to delicately clarify that 
 Reliability was not, strictly speaking, a software delivery metric at all. Instead, it was categorized as an operational performance 

@@ -267,6 +267,28 @@ chosen with the same rigor as the phenomena they represent - illustratively.)*
 Every org has its own exchange rate between confusion and chaos; these are yours.
    
 
+---
+
+## The Advanced Plot
+
+*(The third viz tab, beside Parameter Sweep and Time Simulation. It used to
+hide behind `?exp=1`; it's now open, because it works.)*
+
+- **What:** A free-composition plotter. Pick any term for the x-axis - t, U,
+  TDR, CFR, M, DF, LT, or R - and overlay any of six output series on y:
+  P_inst, P_cum, Ω, DF_eff, TDR, M. "Normalize Y series" rescales each line to
+  its own range so you compare *shapes*, not magnitudes; "Auto sweep" runs the
+  chosen driver across its domain; drag horizontally to scrub.
+- **Model effect:** None new - the same equations, sliced on axes you choose.
+  The Sweep tab pins the y-axis to P and lets you pick x; the Time tab pins x
+  to t; this one hands you both.
+- **On screen:** Put U on x with P_inst and TDR on y and the urgency collapse
+  and the debt it mints share a single frame; swap x to t and the same two
+  terms evolve instead.
+
+>Sweep asks what one knob does. Time asks where it's headed. Advanced
+>asks whatever you want of it. The plot let's you see that you have enough rope.
+
 ## The 90-second walkthrough
 
 1. Click **High Performer** -> "1.000. This is the unit of reality."

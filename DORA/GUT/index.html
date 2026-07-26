@@ -1462,6 +1462,7 @@ function initExperimentalUi() {
   document.querySelectorAll('.experimental-only').forEach(el => {
     el.hidden = false;
   });
+  applyAdvancedSeriesColors();
 }
 
 function currentAdvancedSeriesKeys() {
@@ -1471,6 +1472,30 @@ function currentAdvancedSeriesKeys() {
     if (cb && cb.checked) keys.push(key);
   });
   return keys;
+}
+
+// Tint each series checkbox and its label to the color of its plot line while
+// enabled, so the control row reads as a legend. Disabled series fall back to
+// the default control styling.
+function applyAdvancedSeriesColors() {
+  Object.entries(ADVANCED_SERIES_META).forEach(([key, meta]) => {
+    const cb = document.getElementById('adv-y-' + key);
+    if (!cb) return;
+    const label = cb.closest('label');
+    if (cb.checked) {
+      cb.style.accentColor = meta.color;
+      if (label) {
+        label.style.color = meta.color;
+        label.style.fontWeight = '600';
+      }
+    } else {
+      cb.style.accentColor = '';
+      if (label) {
+        label.style.color = '';
+        label.style.fontWeight = '';
+      }
+    }
+  });
 }
 
 function onAdvancedXKeyChange() {
@@ -1484,6 +1509,7 @@ function onAdvancedXKeyChange() {
     pCumBox.disabled = !enablePCum;
     if (!enablePCum) pCumBox.checked = false;
   }
+  applyAdvancedSeriesColors();
   drawAdvancedChart(getVars());
   syncPermalink();
 }
@@ -1497,6 +1523,7 @@ function onAdvancedNormalizeToggle() {
 
 function onAdvancedSeriesToggle() {
   if (!appState.experimental) return;
+  applyAdvancedSeriesColors();
   drawAdvancedChart(getVars());
   syncPermalink();
 }

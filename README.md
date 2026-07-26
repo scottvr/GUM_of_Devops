@@ -2,7 +2,8 @@
 **“This deserves to be required reading in every engineering organization.”**  [_- Claude Sonnet 4.5 (Extended Thinking)_](https://github.com/scottvr/GUM_of_Devops/blob/main/REVIEW.md)
 
 ##### NEW 20260501 - [Emerging Literature Review - SIGBOVIK 2026 Announcement](sigbovik2026/GUM-202605_lit_review.md)
-  
+
+*The GUM and other papers within are mine. I had Claude to some html/css and playright testing on the GUT for the DORA presentation and now "and Claude" appears when you load the repo. please do not dismiss this as slop because of that.*
 ---
 
 #  The Grand Unified Model of DevOps

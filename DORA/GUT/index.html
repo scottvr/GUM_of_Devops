@@ -577,6 +577,7 @@ const URL_PARAMS = new URLSearchParams(location.search);
 const EXPERIMENTAL_ENABLED = URL_PARAMS.get('exp') === '1';
 const DEBUG_ENABLED = URL_PARAMS.get('debug') === '1';
 const TOOLTIP_DELAY_MS = 350;
+const TOOLTIP_LONGPRESS_MS = 500;
 
 const ADVANCED_X_META = {
   t: { label: 't', min: 0, maxKey: 'simHorizon' },
@@ -998,6 +999,54 @@ function initTooltipLayer() {
   document.addEventListener('focusout', hide);
   document.addEventListener('mousedown', hide);
   document.addEventListener('scroll', hide, true);
+
+  // Touchscreen support: long-press a [data-tip] element to reveal its
+  // tooltip. A short tap still passes through (so checkboxes/labels toggle
+  // normally); only a completed long-press shows the tip and swallows the
+  // click that would otherwise toggle the control under the finger.
+  let touchTimer = null;
+  let longPressed = false;
+
+  const clearTouchTimer = () => {
+    if (touchTimer) { clearTimeout(touchTimer); touchTimer = null; }
+  };
+
+  document.addEventListener('touchstart', e => {
+    // Ignore multi-touch / pinch gestures.
+    if (e.touches && e.touches.length > 1) { clearTouchTimer(); return; }
+    const el = e.target.closest ? e.target.closest('[data-tip]') : null;
+    if (!el) { hide(); return; }
+    if (target && target !== el) hide();
+    longPressed = false;
+    clearTouchTimer();
+    touchTimer = setTimeout(() => {
+      touchTimer = null;
+      longPressed = true;
+      show(el);
+    }, TOOLTIP_LONGPRESS_MS);
+  }, { passive: true });
+
+  // Any finger movement before the threshold means the user is scrolling,
+  // not long-pressing — abort so we don't hijack the gesture.
+  document.addEventListener('touchmove', clearTouchTimer, { passive: true });
+  document.addEventListener('touchcancel', () => { clearTouchTimer(); longPressed = false; });
+  document.addEventListener('touchend', clearTouchTimer, { passive: true });
+
+  // Cancel the synthetic click that follows a long-press so the underlying
+  // checkbox/label does not toggle. Capture phase runs before the control's
+  // own handler.
+  document.addEventListener('click', e => {
+    if (longPressed) {
+      e.preventDefault();
+      e.stopPropagation();
+      longPressed = false;
+    }
+  }, true);
+
+  // Suppress the native context menu that a long-press would otherwise raise.
+  document.addEventListener('contextmenu', e => {
+    if (longPressed || touchTimer) e.preventDefault();
+  });
 }
 
 function ensureAllDomElementsHaveIds() {

@@ -3,7 +3,7 @@ const path = require('path');
 const { pathToFileURL } = require('url');
 const { chromium } = require('../node_modules/playwright');
 
-const PAGE_URL = pathToFileURL(path.join(__dirname, '..', 'index.html')).href;
+const PAGE_URL = pathToFileURL(path.join(__dirname, '..', 'GUT.html')).href;
 const OUT_DIR = '/private/tmp/gum-audit';
 
 (async () => {

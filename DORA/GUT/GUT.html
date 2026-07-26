@@ -1,0 +1,2996 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="../../css/doragum.css">
+  <link rel="stylesheet" href="./vendor/katex/katex.min.css">
+  <script defer="" src="./vendor/katex/katex.min.js"></script>
+  <script defer="" src="./vendor/katex/contrib/auto-render.min.js"></script>
+<title>The Grand Unified Model of DevOps/SRE Dynamics</title>
+
+</head>
+<body>
+
+<header>
+  <div class="header-eyebrow">Interactive Model Explorer</div>
+  <h1>
+    The Grand Unified Model of DevOps/SRE Dynamics
+    <span class="sub">A Technical Account of Metrics, Organizational Volatility, and Entropy</span>
+  </h1>
+</header>
+
+<div class="layout">
+
+  <!-- LEFT CONTROLS-->  
+ <div class="controls-panel">
+
+      <!-- Session Controls -->
+    <div class="panel-section collapsible" data-collapsible-init="1">
+      <button type="button" class="section-toggle" aria-expanded="true"><span>Session Controls</span><span class="section-chevron">▾</span></button><div class="section-content">
+      <div class="control-inline">
+        <label for="sim-freeze-controls">
+          <input type="checkbox" id="sim-freeze-controls" checked="" onchange="onFreezeControlsToggle()">
+          Freeze controls during simulation
+        </label>
+      </div>
+      <div class="control-inline">
+        <label for="toggle-dora-lens">
+          <input type="checkbox" id="toggle-dora-lens" onchange="onDoraLensToggle()">
+          DORA Lens (highlight observed metrics)
+        </label>
+      </div>
+      <div class="control-inline">
+        <label for="toggle-posture-mode">
+          <input type="checkbox" id="toggle-posture-mode" checked="" onchange="onPostureModeToggle()">
+          Institutional Momentum Mode 
+        </label>
+      </div>
+      <div class="control-inline">
+        <label for="df-dynamics-mode">DF dynamics mode</label>
+        <select id="df-dynamics-mode" onchange="setDFDynamicsMode(this.value)">
+          <option value="conservative">Conservative (OG GUM)</option>
+          <option value="endogenous">Endogenous (Exploratory)</option>
+        </select>
+      </div>
+      <div class="control-inline">
+        <label for="toggle-quiet-toasts">
+          <input type="checkbox" id="toggle-quiet-toasts" onchange="onToastModeToggle()">
+          Quiet toasts (small, bottom-right, short)
+        </label>
+      </div>
+      <div class="control-actions">
+        <button type="button" id="action-pin-baseline" onclick="pinBaseline()">Pin Baseline</button>
+        <button type="button" id="action-copy-permalink" onclick="copyPermalink()">Copy Permalink</button>
+      </div>
+    </div></div>
+
+      <!-- Presets -->
+    <div class="panel-section collapsible collapsed" data-collapsible-init="1">
+      <button type="button" class="section-toggle" aria-expanded="false"><span>Organizational Archetypes</span><span class="section-chevron">▾</span></button><div class="section-content">
+      <div class="presets">
+        <button type="button" class="preset-btn" id="preset-elite" onclick="applyPreset('elite')">
+          <span class="preset-name">Elite Performer</span>
+          High trust, low chaos
+        </button>
+        <button type="button" class="preset-btn" id="preset-healthy" onclick="applyPreset('healthy')">
+          <span class="preset-name">High Performer</span>
+          Mostly functional
+        </button>
+        <button type="button" class="preset-btn" id="preset-stressed" onclick="applyPreset('stressed')">
+          <span class="preset-name">Under Pressure</span>
+          Urgency rising
+        </button>
+        <button type="button" class="preset-btn" id="preset-legacy" onclick="applyPreset('legacy')">
+          <span class="preset-name">Legacy Bog</span>
+          Debt-laden, stable-ish
+        </button>
+        <button type="button" class="preset-btn" id="preset-crisis" onclick="applyPreset('crisis')">
+          <span class="preset-name">Incident Loop</span>
+          Fire-fighting mode
+        </button>
+        <button type="button" class="preset-btn" id="preset-entropy" onclick="applyPreset('entropy')">
+          <span class="preset-name">Max Entropy</span>
+          The literature review
+        </button>
+      </div>
+    </div></div>
+
+    <!-- DORA Metrics -->
+    <div class="panel-section collapsible collapsed" data-collapsible-init="1">
+      <button type="button" class="section-toggle" aria-expanded="false"><span>DORA Delivery Variables</span><span class="section-chevron">▾</span></button><div class="section-content">
+
+      <div class="control-row" data-var="DF">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">DF</span> — Deployment Frequency</span>
+          <span class="control-value" id="val-DF">4.00</span>
+        </div>
+        <div class="control-desc">Deployments per day. Elite: &gt;1/day. Low: &lt;1/month.</div>
+        <label class="sr-only" for="sl-DF">Deployment Frequency</label>
+        <input type="range" id="sl-DF" aria-label="Deployment Frequency" min="0.01" max="20" step="0.01" value="4" oninput="update()">
+      </div>
+
+      <div class="control-row" data-var="LT">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">LT</span> — Lead Time for Changes (hrs)</span>
+          <span class="control-value" id="val-LT">4.00 hr</span>
+        </div>
+        <div class="control-desc">Hours from commit to production. Elite: &lt;1hr. Low: &gt;1 month.</div>
+        <label class="sr-only" for="sl-LT">Lead Time for Changes</label>
+        <input type="range" id="sl-LT" aria-label="Lead Time for Changes" min="0.5" max="720" step="0.5" value="4" oninput="update()">
+      </div>
+
+      <div class="control-row" data-var="CFR">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">CFR</span> — Change Failure Rate</span>
+          <span class="control-value" id="val-CFR">0.0500</span>
+        </div>
+        <div class="control-desc">Fraction of changes causing incidents. Elite: 0–5%. Low: 46–60%.</div>
+        <label class="sr-only" for="sl-CFR">Change Failure Rate</label>
+        <input type="range" id="sl-CFR" aria-label="Change Failure Rate" min="0" max="0.6" step="0.01" value="0.05" oninput="update()">
+      </div>
+
+      <div class="control-row" data-var="MTTR">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">MTTR</span> — Mean Time to Restore (hrs)</span>
+          <span class="control-value" id="val-MTTR">0.500 hr</span>
+        </div>
+        <div class="control-desc">Hours to recover from failure. Elite: &lt;1hr. Low: &gt;1 week.</div>
+        <label class="sr-only" for="sl-MTTR">Mean Time to Restore</label>
+        <input type="range" id="sl-MTTR" aria-label="Mean Time to Restore" min="0.1" max="336" step="0.1" value="0.5" oninput="update()">
+      </div>
+    </div></div>
+
+    <!-- Organizational Terms -->
+    <div class="panel-section collapsible collapsed" data-collapsible-init="1">
+      <button type="button" class="section-toggle" aria-expanded="false"><span>Organizational Perturbation Terms</span><span class="section-chevron">▾</span></button><div class="section-content">
+
+      <div class="control-row" data-var="M">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">M</span> — Developer Morale Multiplier</span>
+          <span class="control-value" id="val-M">1.00</span>
+        </div>
+        <div class="control-desc">Ratio of energizing work to chronic toil. &lt;1 = degradation regime.</div>
+        <label class="sr-only" for="sl-M">Developer Morale Multiplier</label>
+        <input type="range" id="sl-M" aria-label="Developer Morale Multiplier" min="0.1" max="2.0" step="0.05" value="1.0" oninput="update()">
+      </div>
+
+      <div class="control-row" data-var="U">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">U</span> — Management Urgency</span>
+          <span class="control-value" id="val-U">1.00</span>
+        </div>
+        <div class="control-desc">Externally imposed schedule pressure. Enters as exponent (1−CFR)^(U_eff²). Proceed with caution.</div>
+        <label class="sr-only" for="sl-U">Management Urgency</label>
+        <input type="range" id="sl-U" aria-label="Management Urgency" min="0.1" max="5.0" step="0.05" value="1.0" oninput="update()">
+        <div class="control-desc" id="u-felt-note">Currently felt as U_eff = 1.00.</div>
+      </div>
+
+      <div class="control-row" data-var="Cm">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">C<sub>m</sub></span> — Competence Mismatch</span>
+          <span class="control-value" id="val-Cm">0.100</span>
+        </div>
+        <div class="control-desc">Misalignment of responsibility, authority, and actual capability.</div>
+        <label class="sr-only" for="sl-Cm">Competence Mismatch</label>
+        <input type="range" id="sl-Cm" aria-label="Competence Mismatch" min="0" max="1.0" step="0.01" value="0.1" oninput="update()">
+      </div>
+
+      <div class="control-row" data-var="E">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">E</span> — Executive Volatility</span>
+          <span class="control-value" id="val-E">0.100</span>
+        </div>
+        <div class="control-desc">Strategic oscillation, reprioritization churn, initiative reversals.</div>
+        <label class="sr-only" for="sl-E">Executive Volatility</label>
+        <input type="range" id="sl-E" aria-label="Executive Volatility" min="0" max="1.0" step="0.01" value="0.1" oninput="update()">
+      </div>
+    </div></div>
+
+    <!-- Debt & Remediation -->
+    <div class="panel-section collapsible collapsed" data-collapsible-init="1">
+      <button type="button" class="section-toggle" aria-expanded="false"><span>Debt and Remediation</span><span class="section-chevron">▾</span></button><div class="section-content">
+
+      <div class="control-row" data-var="TDR">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">TDR</span> — Technical Debt Ratio</span>
+          <span class="control-value" id="val-TDR">0.100</span>
+        </div>
+        <div class="control-desc">Fraction of capacity consumed by historical shortcuts and rework burden.</div>
+        <label class="sr-only" for="sl-TDR">Technical Debt Ratio</label>
+        <input type="range" id="sl-TDR" aria-label="Technical Debt Ratio" min="0" max="1.0" step="0.01" value="0.1" oninput="update()">
+      </div>
+
+      <div class="control-row" data-var="R">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">R</span> — Remediation Rate</span>
+          <span class="control-value" id="val-R">0.100</span>
+        </div>
+        <div class="control-desc">Capacity diverted to debt repayment. Subtracts from visible throughput; benefits are deferred.</div>
+        <label class="sr-only" for="sl-R">Remediation Rate</label>
+        <input type="range" id="sl-R" aria-label="Remediation Rate" min="0" max="0.9" step="0.01" value="0.1" oninput="update()">
+      </div>
+    </div></div>
+
+    <!-- Value & Constants -->
+    <div class="panel-section collapsible collapsed" data-collapsible-init="1">
+      <button type="button" class="section-toggle" aria-expanded="false"><span>Value and Sensitivity Constants</span><span class="section-chevron">▾</span></button><div class="section-content">
+
+      <div class="control-row" data-var="V">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">V</span> — Business Value per Change</span>
+          <span class="control-value" id="val-V">1.00</span>
+        </div>
+        <div class="control-desc">Normalized realized value delivered per change. Relative unit.</div>
+        <label class="sr-only" for="sl-V">Business Value per Change</label>
+        <input type="range" id="sl-V" aria-label="Business Value per Change" min="0.1" max="5.0" step="0.1" value="1.0" oninput="update()">
+      </div>
+
+      <div class="control-row" data-var="lam">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">λ</span> — Debt sensitivity</span>
+          <span class="control-value" id="val-lam">1.00</span>
+        </div>
+        <div class="control-desc">How aggressively TDR attenuates output via e^(−λ·TDR).</div>
+        <label class="sr-only" for="sl-lam">Debt Sensitivity</label>
+        <input type="range" id="sl-lam" aria-label="Debt Sensitivity" min="0.1" max="5.0" step="0.1" value="1.0" oninput="update()">
+      </div>
+
+      <div class="control-row" data-var="alpha">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">α</span> — Competence sensitivity</span>
+          <span class="control-value" id="val-alpha">1.00</span>
+        </div>
+        <div class="control-desc">Cm's weight in the Ω coherence term.</div>
+        <label class="sr-only" for="sl-alpha">Competence Sensitivity</label>
+        <input type="range" id="sl-alpha" aria-label="Competence Sensitivity" min="0.1" max="5.0" step="0.1" value="1.0" oninput="update()">
+      </div>
+
+      <div class="control-row" data-var="beta">
+        <div class="control-header">
+          <span class="control-label"><span class="sym">β</span> — Volatility sensitivity</span>
+          <span class="control-value" id="val-beta">1.00</span>
+        </div>
+        <div class="control-desc">E's weight in the Ω coherence term.</div>
+        <label class="sr-only" for="sl-beta">Volatility Sensitivity</label>
+        <input type="range" id="sl-beta" aria-label="Volatility Sensitivity" min="0.1" max="5.0" step="0.1" value="1.0" oninput="update()">
+      </div>
+    </div></div>
+
+  </div><!-- /controls-panel -->
+
+  <!-- RIGHT: OUTPUT -->
+  <div class="output-panel">
+
+    <!-- Score + health bars -->
+    <div class="output-primary">
+      <div class="output-score">
+        <div class="score-label">Instantaneous realized-output rate</div>
+        <div class="score-value " id="score-value">29.44</div>
+        <div class="score-unit">normalized units</div>
+      </div>
+      <div class="health-bars">
+        <div class="health-bar-row">
+          <span class="health-bar-label" title="Raw value-throughput term relative to the healthy preset (1.0x = healthy).">Throughput</span>
+          <div class="health-bar-track"><div class="health-bar-fill danger" id="bar-throughput" style="width: 1.82512%;"></div></div>
+          <span class="health-bar-val" id="bv-throughput">0.548</span>
+        </div>
+        <div class="health-bar-row">
+          <span class="health-bar-label">Coherence Ω</span>
+          <div class="health-bar-track"><div class="health-bar-fill " id="bar-omega" style="width: 81.8731%;"></div></div>
+          <span class="health-bar-val" id="bv-omega">0.819</span>
+        </div>
+        <div class="health-bar-row">
+          <span class="health-bar-label">Debt drag</span>
+          <div class="health-bar-track"><div class="health-bar-fill " id="bar-debt" style="width: 90.4837%;"></div></div>
+          <span class="health-bar-val" id="bv-debt">0.905</span>
+        </div>
+        <div class="health-bar-row">
+          <span class="health-bar-label">Urgency exp</span>
+          <div class="health-bar-track"><div class="health-bar-fill " id="bar-urgency" style="width: 92.5381%;"></div></div>
+          <span class="health-bar-val" id="bv-urgency">0.925</span>
+        </div>
+        <div class="health-bar-row">
+          <span class="health-bar-label">Morale M</span>
+          <div class="health-bar-track"><div class="health-bar-fill warn" id="bar-morale" style="width: 50%;"></div></div>
+          <span class="health-bar-val" id="bv-morale">1.00</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Equation breakdown -->
+    <div class="equation-block">
+      <div class="equation-hero">
+        <div class="equation-kicker" id="equation-kicker">A Structured Descriptive Model</div>
+        <h3>Instantaneous Term Breakdown</h3>
+      </div>
+      <div class="equation-katex-area" id="equation-katex-area">
+        <div class="eq-main"><span><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>P</mi><mrow><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">t</mi></mrow></msub><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mn>1</mn><mi>Z</mi></mfrac><mrow><mo fence="true">[</mo><mfrac><mrow><mi>V</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo>&thinsp;<mi>D</mi><mi>F</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo>&thinsp;<mi>M</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo>&thinsp;<mi mathvariant="normal">Ω</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo>&thinsp;<mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>R</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><mrow><mi>L</mi><mi>T</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>+</mo><mi>M</mi><mi>T</mi><mi>T</mi><mi>R</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>+</mo><mi>ϵ</mi></mrow></mfrac><mo fence="true">]</mo></mrow><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>C</mi><mi>F</mi><mi>R</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><msup><mo stretchy="false">)</mo><mrow><mi>U</mi><mo stretchy="false">(</mo><mi>t</mi><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow></msup><msup><mi>e</mi><mrow><mo>−</mo><mi>λ</mi><mi>T</mi><mi>D</mi><mi>R</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow></msup></mrow><annotation encoding="application/x-tex">
+          P_{\mathrm{inst}}(t)=\frac{1}{Z}
+          \left[
+            \frac{V(t)\,DF(t)\,M(t)\,\Omega(t)\,(1-R(t))}{LT(t)+MTTR(t)+\epsilon}
+          \right]
+          (1-CFR(t))^{U(t)^2}e^{-\lambda TDR(t)}
+        </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.1389em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3175em;"><span class="" style="top: -2.55em; margin-left: -0.1389em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathrm mtight">inst</span></span></span></span></span></span><span class="vlist-s">&ZeroWidthSpace;</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.2778em;"></span></span><span class="base"><span class="strut" style="height: 2.4em; vertical-align: -0.95em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 1.3214em;"><span class="" style="top: -2.314em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.0715em;">Z</span></span></span><span class="" style="top: -3.23em;"><span class="pstrut" style="height: 3em;"></span><span class="frac-line" style="border-bottom-width: 0.04em;"></span></span><span class="" style="top: -3.677em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">&ZeroWidthSpace;</span></span><span class="vlist-r"><span class="vlist" style="height: 0.686em;"><span class=""></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right: 0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top: 0em;"><span class="delimsizing size3">[</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 1.427em;"><span class="" style="top: -2.314em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord mathnormal">L</span><span class="mord mathnormal" style="margin-right: 0.1389em;">T</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mord mathnormal" style="margin-right: 0.0077em;">MTTR</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mord mathnormal">ϵ</span></span></span><span class="" style="top: -3.23em;"><span class="pstrut" style="height: 3em;"></span><span class="frac-line" style="border-bottom-width: 0.04em;"></span></span><span class="" style="top: -3.677em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.2222em;">V</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.1667em;"></span><span class="mord mathnormal" style="margin-right: 0.0278em;">D</span><span class="mord mathnormal" style="margin-right: 0.1389em;">F</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.1667em;"></span><span class="mord mathnormal" style="margin-right: 0.109em;">M</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.1667em;"></span><span class="mord">Ω</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.1667em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mord mathnormal" style="margin-right: 0.0077em;">R</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">))</span></span></span></span><span class="vlist-s">&ZeroWidthSpace;</span></span><span class="vlist-r"><span class="vlist" style="height: 0.936em;"><span class=""></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top: 0em;"><span class="delimsizing size3">]</span></span></span><span class="mspace" style="margin-right: 0.1667em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.2222em;"></span></span><span class="base"><span class="strut" style="height: 1.2869em; vertical-align: -0.25em;"></span><span class="mord mathnormal" style="margin-right: 0.0077em;">CFR</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 1.0369em;"><span class="" style="top: -3.113em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right: 0.109em;">U</span><span class="mopen mtight">(</span><span class="mord mathnormal mtight">t</span><span class="mclose mtight"><span class="mclose mtight">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.8913em;"><span class="" style="top: -2.931em; margin-right: 0.0714em;"><span class="pstrut" style="height: 2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.938em;"><span class="" style="top: -3.113em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mathnormal mtight">λ</span><span class="mord mathnormal mtight" style="margin-right: 0.1389em;">T</span><span class="mord mathnormal mtight" style="margin-right: 0.0278em;">D</span><span class="mord mathnormal mtight" style="margin-right: 0.0077em;">R</span><span class="mopen mtight">(</span><span class="mord mathnormal mtight">t</span><span class="mclose mtight">)</span></span></span></span></span></span></span></span></span></span></span></span></span></span></div>
+        <div class="eq-side-grid">
+          <div class="eq-side-card">
+            <div class="eq-side-label">Organizational Coherence</div>
+            <span><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi mathvariant="normal">Ω</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mi>exp</mi><mo>⁡</mo>&thinsp;⁣<mrow><mo fence="true">(</mo><mo>−</mo><mi>α</mi><msub><mi>C</mi><mi>m</mi></msub><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>−</mo><mi>β</mi><mi>E</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\Omega(t)=\exp\!\left(-\alpha C_m(t)-\beta E(t)\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord">Ω</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.2778em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mop">exp</span><span class="mspace" style="margin-right: -0.1667em;"></span><span class="mspace" style="margin-right: 0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top: 0em;">(</span><span class="mord">−</span><span class="mord mathnormal" style="margin-right: 0.0037em;">α</span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.0715em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.1514em;"><span class="" style="top: -2.55em; margin-left: -0.0715em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span><span class="vlist-s">&ZeroWidthSpace;</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mord mathnormal" style="margin-right: 0.0576em;">βE</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mclose delimcenter" style="top: 0em;">)</span></span></span></span></span></span></span>
+          </div>
+          <div class="eq-side-card">
+            <div class="eq-side-label">Long-Horizon Debt Dynamics</div>
+            <span><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mi>T</mi><mi>D</mi><mi>R</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mi>κ</mi><mn>1</mn></msub><mi>U</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>+</mo><msub><mi>κ</mi><mn>2</mn></msub><mi>D</mi><mi>F</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>+</mo><msub><mi>κ</mi><mn>3</mn></msub><msub><mi>C</mi><mi>m</mi></msub><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>−</mo><msub><mi>κ</mi><mn>4</mn></msub><mi>R</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\frac{d}{dt}TDR(t)=\kappa_1U(t)+\kappa_2DF(t)+\kappa_3C_m(t)-\kappa_4R(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 2.0574em; vertical-align: -0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 1.3714em;"><span class="" style="top: -2.314em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="mord mathnormal">t</span></span></span><span class="" style="top: -3.23em;"><span class="pstrut" style="height: 3em;"></span><span class="frac-line" style="border-bottom-width: 0.04em;"></span></span><span class="" style="top: -3.677em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord mathnormal">d</span></span></span></span><span class="vlist-s">&ZeroWidthSpace;</span></span><span class="vlist-r"><span class="vlist" style="height: 0.686em;"><span class=""></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord mathnormal" style="margin-right: 0.1389em;">T</span><span class="mord mathnormal" style="margin-right: 0.0278em;">D</span><span class="mord mathnormal" style="margin-right: 0.0077em;">R</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.2778em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord"><span class="mord mathnormal">κ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3011em;"><span class="" style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">&ZeroWidthSpace;</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right: 0.109em;">U</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right: 0.2222em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord"><span class="mord mathnormal">κ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3011em;"><span class="" style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">&ZeroWidthSpace;</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right: 0.0278em;">D</span><span class="mord mathnormal" style="margin-right: 0.1389em;">F</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right: 0.2222em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord"><span class="mord mathnormal">κ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3011em;"><span class="" style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">&ZeroWidthSpace;</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.0715em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.1514em;"><span class="" style="top: -2.55em; margin-left: -0.0715em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span><span class="vlist-s">&ZeroWidthSpace;</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.2222em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord"><span class="mord mathnormal">κ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3011em;"><span class="" style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span><span class="vlist-s">&ZeroWidthSpace;</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right: 0.0077em;">R</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span></span></span></span></span></span>
+          </div>
+        </div>
+      </div>
+      <div class="eq-meta" id="eq-meta">Normalization: calibrated to healthy preset (P_inst ≈ 1.0, Z=0.01147).</div>
+      <div id="eq-expanded" style="margin-top:0.7rem; font-size:12px; color:var(--text-dim);"><span style="color:var(--text)">= (1/0.01147) · [</span><span style="color:var(--accent)">1.00·2.47·1.00·0.819·0.900</span><span style="color:var(--text-dim)"> / </span><span style="color:var(--accent)">(4.00+0.500+0.01)</span><span style="color:var(--text)">] · </span><span style="color:var(--accent)">(0.950)^1.51</span><span style="color:var(--text)"> · </span><span style="color:var(--accent)">e^(-1.00·0.100)</span><span style="color:var(--text)"> · </span><span style="color:var(--accent)">U(t)=1.23 DF(t)=2.47</span><span style="color:var(--text-dim)"> = </span><span style="color:var(--text-bright); font-weight:500">29.44</span></div>
+    </div>
+
+    <div class="viz-mode">
+      <div class="viz-mode-tabs">
+        <button type="button" class="viz-mode-tab active" id="viz-tab-sweep" onclick="setVizMode('sweep')">Parameter Sweep</button>
+        <button type="button" class="viz-mode-tab" id="viz-tab-time" onclick="setVizMode('time')">Time Simulation</button>
+        <button type="button" class="viz-mode-tab experimental-only" id="viz-tab-advanced" onclick="setVizMode('advanced')" hidden>Advanced Plot</button>
+      </div>
+
+      <div class="viz-mode-panel active" id="panel-sweep">
+        <!-- Tabbed sweep panel -->
+        <div class="sweep-panel">
+          <div class="sweep-tabs">
+            <button type="button" class="sweep-tab active" onclick="setSweep('U')" id="tab-U">
+              <span class="tab-sym">U</span>Urgency
+            </button>
+            <button type="button" class="sweep-tab" onclick="setSweep('TDR')" id="tab-TDR">
+              <span class="tab-sym">TDR</span>Debt
+            </button>
+            <button type="button" class="sweep-tab" onclick="setSweep('CFR')" id="tab-CFR">
+              <span class="tab-sym">CFR</span>Fragility
+            </button>
+            <button type="button" class="sweep-tab" onclick="setSweep('M')" id="tab-M">
+              <span class="tab-sym">M</span>Morale
+            </button>
+          </div>
+          <div class="sweep-body">
+            <div class="sweep-title" id="sweep-title">P_inst vs. Urgency — holding current settings</div>
+            <div class="sweep-thesis" id="sweep-thesis">Urgency-Induced Instability: moderate U may increase visible activity; beyond a system-dependent threshold it raises fragility faster than output.</div>
+            <div class="cfr-toggle" id="cfr-toggle-row" style="display:none">
+              Compare at: &nbsp;
+              <button type="button" id="cfr-btn-current" class="active" onclick="setCFRMode('current')">current U</button>
+              <button type="button" id="cfr-btn-low" onclick="setCFRMode('low')">U = 1.0</button>
+              <button type="button" id="cfr-btn-high" onclick="setCFRMode('high')">U = 3.5</button>
+            </div>
+            <canvas id="sparkline" width="963" height="150" style="cursor: ew-resize;"></canvas>
+            <div class="chart-legend" id="chart-legend">
+              <div class="legend-item"><div class="legend-dot" style="background:var(--viz-primary)"></div> <span id="legend-curve">P_inst as U sweeps 0.1 -&gt; 5</span></div>
+              <div class="legend-item"><div class="legend-dot" style="background:var(--viz-handle)"></div> <span id="legend-handle">Current U — drag chart to sweep</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TDR dynamics -->
+        <div class="tdr-dynamics">
+          <h3>Long-Horizon Debt Dynamics — dTDR/dt</h3>
+          <div class="tdr-formula-note">Integrated explicitly each step: TDR(t+Δt) = TDR(t) + (dTDR/dt)·Δt. The κ's are the paper's; the growth inputs are what the organization actually experiences — felt urgency U_eff and effective DF, weighted by the attenuation state <span id="tdr-att-driver">A(t) = 1.000</span>.</div>
+          <div style="font-size:11px; color:var(--text-dim); margin-bottom:0.8rem;">
+            At current settings, technical debt is <strong id="tdr-trend-word" style="color: var(--danger);">accumulating</strong>.
+            <span id="tdr-rate-label">Debt derivative</span>: <span id="tdr-rate" style="color:var(--text-bright)">+0.301</span>/period.
+          </div>
+          <div class="tdr-grid">
+            <div class="tdr-term">
+              <span class="tdr-sym">+k1·U_eff²·A</span>: urgency-driven debt<br>
+              <span class="tdr-val" id="tdr-k1">+0.300</span>
+            </div>
+            <div class="tdr-term">
+              <span class="tdr-sym">+k2·DF_eff·A</span>: velocity-driven debt<br>
+              <span class="tdr-val" id="tdr-k2">+0.200</span>
+            </div>
+            <div class="tdr-term">
+              <span class="tdr-sym">+k3·Cm·A</span>: mismatch-driven debt<br>
+              <span class="tdr-val" id="tdr-k3">+0.0400</span>
+            </div>
+            <div class="tdr-term">
+              <span class="tdr-sym">−k4·R</span>: remediation<br>
+              <span class="tdr-val" id="tdr-k4">-0.0800</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="viz-mode-panel" id="panel-time">
+        <div class="time-panel">
+          <div class="time-controls">
+            <div class="time-row">
+              <label for="sim-horizon">Time horizon</label>
+              <input type="range" id="sim-horizon" min="0" max="36" step="1" value="24" oninput="updateSimHorizon()">
+              <span class="time-val" id="sim-horizon-val">24 periods</span>
+            </div>
+            <div class="time-row">
+              <label for="sim-time">Time scrubber</label>
+              <input type="range" id="sim-time" min="0" max="24" step="0.25" value="0" oninput="updateSimTimeFromSlider()">
+              <span class="time-val" id="sim-time-val">t = 0.000</span>
+            </div>
+            <div class="time-actions">
+              <button type="button" id="sim-play-btn" onclick="toggleSimPlay()">Play</button>
+              <label for="sim-speed">Speed</label>
+              <select id="sim-speed" onchange="setSimSpeed(this.value)">
+                <option value="0.25">0.25x</option>
+                <option value="1" selected="">1x</option>
+                <option value="4">4x</option>
+                <option value="16">Ludicrous</option>
+              </select>
+              <label for="sim-mode">Projection mode</label>
+              <select id="sim-mode" onchange="setProjectionMode(this.value)">
+                <option value="debt">Debt only</option>
+                <option value="coupled">Coupled organization</option>
+              </select>
+            </div>
+            <div class="time-actions">
+              <label><input type="checkbox" id="toggle-pinst" checked="" onchange="update()"> P_inst</label>
+              <label><input type="checkbox" id="toggle-pcum" checked="" onchange="update()"> P_cumulative</label>
+              <label><input type="checkbox" id="toggle-tdr" checked="" onchange="update()"> TDR</label>
+              <label><input type="checkbox" id="toggle-coupling" onchange="update()"> Omega/Morale coupling</label>
+            </div>
+            <div class="time-actions">
+              <label><input type="checkbox" id="toggle-urgency-boost" onchange="onUrgencyBoostToggle()"> Enable urgency activity boost</label>
+              <button type="button" id="action-adopt-simulated" onclick="adoptSimulatedState()">Adopt simulated state</button>
+            </div>
+            <div class="sim-assumption-banner" id="df-dynamics-banner">DF dynamics mode: Conservative (OG GUM). DF is treated as an observed policy input; latent terms do not rewrite DF.</div>
+            <div class="integration-step" id="integration-step">Euler Integration Step (dt=0.25)</div>
+          </div>
+          <canvas id="sim-canvas" width="0" height="0"></canvas>
+          <div class="chart-legend" id="sim-chart-legend"></div>
+          <div class="sim-ticker">
+            <div><span class="ticker-label">P_inst</span> <span id="ticker-pinst">29.44</span></div>
+            <div><span class="ticker-label">P_real(t)</span> <span id="ticker-preal">0.000</span></div>
+            <div><span class="ticker-label">TDR(t)</span> <span id="ticker-tdr">0.1000</span></div>
+            <div><span class="ticker-label">DF_policy</span> <span id="ticker-df-policy">4.000</span></div>
+            <div><span class="ticker-label">DF_eff(t)</span> <span id="ticker-df-eff">4.000</span></div>
+          </div>
+          <div class="sim-readout" id="sim-readout">At t = 0.000 (Δt=0.25): projected TDR = 0.1000, instantaneous output = 29.44, cumulative P_real(t) = 0.000.</div>
+        </div>
+      </div>
+
+      <div class="viz-mode-panel experimental-only" id="panel-advanced" hidden>
+        <div class="advanced-panel">
+          <div class="advanced-controls">
+            <div class="advanced-control-row">
+              <label for="adv-x-key">X-axis term</label>
+              <select id="adv-x-key" onchange="onAdvancedXKeyChange()">
+                <option value="t">t (time)</option>
+                <option value="U">U (urgency)</option>
+                <option value="TDR">TDR (debt)</option>
+                <option value="CFR">CFR (fragility)</option>
+                <option value="M">M (morale)</option>
+                <option value="DF">DF (deploy frequency)</option>
+                <option value="LT">LT (lead time)</option>
+                <option value="R">R (remediation)</option>
+              </select>
+              <label><input type="checkbox" id="adv-normalize" checked onchange="onAdvancedNormalizeToggle()"> Normalize Y series</label>
+              <button type="button" id="adv-auto-btn" onclick="toggleAdvancedAuto()">Auto sweep</button>
+            </div>
+            <div class="advanced-control-row advanced-series">
+              <label><input type="checkbox" id="adv-y-pinst" checked onchange="onAdvancedSeriesToggle()"> P_inst</label>
+              <label><input type="checkbox" id="adv-y-pcum" onchange="onAdvancedSeriesToggle()"> P_cum</label>
+              <label><input type="checkbox" id="adv-y-tdr" checked onchange="onAdvancedSeriesToggle()"> TDR</label>
+              <label><input type="checkbox" id="adv-y-omega" onchange="onAdvancedSeriesToggle()"> Omega</label>
+              <label><input type="checkbox" id="adv-y-df_eff" onchange="onAdvancedSeriesToggle()"> DF_eff</label>
+              <label><input type="checkbox" id="adv-y-m" onchange="onAdvancedSeriesToggle()"> M</label>
+            </div>
+          </div>
+          <canvas id="advanced-canvas" width="0" height="0"></canvas>
+          <div class="sim-readout" id="advanced-readout">Choose an x-axis term and any y series, then drag on the graph to scrub. "Normalize" compares shapes; "Auto sweep" animates the driver.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-chip" id="state-chip">View: Parameter sweep | Projection: debt-only | Freeze: ON | Preset: Custom | t=0.000 | Baseline: none</div>
+
+    <div class="diag-grid">
+      <div class="diag-card">
+        <span class="label">Current vs Baseline</span>
+        <div id="baseline-compare">No baseline pinned yet.</div>
+      </div>
+      <div class="diag-card">
+        <span class="label" title="Local one-at-a-time sensitivity: % change in P_inst from a ±5% nudge of each input, ranked by magnitude.">Sensitivity Ranking</span>
+        <div id="sensitivity-ranking">1. M (+3.013)<br>2. DF (+1.472)<br>3. LT (-1.308)<br>4. TDR (-0.3013)</div>
+      </div>
+      <div class="diag-card">
+        <span class="label">Multiplicative Waterfall</span>
+        <div id="waterfall-view">Nominal throughput 0.8869<br>x Morale 1.000<br>x Omega 0.8187<br>x Effective DF(t)/DF 0.6173<br>x Remediation capacity 0.9000<br>x CFR/U term 0.9254<br>x Debt drag 0.9048<br>= Realized output 29.44</div>
+      </div>
+    </div>
+
+    <!-- Diagnosis -->
+    <div class="diagnosis">
+      <span class="label">System Diagnosis</span>
+      <span id="diagnosis-text"><strong>Elite delivery posture.</strong> DORA variables dominate behavior.</span>
+    </div>
+
+  </div><!-- /output-panel -->
+</div><!-- /layout -->
+
+<footer>
+  <div class="footer-meta">
+    <span>Scott VanRavenswaay</span>
+    <a href="mailto:scottvr@paperclipmaximizer.ai">scottvr@paperclipmaximizer.ai</a>
+    <span>Presented to the DORA Community, July 2026</span>
+  </div>
+  <nav class="paper-links" aria-label="Project resources">
+    <a class="paper-link-primary" href="./field-guide.html">Field Guide</a>
+    <a href="https://github.com/scottvr/GUM_of_Devops/" target="_blank" rel="noopener noreferrer">Paper Repository</a>
+    <a href="https://sigbovik.org/2026/proceedings.pdf#page=897" target="_blank" rel="noopener noreferrer">SIGBOVIK Proceedings</a>
+    <button type="button" id="action-read-key-sections" aria-label="Read key sections 4.1, 5.1 through 5.3, 6, 6.1, and 7" onclick="openKeySectionsModal()">Read Paper Excerpts</button>
+  </nav>
+</footer>
+
+<div class="toast-stack" id="toast-stack" aria-live="polite" aria-atomic="true"></div>
+
+<div class="paper-modal-overlay" id="paper-modal-overlay" onclick="closeKeySectionsModal(event)" hidden>
+  <div class="paper-modal" role="dialog" aria-modal="true" aria-labelledby="paper-modal-title" onclick="event.stopPropagation()">
+    <div class="paper-modal-head">
+      <h2 id="paper-modal-title">GUM Reader Excerpts</h2>
+      <button type="button" class="paper-modal-close" id="paper-modal-close-btn" onclick="closeKeySectionsModal()">Close</button>
+    </div>
+    <div class="paper-modal-body" id="paper-modal-body">
+      <h3>4.1 Technical Debt as a Compounding Drag Term</h3>
+      <p>Technical debt ratio \(TDR\) is modeled as a compounding drag on future delivery capacity, not just a one-time penalty. Remediation \(R\) is treated as a short-term throughput cost with longer-horizon stabilizing effect.</p>
+
+      <h3>5.1 Canonical Delivery Variables</h3>
+      <p>Observed delivery metrics remain explicit: \(DF\), \(LT\), \(CFR\), and \(MTTR\). These are treated as operational observables in OG posture.</p>
+
+      <h3>5.2 Entropy and Recovery Terms</h3>
+      <p>\(TDR\) captures accumulated organizational/technical drag; \(R\) represents deliberate repayment effort that competes with short-term visible output.</p>
+
+      <h3>5.3 Organizational Perturbation Terms</h3>
+      <p>Latent terms (\(M\), \(U\), \(C_m\), \(E\)) are included to model socio-organizational effects that are difficult to measure cleanly but materially influence system behavior.</p>
+
+      <h3>6 Conceptual Grand Unified Law</h3>
+      <p>$$
+      P_{inst}(t)=\frac{1}{Z}
+      \left[
+      \frac{V(t)\,DF(t)\,M(t)\,\Omega(t)\,(1-R(t))}
+      {LT(t)+MTTR(t)+\epsilon}
+      \right]
+      (1-CFR(t))^{U(t)^2}
+      e^{-\lambda TDR(t)}
+      $$</p>
+
+      <h3>6.1 Limiting Cases</h3>
+      <p>As \(TDR\to 0\), \(C_m\to 0\), and \(E\to 0\), behavior tends toward comparatively stable high-trust dynamics where DORA variables dominate. With insufficient remediation over time, debt drag grows and realized output decays.</p>
+
+      <h3>7 Informal Laws of DevOps Dynamics</h3>
+      <p>The “laws” summarize practical behavior: visible activity can diverge from realized output, latent organizational terms can dominate outcomes, and unmanaged debt accumulation can overwhelm nominal throughput.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const EPS = 0.01;
+const K1 = 0.3;
+const K2 = 0.05;
+const K3 = 0.4;
+const K4 = 0.8;
+const SIM_DT = 0.25;
+const HANDLE_R = 8;
+const URL_PARAMS = new URLSearchParams(location.search);
+//const EXPERIMENTAL_ENABLED = URL_PARAMS.get('exp') === '0';
+const EXPERIMENTAL_ENABLED = 1
+const DEBUG_ENABLED = URL_PARAMS.get('debug') === '1';
+const TOOLTIP_DELAY_MS = 350;
+const TOOLTIP_LONGPRESS_MS = 500;
+
+const ADVANCED_X_META = {
+  t: { label: 't', min: 0, maxKey: 'simHorizon' },
+  U: { label: 'U' },
+  TDR: { label: 'TDR' },
+  CFR: { label: 'CFR' },
+  M: { label: 'M' },
+  DF: { label: 'DF' },
+  LT: { label: 'LT' },
+  R: { label: 'R' },
+};
+
+const ADVANCED_SERIES_META = {
+  pinst: { label: 'P_inst', color: '#2f8fd8' },
+  pcum: { label: 'P_cum', color: '#7a57d1' },
+  tdr: { label: 'TDR', color: '#d06441' },
+  omega: { label: 'Omega', color: '#2ea070' },
+  df_eff: { label: 'DF_eff', color: '#b0881f' },
+  m: { label: 'M', color: '#5a677d' },
+};
+
+const SLIDER_META = {
+  DF: { min: 0.01, max: 20 },
+  LT: { min: 0.5, max: 720 },
+  CFR: { min: 0, max: 0.6 },
+  MTTR: { min: 0.1, max: 336 },
+  M: { min: 0.1, max: 2.0 },
+  U: { min: 0.1, max: 5.0 },
+  Cm: { min: 0, max: 1.0 },
+  E: { min: 0, max: 1.0 },
+  TDR: { min: 0, max: 1.0 },
+  R: { min: 0, max: 0.9 },
+  V: { min: 0.1, max: 5.0 },
+  lam: { min: 0.1, max: 5.0 },
+  alpha: { min: 0.1, max: 5.0 },
+  beta: { min: 0.1, max: 5.0 },
+};
+
+const SLIDER_SEMANTICS = {
+  DF:   { better: 'higher',  hint: 'Higher deployment frequency is usually favorable.' },
+  LT:   { better: 'lower',   hint: 'Lower lead time is favorable.' },
+  CFR:  { better: 'lower',   hint: 'Lower change failure rate is favorable.' },
+  MTTR: { better: 'lower',   hint: 'Lower restore time is favorable.' },
+  M:    { better: 'higher',  hint: 'Higher morale multiplier is favorable.' },
+  U:    { better: 'context', hint: 'Urgency is nonlinear: small increases can drive visible activity, sustained high urgency destabilizes.' },
+  Cm:   { better: 'lower',   hint: 'Lower competence mismatch is favorable.' },
+  E:    { better: 'lower',   hint: 'Lower executive volatility is favorable.' },
+  TDR:  { better: 'lower',   hint: 'Lower technical debt ratio is favorable.' },
+  R:    { better: 'tradeoff', hint: 'Remediation is a short-term cost and long-term benefit.' },
+  V:    { better: 'context', hint: 'Business value per change is scenario-dependent.' },
+  lam:  { better: 'context', hint: 'Debt sensitivity is a model constant, not an intrinsic good/bad direction.' },
+  alpha:{ better: 'context', hint: 'Competence sensitivity is a model constant, not an intrinsic good/bad direction.' },
+  beta: { better: 'context', hint: 'Volatility sensitivity is a model constant, not an intrinsic good/bad direction.' },
+};
+
+const TOOLTIP_TEXT_COMMON = {
+  'sim-freeze-controls': 'Keep sliders fixed while the simulation runs; disable to allow projected values to update controls.',
+  'toggle-dora-lens': 'Show/hide DORA-forward wording where applicable.',
+  'toggle-posture-mode': 'Toggle wording posture between strict scientific phrasing and institutional-momentum framing.',
+  'df-dynamics-mode': 'Choose how DF is modeled over time: conservative (policy input) or endogenous (attenuated effective DF).',
+  'toggle-quiet-toasts': 'Use shorter, less prominent toasts to reduce distraction.',
+  'action-pin-baseline': 'Capture current state context to compare future changes against it.',
+  'action-copy-permalink': 'Copy a URL encoding current settings and collapsed-section state.',
+  'preset-elite': 'Load an optimistic high-performing preset.',
+  'preset-healthy': 'Load a balanced healthy baseline preset.',
+  'preset-stressed': 'Load a stressed-system preset.',
+  'preset-legacy': 'Load a legacy-platform debt-heavy preset.',
+  'preset-crisis': 'Load a crisis-mode preset with high fragility and debt.',
+  'preset-entropy': 'Load a saturated entropy regime preset.',
+  'viz-tab-sweep': 'Explore one selected input term across its range while other values stay fixed.',
+  'viz-tab-time': 'Simulate projected behavior over time using the current policy inputs.',
+  'viz-tab-advanced': 'Experimental combined plotter with selectable x-axis and multi-series y plotting.',
+  'tab-U': 'Sweep management urgency U across its domain.',
+  'tab-TDR': 'Sweep technical debt ratio TDR across its domain.',
+  'tab-CFR': 'Sweep change failure rate CFR across its domain.',
+  'tab-M': 'Sweep morale multiplier M across its domain.',
+  'cfr-btn-current': 'Use the current urgency value for CFR comparison.',
+  'cfr-btn-low': 'Compare CFR curve at fixed urgency U=1.0.',
+  'cfr-btn-high': 'Compare CFR curve at fixed urgency U=3.5.',
+  'sparkline': 'Drag horizontally to scrub the active sweep parameter value.',
+  'sim-horizon': 'Set simulation horizon in model periods.',
+  'sim-time': 'Scrub projected state by simulated time t.',
+  'sim-play-btn': 'Play or pause automatic time progression.',
+  'sim-speed': 'Set playback speed for time simulation.',
+  'sim-mode': 'Projection mode: debt-only or coupled organization dynamics.',
+  'toggle-pinst': 'Show/hide instantaneous output series P_inst in time chart.',
+  'toggle-pcum': 'Show/hide cumulative output series P_cum in time chart.',
+  'toggle-tdr': 'Show/hide technical debt ratio series in time chart.',
+  'toggle-coupling': 'Show/hide coherence coupling (Omega) series in time chart.',
+  'toggle-urgency-boost': 'Apply or remove urgency activity boost in output calculations.',
+  'action-adopt-simulated': 'Write selected simulated state values into current controls.',
+  'sim-canvas': 'Time-series chart of selected variables; vertical guide marks current t.',
+  'adv-x-key': 'Choose x-axis driver for experimental combined plotting.',
+  'adv-normalize': 'Normalize each selected y series to its own local range.',
+  'adv-auto-btn': 'Auto-sweep the chosen x term back and forth.',
+  'adv-y-pinst': 'Toggle P_inst in advanced plot.',
+  'adv-y-pcum': 'Toggle cumulative output P_cum in advanced plot (time x-axis only).',
+  'adv-y-tdr': 'Toggle TDR series in advanced plot.',
+  'adv-y-omega': 'Toggle Omega coherence series in advanced plot.',
+  'adv-y-df_eff': 'Toggle effective deployment frequency DF_eff in advanced plot.',
+  'adv-y-m': 'Toggle morale multiplier M in advanced plot.',
+  'advanced-canvas': 'Drag horizontally to scrub selected x value in advanced plot.',
+  'action-read-key-sections': 'Open curated paper excerpts in an on-page modal reader.',
+  'paper-modal-close-btn': 'Close the key sections modal.',
+};
+
+const TOOLTIP_TEXT_BY_POSTURE = {
+  strict: {
+    'toggle-posture-mode': 'Toggle wording posture between strict scientific phrasing and institutional-momentum framing.',
+    'action-pin-baseline': 'Capture current state context to compare future changes against it.',
+    'action-adopt-simulated': 'Write selected simulated state values into current controls.',
+    'toggle-urgency-boost': 'Apply or remove urgency activity boost in output calculations.',
+    'viz-tab-advanced': 'Experimental combined plotter with selectable x-axis and multi-series y plotting.',
+  },
+  momentum: {
+    'toggle-posture-mode': 'Toggle wording posture between strict scientific phrasing and institutional-momentum framing.',
+    'action-pin-baseline': 'Pin the current institutional reality so future chaos has a reference frame.',
+    'action-adopt-simulated': 'Import simulated organizational consequences into live controls.',
+    'toggle-urgency-boost': 'Toggle urgency theater amplification in the visible output term.',
+    'viz-tab-advanced': 'Experimental observatory: compose terms, scrub time, and watch narratives collide.',
+  },
+};
+
+const TOOLTIP_SELECTOR_TEXT = [
+  { selector: '.section-toggle', text: 'Expand or collapse this control section.' },
+];
+
+const presets = {
+  elite: {
+    DF:1.0, LT:0.5, CFR:0.02, MTTR:0.5,
+    M:1.4, U:0.5, Cm:0.05, E:0.05,
+    TDR:0.05, R:0.2, V:1.5, lam:1.0, alpha:1.0, beta:1.0
+  },
+  healthy: {
+    DF:0.25, LT:4, CFR:0.08, MTTR:2,
+    M:1.1, U:1.0, Cm:0.15, E:0.15,
+    TDR:0.2, R:0.15, V:1.0, lam:1.0, alpha:1.0, beta:1.0
+  },
+  stressed: {
+    DF:0.5, LT:8, CFR:0.15, MTTR:4,
+    M:0.75, U:2.5, Cm:0.3, E:0.4,
+    TDR:0.35, R:0.05, V:1.0, lam:1.0, alpha:1.0, beta:1.0
+  },
+  legacy: {
+    DF:0.05, LT:48, CFR:0.25, MTTR:12,
+    M:0.8, U:1.2, Cm:0.3, E:0.2,
+    TDR:0.7, R:0.1, V:0.8, lam:1.5, alpha:1.0, beta:1.0
+  },
+  crisis: {
+    DF:0.1, LT:24, CFR:0.45, MTTR:48,
+    M:0.4, U:4.0, Cm:0.5, E:0.6,
+    TDR:0.5, R:0.0, V:0.5, lam:1.0, alpha:1.5, beta:1.5
+  },
+  entropy: {
+    DF:0.2, LT:336, CFR:0.55, MTTR:120,
+    M:0.2, U:4.8, Cm:0.9, E:0.9,
+    TDR:0.9, R:0.0, V:0.5, lam:3.0, alpha:3.0, beta:3.0
+  }
+};
+
+let normalizationZ = 1.0;
+let throughputRef = 1.0;
+let chartDragging = false;
+let activeSweep = 'U';
+let cfrMode = 'current';
+let baselineSnapshot = null;
+let suppressUrlSync = false;
+let pendingCollapsedState = null;
+let lastSliderValues = null;
+const sliderPulseTimers = {};
+
+const appState = {
+  vizMode: 'sweep',
+  projectionMode: 'debt',
+  dfDynamicsMode: 'conservative',
+  freezeControls: true,
+  activePreset: null,
+  quietToasts: false,
+  doraLens: true,
+  postureMode: 'momentum',
+  urgencyBoost: false,
+  simHorizon: 24,
+  simTime: 0,
+  simSpeed: 1,
+  simPlaying: false,
+  simRows: [],
+  rafToken: null,
+  lastTs: null,
+  showSeries: {
+    pInst: true,
+    pCum: true,
+    tdr: true,
+    coupling: false,
+  },
+  floorToastShown: false,
+  dfSaturationToastAt: 0,
+  lastYAxisMax: null,
+  yAxisPulseUntil: 0,
+  yAxisScaleToastAt: 0,
+  experimental: EXPERIMENTAL_ENABLED,
+  advanced: {
+    xKey: 't',
+    normalize: true,
+    auto: false,
+    autoDir: 1,
+    autoTimer: null,
+  },
+};
+
+const POSTURE_COPY = {
+  strict: {
+    kicker: 'A Structured Descriptive Model',
+    rateLabel: 'Debt derivative',
+    integration: dt => `Euler Integration Step (dt=${dt})`,
+    eqMetaPrefix: 'Normalization: calibrated to healthy preset',
+    criticalTrend: 'SATURATED REGIME',
+    criticalDiagnosis: '<strong>SATURATED REGIME:</strong> Constraint interactions dominate; marginal innovation yield is near zero.',
+    lensOnToast: 'DORA Lens enabled: observed metrics foregrounded.',
+    lensOffToast: 'DORA Lens disabled.',
+    modeOnToast: 'Institutional Momentum Mode enabled.',
+    modeOffToast: 'Strict Scientific Posture enabled.',
+    floorToast: 'Remediation floor active: debt state clamped at zero.',
+    dfToast: 'Debt saturation: sustained velocity exceeds feasible envelope.',
+  },
+  momentum: {
+    kicker: 'A Grand Unified Model',
+    rateLabel: 'Debt Velocity Vector',
+    integration: dt => `Integration Step (dt=${dt})`,
+    eqMetaPrefix: 'Z keeps the expression dimensionally and rhetorically manageable — calibrated to the healthy preset',
+    criticalTrend: 'CRITICAL REGIME',
+    criticalDiagnosis: '<strong>CRITICAL REGIME:</strong> Resume Driven Development detected. System functions on institutional momentum; innovation is mathematically improbable.',
+    lensOnToast: 'DORA Lens enabled: observed metrics foregrounded.',
+    lensOffToast: 'DORA Lens disabled.',
+    modeOnToast: 'Institutional Momentum Mode enabled.',
+    modeOffToast: 'Strict Scientific Posture enabled.',
+    floorToast: 'Remediation Floor Active: Debt Fully Cleared.',
+    dfToast: 'Debt Saturation: Cannot sustain high velocity.',
+  }
+};
+
+function renderSliderLabels(v) {
+  setText('val-DF', fmt(v.DF));
+  setText('val-LT', fmt(v.LT) + ' hr');
+  setText('val-CFR', fmt(v.CFR));
+  setText('val-MTTR', fmt(v.MTTR) + ' hr');
+  setText('val-M', fmt(v.M));
+  setText('val-U', fmt(v.U));
+  setText('val-Cm', fmt(v.Cm));
+  setText('val-E', fmt(v.E));
+  setText('val-TDR', fmt(v.TDR));
+  setText('val-R', fmt(v.R));
+  setText('val-V', fmt(v.V));
+  setText('val-lam', fmt(v.lam));
+  setText('val-alpha', fmt(v.alpha));
+  setText('val-beta', fmt(v.beta));
+  applySliderSemanticFeedback(v);
+}
+
+function semanticChangeClass(key, prev, next) {
+  const sem = SLIDER_SEMANTICS[key];
+  if (!sem) return '';
+  const delta = next - prev;
+  if (Math.abs(delta) < 1e-9) return '';
+  if (sem.better === 'higher') return delta > 0 ? 'semantic-good' : 'semantic-bad';
+  if (sem.better === 'lower') return delta < 0 ? 'semantic-good' : 'semantic-bad';
+  if (sem.better === 'tradeoff') return 'semantic-tradeoff';
+  if (sem.better === 'context') {
+    if (key === 'U') {
+      if (delta > 0 && next <= 1.5) return appState.urgencyBoost ? 'semantic-tradeoff' : 'semantic-bad';
+      if (delta < 0) return 'semantic-good';
+      return 'semantic-bad';
+    }
+    return 'semantic-tradeoff';
+  }
+  return '';
+}
+
+function pulseSliderSemantic(key, className) {
+  if (!className) return;
+  const el = document.getElementById('sl-' + key);
+  if (!el) return;
+  el.classList.remove('semantic-good', 'semantic-bad', 'semantic-tradeoff');
+  void el.offsetWidth;
+  el.classList.add(className);
+  clearTimeout(sliderPulseTimers[key]);
+  sliderPulseTimers[key] = setTimeout(() => {
+    el.classList.remove('semantic-good', 'semantic-bad', 'semantic-tradeoff');
+  }, 520);
+}
+
+function applySliderSemanticFeedback(v) {
+  if (!lastSliderValues) {
+    lastSliderValues = { ...v };
+    return;
+  }
+  Object.keys(SLIDER_META).forEach(key => {
+    const prev = +lastSliderValues[key];
+    const next = +v[key];
+    if (!Number.isFinite(prev) || !Number.isFinite(next)) return;
+    const cls = semanticChangeClass(key, prev, next);
+    pulseSliderSemantic(key, cls);
+  });
+  lastSliderValues = { ...v };
+}
+
+function applySliderSemanticHints() {
+  applyTooltipRegistry();
+}
+
+function activeTooltipProfile() {
+  const mode = appState.postureMode === 'momentum' ? 'momentum' : 'strict';
+  return {
+    ...TOOLTIP_TEXT_COMMON,
+    ...(TOOLTIP_TEXT_BY_POSTURE[mode] || {}),
+  };
+}
+
+function applyLabelTooltip(el, text) {
+  const seen = new Set([el]);
+  const targets = [];
+  if (el.id) {
+    const forLabel = document.querySelector(`label[for="${el.id}"]`);
+    if (forLabel && !seen.has(forLabel)) { targets.push(forLabel); seen.add(forLabel); }
+  }
+  const wrappingLabel = el.closest('label');
+  if (wrappingLabel && !seen.has(wrappingLabel)) { targets.push(wrappingLabel); seen.add(wrappingLabel); }
+  const row = el.closest('.control-row');
+  if (row) {
+    const labelSpan = row.querySelector('.control-label');
+    if (labelSpan && !seen.has(labelSpan)) { targets.push(labelSpan); seen.add(labelSpan); }
+    const descEl = row.querySelector('.control-desc');
+    if (descEl && !seen.has(descEl)) { targets.push(descEl); seen.add(descEl); }
+  }
+  targets.forEach(t => setTip(t, text));
+}
+
+// Custom fast-delay tooltips: text lives in data-tip, rendered by the
+// #gum-tooltip layer after TOOLTIP_DELAY_MS. Native title attributes are
+// removed so the browser's slow built-in tooltip never doubles up.
+function setTip(el, text) {
+  el.dataset.tip = text;
+  el.setAttribute('aria-description', text);
+  el.removeAttribute('title');
+}
+
+function convertStaticTitlesToTips() {
+  document.querySelectorAll('[title]').forEach(el => setTip(el, el.getAttribute('title')));
+}
+
+function applyTooltipRegistry() {
+  const merged = activeTooltipProfile();
+  Object.keys(SLIDER_SEMANTICS).forEach(key => {
+    merged['sl-' + key] = SLIDER_SEMANTICS[key].hint;
+  });
+  Object.entries(merged).forEach(([id, text]) => {
+    const el = document.getElementById(id);
+    if (!el || !text) return;
+    setTip(el, text);
+    applyLabelTooltip(el, text);
+  });
+  TOOLTIP_SELECTOR_TEXT.forEach(({ selector, text }) => {
+    if (!selector || !text) return;
+    document.querySelectorAll(selector).forEach(el => setTip(el, text));
+  });
+}
+
+function initTooltipLayer() {
+  const tip = document.createElement('div');
+  tip.id = 'gum-tooltip';
+  tip.setAttribute('role', 'tooltip');
+  tip.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(tip);
+
+  let timer = null;
+  let target = null;
+
+  const hide = () => {
+    if (timer) { clearTimeout(timer); timer = null; }
+    target = null;
+    tip.classList.remove('visible');
+    tip.setAttribute('aria-hidden', 'true');
+  };
+
+  const show = (el) => {
+    const text = el.dataset.tip;
+    if (!text) return;
+    tip.textContent = text;
+    tip.classList.add('visible');
+    tip.setAttribute('aria-hidden', 'false');
+    const r = el.getBoundingClientRect();
+    const tr = tip.getBoundingClientRect();
+    let x = r.left + Math.min(r.width / 2, 120) - tr.width / 2;
+    let y = r.bottom + 8;
+    x = clamp(x, 8, window.innerWidth - tr.width - 8);
+    if (y + tr.height > window.innerHeight - 8) y = r.top - tr.height - 8;
+    tip.style.left = x + 'px';
+    tip.style.top = y + 'px';
+  };
+
+  const arm = (el, delay) => {
+    if (el === target) return;
+    hide();
+    target = el;
+    timer = setTimeout(() => { if (target === el) show(el); }, delay);
+  };
+
+  document.addEventListener('mouseover', e => {
+    const el = e.target.closest ? e.target.closest('[data-tip]') : null;
+    if (!el) { if (target) hide(); return; }
+    arm(el, TOOLTIP_DELAY_MS);
+  });
+  document.addEventListener('mouseout', e => {
+    if (target && !(e.relatedTarget && target.contains(e.relatedTarget))) hide();
+  });
+  document.addEventListener('focusin', e => {
+    const el = e.target.closest ? e.target.closest('[data-tip]') : null;
+    if (el) arm(el, 0);
+  });
+  document.addEventListener('focusout', hide);
+  document.addEventListener('mousedown', hide);
+  document.addEventListener('scroll', hide, true);
+
+  // Touchscreen support: long-press a [data-tip] element to reveal its
+  // tooltip. A short tap still passes through (so checkboxes/labels toggle
+  // normally); only a completed long-press shows the tip and swallows the
+  // click that would otherwise toggle the control under the finger.
+  let touchTimer = null;
+  let longPressed = false;
+
+  const clearTouchTimer = () => {
+    if (touchTimer) { clearTimeout(touchTimer); touchTimer = null; }
+  };
+
+  document.addEventListener('touchstart', e => {
+    // Ignore multi-touch / pinch gestures.
+    if (e.touches && e.touches.length > 1) { clearTouchTimer(); return; }
+    const el = e.target.closest ? e.target.closest('[data-tip]') : null;
+    if (!el) { hide(); return; }
+    if (target && target !== el) hide();
+    longPressed = false;
+    clearTouchTimer();
+    touchTimer = setTimeout(() => {
+      touchTimer = null;
+      longPressed = true;
+      show(el);
+    }, TOOLTIP_LONGPRESS_MS);
+  }, { passive: true });
+
+  // Any finger movement before the threshold means the user is scrolling,
+  // not long-pressing — abort so we don't hijack the gesture.
+  document.addEventListener('touchmove', clearTouchTimer, { passive: true });
+  document.addEventListener('touchcancel', () => { clearTouchTimer(); longPressed = false; });
+  document.addEventListener('touchend', clearTouchTimer, { passive: true });
+
+  // Cancel the synthetic click that follows a long-press so the underlying
+  // checkbox/label does not toggle. Capture phase runs before the control's
+  // own handler.
+  document.addEventListener('click', e => {
+    if (longPressed) {
+      e.preventDefault();
+      e.stopPropagation();
+      longPressed = false;
+    }
+  }, true);
+
+  // Suppress the native context menu that a long-press would otherwise raise.
+  document.addEventListener('contextmenu', e => {
+    if (longPressed || touchTimer) e.preventDefault();
+  });
+}
+
+function ensureAllDomElementsHaveIds() {
+  const used = new Set(Array.from(document.querySelectorAll('[id]')).map(el => el.id).filter(Boolean));
+  let counter = 1;
+  const nextId = tag => {
+    let candidate = `auto-${tag}-${counter}`;
+    while (used.has(candidate)) {
+      counter += 1;
+      candidate = `auto-${tag}-${counter}`;
+    }
+    used.add(candidate);
+    counter += 1;
+    return candidate;
+  };
+  [document.documentElement, document.body, ...document.querySelectorAll('body *')].forEach(el => {
+    if (!el) return;
+    if (!el.id) {
+      el.id = nextId(el.tagName.toLowerCase());
+    }
+  });
+}
+
+function elementTrail(el) {
+  const parent = el.parentElement;
+  if (!parent) return '<none>';
+  const parentId = parent.id ? `#${parent.id}` : '(no-id)';
+  return `${parent.tagName.toLowerCase()}${parentId}`;
+}
+
+function isPotentiallyHoverable(el) {
+  if (!(el instanceof Element)) return false;
+  const tag = el.tagName.toLowerCase();
+  const interactiveTags = new Set(['a', 'button', 'input', 'select', 'textarea', 'summary', 'canvas', 'label']);
+  if (interactiveTags.has(tag)) return true;
+  if (el.hasAttribute('onclick') || el.hasAttribute('onmouseenter') || el.hasAttribute('onmouseover')) return true;
+  if (el.tabIndex >= 0) return true;
+  if (el.getAttribute('role') === 'button' || el.getAttribute('role') === 'link') return true;
+  const cs = getComputedStyle(el);
+  if (cs.cursor === 'pointer') return true;
+  return false;
+}
+
+function auditTooltipCoverage() {
+  const tooltips = activeTooltipProfile();
+  Object.keys(SLIDER_SEMANTICS).forEach(key => {
+    tooltips['sl-' + key] = SLIDER_SEMANTICS[key].hint;
+  });
+  let missingCount = 0;
+  let hoverableMissing = 0;
+  let nonHoverableMissing = 0;
+  document.querySelectorAll('body *').forEach(el => {
+    const id = el.id || '<missing-id>';
+    const tag = el.tagName.toLowerCase();
+    const hasRegistryTooltip = Boolean(id && tooltips[id]);
+    const hasAppliedTooltip = Boolean(el.dataset.tip && el.dataset.tip.trim().length);
+    if (!hasRegistryTooltip && !hasAppliedTooltip) {
+      const hoverable = isPotentiallyHoverable(el);
+      const kind = hoverable ? 'hoverable' : 'non-hoverable';
+      missingCount += 1;
+      if (hoverable) hoverableMissing += 1;
+      else nonHoverableMissing += 1;
+      console.log(`element #${id} of type <${tag}> child of ${elementTrail(el)} has no tooltip text (${kind}). Add one.`);
+    }
+  });
+  console.log(`[tooltip-audit] missing=${missingCount}, hoverable=${hoverableMissing}, non-hoverable=${nonHoverableMissing}`);
+}
+
+function initControlRowSemantics() {
+  const sliderToKey = {
+    'sl-DF': 'DF', 'sl-LT': 'LT', 'sl-CFR': 'CFR', 'sl-MTTR': 'MTTR',
+    'sl-M': 'M', 'sl-U': 'U', 'sl-Cm': 'Cm', 'sl-E': 'E',
+    'sl-TDR': 'TDR', 'sl-R': 'R', 'sl-V': 'V', 'sl-lam': 'lam',
+    'sl-alpha': 'alpha', 'sl-beta': 'beta'
+  };
+  Object.entries(sliderToKey).forEach(([id, key]) => {
+    const slider = document.getElementById(id);
+    const row = slider ? slider.closest('.control-row') : null;
+    if (row) row.dataset.var = key;
+  });
+}
+
+function applyDoraLens() {
+  const doraVars = new Set(['DF', 'LT', 'CFR', 'MTTR']);
+  const rows = document.querySelectorAll('.control-row[data-var]');
+  rows.forEach(row => {
+    const v = row.dataset.var;
+    const isDora = doraVars.has(v);
+    row.classList.toggle('lens-dora', appState.doraLens && isDora);
+    row.classList.toggle('lens-latent', appState.doraLens && !isDora);
+  });
+}
+
+function postureCopy() {
+  return appState.postureMode === 'momentum' ? POSTURE_COPY.momentum : POSTURE_COPY.strict;
+}
+
+function applyPostureCopy() {
+  const c = postureCopy();
+  setText('equation-kicker', c.kicker);
+  setText('tdr-rate-label', c.rateLabel);
+  setText('integration-step', c.integration(SIM_DT));
+  setText('eq-meta', `${c.eqMetaPrefix} (P_inst ≈ 1.0, Z=${fmt(normalizationZ,4)}).`);
+}
+
+function initCollapsibleSections() {
+  const sections = Array.from(document.querySelectorAll('.controls-panel .panel-section'));
+  sections.forEach((section, idx) => {
+    const label = section.querySelector(':scope > .panel-section-label');
+    let toggle = section.querySelector(':scope > .section-toggle');
+    let content = section.querySelector(':scope > .section-content');
+
+    if (!toggle) {
+      if (!label) return;
+      toggle = document.createElement('button');
+      toggle.type = 'button';
+      toggle.className = 'section-toggle';
+      toggle.innerHTML = `<span>${label.textContent}</span><span class="section-chevron">▾</span>`;
+      label.replaceWith(toggle);
+    }
+
+    if (!content) {
+      content = document.createElement('div');
+      content.className = 'section-content';
+      let node = toggle.nextSibling;
+      while (node) {
+        const next = node.nextSibling;
+        content.appendChild(node);
+        node = next;
+      }
+      section.appendChild(content);
+    }
+
+    let hint = toggle.querySelector('.section-toggle-hint');
+    if (!hint) {
+      hint = document.createElement('span');
+      hint.className = 'section-toggle-hint';
+      toggle.appendChild(hint);
+    }
+
+    section.classList.add('collapsible');
+    const hasExplicitState = section.classList.contains('collapsed') || toggle.hasAttribute('aria-expanded');
+    if (!hasExplicitState) {
+      section.classList.toggle('collapsed', idx !== 0);
+    }
+
+    const syncExpanded = () => {
+      const isCollapsed = section.classList.contains('collapsed');
+      toggle.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+      hint.textContent = isCollapsed ? 'click to expand' : 'click to collapse';
+    };
+    syncExpanded();
+
+    if (toggle.dataset.collapseBound !== '1') {
+      toggle.addEventListener('click', () => {
+        section.classList.toggle('collapsed');
+        syncExpanded();
+        syncPermalink();
+      });
+      toggle.dataset.collapseBound = '1';
+    }
+
+    section.dataset.collapsibleInit = '1';
+  });
+  if (pendingCollapsedState) {
+    applyCollapsedSectionState(pendingCollapsedState);
+    pendingCollapsedState = null;
+  }
+}
+
+function getCollapsedSectionState() {
+  const sections = Array.from(document.querySelectorAll('.controls-panel .panel-section'));
+  return sections.map(section => (section.classList.contains('collapsed') ? '1' : '0')).join('');
+}
+
+function applyCollapsedSectionState(bits) {
+  if (!bits || !/^[01]+$/.test(bits)) return;
+  const sections = Array.from(document.querySelectorAll('.controls-panel .panel-section'));
+  sections.forEach((section, idx) => {
+    if (idx >= bits.length) return;
+    const collapsed = bits[idx] === '1';
+    section.classList.toggle('collapsed', collapsed);
+    const toggle = section.querySelector(':scope > .section-toggle');
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+      const hint = toggle.querySelector('.section-toggle-hint');
+      if (hint) hint.textContent = collapsed ? 'click to expand' : 'click to collapse';
+    }
+  });
+}
+
+function renderKaTeXEquations() {
+  if (typeof renderMathInElement !== 'function') return;
+  const renderIn = (target) => {
+    if (!target) return;
+    renderMathInElement(target, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '\\(', right: '\\)', display: false }
+      ],
+      throwOnError: false
+    });
+  };
+  renderIn(document.getElementById('equation-katex-area'));
+  renderIn(document.getElementById('paper-modal-body'));
+}
+
+function openKeySectionsModal() {
+  const overlay = document.getElementById('paper-modal-overlay');
+  if (!overlay) return;
+  overlay.hidden = false;
+  renderKaTeXEquations();
+  document.body.style.overflow = 'hidden';
+}
+
+function closeKeySectionsModal(event) {
+  if (event && event.target && event.target.id !== 'paper-modal-overlay') return;
+  const overlay = document.getElementById('paper-modal-overlay');
+  if (!overlay) return;
+  overlay.hidden = true;
+  document.body.style.overflow = '';
+}
+
+window.addEventListener('keydown', (event) => {
+  if (event.key !== 'Escape') return;
+  const overlay = document.getElementById('paper-modal-overlay');
+  if (!overlay || overlay.hidden) return;
+  closeKeySectionsModal();
+});
+
+function onDoraLensToggle() {
+  appState.doraLens = document.getElementById('toggle-dora-lens').checked;
+  applyDoraLens();
+  const c = postureCopy();
+  showToast(appState.doraLens ? c.lensOnToast : c.lensOffToast);
+  syncPermalink();
+}
+
+function onPostureModeToggle() {
+  appState.postureMode = document.getElementById('toggle-posture-mode').checked ? 'momentum' : 'strict';
+  applyPostureCopy();
+  applyTooltipRegistry();
+  const c = postureCopy();
+  showToast(appState.postureMode === 'momentum' ? c.modeOnToast : c.modeOffToast);
+  update();
+  syncPermalink();
+}
+
+const SWEEP_CONFIG = {
+  U: {
+    sliderKey: 'U',
+    min: 0.1, max: 5.0,
+    label: v => 'U=' + fmt(v.U),
+    title: 'P_inst vs. Urgency — holding current settings',
+    thesis: 'Urgency-Induced Instability: moderate U may increase visible activity; beyond a system-dependent threshold it raises fragility faster than output.',
+    curveLabel: 'P_inst as U sweeps 0.1 -> 5',
+    handleLabel: 'Current U — drag chart to sweep',
+    curveColor: '#49a0ec',
+    showCFRToggle: false,
+    getValue: v => v.U,
+    sweep: (v, x) => Object.assign({}, v, { U: x }),
+  },
+  TDR: {
+    sliderKey: 'TDR',
+    min: 0.0, max: 1.0,
+    label: v => 'TDR=' + fmt(v.TDR),
+    title: 'P_inst vs. Technical Debt Ratio — holding current settings',
+    thesis: 'The Compounding Debt Tax: TDR enters as an exponential toll on every unit of nominal output.',
+    curveLabel: 'P_inst as TDR sweeps 0 -> 1',
+    handleLabel: 'Current TDR — drag chart to sweep',
+    curveColor: '#49a0ec',
+    showCFRToggle: false,
+    getValue: v => v.TDR,
+    sweep: (v, x) => Object.assign({}, v, { TDR: x }),
+  },
+  CFR: {
+    sliderKey: 'CFR',
+    min: 0.0, max: 0.6,
+    label: v => 'CFR=' + fmt(v.CFR),
+    title: 'P_inst vs. Change Failure Rate — fragility under pressure',
+    thesis: 'CFR is amplified nonlinearly by urgency via (1-CFR)^U^2.',
+    curveLabel: 'P_inst at current U',
+    handleLabel: 'Current CFR — drag chart to sweep',
+    curveColor: '#49a0ec',
+    showCFRToggle: true,
+    getValue: v => v.CFR,
+    sweep: (v, x) => Object.assign({}, v, { CFR: x }),
+  },
+  M: {
+    sliderKey: 'M',
+    min: 0.1, max: 2.0,
+    label: v => 'M=' + fmt(v.M),
+    title: 'P_inst vs. Developer Morale — holding current settings',
+    thesis: 'Morale is a direct multiplier. Low morale hides in plain sight until degradation becomes severe.',
+    curveLabel: 'P_inst as M sweeps 0.1 -> 2',
+    handleLabel: 'Current M — drag chart to sweep',
+    curveColor: '#49a0ec',
+    showCFRToggle: false,
+    getValue: v => v.M,
+    sweep: (v, x) => Object.assign({}, v, { M: x }),
+  },
+};
+
+function clamp(x, lo, hi) {
+  return Math.max(lo, Math.min(hi, x));
+}
+
+function fmt(x, digits=3) {
+  if (!Number.isFinite(x)) return '—';
+  if (Math.abs(x) >= 100) return x.toFixed(1);
+  if (Math.abs(x) >= 10) return x.toFixed(2);
+  return x.toPrecision(digits);
+}
+
+function cssVar(name, fallback) {
+  const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  return v || fallback;
+}
+
+function getVars() {
+  return {
+    DF: +document.getElementById('sl-DF').value,
+    LT: +document.getElementById('sl-LT').value,
+    CFR: +document.getElementById('sl-CFR').value,
+    MTTR: +document.getElementById('sl-MTTR').value,
+    M: +document.getElementById('sl-M').value,
+    U: +document.getElementById('sl-U').value,
+    Cm: +document.getElementById('sl-Cm').value,
+    E: +document.getElementById('sl-E').value,
+    TDR: +document.getElementById('sl-TDR').value,
+    R: +document.getElementById('sl-R').value,
+    V: +document.getElementById('sl-V').value,
+    lam: +document.getElementById('sl-lam').value,
+    alpha: +document.getElementById('sl-alpha').value,
+    beta: +document.getElementById('sl-beta').value,
+  };
+}
+
+function setVars(v) {
+  Object.keys(SLIDER_META).forEach(key => {
+    const el = document.getElementById('sl-' + key);
+    if (!el || v[key] == null) return;
+    const meta = SLIDER_META[key];
+    el.value = clamp(+v[key], meta.min, meta.max);
+  });
+}
+
+function getPresetNameForVars(v) {
+  const keys = Object.keys(SLIDER_META);
+  for (const [name, preset] of Object.entries(presets)) {
+    const matches = keys.every(key => Math.abs((v[key] ?? 0) - (preset[key] ?? 0)) < 1e-9);
+    if (matches) return name;
+  }
+  return null;
+}
+
+function syncPresetButtonState(v = getVars()) {
+  const matchedPreset = getPresetNameForVars(v);
+  appState.activePreset = matchedPreset;
+  document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+  if (matchedPreset) {
+    const activeBtn = document.getElementById('preset-' + matchedPreset);
+    if (activeBtn) activeBtn.classList.add('active');
+  }
+}
+
+function formatPresetLabel(name) {
+  if (!name) return 'Custom';
+  const btn = document.getElementById('preset-' + name);
+  const label = btn ? btn.querySelector('.preset-name') : null;
+  return label ? label.textContent.trim() : name;
+}
+
+function uiStateContextLabel() {
+  const tab = appState.vizMode === 'time' ? 'Time simulation' : appState.vizMode === 'advanced' ? 'Advanced plot' : 'Parameter sweep';
+  const projection = appState.projectionMode === 'coupled' ? 'coupled' : 'debt-only';
+  const freeze = appState.freezeControls ? 'freeze ON' : 'freeze OFF';
+  return `${tab}, ${projection}, ${freeze}, t=${fmt(appState.simTime,4)}`;
+}
+
+function renderStateChip() {
+  const el = document.getElementById('state-chip');
+  if (!el) return;
+  const view = appState.vizMode === 'time' ? 'Time simulation' : appState.vizMode === 'advanced' ? 'Advanced plot' : 'Parameter sweep';
+  const projection = appState.projectionMode === 'coupled' ? 'coupled' : 'debt-only';
+  const dfMode = appState.dfDynamicsMode === 'endogenous' ? 'endogenous' : 'conservative';
+  const freeze = appState.freezeControls ? 'ON' : 'OFF';
+  const preset = formatPresetLabel(appState.activePreset);
+  const baseline = baselineSnapshot ? `pinned@t=${fmt(baselineSnapshot.simTime,4)}` : 'none';
+  const toastMode = appState.quietToasts ? 'quiet' : 'focus';
+  el.textContent = `View: ${view} | Projection: ${projection} | DF dynamics: ${dfMode} | Freeze: ${freeze} | Preset: ${preset} | t=${fmt(appState.simTime,4)} | Baseline: ${baseline} | Toasts: ${toastMode}`;
+}
+
+function applyToastMode() {
+  const stack = document.getElementById('toast-stack');
+  if (!stack) return;
+  stack.classList.toggle('quiet', appState.quietToasts);
+}
+
+function renderDFDynamicsBanner() {
+  const el = document.getElementById('df-dynamics-banner');
+  if (!el) return;
+  if (appState.dfDynamicsMode === 'endogenous') {
+    el.textContent = 'DF dynamics mode: Endogenous (Exploratory). DF_eff(t) is attenuated by latent terms and can diverge from DF_policy.';
+  } else {
+    el.textContent = 'DF dynamics mode: Conservative (OG GUM). DF is treated as an observed policy input; latent terms do not rewrite DF.';
+  }
+}
+
+function initExperimentalUi() {
+  if (!appState.experimental) return;
+  document.querySelectorAll('.experimental-only').forEach(el => {
+    el.hidden = false;
+  });
+  applyAdvancedSeriesColors();
+}
+
+function currentAdvancedSeriesKeys() {
+  const keys = [];
+  Object.keys(ADVANCED_SERIES_META).forEach(key => {
+    const cb = document.getElementById('adv-y-' + key);
+    if (cb && cb.checked) keys.push(key);
+  });
+  return keys;
+}
+
+// Tint each series checkbox and its label to the color of its plot line while
+// enabled, so the control row reads as a legend. Disabled series fall back to
+// the default control styling.
+function applyAdvancedSeriesColors() {
+  Object.entries(ADVANCED_SERIES_META).forEach(([key, meta]) => {
+    const cb = document.getElementById('adv-y-' + key);
+    if (!cb) return;
+    const label = cb.closest('label');
+    if (cb.checked) {
+      cb.style.accentColor = meta.color;
+      if (label) {
+        label.style.color = meta.color;
+        label.style.fontWeight = '600';
+      }
+    } else {
+      cb.style.accentColor = '';
+      if (label) {
+        label.style.color = '';
+        label.style.fontWeight = '';
+      }
+    }
+  });
+}
+
+function onAdvancedXKeyChange() {
+  if (!appState.experimental) return;
+  const sel = document.getElementById('adv-x-key');
+  if (!sel || !ADVANCED_X_META[sel.value]) return;
+  appState.advanced.xKey = sel.value;
+  const pCumBox = document.getElementById('adv-y-pcum');
+  if (pCumBox) {
+    const enablePCum = sel.value === 't';
+    pCumBox.disabled = !enablePCum;
+    if (!enablePCum) pCumBox.checked = false;
+  }
+  applyAdvancedSeriesColors();
+  drawAdvancedChart(getVars());
+  syncPermalink();
+}
+
+function onAdvancedNormalizeToggle() {
+  if (!appState.experimental) return;
+  appState.advanced.normalize = document.getElementById('adv-normalize').checked;
+  drawAdvancedChart(getVars());
+  syncPermalink();
+}
+
+function onAdvancedSeriesToggle() {
+  if (!appState.experimental) return;
+  applyAdvancedSeriesColors();
+  drawAdvancedChart(getVars());
+  syncPermalink();
+}
+
+function toggleAdvancedAuto() {
+  if (!appState.experimental) return;
+  appState.advanced.auto = !appState.advanced.auto;
+  const btn = document.getElementById('adv-auto-btn');
+  if (btn) btn.textContent = appState.advanced.auto ? 'Stop auto' : 'Auto sweep';
+  if (appState.advanced.auto) {
+    if (appState.advanced.autoTimer) clearInterval(appState.advanced.autoTimer);
+    appState.advanced.autoTimer = setInterval(tickAdvancedAuto, 80);
+    showToast(`Advanced auto sweep enabled (${appState.advanced.xKey}).`);
+  } else {
+    if (appState.advanced.autoTimer) clearInterval(appState.advanced.autoTimer);
+    appState.advanced.autoTimer = null;
+    showToast('Advanced auto sweep disabled.');
+  }
+  syncPermalink();
+}
+
+function getAdvancedXAxisConfig(v) {
+  const key = appState.advanced.xKey;
+  if (key === 't') {
+    return {
+      key,
+      min: 0,
+      max: appState.simHorizon,
+      current: appState.simTime,
+      label: 't',
+    };
+  }
+  const meta = SLIDER_META[key];
+  const safe = meta || { min: 0, max: 1 };
+  return {
+    key,
+    min: safe.min,
+    max: safe.max,
+    current: v[key],
+    label: key,
+  };
+}
+
+function computeAdvancedSeriesPoint(v, row) {
+  const terms = row ? {
+    omega: row.omega,
+    DF_t: row.DF_eff,
+  } : computeTerms(v, { urgencyBoost: appState.urgencyBoost });
+  return {
+    pinst: row ? row.P_inst : computePInst(v, { urgencyBoost: appState.urgencyBoost }),
+    pcum: row ? row.P_cum : 0,
+    tdr: row ? row.TDR : v.TDR,
+    omega: terms.omega,
+    df_eff: row ? row.DF_eff : terms.DF_t,
+    m: row ? row.M : v.M,
+  };
+}
+
+function buildAdvancedPlotPoints(v) {
+  const xCfg = getAdvancedXAxisConfig(v);
+  if (xCfg.key === 't') {
+    return appState.simRows.map(row => ({
+      x: row.time,
+      values: computeAdvancedSeriesPoint(v, row),
+    }));
+  }
+  const steps = 90;
+  const out = [];
+  for (let i = 0; i <= steps; i++) {
+    const x = xCfg.min + ((xCfg.max - xCfg.min) * i) / steps;
+    const vv = { ...v, [xCfg.key]: x };
+    out.push({ x, values: computeAdvancedSeriesPoint(vv, null) });
+  }
+  return out;
+}
+
+function applyAdvancedFromCanvas(clientX) {
+  if (!appState.experimental) return;
+  const canvas = document.getElementById('advanced-canvas');
+  if (!canvas || !canvas.width) return;
+  const rect = canvas.getBoundingClientRect();
+  const xPx = clamp(clientX - rect.left, 0, canvas.width);
+  const baseVars = getVars();
+  const xCfg = getAdvancedXAxisConfig(baseVars);
+  const xVal = xCfg.min + (xPx / canvas.width) * (xCfg.max - xCfg.min);
+  if (xCfg.key === 't') {
+    appState.simTime = clamp(xVal, 0, appState.simHorizon);
+    const simSlider = document.getElementById('sim-time');
+    if (simSlider) simSlider.value = appState.simTime;
+  } else {
+    const slider = document.getElementById('sl-' + xCfg.key);
+    if (slider) slider.value = clamp(xVal, xCfg.min, xCfg.max);
+  }
+  update();
+}
+
+function initAdvancedChartDrag() {
+  const canvas = document.getElementById('advanced-canvas');
+  if (!canvas) return;
+  let dragging = false;
+  canvas.addEventListener('mousedown', e => {
+    dragging = true;
+    applyAdvancedFromCanvas(e.clientX);
+    e.preventDefault();
+  });
+  canvas.addEventListener('mousemove', e => {
+    if (dragging) applyAdvancedFromCanvas(e.clientX);
+  });
+  window.addEventListener('mouseup', () => {
+    dragging = false;
+  });
+  canvas.addEventListener('touchstart', e => {
+    dragging = true;
+    applyAdvancedFromCanvas(e.touches[0].clientX);
+    e.preventDefault();
+  }, { passive: false });
+  canvas.addEventListener('touchmove', e => {
+    if (!dragging) return;
+    applyAdvancedFromCanvas(e.touches[0].clientX);
+    e.preventDefault();
+  }, { passive: false });
+  window.addEventListener('touchend', () => {
+    dragging = false;
+  });
+}
+
+function tickAdvancedAuto() {
+  if (!appState.advanced.auto || !appState.experimental) return;
+  const v = getVars();
+  const xCfg = getAdvancedXAxisConfig(v);
+  const span = Math.max(EPS, xCfg.max - xCfg.min);
+  const step = span / 120;
+  if (xCfg.key === 't') {
+    let next = appState.simTime + step * appState.advanced.autoDir;
+    if (next > xCfg.max) { next = xCfg.max; appState.advanced.autoDir = -1; }
+    if (next < xCfg.min) { next = xCfg.min; appState.advanced.autoDir = 1; }
+    appState.simTime = next;
+    const simSlider = document.getElementById('sim-time');
+    if (simSlider) simSlider.value = appState.simTime;
+  } else {
+    const slider = document.getElementById('sl-' + xCfg.key);
+    if (!slider) return;
+    let next = (+slider.value) + step * appState.advanced.autoDir;
+    if (next > xCfg.max) { next = xCfg.max; appState.advanced.autoDir = -1; }
+    if (next < xCfg.min) { next = xCfg.min; appState.advanced.autoDir = 1; }
+    slider.value = next;
+  }
+  update();
+}
+
+function drawAdvancedChart(v) {
+  if (!appState.experimental) return;
+  const panel = document.getElementById('panel-advanced');
+  if (!panel) return;
+  const canvas = document.getElementById('advanced-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.offsetWidth;
+  const H = canvas.offsetHeight;
+  if (W <= 2 || H <= 2) return;
+  canvas.width = W;
+  canvas.height = H;
+  ctx.clearRect(0, 0, W, H);
+  const xCfg = getAdvancedXAxisConfig(v);
+  const seriesKeys = currentAdvancedSeriesKeys();
+  if (!seriesKeys.length) {
+    const readout = document.getElementById('advanced-readout');
+    if (readout) readout.textContent = 'Select at least one Y series.';
+    return;
+  }
+  const points = buildAdvancedPlotPoints(v);
+  if (!points.length) return;
+
+  const stats = {};
+  seriesKeys.forEach(key => {
+    const vals = points.map(p => p.values[key]).filter(Number.isFinite);
+    const min = Math.min(...vals);
+    const max = Math.max(...vals);
+    stats[key] = { min, max, span: Math.max(EPS, max - min) };
+  });
+  let globalMin = Infinity;
+  let globalMax = -Infinity;
+  if (!appState.advanced.normalize) {
+    seriesKeys.forEach(key => {
+      globalMin = Math.min(globalMin, stats[key].min);
+      globalMax = Math.max(globalMax, stats[key].max);
+    });
+  }
+  const globalSpan = Math.max(EPS, globalMax - globalMin);
+  const xSpan = Math.max(EPS, xCfg.max - xCfg.min);
+  const xOf = x => ((x - xCfg.min) / xSpan) * W;
+  const yOf = (key, val) => {
+    if (appState.advanced.normalize) {
+      const st = stats[key];
+      return H - ((val - st.min) / st.span) * H;
+    }
+    return H - ((val - globalMin) / globalSpan) * H;
+  };
+
+  ctx.strokeStyle = '#d5d8df';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const gy = H - (i / 4) * H;
+    ctx.beginPath();
+    ctx.moveTo(0, gy);
+    ctx.lineTo(W, gy);
+    ctx.stroke();
+  }
+
+  seriesKeys.forEach(key => {
+    ctx.beginPath();
+    ctx.strokeStyle = ADVANCED_SERIES_META[key].color;
+    ctx.lineWidth = 2;
+    points.forEach((pt, i) => {
+      const px = xOf(pt.x);
+      const py = yOf(key, pt.values[key]);
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    });
+    ctx.stroke();
+  });
+
+  const cursorXVal = clamp(xCfg.current, xCfg.min, xCfg.max);
+  const cursorX = xOf(cursorXVal);
+  ctx.strokeStyle = cssVar('--viz-handle', '#e8a838');
+  ctx.setLineDash([4, 3]);
+  ctx.beginPath();
+  ctx.moveTo(cursorX, 0);
+  ctx.lineTo(cursorX, H);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  const nearest = points.reduce((best, pt) => Math.abs(pt.x - cursorXVal) < Math.abs(best.x - cursorXVal) ? pt : best, points[0]);
+  const labels = seriesKeys.map(key => {
+    const y = yOf(key, nearest.values[key]);
+    return {
+      key,
+      y,
+      text: `${ADVANCED_SERIES_META[key].label}=${fmt(nearest.values[key], 3)}`,
+      color: ADVANCED_SERIES_META[key].color,
+    };
+  }).sort((a, b) => a.y - b.y);
+  const gap = 13;
+  for (let i = 1; i < labels.length; i++) {
+    if (labels[i].y - labels[i - 1].y < gap) {
+      labels[i].y = labels[i - 1].y + gap;
+    }
+  }
+  for (let i = labels.length - 2; i >= 0; i--) {
+    if (labels[i + 1].y > H - 8 && labels[i].y > labels[i + 1].y - gap) {
+      labels[i].y = labels[i + 1].y - gap;
+    }
+  }
+
+  const sideRight = cursorX < W * 0.68;
+  const xText = `${xCfg.label}=${fmt(nearest.x, 3)}`;
+  ctx.font = '10px IBM Plex Mono, monospace';
+  ctx.fillStyle = cssVar('--viz-handle', '#e8a838');
+  ctx.textAlign = sideRight ? 'left' : 'right';
+  ctx.fillText(xText, sideRight ? cursorX + 8 : cursorX - 8, 12);
+  labels.forEach(lbl => {
+    const pointY = yOf(lbl.key, nearest.values[lbl.key]);
+    ctx.beginPath();
+    ctx.arc(cursorX, pointY, 3, 0, Math.PI * 2);
+    ctx.fillStyle = lbl.color;
+    ctx.fill();
+    ctx.fillStyle = lbl.color;
+    ctx.textAlign = sideRight ? 'left' : 'right';
+    ctx.fillText(lbl.text, sideRight ? cursorX + 8 : cursorX - 8, clamp(lbl.y, 10, H - 4));
+  });
+
+  const readout = document.getElementById('advanced-readout');
+  if (readout) {
+    const norm = appState.advanced.normalize ? 'normalized Y' : 'shared Y scale';
+    readout.textContent = `Advanced plot (${norm}). X=${xCfg.label}, cursor ${xCfg.label}=${fmt(nearest.x, 3)}, series: ${seriesKeys.map(k => ADVANCED_SERIES_META[k].label).join(', ')}.`;
+  }
+}
+
+function urgencyActivityBoost(U) {
+  return 1 + 0.25 * Math.log1p(U);
+}
+
+function computeOmega(v) {
+  return Math.exp(-v.alpha * v.Cm - v.beta * v.E);
+}
+
+function computeRawP(v, opts = { urgencyBoost: false }) {
+  const terms = computeTerms(v, opts);
+  const activity = opts.urgencyBoost ? urgencyActivityBoost(terms.U_t) : 1;
+  const num = v.V * terms.DF_t * activity * v.M * terms.omega * (1 - v.R);
+  const den = v.LT + v.MTTR + EPS;
+  return (num / den) * terms.cfrTerm * terms.debtAtt;
+}
+
+function computePInst(v, opts = { urgencyBoost: false }) {
+  return (1 / normalizationZ) * computeRawP(v, opts);
+}
+
+function computePCum(previous, pInst, dt) {
+  return previous + pInst * dt;
+}
+
+function computeTerms(v, opts = { urgencyBoost: false }) {
+  const omega = computeOmega(v);
+  const debtAtt = Math.exp(-v.lam * v.TDR);
+  const attenuationDriver = clamp(omega * debtAtt * Math.max(0.2, v.M / 1.2), 0.05, 1.25);
+  const U_t = v.U * (1 + 0.6 * (1 - attenuationDriver));
+  const DF_t = appState.dfDynamicsMode === 'endogenous' ? v.DF * attenuationDriver : v.DF;
+  const dfScale = v.DF <= EPS ? 1 : DF_t / v.DF;
+  const urgencyExp = Math.pow(U_t, 2);
+  const cfrTerm = Math.pow(1 - v.CFR, urgencyExp);
+  const activity = opts.urgencyBoost ? urgencyActivityBoost(U_t) : 1;
+  const throughputNominal = v.V * v.DF / (v.LT + v.MTTR + EPS);
+  const throughput = v.V * DF_t / (v.LT + v.MTTR + EPS);
+  const growthDrivers = (K1 * urgencyExp + K2 * DF_t + K3 * v.Cm) * attenuationDriver;
+  const dTDR = growthDrivers - K4 * v.R;
+  return { omega, urgencyExp, cfrTerm, debtAtt, throughput, throughputNominal, dTDR, activity, attenuationDriver, dfScale, U_t, DF_t };
+}
+
+function stepDebtOnlyState(v, dt, opts = { urgencyBoost: false }) {
+  const t = computeTerms(v, opts);
+  const next = v.TDR + t.dTDR * dt;
+  return { ...v, TDR: clamp(next, 0, 1) };
+}
+
+function stepCoupledState(v, dt, opts = { urgencyBoost: false }) {
+  const base = stepDebtOnlyState(v, dt, opts);
+  const urgencyExcess = Math.max(0, v.U - 1);
+  const debtPressure = Math.max(0, base.TDR - 0.4);
+  return {
+    ...base,
+    M: clamp(base.M - 0.015 * urgencyExcess * dt - 0.01 * debtPressure * dt, 0.1, 2.0),
+    LT: clamp(base.LT * (1 + 0.03 * debtPressure * dt), 0.5, 720),
+    CFR: clamp(base.CFR + 0.005 * urgencyExcess * debtPressure * dt, 0, 0.6),
+  };
+}
+
+function simulateTrajectory(v0, periods = 24, dt = SIM_DT, options = {}) {
+  const out = [];
+  const opts = { urgencyBoost: appState.urgencyBoost, projectionMode: appState.projectionMode, ...options };
+  let state = { ...v0 };
+  let cumulative = 0;
+
+  for (let time = 0; time <= periods + 1e-9; time += dt) {
+    const terms = computeTerms(state, opts);
+    const pInst = computePInst(state, opts);
+    out.push({
+      time: +time.toFixed(4),
+      P_inst: pInst,
+      P_cum: cumulative,
+      TDR: state.TDR,
+      DF_policy: state.DF,
+      DF_eff: terms.DF_t,
+      dTDR: terms.dTDR,
+      omega: terms.omega,
+      debt_att: terms.debtAtt,
+      cfr_term: terms.cfrTerm,
+      U_t: terms.U_t,
+      DF_t: terms.DF_t,
+      attenuationDriver: terms.attenuationDriver,
+      floorActive: state.TDR + terms.dTDR * dt < 0,
+      M: state.M,
+      LT: state.LT,
+      CFR: state.CFR,
+    });
+    cumulative = computePCum(cumulative, pInst, dt);
+    state = opts.projectionMode === 'coupled' ? stepCoupledState(state, dt, opts) : stepDebtOnlyState(state, dt, opts);
+  }
+  return out;
+}
+
+function rowAtTime(rows, t) {
+  if (!rows.length) return null;
+  let best = rows[0];
+  for (const row of rows) {
+    if (Math.abs(row.time - t) < Math.abs(best.time - t)) best = row;
+  }
+  return best;
+}
+
+function setText(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+
+function setBar(name, val, max, lowT, highT, suffix = '') {
+  const fill = document.getElementById('bar-' + name);
+  const text = document.getElementById('bv-' + name);
+  if (!fill || !text) return;
+  const w = Math.min(100, Math.max(0, (val / max) * 100));
+  fill.style.width = w + '%';
+  const ratio = val / max;
+  fill.className = 'health-bar-fill ' + (ratio < lowT ? 'danger' : ratio < highT ? 'warn' : '');
+  text.textContent = fmt(val, 3) + suffix;
+}
+
+function buildDiagnosis(v, t, pInst) {
+  const notes = [];
+  const c = postureCopy();
+  if (v.TDR > 0.9 && v.R < 0.08 && t.U_t > 3) {
+    notes.push(c.criticalDiagnosis);
+  }
+  if (v.U > 3.0) {
+    notes.push(`<strong>Urgency-Induced Instability:</strong> U=${fmt(v.U)} applies exponent ${fmt(t.urgencyExp,3)} to CFR impact.`);
+  } else if (v.U > 2.0) {
+    notes.push(`<strong>Elevated urgency</strong> (U=${fmt(v.U)}) is amplifying fragility.`);
+  }
+  if (v.M < 0.5) {
+    notes.push(`<strong>Degraded morale regime</strong> (M=${fmt(v.M)}): resilience degrades before throughput dashboards admit it.`);
+  }
+  if (v.E > 0.6 && v.Cm > 0.5) {
+    notes.push(`<strong>Maximum organizational entropy:</strong> elevated E and Cm predict fragmented coordination.`);
+  }
+  if (v.TDR > 0.6) {
+    notes.push(`<strong>Debt dominance:</strong> TDR=${fmt(v.TDR)} gives debt attenuation ${fmt(t.debtAtt,3)}.`);
+  }
+  if (v.R < 0.05 && v.TDR > 0.3) {
+    notes.push(`<strong>Remediation insufficient:</strong> debt trajectory is divergent under current pressure.`);
+  }
+  if (v.CFR > 0.3 && v.U > 1.5) {
+    notes.push(`<strong>Fragility under pressure:</strong> (1-CFR)^(U^2) = ${fmt(t.cfrTerm,3)}.`);
+  }
+  if (t.omega < 0.5) {
+    notes.push(`<strong>Organizational coherence Omega=${fmt(t.omega,3)}:</strong> responsibility/authority/expertise alignment is weak.`);
+  }
+  // P_inst is a multiplicative product of exponential attenuation terms, so it
+  // spans many orders of magnitude across the archetype presets (elite ~69 down
+  // to entropy ~1e-26). Thresholds are log-scale, not linear, and are set so the
+  // healthy preset itself -- the P_inst=1.0 calibration anchor -- reads as
+  // functional rather than sub-optimal.
+  const doraWouldSayHealthy = v.TDR > 0.6 || t.omega < 0.5 || (v.CFR > 0.3 && v.U > 1.5);
+  if (pInst > 10 && doraWouldSayHealthy) {
+    notes.push(`<strong>Elite delivery posture, on paper.</strong> DORA variables alone would call this healthy; the debt and coherence terms above say otherwise.`);
+  } else if (pInst > 10) {
+    notes.push(`<strong>Elite delivery posture.</strong> DORA variables dominate behavior.`);
+  } else if (pInst > 0.3) {
+    notes.push(`<strong>Functional delivery system.</strong> There is room to improve coherence or reduce debt drag.`);
+  } else if (pInst > 0.001) {
+    notes.push(`<strong>Sub-optimal delivery.</strong> Attenuation is extracting a significant premium.`);
+  } else {
+    notes.push(`<strong>Critical degradation.</strong> Nominal activity and realized value have diverged.`);
+  }
+  return notes.join('<br><br>') || 'System within normal parameters.';
+}
+
+function getProjectedVars(baseVars) {
+  const row = rowAtTime(appState.simRows, appState.simTime);
+  if (!row) return null;
+  return {
+    ...baseVars,
+    TDR: row.TDR,
+    M: row.M,
+    LT: row.LT,
+    CFR: row.CFR,
+  };
+}
+
+function syncControlsToProjected(v) {
+  document.getElementById('sl-TDR').value = v.TDR;
+  if (appState.projectionMode === 'coupled') {
+    document.getElementById('sl-M').value = v.M;
+    document.getElementById('sl-LT').value = v.LT;
+    document.getElementById('sl-CFR').value = v.CFR;
+  }
+}
+
+function renderMainOutput(v) {
+  const terms = computeTerms(v, { urgencyBoost: appState.urgencyBoost });
+  const pInst = computePInst(v, { urgencyBoost: appState.urgencyBoost });
+  const scoreEl = document.getElementById('score-value');
+  scoreEl.textContent = fmt(pInst, 4);
+  scoreEl.className = 'score-value ' + (pInst < 0.3 ? 'danger' : pInst < 1.0 ? 'warn' : '');
+
+  // Throughput is reported relative to the healthy preset's nominal
+  // throughput (same normalization philosophy as Z): 1.0x = healthy.
+  setBar('throughput', terms.throughput / throughputRef, 1.25, 0.08, 0.48, 'x');
+  setBar('omega', terms.omega, 1, 0.3, 0.6);
+  setBar('debt', terms.debtAtt, 1, 0.3, 0.6);
+  setBar('urgency', terms.cfrTerm, 1, 0.3, 0.6);
+  setBar('morale', v.M, 2, 0.4, 0.7);
+
+  const feltNote = document.getElementById('u-felt-note');
+  if (feltNote) {
+    const amp = v.U > 0 ? terms.U_t / v.U : 1;
+    feltNote.textContent = amp > 1.02
+      ? `Currently felt as U_eff = ${fmt(terms.U_t)} (x${fmt(amp)}) — dysfunction amplifies the urgency that produces it.`
+      : `Currently felt as U_eff = ${fmt(terms.U_t)}.`;
+    feltNote.style.color = amp > 1.35 ? 'var(--danger)' : '';
+  }
+
+  document.getElementById('eq-expanded').innerHTML =
+    `<span style="color:var(--text)">= (1/${fmt(normalizationZ,4)}) · [</span>` +
+    `<span style="color:var(--accent)">${fmt(v.V)}·${fmt(terms.DF_t)}·${fmt(v.M)}·${fmt(terms.omega,3)}·${fmt(1-v.R,3)}</span>` +
+    `<span style="color:var(--text-dim)"> / </span>` +
+    `<span style="color:var(--accent)">(${fmt(v.LT)}+${fmt(v.MTTR)}+${EPS})</span>` +
+    `<span style="color:var(--text)">] · </span>` +
+    `<span style="color:var(--accent)">(${fmt(1-v.CFR)})^${fmt(terms.urgencyExp,3)}</span>` +
+    `<span style="color:var(--text)"> · </span>` +
+    `<span style="color:var(--accent)">e^(-${fmt(v.lam)}·${fmt(v.TDR)})</span>` +
+    (appState.urgencyBoost ? `<span style="color:var(--text)"> · </span><span style="color:var(--accent)">activity=${fmt(terms.activity,3)}</span>` : '') +
+    `<span style="color:var(--text-dim)"> = </span><span style="color:var(--text-bright); font-weight:500">${fmt(pInst, 4)}</span>` +
+    `<span style="color:var(--text-dim)"> &nbsp;—&nbsp; felt urgency U_eff=${fmt(terms.U_t)} (policy U=${fmt(v.U)}), DF_eff=${fmt(terms.DF_t)}</span>`;
+
+  const c = postureCopy();
+  const dTDR = terms.dTDR;
+  const A = terms.attenuationDriver;
+  setText('tdr-k1', `+${fmt(K1 * terms.urgencyExp * A, 3)} (k1=${K1}·U_eff²=${fmt(terms.urgencyExp,3)}·A)`);
+  setText('tdr-k2', `+${fmt(K2 * terms.DF_t * A, 3)} (k2=${K2}·DF_eff=${fmt(terms.DF_t)}·A)`);
+  setText('tdr-k3', `+${fmt(K3 * v.Cm * A, 3)} (k3=${K3}·Cm=${fmt(v.Cm)}·A)`);
+  setText('tdr-k4', `-${fmt(K4 * v.R, 3)} (k4=${K4}·R=${fmt(v.R)})`);
+  setText('tdr-att-driver', `A(t) = ${fmt(A, 3)}`);
+  const trendWord = document.getElementById('tdr-trend-word');
+  if (v.TDR > 0.9 && v.R < 0.08 && terms.U_t > 3) {
+    trendWord.textContent = c.criticalTrend;
+    trendWord.style.color = 'var(--danger)';
+  } else if (dTDR > 0.05) {
+    trendWord.textContent = 'accumulating';
+    trendWord.style.color = 'var(--danger)';
+  } else if (dTDR > 0) {
+    trendWord.textContent = 'slowly growing';
+    trendWord.style.color = 'var(--warn)';
+  } else {
+    trendWord.textContent = 'being paid down';
+    trendWord.style.color = 'var(--accent)';
+  }
+  setText('tdr-rate', (dTDR >= 0 ? '+' : '') + fmt(dTDR, 3));
+
+  document.getElementById('diagnosis-text').innerHTML = buildDiagnosis(v, terms, pInst);
+  updateWaterfall(v, terms, pInst);
+}
+
+function renderTimeProjectionFrame(options = {}) {
+  const { allowControlSync = true } = options;
+  if (appState.vizMode !== 'time') return;
+  const baseVars = getVars();
+  let projected = getProjectedVars(baseVars);
+  if (!projected) return;
+  if (!appState.freezeControls && allowControlSync) {
+    syncControlsToProjected(projected);
+    projected = getVars();
+    renderSliderLabels(projected);
+  }
+  renderMainOutput(projected);
+}
+
+function update(options = {}) {
+  const { allowControlSync = true } = options;
+  let policyVars = getVars();
+  policyVars = enforceDebtSaturation(policyVars);
+
+  appState.showSeries.pInst = document.getElementById('toggle-pinst').checked;
+  appState.showSeries.pCum = document.getElementById('toggle-pcum').checked;
+  appState.showSeries.tdr = document.getElementById('toggle-tdr').checked;
+  appState.showSeries.coupling = document.getElementById('toggle-coupling').checked;
+  syncPresetButtonState(policyVars);
+  appState.simRows = simulateTrajectory(policyVars, appState.simHorizon, SIM_DT, {
+    projectionMode: appState.projectionMode,
+    urgencyBoost: appState.urgencyBoost
+  });
+  const simTimeEl = document.getElementById('sim-time');
+  simTimeEl.max = appState.simHorizon;
+  simTimeEl.value = clamp(appState.simTime, 0, appState.simHorizon);
+  appState.simTime = +simTimeEl.value;
+
+  renderSliderLabels(getVars());
+  if (appState.vizMode === 'time') {
+    renderTimeProjectionFrame({ allowControlSync });
+  } else {
+    renderMainOutput(getVars());
+  }
+
+  drawChart(policyVars);
+  drawSimChart();
+  drawAdvancedChart(policyVars);
+  updateSimReadout();
+  updateBaselineCompare(policyVars);
+  updateSensitivity(policyVars);
+  renderStateChip();
+  renderDFDynamicsBanner();
+  syncPermalink();
+}
+
+function updateWaterfall(v, terms, pInst) {
+  const nominal = terms.throughputNominal;
+  const rows = [
+    `Nominal throughput ${fmt(nominal,4)}`,
+    `x Morale ${fmt(v.M,4)}`,
+    `x Omega ${fmt(terms.omega,4)}`,
+    `x Effective DF(t)/DF ${fmt(terms.dfScale,4)}`,
+    `x Remediation capacity ${fmt(1-v.R,4)}`,
+    `x CFR/U term ${fmt(terms.cfrTerm,4)}`,
+    `x Debt drag ${fmt(terms.debtAtt,4)}`,
+    `= Realized output ${fmt(pInst,4)}`
+  ];
+  document.getElementById('waterfall-view').innerHTML = rows.join('<br>');
+}
+
+function enforceDebtSaturation(v) {
+  const c = postureCopy();
+  const maxVelocity = 15 * Math.exp(-0.5 * v.TDR);
+  if (v.DF <= maxVelocity) return v;
+  const reduced = Math.max(maxVelocity, v.DF * 0.95);
+  document.getElementById('sl-DF').value = reduced;
+  if (!appState.dfSaturationToastAt || Date.now() - appState.dfSaturationToastAt > 2000) {
+    showToast(c.dfToast);
+    appState.dfSaturationToastAt = Date.now();
+  }
+  return getVars();
+}
+
+function updateBaselineCompare(v) {
+  const el = document.getElementById('baseline-compare');
+  if (!baselineSnapshot) {
+    el.textContent = 'No baseline pinned yet.';
+    return;
+  }
+  const nowTerms = computeTerms(v, { urgencyBoost: appState.urgencyBoost });
+  const baseTerms = computeTerms(baselineSnapshot.vars, { urgencyBoost: baselineSnapshot.urgencyBoost });
+  const nowP = computePInst(v, { urgencyBoost: appState.urgencyBoost });
+  const baseP = computePInst(baselineSnapshot.vars, { urgencyBoost: baselineSnapshot.urgencyBoost });
+  const pct = (a, b) => {
+    if (Math.abs(b) < EPS) return 'n/a';
+    const delta = ((100 * (a - b)) / Math.abs(b)).toFixed(1);
+    return `${delta.startsWith('-') ? '' : '+'}${delta}%`;
+  };
+  const baselineMode = baselineSnapshot.vizMode === 'time' ? 'Time simulation' : 'Parameter sweep';
+  const baselineProjection = baselineSnapshot.projectionMode === 'coupled' ? 'coupled' : 'debt-only';
+  const baselineDfMode = baselineSnapshot.dfDynamicsMode === 'endogenous' ? 'endogenous' : 'conservative';
+  const baselineFreeze = baselineSnapshot.freezeControls ? 'ON' : 'OFF';
+  el.innerHTML =
+    `Pinned baseline: ${baselineMode}, ${baselineProjection}, DF ${baselineDfMode}, freeze ${baselineFreeze}, t=${fmt(baselineSnapshot.simTime,4)}, ${formatPresetLabel(baselineSnapshot.preset)}<br>` +
+    `P_inst: ${fmt(nowP, 4)} vs ${fmt(baseP, 4)} (${pct(nowP, baseP)})<br>` +
+    `Omega: ${fmt(nowTerms.omega, 4)} vs ${fmt(baseTerms.omega, 4)} (${pct(nowTerms.omega, baseTerms.omega)})<br>` +
+    `Debt drag: ${fmt(nowTerms.debtAtt, 4)} vs ${fmt(baseTerms.debtAtt, 4)} (${pct(nowTerms.debtAtt, baseTerms.debtAtt)})<br>` +
+    `Urgency term: ${fmt(nowTerms.cfrTerm, 4)} vs ${fmt(baseTerms.cfrTerm, 4)} (${pct(nowTerms.cfrTerm, baseTerms.cfrTerm)})`;
+}
+
+function updateSensitivity(v) {
+
+
+  const keys = ['U', 'LT', 'TDR', 'M', 'CFR', 'DF', 'R'];
+  const baseline = Math.max(computePInst(v, { urgencyBoost: appState.urgencyBoost }), 1e-300);
+  const out = [];
+  keys.forEach(key => {
+    const meta = SLIDER_META[key];
+    const d = Math.max(0.0001, Math.abs(v[key]) * 0.05);
+    const plus = { ...v, [key]: clamp(v[key] + d, meta.min, meta.max) };
+    const minus = { ...v, [key]: clamp(v[key] - d, meta.min, meta.max) };
+    const pPlus = computePInst(plus, { urgencyBoost: appState.urgencyBoost });
+    const pMinus = computePInst(minus, { urgencyBoost: appState.urgencyBoost });
+    // Percent change in P_inst per +5% nudge — scale-invariant, so the
+    // ranking stays readable whether P_inst is 69 or 1e-26.
+    const pct = ((pPlus - pMinus) / 2 / baseline) * 100;
+    out.push({ key, pct });
+  });
+  out.sort((a, b) => Math.abs(b.pct) - Math.abs(a.pct));
+  document.getElementById('sensitivity-ranking').innerHTML = out.slice(0, 4)
+    .map((row, idx) => `${idx + 1}. ${row.key} (${row.pct >= 0 ? '+' : ''}${fmt(row.pct, 3)}%)`)
+    .join('<br>');
+}
+
+function pinBaseline() {
+  const varsNow = getVars();
+  baselineSnapshot = {
+    vars: varsNow,
+    urgencyBoost: appState.urgencyBoost,
+    vizMode: appState.vizMode,
+    projectionMode: appState.projectionMode,
+    dfDynamicsMode: appState.dfDynamicsMode,
+    freezeControls: appState.freezeControls,
+    simTime: appState.simTime,
+    preset: getPresetNameForVars(varsNow),
+  };
+
+
+  showToast(`Baseline pinned (${uiStateContextLabel()}).`);
+  update();
+}
+
+function showToast(msg, ttlOverride) {
+  const stack = document.getElementById('toast-stack');
+  const MAX_TOASTS = appState.quietToasts ? 3 : 2;
+  while (stack.children.length >= MAX_TOASTS) {
+    stack.firstElementChild.remove();
+  }
+  const node = document.createElement('div');
+  node.className = 'toast';
+  node.textContent = msg;
+  stack.appendChild(node);
+  setTimeout(() => node.classList.add('visible'), 10);
+  const ttl = ttlOverride || (appState.quietToasts ? 1400 : 2200);
+  setTimeout(() => {
+    node.classList.remove('visible');
+    setTimeout(() => node.remove(), 250);
+  }, ttl);
+}
+
+// Mouse users get hover tooltips automatically, so they need no prompt. On
+// touch-primary devices (no hover capability) the same help is reachable via
+// long-press, but that affordance is invisible — so surface it once, the
+// first time such a device loads the app.
+const TOUCH_HINT_STORAGE_KEY = 'gut-longpress-hint-seen';
+
+function isTouchPrimaryDevice() {
+  return typeof window.matchMedia === 'function' &&
+    window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+}
+
+function touchHintAlreadyShown() {
+  try {
+    return window.localStorage.getItem(TOUCH_HINT_STORAGE_KEY) === '1';
+  } catch (e) {
+    // localStorage can throw (private mode, sandboxed context). Treat an
+    // unreadable store as "not shown" so the hint still appears once.
+    return false;
+  }
+}
+
+function markTouchHintShown() {
+  try {
+    window.localStorage.setItem(TOUCH_HINT_STORAGE_KEY, '1');
+  } catch (e) {
+    /* no-op: hint may reappear next load, which is acceptable */
+  }
+}
+
+function maybeShowTouchHint() {
+  if (!isTouchPrimaryDevice() || touchHintAlreadyShown()) return;
+  markTouchHintShown();
+  // Small delay lets the initial layout settle before the hint slides in.
+  setTimeout(() => {
+    showToast('Tip: press and hold any control or label to see its help.', 6000);
+  }, 700);
+}
+
+function setVizMode(mode) {
+  if (mode === 'advanced' && !appState.experimental) mode = 'sweep';
+  appState.vizMode = mode;
+  document.getElementById('viz-tab-sweep').classList.toggle('active', mode === 'sweep');
+  document.getElementById('viz-tab-time').classList.toggle('active', mode === 'time');
+  const advTab = document.getElementById('viz-tab-advanced');
+  if (advTab) advTab.classList.toggle('active', mode === 'advanced');
+  document.getElementById('panel-sweep').classList.toggle('active', mode === 'sweep');
+  document.getElementById('panel-time').classList.toggle('active', mode === 'time');
+  const advPanel = document.getElementById('panel-advanced');
+  if (advPanel) advPanel.classList.toggle('active', mode === 'advanced');
+  if (mode === 'time') {
+    renderTimeProjectionFrame({ allowControlSync: false });
+    drawSimChart();
+    updateSimReadout();
+  } else if (mode === 'advanced') {
+    drawAdvancedChart(getVars());
+    renderMainOutput(getVars());
+  } else {
+    drawChart(getVars());
+    renderMainOutput(getVars());
+  }
+  renderStateChip();
+  renderDFDynamicsBanner();
+  syncPermalink();
+}
+
+function setProjectionMode(mode) {
+  appState.projectionMode = mode;
+  showToast(mode === 'coupled' ? 'Realistic dysfunction coupling enabled.' : 'Debt-only projection mode enabled.');
+  update();
+}
+
+function setDFDynamicsMode(mode) {
+  if (mode !== 'conservative' && mode !== 'endogenous') return;
+  appState.dfDynamicsMode = mode;
+  renderDFDynamicsBanner();
+  showToast(mode === 'endogenous'
+    ? 'DF dynamics set to Endogenous (Exploratory).'
+    : 'DF dynamics set to Conservative (OG GUM).');
+  update({ allowControlSync: false });
+}
+
+function onUrgencyBoostToggle() {
+  appState.urgencyBoost = document.getElementById('toggle-urgency-boost').checked;
+  showToast(appState.urgencyBoost
+    ? `Urgency activity boost enabled (${uiStateContextLabel()}).`
+    : `Urgency activity boost disabled (${uiStateContextLabel()}).`);
+  update({ allowControlSync: false });
+}
+
+function onFreezeControlsToggle() {
+  appState.freezeControls = document.getElementById('sim-freeze-controls').checked;
+  if (appState.freezeControls) {
+    showToast(`Freeze ON: simulation keeps controls fixed (${uiStateContextLabel()}).`);
+  } else {
+    showToast(`Freeze OFF: time simulation can write projected values into controls (${uiStateContextLabel()}).`);
+  }
+  update();
+}
+
+function onToastModeToggle() {
+  appState.quietToasts = document.getElementById('toggle-quiet-toasts').checked;
+  applyToastMode();
+  showToast(appState.quietToasts ? 'Quiet toast mode enabled.' : 'Focus toast mode enabled.');
+  update({ allowControlSync: false });
+}
+
+function updateSimHorizon() {
+  appState.simHorizon = +document.getElementById('sim-horizon').value;
+  setText('sim-horizon-val', `${appState.simHorizon} periods`);
+  appState.simTime = Math.min(appState.simTime, appState.simHorizon);
+  update();
+}
+
+function updateSimTimeFromSlider() {
+  appState.simTime = +document.getElementById('sim-time').value;
+  updateSimReadout();
+  drawSimChart();
+  renderTimeProjectionFrame();
+  syncPermalink();
+}
+
+function updateSimReadout() {
+  const c = postureCopy();
+  setText('sim-time-val', `t = ${fmt(appState.simTime,4)}`);
+  const row = rowAtTime(appState.simRows, appState.simTime);
+  if (!row) return;
+  if (row.floorActive && !appState.floorToastShown) {
+    showToast(c.floorToast);
+    appState.floorToastShown = true;
+  }
+  if (!row.floorActive) appState.floorToastShown = false;
+  setText('ticker-pinst', fmt(row.P_inst, 4));
+  setText('ticker-preal', fmt(row.P_cum, 4));
+  setText('ticker-tdr', fmt(row.TDR, 4));
+  setText('ticker-df-policy', fmt(row.DF_policy, 4));
+  setText('ticker-df-eff', fmt(row.DF_eff, 4));
+  setText('sim-readout',
+    `At t = ${fmt(row.time,4)} (Δt=${SIM_DT}): projected TDR = ${fmt(row.TDR,4)}, DF_policy = ${fmt(row.DF_policy,4)}, DF_eff = ${fmt(row.DF_eff,4)}, instantaneous output = ${fmt(row.P_inst,4)}, cumulative P_real(t) = ${fmt(row.P_cum,4)}.`);
+}
+
+function setSimSpeed(v) {
+  appState.simSpeed = +v;
+  syncPermalink();
+}
+
+function toggleSimPlay() {
+  appState.simPlaying = !appState.simPlaying;
+  document.getElementById('sim-play-btn').textContent = appState.simPlaying ? 'Pause' : 'Play';
+  document.getElementById('integration-step').classList.toggle('active', appState.simPlaying);
+  if (appState.simPlaying) {
+    appState.lastTs = null;
+    if (appState.rafToken) cancelAnimationFrame(appState.rafToken);
+    appState.rafToken = requestAnimationFrame(tickSim);
+  } else if (appState.rafToken) {
+    cancelAnimationFrame(appState.rafToken);
+    appState.rafToken = null;
+  }
+}
+
+function tickSim(ts) {
+  if (!appState.simPlaying) return;
+  if (appState.lastTs == null) appState.lastTs = ts;
+  const dtSec = (ts - appState.lastTs) / 1000;
+  appState.lastTs = ts;
+  appState.simTime = clamp(appState.simTime + dtSec * appState.simSpeed, 0, appState.simHorizon);
+  document.getElementById('sim-time').value = appState.simTime;
+  updateSimReadout();
+  drawSimChart();
+  renderTimeProjectionFrame();
+  if (appState.simTime >= appState.simHorizon) {
+    appState.simPlaying = false;
+    document.getElementById('sim-play-btn').textContent = 'Play';
+    document.getElementById('integration-step').classList.remove('active');
+    appState.rafToken = null;
+    syncPermalink();
+    return;
+  }
+  appState.rafToken = requestAnimationFrame(tickSim);
+}
+
+const SIM_SERIES_META = {
+  P_inst: { label: 'P_inst', color: '#2f8fd8' },
+  P_cum: { label: 'P_cumulative', color: '#7a57d1' },
+  TDR: { label: 'TDR', color: '#d06441' },
+  omega: { label: 'Omega/Morale', color: '#2ea070' },
+};
+
+function drawSimChart() {
+  const canvas = document.getElementById('sim-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.offsetWidth;
+  const H = canvas.offsetHeight;
+  canvas.width = W;
+  canvas.height = H;
+  const rows = appState.simRows;
+  const legendEl = document.getElementById('sim-chart-legend');
+
+  const selected = [];
+  if (appState.showSeries.pInst) selected.push({ key: 'P_inst', ...SIM_SERIES_META.P_inst });
+  if (appState.showSeries.pCum) selected.push({ key: 'P_cum', ...SIM_SERIES_META.P_cum });
+  if (appState.showSeries.tdr) selected.push({ key: 'TDR', ...SIM_SERIES_META.TDR });
+  if (appState.showSeries.coupling) selected.push({ key: 'omega', ...SIM_SERIES_META.omega });
+
+  if (!rows.length || !selected.length) {
+    ctx.clearRect(0, 0, W, H);
+    if (legendEl) legendEl.innerHTML = '';
+    return;
+  }
+
+  // Each series is scaled independently (0..its own max) so curves of very
+  // different magnitude (e.g. TDR in [0,1] vs. cumulative P_real growing
+  // unbounded) are all legible on the same canvas. Read exact values from
+  // the legend below or the ticker, not from comparing heights across series.
+  const seriesMax = {};
+  selected.forEach(s => {
+    seriesMax[s.key] = Math.max(...rows.map(r => r[s.key]), 1e-6) * 1.08;
+  });
+  const xOf = t => (t / appState.simHorizon) * W;
+  const yOf = (key, val) => H - (val / seriesMax[key]) * H;
+
+  ctx.clearRect(0, 0, W, H);
+  ctx.strokeStyle = '#d5d8df';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const y = H - (i / 4) * H;
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+  }
+
+  selected.forEach(s => {
+    ctx.beginPath();
+    ctx.strokeStyle = s.color;
+    ctx.lineWidth = 2;
+    rows.forEach((r, idx) => {
+      const x = xOf(r.time);
+      const y = yOf(s.key, r[s.key]);
+      if (idx === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+  });
+
+  const scrubX = xOf(appState.simTime);
+  ctx.strokeStyle = '#20293a';
+  ctx.setLineDash([4, 3]);
+  ctx.beginPath();
+  ctx.moveTo(scrubX, 0);
+  ctx.lineTo(scrubX, H);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  ctx.fillStyle = '#8b93a3';
+  ctx.font = '9px IBM Plex Mono, monospace';
+  ctx.textAlign = 'left';
+  ctx.fillText('t=0', 2, H - 3);
+  ctx.textAlign = 'right';
+  ctx.fillText(`t=${fmt(appState.simHorizon, 0)}`, W - 2, H - 3);
+
+  if (legendEl) {
+    const row = rowAtTime(rows, appState.simTime) || rows[rows.length - 1];
+    legendEl.innerHTML = selected.map(s => {
+      const now = fmt(row[s.key], 3);
+      const max = fmt(seriesMax[s.key] / 1.08, 3);
+      return `<div class="legend-item"><div class="legend-dot" style="background:${s.color}"></div> ${s.label}: ${now} <span style="opacity:0.65">(scaled 0–${max})</span></div>`;
+    }).join('');
+  }
+}
+
+function adoptSimulatedState() {
+  const row = rowAtTime(appState.simRows, appState.simTime);
+  if (!row) return;
+  const before = getVars();
+  document.getElementById('sl-TDR').value = row.TDR;
+  const adoptedKeys = ['TDR'];
+  if (appState.projectionMode === 'coupled') {
+    document.getElementById('sl-M').value = row.M;
+    document.getElementById('sl-LT').value = row.LT;
+    document.getElementById('sl-CFR').value = row.CFR;
+    adoptedKeys.push('M', 'LT', 'CFR');
+  }
+  const after = getVars();
+  const changed = adoptedKeys.filter(key => Math.abs(after[key] - before[key]) > 1e-9);
+  if (!changed.length) {
+    showToast(`No control changes at t=${fmt(row.time,4)}. Try a later time or coupled mode.`);
+    return;
+  }
+  const modeLabel = appState.projectionMode === 'coupled' ? 'coupled' : 'debt-only';
+  showToast(`Adopted ${changed.join(', ')} from simulated state at t=${fmt(row.time,4)} (${modeLabel}, freeze ${appState.freezeControls ? 'ON' : 'OFF'}).`);
+  update();
+}
+
+function setSweep(key) {
+  activeSweep = key;
+  document.querySelectorAll('.sweep-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + key).classList.add('active');
+  const cfg = SWEEP_CONFIG[key];
+  document.getElementById('sweep-title').textContent = cfg.title;
+  document.getElementById('sweep-thesis').textContent = cfg.thesis;
+  document.getElementById('legend-curve').innerHTML = cfg.curveLabel;
+  document.getElementById('legend-handle').textContent = cfg.handleLabel;
+  document.getElementById('cfr-toggle-row').style.display = cfg.showCFRToggle ? 'flex' : 'none';
+  drawChart(getVars());
+  syncPermalink();
+}
+
+function setCFRMode(mode) {
+  cfrMode = mode;
+  ['current','low','high'].forEach(m => {
+    document.getElementById('cfr-btn-' + m).classList.toggle('active', m === mode);
+  });
+  drawChart(getVars());
+}
+
+function drawChart(v) {
+  const canvas = document.getElementById('sparkline');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.offsetWidth;
+  const H = canvas.offsetHeight;
+  canvas.width = W;
+  canvas.height = H;
+  const cfg = SWEEP_CONFIG[activeSweep];
+  const primaryColor = cssVar('--viz-primary', '#49a0ec');
+  const compareColor = cssVar('--viz-compare', '#6f54d6');
+  const handleColor = cssVar('--viz-handle', '#e8a838');
+  const steps = 80;
+  const { min, max } = cfg;
+
+  const points = [];
+  for (let i = 0; i <= steps; i++) {
+    const x = min + (max - min) * (i / steps);
+    const vv = cfg.sweep(v, x);
+    points.push({ x, p: computePInst(vv, { urgencyBoost: appState.urgencyBoost }) });
+  }
+
+  let compCurves = [];
+  if (activeSweep === 'CFR' && cfrMode !== 'current') {
+    const compU = cfrMode === 'low' ? 1.0 : 3.5;
+    const compPoints = [];
+    for (let i = 0; i <= steps; i++) {
+      const x = min + (max - min) * (i / steps);
+      const vv = cfg.sweep(Object.assign({}, v, { U: compU }), x);
+      compPoints.push({ x, p: computePInst(vv, { urgencyBoost: appState.urgencyBoost }) });
+    }
+    compCurves.push({ points: compPoints, color: compareColor, label: 'U=' + compU });
+  }
+
+  const niceAxisMax = (raw) => {
+    const safe = Math.max(raw, 1e-6);
+    const exp = Math.floor(Math.log10(safe));
+    const base = Math.pow(10, exp);
+    const f = safe / base;
+    let niceF = 10;
+    if (f <= 1) niceF = 1;
+    else if (f <= 2) niceF = 2;
+    else if (f <= 5) niceF = 5;
+    return niceF * base;
+  };
+
+  const allPs = [...points.map(p => p.p), ...compCurves.flatMap(c => c.points.map(p => p.p))];
+  const rawMax = (Math.max(...allPs) * 1.15) || 1;
+  const pMax = niceAxisMax(rawMax);
+  const nowMs = Date.now();
+  const yScaleChanged = appState.lastYAxisMax == null ? false : pMax !== appState.lastYAxisMax;
+  if (yScaleChanged) {
+    appState.yAxisPulseUntil = nowMs + 900;
+    if (appState.quietToasts && (!appState.yAxisScaleToastAt || nowMs - appState.yAxisScaleToastAt > 2600)) {
+      showToast(`Y-axis scale updated: Y max=${fmt(pMax,3)}`);
+      appState.yAxisScaleToastAt = nowMs;
+    }
+  }
+  appState.lastYAxisMax = pMax;
+  ctx.clearRect(0, 0, W, H);
+
+  ctx.strokeStyle = '#d5d8df';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const y = H - (i / 4) * H;
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+  }
+
+  if (activeSweep === 'M') {
+    const refX = ((1.0 - min) / (max - min)) * W;
+    ctx.strokeStyle = '#49a0ec';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([3, 4]);
+    ctx.beginPath(); ctx.moveTo(refX, 0); ctx.lineTo(refX, H); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#49a0ec';
+    ctx.font = '9px IBM Plex Mono, monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText('M=1 threshold', refX + 3, 10);
+  }
+
+  compCurves.forEach(cc => {
+    ctx.beginPath();
+    ctx.strokeStyle = cc.color;
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([5, 3]);
+    cc.points.forEach((pt, i) => {
+      const px = (i / steps) * W;
+      const py = H - (pt.p / pMax) * H;
+      i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    });
+    ctx.stroke();
+    ctx.setLineDash([]);
+  });
+
+  ctx.beginPath();
+  ctx.strokeStyle = cfg.curveColor || primaryColor;
+  ctx.lineWidth = 2;
+  points.forEach((pt, i) => {
+    const px = (i / steps) * W;
+    const py = H - (pt.p / pMax) * H;
+    i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+  });
+  ctx.stroke();
+  ctx.lineTo(W, H);
+  ctx.lineTo(0, H);
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(73,160,236,0.08)';
+  ctx.fill();
+
+  const curVal = cfg.getValue(v);
+  const curFrac = (curVal - min) / (max - min);
+  const cx = curFrac * W;
+  const curP = computePInst(v, { urgencyBoost: appState.urgencyBoost });
+  const cy = H - (curP / pMax) * H;
+
+  ctx.beginPath();
+  ctx.strokeStyle = handleColor;
+  ctx.lineWidth = 1;
+  ctx.setLineDash([4, 3]);
+  ctx.moveTo(cx, H); ctx.lineTo(cx, 0);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  if (chartDragging) {
+    ctx.beginPath();
+    ctx.arc(cx, cy, HANDLE_R + 4, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(232,168,56,0.15)';
+    ctx.fill();
+  }
+
+  ctx.beginPath();
+  ctx.arc(cx, cy, HANDLE_R, 0, Math.PI * 2);
+  ctx.fillStyle = handleColor;
+  ctx.fill();
+  ctx.strokeStyle = '#0d0f0e';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(cx - 3, cy); ctx.lineTo(cx + 3, cy);
+  ctx.moveTo(cx, cy - 3); ctx.lineTo(cx, cy + 3);
+  ctx.stroke();
+
+  ctx.fillStyle = '#20293a';
+  ctx.font = '10px IBM Plex Mono, monospace';
+  const xText = cfg.label(v);
+  const yText = `P=${fmt(curP)}`;
+  const labelOffset = HANDLE_R + 4;
+  const xTextW = ctx.measureText(xText).width;
+  const yTextW = ctx.measureText(yText).width;
+  const rightWouldClip = cx + labelOffset + Math.max(xTextW, yTextW) > W - 4;
+  const leftWouldClip = cx - labelOffset - Math.max(xTextW, yTextW) < 4;
+
+  let xSide = cx < W * 0.75 ? 'right' : 'left';
+  let ySide = 'left';
+  if (cx < 74) ySide = 'right'; // Left edge: keep y label in bottom-right quadrant.
+  if (rightWouldClip) {
+    xSide = 'left';
+    ySide = 'left';
+  } else if (leftWouldClip) {
+    xSide = 'right';
+    ySide = 'right';
+  }
+
+  let xLabelY = Math.max(12, cy - HANDLE_R - 8);
+  if (cy > H - 26) xLabelY = Math.max(12, cy - HANDLE_R - 20);
+  const xLabelX = xSide === 'right' ? cx + labelOffset : cx - labelOffset;
+  ctx.textAlign = xSide === 'right' ? 'left' : 'right';
+  ctx.fillText(xText, xLabelX, xLabelY);
+
+  let yLabelY = Math.min(H - 12, cy + HANDLE_R + 11);
+  const yLabelX = ySide === 'right' ? cx + labelOffset : cx - labelOffset;
+  if (cy > H - 18) yLabelY = H - 14;
+  ctx.textAlign = ySide === 'right' ? 'left' : 'right';
+  ctx.fillText(yText, yLabelX, yLabelY);
+
+  const xAxisColor = cssVar('--viz-handle', '#e8a838');
+  const yAxisColor = cssVar('--viz-primary', '#49a0ec');
+  ctx.fillStyle = xAxisColor;
+  ctx.textAlign = 'left';
+  ctx.fillText(activeSweep + '=' + fmt(min), 2, H - 6);
+  ctx.textAlign = 'right';
+  ctx.fillText(activeSweep + '=' + fmt(max), W - 2, H - 6);
+  const yMaxText = `Y max=${fmt(pMax, 3)}`;
+  const yMaxX = 2;
+  const yMaxY = 12;
+  if (nowMs < appState.yAxisPulseUntil) {
+    const pulsePhase = (nowMs % 420) / 420;
+    const glow = 0.16 + 0.18 * Math.abs(Math.sin(pulsePhase * Math.PI * 2));
+    const w = ctx.measureText(yMaxText).width;
+    ctx.save();
+    ctx.fillStyle = `rgba(73,160,236,${glow.toFixed(3)})`;
+    ctx.fillRect(yMaxX - 2, yMaxY - 9, w + 6, 11);
+    ctx.restore();
+  }
+  ctx.fillStyle = yAxisColor;
+  ctx.textAlign = 'left';
+  ctx.fillText(yMaxText, yMaxX, yMaxY);
+}
+
+function canvasXtoSweepVal(canvas, clientX) {
+  const cfg = SWEEP_CONFIG[activeSweep];
+  const rect = canvas.getBoundingClientRect();
+  const x = clientX - rect.left;
+  const frac = x / canvas.width;
+  const val = cfg.min + (cfg.max - cfg.min) * frac;
+  return clamp(val, cfg.min, cfg.max);
+}
+
+function applyFromCanvas(clientX) {
+  const canvas = document.getElementById('sparkline');
+  const cfg = SWEEP_CONFIG[activeSweep];
+  const val = canvasXtoSweepVal(canvas, clientX);
+  const sl = document.getElementById('sl-' + cfg.sliderKey);
+  if (sl) sl.value = val;
+  update();
+}
+
+function initChartDrag() {
+  const canvas = document.getElementById('sparkline');
+  canvas.addEventListener('mousemove', e => {
+    if (chartDragging) applyFromCanvas(e.clientX);
+    else canvas.style.cursor = 'ew-resize';
+  });
+  canvas.addEventListener('mousedown', e => {
+    chartDragging = true;
+    canvas.style.cursor = 'ew-resize';
+    applyFromCanvas(e.clientX);
+    e.preventDefault();
+  });
+  window.addEventListener('mouseup', () => { chartDragging = false; });
+  canvas.addEventListener('touchstart', e => {
+    chartDragging = true;
+    applyFromCanvas(e.touches[0].clientX);
+    e.preventDefault();
+  }, { passive: false });
+  canvas.addEventListener('touchmove', e => {
+    if (chartDragging) {
+      applyFromCanvas(e.touches[0].clientX);
+      e.preventDefault();
+    }
+  }, { passive: false });
+  window.addEventListener('touchend', () => { chartDragging = false; });
+}
+
+function applyPreset(name) {
+  const p = presets[name];
+  setVars(p);
+  appState.activePreset = name;
+  showToast(`Applied preset: ${formatPresetLabel(name)} (${uiStateContextLabel()}).`);
+  update();
+}
+
+function toQueryState() {
+  const v = getVars();
+  const q = {};
+  Object.keys(SLIDER_META).forEach(k => q[k] = v[k]);
+  q.tab = appState.vizMode;
+  q.projectionMode = appState.projectionMode;
+  q.dfDynamics = appState.dfDynamicsMode;
+  q.freeze = appState.freezeControls ? 1 : 0;
+  q.quietToasts = appState.quietToasts ? 1 : 0;
+  q.doraLens = appState.doraLens ? 1 : 0;
+  q.posture = appState.postureMode;
+  q.urgencyBoost = appState.urgencyBoost ? 1 : 0;
+  q.horizon = appState.simHorizon;
+  q.time = +appState.simTime.toFixed(3);
+  q.speed = appState.simSpeed;
+  q.sweep = activeSweep;
+  q.cfrMode = cfrMode;
+  if (appState.experimental) {
+    q.exp = 1;
+    q.advX = appState.advanced.xKey;
+    q.advNormalize = appState.advanced.normalize ? 1 : 0;
+    q.advY = currentAdvancedSeriesKeys().join(',');
+  }
+  q.collapsed = getCollapsedSectionState();
+  q.series = [
+    appState.showSeries.pInst ? 'pinst' : '',
+    appState.showSeries.pCum ? 'pcum' : '',
+    appState.showSeries.tdr ? 'tdr' : '',
+    appState.showSeries.coupling ? 'coupling' : ''
+  ].filter(Boolean).join(',');
+  return q;
+}
+
+function syncPermalink() {
+  if (suppressUrlSync) return;
+  const params = new URLSearchParams();
+  const q = toQueryState();
+  Object.keys(q).forEach(k => params.set(k, String(q[k])));
+  history.replaceState(null, '', `${location.pathname}?${params.toString()}`);
+}
+
+function hydrateFromUrl() {
+  const sp = new URLSearchParams(location.search);
+  if (!sp.size) return;
+  suppressUrlSync = true;
+  Object.keys(SLIDER_META).forEach(key => {
+    if (!sp.has(key)) return;
+    const v = +sp.get(key);
+    if (!Number.isFinite(v)) return;
+    const meta = SLIDER_META[key];
+    document.getElementById('sl-' + key).value = clamp(v, meta.min, meta.max);
+  });
+  const tab = sp.get('tab');
+  if (tab === 'time' || tab === 'sweep' || tab === 'advanced') appState.vizMode = tab;
+  const mode = sp.get('projectionMode');
+  if (mode === 'debt' || mode === 'coupled') appState.projectionMode = mode;
+  const dfDynamics = sp.get('dfDynamics');
+  if (dfDynamics === 'conservative' || dfDynamics === 'endogenous') appState.dfDynamicsMode = dfDynamics;
+  const freeze = sp.get('freeze');
+  if (freeze === '0' || freeze === '1' || freeze === 'true' || freeze === 'false') {
+    appState.freezeControls = freeze === '1' || freeze === 'true';
+  }
+  const quiet = sp.get('quietToasts');
+  if (quiet === '0' || quiet === '1' || quiet === 'true' || quiet === 'false') {
+    appState.quietToasts = quiet === '1' || quiet === 'true';
+  }
+  const lens = sp.get('doraLens');
+  if (lens === '0' || lens === '1' || lens === 'true' || lens === 'false') {
+    appState.doraLens = lens === '1' || lens === 'true';
+  }
+  const posture = sp.get('posture');
+  if (posture === 'strict' || posture === 'momentum') appState.postureMode = posture;
+  const ub = sp.get('urgencyBoost');
+  appState.urgencyBoost = ub === '1' || ub === 'true';
+  if (sp.has('horizon')) {
+    const horizon = +sp.get('horizon');
+    if (Number.isFinite(horizon)) appState.simHorizon = clamp(horizon, 0, 36);
+  }
+  if (sp.has('time')) {
+    const stime = +sp.get('time');
+    if (Number.isFinite(stime)) appState.simTime = Math.max(0, stime);
+  }
+  if (sp.has('speed')) {
+    const speed = +sp.get('speed');
+    if (Number.isFinite(speed) && speed > 0) appState.simSpeed = speed;
+  }
+  const sweep = sp.get('sweep');
+  if (SWEEP_CONFIG[sweep]) activeSweep = sweep;
+  const modeCfr = sp.get('cfrMode');
+  if (['current', 'low', 'high'].includes(modeCfr)) cfrMode = modeCfr;
+  const advX = sp.get('advX');
+  if (ADVANCED_X_META[advX]) appState.advanced.xKey = advX;
+  const advNorm = sp.get('advNormalize');
+  if (advNorm === '0' || advNorm === '1' || advNorm === 'true' || advNorm === 'false') {
+    appState.advanced.normalize = advNorm === '1' || advNorm === 'true';
+  }
+  const collapsed = sp.get('collapsed');
+  if (collapsed && /^[01]+$/.test(collapsed)) pendingCollapsedState = collapsed;
+  const advY = (sp.get('advY') || '').split(',').filter(Boolean);
+  if (advY.length) {
+    Object.keys(ADVANCED_SERIES_META).forEach(key => {
+      const cb = document.getElementById('adv-y-' + key);
+      if (cb) cb.checked = advY.includes(key);
+    });
+  }
+  const series = (sp.get('series') || '').split(',').filter(Boolean);
+  if (series.length) {
+    appState.showSeries.pInst = series.includes('pinst');
+    appState.showSeries.pCum = series.includes('pcum');
+    appState.showSeries.tdr = series.includes('tdr');
+    appState.showSeries.coupling = series.includes('coupling');
+  }
+  suppressUrlSync = false;
+}
+
+function copyPermalink() {
+  const url = location.href;
+  if (!navigator.clipboard || !navigator.clipboard.writeText) {
+    showToast('Clipboard API unavailable in this browser context.');
+    return;
+  }
+  navigator.clipboard.writeText(url).then(() => {
+    showToast('Permalink copied to clipboard.');
+  }).catch(() => {
+    showToast('Could not copy permalink automatically.');
+  });
+}
+
+function applyInitialUiState() {
+  if (appState.vizMode === 'advanced' && !appState.experimental) appState.vizMode = 'sweep';
+  document.getElementById('sim-horizon').value = appState.simHorizon;
+  document.getElementById('sim-horizon-val').textContent = `${appState.simHorizon} periods`;
+  document.getElementById('sim-time').value = appState.simTime;
+  document.getElementById('sim-speed').value = String(appState.simSpeed);
+  document.getElementById('sim-mode').value = appState.projectionMode;
+  document.getElementById('df-dynamics-mode').value = appState.dfDynamicsMode;
+  document.getElementById('sim-freeze-controls').checked = appState.freezeControls;
+  document.getElementById('toggle-quiet-toasts').checked = appState.quietToasts;
+  document.getElementById('toggle-dora-lens').checked = appState.doraLens;
+  document.getElementById('toggle-posture-mode').checked = appState.postureMode === 'momentum';
+  document.getElementById('toggle-urgency-boost').checked = appState.urgencyBoost;
+  document.getElementById('toggle-pinst').checked = appState.showSeries.pInst;
+  document.getElementById('toggle-pcum').checked = appState.showSeries.pCum;
+  document.getElementById('toggle-tdr').checked = appState.showSeries.tdr;
+  document.getElementById('toggle-coupling').checked = appState.showSeries.coupling;
+  if (appState.experimental) {
+    const advX = document.getElementById('adv-x-key');
+    const advNorm = document.getElementById('adv-normalize');
+    if (advX) advX.value = appState.advanced.xKey;
+    if (advNorm) advNorm.checked = appState.advanced.normalize;
+    onAdvancedXKeyChange();
+  }
+  applyPostureCopy();
+  initControlRowSemantics();
+  applySliderSemanticHints();
+  applyDoraLens();
+  applyToastMode();
+  renderDFDynamicsBanner();
+  setVizMode(appState.vizMode);
+  setSweep(activeSweep);
+  setCFRMode(cfrMode);
+}
+
+function calibrateNormalization() {
+  normalizationZ = computeRawP(presets.healthy, { urgencyBoost: false }) || 1.0;
+  throughputRef = computeTerms(presets.healthy, { urgencyBoost: false }).throughputNominal || 1.0;
+  applyPostureCopy();
+}
+
+function stampPresetOutputs() {
+  Object.keys(presets).forEach(name => {
+    const btn = document.getElementById('preset-' + name);
+    if (!btn) return;
+    const p = computePInst(presets[name], { urgencyBoost: false });
+    let chip = btn.querySelector('.preset-pinst');
+    if (!chip) {
+      chip = document.createElement('span');
+      chip.className = 'preset-pinst';
+      btn.appendChild(chip);
+    }
+    chip.textContent = `P = ${fmt(p, 3)}`;
+  });
+}
+
+window.addEventListener('resize', () => {
+  drawChart(getVars());
+  drawSimChart();
+  drawAdvancedChart(getVars());
+});
+
+setVars(presets.healthy);
+hydrateFromUrl();
+calibrateNormalization();
+stampPresetOutputs();
+initExperimentalUi();
+initCollapsibleSections();
+ensureAllDomElementsHaveIds();
+initChartDrag();
+initAdvancedChartDrag();
+convertStaticTitlesToTips();
+initTooltipLayer();
+applyInitialUiState();
+update();
+maybeShowTouchHint();
+window.addEventListener('load', renderKaTeXEquations);
+if (DEBUG_ENABLED) auditTooltipCoverage();
+</script>
+
+</body></html>

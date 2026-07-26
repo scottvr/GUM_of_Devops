@@ -2175,7 +2175,7 @@ function pinBaseline() {
   update();
 }
 
-function showToast(msg) {
+function showToast(msg, ttlOverride) {
   const stack = document.getElementById('toast-stack');
   const MAX_TOASTS = appState.quietToasts ? 3 : 2;
   while (stack.children.length >= MAX_TOASTS) {
@@ -2186,11 +2186,49 @@ function showToast(msg) {
   node.textContent = msg;
   stack.appendChild(node);
   setTimeout(() => node.classList.add('visible'), 10);
-  const ttl = appState.quietToasts ? 1400 : 2200;
+  const ttl = ttlOverride || (appState.quietToasts ? 1400 : 2200);
   setTimeout(() => {
     node.classList.remove('visible');
     setTimeout(() => node.remove(), 250);
   }, ttl);
+}
+
+// Mouse users get hover tooltips automatically, so they need no prompt. On
+// touch-primary devices (no hover capability) the same help is reachable via
+// long-press, but that affordance is invisible — so surface it once, the
+// first time such a device loads the app.
+const TOUCH_HINT_STORAGE_KEY = 'gut-longpress-hint-seen';
+
+function isTouchPrimaryDevice() {
+  return typeof window.matchMedia === 'function' &&
+    window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+}
+
+function touchHintAlreadyShown() {
+  try {
+    return window.localStorage.getItem(TOUCH_HINT_STORAGE_KEY) === '1';
+  } catch (e) {
+    // localStorage can throw (private mode, sandboxed context). Treat an
+    // unreadable store as "not shown" so the hint still appears once.
+    return false;
+  }
+}
+
+function markTouchHintShown() {
+  try {
+    window.localStorage.setItem(TOUCH_HINT_STORAGE_KEY, '1');
+  } catch (e) {
+    /* no-op: hint may reappear next load, which is acceptable */
+  }
+}
+
+function maybeShowTouchHint() {
+  if (!isTouchPrimaryDevice() || touchHintAlreadyShown()) return;
+  markTouchHintShown();
+  // Small delay lets the initial layout settle before the hint slides in.
+  setTimeout(() => {
+    showToast('Tip: press and hold any control or label to see its help.', 6000);
+  }, 700);
 }
 
 function setVizMode(mode) {
@@ -2922,6 +2960,7 @@ convertStaticTitlesToTips();
 initTooltipLayer();
 applyInitialUiState();
 update();
+maybeShowTouchHint();
 window.addEventListener('load', renderKaTeXEquations);
 if (DEBUG_ENABLED) auditTooltipCoverage();
 </script>

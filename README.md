@@ -1,3 +1,6 @@
+_**NOTE:** Unless you are after the LaTeX source for the paper or the html/js for the tool, this repo is far more navigable   
+on the [Pages deployed from it](https://blehg.paperclipmaximizer.ai/GUM_of_Devops/)_
+
 
 **“This deserves to be required reading in every engineering organization.”**  [_- Claude Sonnet 4.5 (Extended Thinking)_](https://github.com/scottvr/GUM_of_Devops/blob/main/REVIEW.md)
 

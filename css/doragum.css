@@ -1613,6 +1613,15 @@ body.readme-page.post-page {
   margin-inline: auto;
 }
 
+/* On narrow (portrait phone) screens the column is already tight, so the fixed
+   12ch inset leaves the abstract eye-crossingly narrow. Below the mobile
+   breakpoint, let it fill the column like normal body text. */
+@media (max-width: 600px) {
+  .readme-page.post-page .github-markdown-content .post-abstract {
+    max-width: none;
+  }
+}
+
 /* Title + subtitle: an H2 immediately after the leading H1 is a subheading,
    not a new section, so group it tightly under the title instead of leaving
    the default 3rem section gap (which the two margins otherwise collapse to).

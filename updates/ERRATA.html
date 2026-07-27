@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Errata — a formal retraction of an earlier retraction concerning DORA's shifting fifth metric and the Grand Unified Model of DevOps.">
+<title>Errata — The GUM of DevOps</title>
+<link rel="stylesheet" href="../css/doragum.css">
+<style>
+  /* Page-specific overrides on top of the shared GUT documentation theme. */
+  .readme-page .github-markdown-content h1:first-of-type::before {
+    content: "THE GUM OF DEVOPS · ERRATA";
+  }
+
+  /* Footer mirrors the landing page's: a horizontal meta / links bar driven
+     by the shared unscoped footer/.footer-meta/.paper-links rules, with the
+     content-scoped link colors restored. */
+  .readme-page .github-markdown-content footer {
+    margin-top: 3rem;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .readme-page .github-markdown-content .footer-meta a,
+  .readme-page .github-markdown-content .paper-links a {
+    color: var(--accent-dim);
+    text-decoration: none;
+  }
+
+  .readme-page .github-markdown-content .paper-links .paper-link-primary {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .readme-page .github-markdown-content .footer-meta a:hover,
+  .readme-page .github-markdown-content .paper-links a:hover {
+    color: var(--accent);
+  }
+
+  .readme-nav-actions {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 0.5rem;
+  }
+</style>
+</head>
+<body class="readme-page post-page">
+<a class="skip-link" href="#errata-content">Skip to content</a>
+<nav class="readme-nav" aria-label="Site">
+    <div class="readme-nav-brand" aria-label="The GUM of DevOps">
+        <span class="readme-nav-mark" aria-hidden="true">GUM</span>
+        <span>The Grand Unified Model of DevOps</span>
+    </div>
+    <div class="readme-nav-actions">
+        <a class="readme-nav-action" href="../index.html">The Paper</a>
+        <a class="readme-nav-action" href="../DORA/GUT/GUT.html">Launch the GUT <span aria-hidden="true">&rarr;</span></a>
+        <a class="readme-nav-action" href="../DORA/GUT/field-guide.html">Field Guide</a>
+    </div>
+</nav>
+<main
+            class="github-markdown-body"
+            data-color-mode="auto"
+            data-light-theme="light"
+            data-dark-theme="dark"
+        >
+    <div class="github-markdown-content" id="errata-content">
+        <h1>Errata</h1>
+
+        <p>We would like to formally address the previous brief note where we had
+acknowledged that the present-day DORA model has changed to include a
+&ldquo;fifth metric&rdquo;, and that they had &ldquo;caught up&rdquo; to the GUM
+insofar as accounting for rework by naming it as a metric, a result being that
+the DORA metrics formulation is now different than the one used in
+<em>The Grand Unified Model of DevOps/SRE Dynamics</em>, but we now feel a
+retraction is in order.</p>
+
+        <p>An earlier version of this document erroneously ascribed blame to the
+author of <em>The Grand Unified Model of DevOps (GUM)</em> for the initial
+omission &mdash; and subsequent awkward handling &mdash; of the so-called
+&ldquo;fifth&rdquo; DORA metric. However, upon further review of the historical
+record, this mea culpa was entirely unwarranted. The confusion surrounding this
+metric is not a failure of the author&rsquo;s scholarship, but rather a direct
+result of the DevOps Research and Assessment (DORA) organization&rsquo;s
+prolonged ontological crisis regarding its own framework. The record must hereby
+be corrected to reflect that the author is blameless.</p>
+
+        <p>For years, the industry operated under the elegant stability of the Four
+Key Metrics: Deployment Frequency, Lead Time for Changes, Mean Time to Recovery
+(MTTR), and Change Failure Rate. This was a closed, perfectly balanced system.
+It measured the velocity and stability of software delivery with rigorous
+clarity.</p>
+
+        <p>Then, in 2018, the Accelerate State of DevOps report disrupted this
+equilibrium by introducing a fifth element: Availability. The rationale was
+plausible enough &mdash; velocity means little if the underlying system is
+offline &mdash; yet bolting a deeply operational concern onto a framework
+historically dedicated to delivery pipelines felt structurally suspect. It was a
+subtle, creeping expansion of scope, but the industry largely complied and
+adjusted its slide decks accordingly.</p>
+
+        <p>The taxonomic drift accelerated in 2019. In what appeared to be a
+convergence of academic research and corporate branding following Google&rsquo;s
+acquisition of DORA, Availability was quietly retired in favor of
+&ldquo;Reliability.&rdquo; This brought the metric conveniently into alignment
+with Google&rsquo;s own Site Reliability Engineering (SRE) nomenclature by which
+they gave a generation of &ldquo;sysadmins&rdquo; a finally respectable title
+which incorporates the word &ldquo;Reliability&rdquo;. The fifth metric had not
+only changed scope but, like the sysadmin before it, had also undergone a
+rebrand.</p>
+
+        <blockquote>
+            <p><a href="rant-wasidrunkorsomething.md">A typo-laden rant that was
+previously here has been moved to its own document</a> such that the author might
+recover from sleep-deprivation and perhaps revise it to be more suitable for
+reading.</p>
+        </blockquote>
+
+        <p>Nevertheless, once Reliability was thoroughly entrenched as the
+indisputable &ldquo;Fifth Key Metric&rdquo; across the corporate landscape, DORA
+initiated a sweeping epistemological walk-back. Beginning around 2021, subsequent
+publications began to delicately clarify that Reliability was not, strictly
+speaking, a software delivery metric at all. Instead, it was categorized as an
+operational performance metric. So the messaging subtly shifted again: the
+original four metrics measure the pipeline, while Reliability measures the
+outcome. It was no longer the fifth sibling in the metric family, but rather the
+foundational constraint against which the other four are judged. One does not
+simply measure Reliability alongside Lead Time; one achieves the former to
+justify the latter. DORA had seemingly realized that adding a fifth wheel to a
+perfectly good car does not make it a better car, so they declared the fifth
+wheel to be the road itself.</p>
+
+        <p>Within all of that greater context, any previous apologies for failing
+to accurately classify this moving target are formally retracted. Until the
+broader DevOps community and the framework&rsquo;s authors can definitively agree
+on whether this crucial Non-Functional Requirement is a metric, an operational
+outcome, a foundational constraint, or a state of mind, the author&rsquo;s initial
+adherence to the foundational four-metric model stands as an act of rigorous
+historical preservation rather than as an oversight.</p>
+
+        <footer>
+            <div class="footer-meta">
+                <span>Scott VanRavenswaay</span>
+                <a href="mailto:scottvr@paperclipmaximizer.ai">scottvr@paperclipmaximizer.ai</a>
+                <span>Errata to the GUM of DevOps</span>
+            </div>
+            <nav class="paper-links" aria-label="Project resources">
+                <a class="paper-link-primary" href="../index.html">The Paper</a>
+                <a href="../DORA/GUT/GUT.html">Launch the GUT</a>
+                <a href="../DORA/GUT/field-guide.html">Field Guide</a>
+                <a href="https://github.com/scottvr/GUM_of_Devops/" target="_blank" rel="noopener noreferrer">Repository</a>
+            </nav>
+        </footer>
+    </div>
+</main>
+</body>
+</html>

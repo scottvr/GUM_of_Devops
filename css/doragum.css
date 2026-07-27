@@ -1574,6 +1574,35 @@ body.readme-page {
   }
 }
 
+/* Standalone posts (supplementary notes, errata, and similar essays)
+   -------------------------------------------------------------------
+   A .readme-page variant with a "middle" reading measure: wider than the
+   field guide's abstract-width column (--readme-measure, 78ch) but narrower
+   than the landing page's full-card width. Justified, hyphenated body prose
+   (needs the page's lang="en") gives these a LaTeX-like feel. An abstract or
+   introductory block stays at the narrow measure by wrapping it in
+   .post-abstract.
+
+   Tuning: --readme-measure is the body line width; --post-abstract-measure
+   is the abstract line width. The card width is inherited from .readme-page
+   (960px) and is intentionally left unchanged. */
+body.readme-page.post-page {
+  --readme-measure: 90ch;            /* ~15% wider than the 78ch narrow measure */
+  --post-abstract-measure: 78ch;
+}
+
+.readme-page.post-page .github-markdown-content p {
+  text-align: justify;
+  text-wrap: pretty;
+  hyphens: auto;
+}
+
+/* Abstract / intro block keeps the narrow measure, flush-left with the body
+   so only its right edge pulls in (a shorter measure, like a LaTeX abstract). */
+.readme-page.post-page .github-markdown-content .post-abstract {
+  max-width: var(--post-abstract-measure);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .readme-page *,
   .readme-page *::before,

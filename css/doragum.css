@@ -1597,13 +1597,96 @@ body.readme-page.post-page {
   hyphens: auto;
 }
 
-/* Abstract / intro block keeps the narrow measure, flush-left with the body
-   so only its right edge pulls in (a shorter measure, like a LaTeX abstract). */
+/* Abstract / intro block keeps the narrow measure and is centered within the
+   body column, so it gets equal left/right inset relative to the section text
+   below it (like a LaTeX abstract, which is indented on both sides).
+
+   Note: --readme-measure is the content column's max-width *including* its
+   side padding, so the actual text area is already narrower than 90ch. Using
+   max-width:78ch here would exceed that text area and never apply. Instead we
+   pull the abstract in from the body text width (100%) by the difference
+   between the two measures (90ch - 78ch = 12ch) — a padding-independent delta,
+   so the abstract stays exactly that much narrower whatever the padding, split
+   evenly across both sides by the auto margins. */
 .readme-page.post-page .github-markdown-content .post-abstract {
-  max-width: var(--post-abstract-measure);
+  max-width: calc(100% - (var(--readme-measure) - var(--post-abstract-measure)));
+  margin-inline: auto;
 }
 
-@media (prefers-reduced-motion: reduce) {
+/* Title + subtitle: an H2 immediately after the leading H1 is a subheading,
+   not a new section, so group it tightly under the title instead of leaving
+   the default 3rem section gap (which the two margins otherwise collapse to).
+   Scoped to this exact pair via :has()/+, so the numbered section H2s and
+   posts that open H1 -> paragraph (e.g. the errata) keep their normal spacing. */
+.readme-page.post-page .github-markdown-content h1:first-of-type:has(+ h2) {
+  margin-bottom: 0.3rem;
+}
+
+.readme-page.post-page .github-markdown-content h1:first-of-type + h2 {
+  margin-top: 1rem;
+  /* Subtitle sizing: a step up from H3 (1.03rem), well below the section
+     H2s (clamp up to 1.75rem). Fixed rather than clamped since it's short. */
+  font-size: 1.2rem;
+}
+
+#abstract {
+  font-size: 1.2rem;
+}
+
+.abstract hr {
+  mnargin: 2em;
+}
+
+/* Inline image-on-hover — a term that is NOT a link but reveals a small image
+   when hovered or keyboard-focused (visual asides / jokes). A dotted underline
+   signals it's interactive without implying navigation. Markup:
+     <span class="img-hover" tabindex="0">term<span class="img-hover__pop">
+       <img src="..." alt="..."></span></span> */
+.readme-page .github-markdown-content .img-hover {
+  position: relative;
+  border-bottom: 1px dotted var(--accent-dim);
+  cursor: help;
+  outline: none;
+}
+
+.readme-page .github-markdown-content .img-hover:focus-visible {
+  outline: 2px solid var(--viz-handle);
+  outline-offset: 2px;
+}
+
+.readme-page .github-markdown-content .img-hover__pop {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 6px);
+  transform: translateX(-50%) translateY(4px);
+  z-index: 60;
+  padding: 5px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  box-shadow: 0 12px 28px rgba(34, 30, 39, 0.22);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.readme-page .github-markdown-content .img-hover__pop img {
+  display: block;
+  width: 240px;
+  max-width: 60vw;
+  height: auto;
+  border-radius: 3px;
+}
+
+.readme-page .github-markdown-content .img-hover:hover .img-hover__pop,
+.readme-page .github-markdown-content .img-hover:focus-within .img-hover__pop {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+  @media (prefers-reduced-motion: reduce) {
   .readme-page *,
   .readme-page *::before,
   .readme-page *::after {

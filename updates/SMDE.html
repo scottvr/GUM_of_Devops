@@ -118,7 +118,7 @@ The objection is not, however, relevant. </p>
 </ul>
 <p dir="auto">None of these changes are required, which is precisely what makes them appropriately rigorous.</p>
 <h2 dir="auto" id="3-the-re-expressed-model">3. The Re-expressed Model</h2>
-<p dir="auto">The canonical model may be re-written in the following form:</p>
+<p dir="auto">The canonical model may be rewritten in the following representationally hardened form:</p>
 $$
 \begin{aligned}
 P_{\mathrm{real}}(t)
@@ -150,7 +150,10 @@ V(\tau)DF(\tau)M(\tau)\Omega(\tau).
 $$
 <p>
 The calligraphic transformation of business value has no mathematical
-effect, but prevents the symbol from appearing insufficiently formal.  At this point, a reasonable reader may ask whether this expression is meaningfully different from the original GUM.  Indeed it is not, which permits us to proceed.</p>
+effect, but prevents the symbol from appearing insufficiently formal.  
+At this point, a reasonable reader may ask whether this expression is meaningfully different from the original GUM.  Indeed it is not, which permits us to proceed.</p>
+
+
 <h2 dir="auto" id="4-normalization-through-analytic-continuation">4. Normalization Through Analytic Continuation</h2>
 <p dir="auto">The original normalization factor is:</p>
 $$
@@ -167,8 +170,7 @@ $$
 =
 \frac{1}{Z}.
 $$
-<p dir="auto">This reformulation has two advantages: it produces the same value, and it raises the possibility that the normalization constant participates in a deeper analytic structure that has not been investigated and almost certainly does not matter. The recurrence is understood through the analytically continued Gamma function, thereby importing substantially more theory than the calculation requires.   ate
-   The normalized result is unchanged, yet its implied theoretical seriousness is improved.</p>
+<p dir="auto">This reformulation has two advantages: it produces the same value, and it raises the possibility that the normalization constant participates in a deeper analytic structure that has not been investigated and almost certainly does not matter. The recurrence is understood through the analytically continued Gamma function, thereby importing substantially more theory than the calculation requires.  The normalized result is unchanged, yet its implied theoretical seriousness is improved.</p>
 <h2 dir="auto" id="5-topological-preservation-of-unity">5. Topological Preservation of Unity</h2>
 <p dir="auto">The contour term is defined as:</p>
 $$
@@ -255,7 +257,7 @@ $$
 $$
 \left(1-CFR(\tau)\right)^{U(\tau)^2}.
 $$
-<p dir="auto">We embed the scalar urgency parameter into a vector state:</p>
+<p dir="auto">We embed the nonnegative real-valued scalar urgency parameter into a vector state:</p>
 $$
 \mathbf{U}(\tau)=U(\tau)\mathbf{e}_1.
 $$
@@ -356,7 +358,63 @@ $$
 <p dir="auto">The revised expression implies that organizational coherence is not lost all at once. Instead, it is reduced through an infinite sequence of individually negligible management decisions.  
 This is both mathematically equivalent and empirically sound.</p>
 <h2 dir="auto" id="11-result">11. Result</h2>
-<p dir="auto">After reducing each constituent expression, the re-expressed equation becomes:</p>
+<p>
+The exact reduction depends on the numerator identifications introduced in
+<a href="#3-the-re-expressed-model">Section 3</a>, together with the following remaining definitions and domain
+conditions:
+</p>
+$$
+\mathbf{U}(\tau)=U(\tau)\mathbf{e}_1,
+\qquad
+\mathbf{R}(\tau)
+=
+R(\tau)\mathbf{e}_1\mathbf{e}_1^{\mathsf T},
+$$
+<p>
+
+where \(\mathbf{e}_1\) is a unit standard basis vector in an arbitrary
+finite-dimensional state space.
+</p>
+
+<p>
+
+The corresponding domain and contour conditions are:
+</p>
+$$
+\operatorname{wind}(\gamma,0)=1, \qquad
+0\notin\gamma, \qquad
+Z>0,
+\qquad
+\epsilon>0,
+0\le CFR(\tau)<1,
+$$
+$$
+\lambda\ge 0,
+\qquad
+TDR(\tau)\ge 0,
+\qquad
+c>0.
+$$
+<p>
+All constituent functions are assumed to be defined on \([0,t]\), with
+the resulting integrand integrable over that interval and
+</p>
+
+$$
+LT(\tau)+MTTR(\tau)+\epsilon\ne 0
+\qquad
+\text{for all }\tau\in[0,t].
+$$.
+<p>
+In the inverse-transform representation, \(x\) is an auxiliary
+transform-time variable distinct from the model time \(\tau\), and the
+evaluation \(x=1\) must be retained. Under these conditions, every
+introduced object either reduces to its canonical GUM counterpart or
+contributes a multiplicative factor of exactly \(1\).
+</p>
+<p dir="auto">
+After reducing each constituent expression, the re-expressed equation becomes:
+</p>
 $$
 P_{\mathrm{real}}(t)
 =
@@ -375,8 +433,9 @@ LT(\tau)+MTTR(\tau)+\epsilon
 e^{-\lambda TDR(\tau)}
 \,d\tau
 $$
-<p dir="auto">This is the original GUM equation. The reformulation has therefore succeeded.</p>
-<p dir="auto">No behavior has changed. No predictive capability has been added. No organizational decision has become easier. The model is now substantially more difficult to challenge in a meeting.</p>
+
+<p dir="auto">This is the original GUM equation. The reformulation has therefore succeeded.  
+No behavior has changed. No predictive capability has been added. No organizational decision has become easier. The model is now substantially more difficult to challenge in a meeting.</p>
 <h2 dir="auto" id="12-discussion">12. Discussion</h2>
 <p dir="auto">The reformulated GUM demonstrates an important distinction between model complexity and model content:
 A model may become more mathematically sophisticated without becoming more informative. Indeed, under certain organizational conditions, this may be preferable.</p>

@@ -1,22 +1,85 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/default.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Different Equation, Same Model — a supplementary note on the necessary re-expression of the Grand Unified Model of DevOps.">
+<title>Different Equation, Same Model — The GUM of DevOps</title>
+<!-- KaTeX stylesheet only: the equations on this page are pre-rendered to
+     static HTML, so no KaTeX JavaScript is needed at runtime. -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markdown-it-texmath/css/texmath.min.css">
-<link rel="stylesheet" href="file:////Users/bundle-tron9k/.vscode/extensions/goessner.mdmath-2.7.4/themes/default/style.css">
+<link rel="stylesheet" href="../css/doragum.css">
+<style>
+  /* Page-specific overrides on top of the shared GUT documentation theme. */
+  .readme-page .github-markdown-content h1:first-of-type::before {
+    content: "THE GUM OF DEVOPS · SUPPLEMENTARY NOTE";
+  }
 
+  /* Equations are pre-rendered KaTeX wrapped in <section><eqn>. Give the
+     blocks breathing room, center them, and let very wide display math
+     scroll horizontally on its own instead of overflowing the page. */
+  .readme-page .github-markdown-content section {
+    margin: 1.6rem 0;
+  }
+  .readme-page .github-markdown-content .katex-display {
+    margin: 0;
+    padding: 0.35rem 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  /* Footer mirrors the landing page's: a horizontal meta / links bar driven
+     by the shared unscoped footer/.footer-meta/.paper-links rules, with the
+     content-scoped link colors restored. */
+  .readme-page .github-markdown-content footer {
+    margin-top: 3rem;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .readme-page .github-markdown-content .footer-meta a,
+  .readme-page .github-markdown-content .paper-links a {
+    color: var(--accent-dim);
+    text-decoration: none;
+  }
+
+  .readme-page .github-markdown-content .paper-links .paper-link-primary {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .readme-page .github-markdown-content .footer-meta a:hover,
+  .readme-page .github-markdown-content .paper-links a:hover {
+    color: var(--accent);
+  }
+
+  .readme-nav-actions {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 0.5rem;
+  }
+</style>
 </head>
-<body class="markdown-body">
-<div
+<body class="readme-page">
+<a class="skip-link" href="#note-content">Skip to content</a>
+<nav class="readme-nav" aria-label="Site">
+    <div class="readme-nav-brand" aria-label="The GUM of DevOps">
+        <span class="readme-nav-mark" aria-hidden="true">GUM</span>
+        <span>The Grand Unified Model of DevOps</span>
+    </div>
+    <div class="readme-nav-actions">
+        <a class="readme-nav-action" href="../index.html">The Paper</a>
+        <a class="readme-nav-action" href="../DORA/GUT/GUT.html">Launch the GUT <span aria-hidden="true">→</span></a>
+        <a class="readme-nav-action" href="../DORA/GUT/field-guide.html">Field Guide</a>
+    </div>
+</nav>
+<main
             class="github-markdown-body"
             data-color-mode="auto"
             data-light-theme="light"
             data-dark-theme="dark"
         >
-            <div class="github-markdown-content"><span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;default&quot;,&quot;lightModeTheme&quot;:&quot;default&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+            <div class="github-markdown-content" id="note-content"><span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;default&quot;,&quot;lightModeTheme&quot;:&quot;default&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
                 <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
 				<h1 dir="auto" id="different-equation-same-model">Different Equation, Same Model</h1>
 <h2 dir="auto" id="on-the-necessary-re-expression-of-the-grand-unified-model-of-devops">On the Necessary Re-expression of the Grand Unified Model of DevOps</h2>
@@ -49,10 +112,10 @@
 <p dir="auto">Under this approach, simple quantities are replaced with formally richer objects whose reduction requires knowledge of several otherwise unrelated areas of mathematics.</p>
 <p dir="auto">For example:</p>
 <ul dir="auto">
-<li dir="auto">The scalar (1) may be represented as a contour integral with winding number one.</li>
-<li dir="auto">The normalization factor (1/Z) may be represented through the Gamma-function recurrence.</li>
-<li dir="auto">The term (1-R(\tau)) may be expressed as the determinant of a rank-one perturbation of the identity.</li>
-<li dir="auto">The sum (LT(\tau)+MTTR(\tau)+\epsilon) may be expressed as the trace of a diagonal matrix whose third element is reconstructed through the Basel problem.</li>
+<li dir="auto">The scalar <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> may be represented as a contour integral with winding number one.</li>
+<li dir="auto">The normalization factor <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi mathvariant="normal">/</mi><mi>Z</mi></mrow><annotation encoding="application/x-tex">1/Z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1/</span><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span></span></span></span> may be represented through the Gamma-function recurrence.</li>
+<li dir="auto">The term <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>−</mo><mi>R</mi><mo stretchy="false">(</mo><mi>τ</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">1-R(\tau)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="mclose">)</span></span></span></span> may be expressed as the determinant of a rank-one perturbation of the identity.</li>
+<li dir="auto">The sum <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mi>T</mi><mo stretchy="false">(</mo><mi>τ</mi><mo stretchy="false">)</mo><mo>+</mo><mi>M</mi><mi>T</mi><mi>T</mi><mi>R</mi><mo stretchy="false">(</mo><mi>τ</mi><mo stretchy="false">)</mo><mo>+</mo><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">LT(\tau)+MTTR(\tau)+\epsilon</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">L</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.00773em;">MTTR</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">ϵ</span></span></span></span> may be expressed as the trace of a diagonal matrix whose third element is reconstructed through the Basel problem.</li>
 <li dir="auto">Exponential attenuation may be recovered using a Bromwich inversion integral.</li>
 <li dir="auto">An ordinary exponential may be replaced by Euler's limiting definition.</li>
 </ul>
@@ -120,7 +183,7 @@ M347 1759 V0 H263 V1759 v2400 v1759 h84z"/></svg></span></span></span><span clas
 <section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mo>∮</mo><mi>γ</mi></msub><mfrac><mrow><mi>d</mi><mi>z</mi></mrow><mrow><mn>2</mn><mi>π</mi><mi>i</mi><mi>z</mi></mrow></mfrac><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">
 \oint_{\gamma}\frac{dz}{2\pi i z}.
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.4195em;vertical-align:-1.0481em;"></span><span class="mop"><span class="mop op-symbol large-op" style="margin-right:0.4445em;position:relative;top:-0.0011em;">∮</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:-0.6106em;"><span style="top:-1.7881em;margin-left:-0.4445em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0556em;">γ</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.0481em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span><span class="mord mathnormal" style="margin-right:0.0359em;">π</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.044em;">z</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="mord mathnormal" style="margin-right:0.044em;">z</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord">.</span></span></span></span></span></eqn></section></math>
-<p dir="auto">For a positively oriented closed contour (\gamma) with winding number one around the origin,</p>
+<p dir="auto">For a positively oriented closed contour <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi></mrow><annotation encoding="application/x-tex">\gamma</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05556em;">γ</span></span></span></span> with winding number one around the origin,</p>
 <section><eqn><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mo>∮</mo><mi>γ</mi></msub><mfrac><mrow><mi>d</mi><mi>z</mi></mrow><mrow><mn>2</mn><mi>π</mi><mi>i</mi><mi>z</mi></mrow></mfrac><mo>=</mo><mn>1.</mn></mrow><annotation encoding="application/x-tex">
 \oint_{\gamma}\frac{dz}{2\pi i z}=1.
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.4195em;vertical-align:-1.0481em;"></span><span class="mop"><span class="mop op-symbol large-op" style="margin-right:0.4445em;position:relative;top:-0.0011em;">∮</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:-0.6106em;"><span style="top:-1.7881em;margin-left:-0.4445em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0556em;">γ</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.0481em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span><span class="mord mathnormal" style="margin-right:0.0359em;">π</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.044em;">z</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="mord mathnormal" style="margin-right:0.044em;">z</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1.</span></span></span></span></span></eqn></section></math>
@@ -360,7 +423,21 @@ e^{-\lambda TDR(\tau)}
 <p dir="auto">The GUM does not.</p>
 <p dir="auto">It continues to say precisely what it said before.</p>
 <p dir="auto">It now requires considerably more work to prove it.</p>
+
+        <footer>
+            <div class="footer-meta">
+                <span>Scott VanRavenswaay</span>
+                <a href="mailto:scottvr@paperclipmaximizer.ai">scottvr@paperclipmaximizer.ai</a>
+                <span>A supplementary note to the GUM of DevOps</span>
+            </div>
+            <nav class="paper-links" aria-label="Project resources">
+                <a class="paper-link-primary" href="../index.html">The Paper</a>
+                <a href="../DORA/GUT/GUT.html">Launch the GUT</a>
+                <a href="../DORA/GUT/field-guide.html">Field Guide</a>
+                <a href="https://github.com/scottvr/GUM_of_Devops/" target="_blank" rel="noopener noreferrer">Repository</a>
+            </nav>
+        </footer>
 </div>
-        </div>
+        </main>
 </body>
 </html>

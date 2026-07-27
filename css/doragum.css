@@ -1694,7 +1694,7 @@ body.readme-page.post-page {
        role="tooltip">definition…</span></span> */
 .readme-page .github-markdown-content .term-tip {
   position: relative;
-  border-bottom: 1px dotted var(--accent-dim);
+  border-bottom: 2px dotted var(--accent-dim);
   cursor: help;
   outline: none;
 }

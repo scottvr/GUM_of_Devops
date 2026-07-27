@@ -1587,8 +1587,8 @@ body.readme-page {
    is the abstract line width. The card width is inherited from .readme-page
    (960px) and is intentionally left unchanged. */
 body.readme-page.post-page {
-  --readme-measure: 90ch;            /* ~15% wider than the 78ch narrow measure */
-  --post-abstract-measure: 78ch;
+  --readme-measure: 95ch;            /* ~15% wider than the 78ch narrow measure */
+  --post-abstract-measure: 85ch;
 }
 
 .readme-page.post-page .github-markdown-content p {
@@ -1744,6 +1744,14 @@ body.readme-page.post-page {
   opacity: 1;
   visibility: visible;
   transform: translateX(-50%) translateY(0);
+}
+
+/* Live-KaTeX pages hide the content until math renders, avoiding a flash of raw
+   LaTeX source. The class is set by an inline <head> script, so it is never
+   applied when JS is disabled, and a failsafe timeout removes it if a script
+   fails to load. */
+.math-loading .github-markdown-content {
+  visibility: hidden;
 }
 
   @media (prefers-reduced-motion: reduce) {

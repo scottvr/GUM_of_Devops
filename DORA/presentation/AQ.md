@@ -1,6 +1,12 @@
 # AQ
 ### Asked Questions (with no mention of Frequency)
 
+I will try to soon update this with some of the Q&A fro the Lean Coffeee session, but since it was not recorded, I'll be going from memory. 
+
+If you are one of the folks who was able to ask a Question, please relay it to me in an Issue or Discussion and I'd love a chance to answer in writing, without so much adrenaline dump. :-)
+
+Below are questions I have answered before the presentatuon occurred.
+
 ---
 
 - *"Your slider says U=1 but the equation says 1.27?"* 

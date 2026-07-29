@@ -1,7 +1,7 @@
 Files for DORA Community presentation.
 Jul 23 2026 Lean coffee 
 
-[Presentation Slidesi and such](./presentation/)
+[Presentation Slides and such](./presentation/)
 
 
 [GUT README](https://blehg.paperclipmaximizer.ai/GUM_of_Devops/DORA/GUT/field-guide.html)   

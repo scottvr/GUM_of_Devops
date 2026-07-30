@@ -2,7 +2,7 @@ When one is *peerless*, it is difficult to obtain peer reviews.
 
 Luckily, there exists a voracious consumer of text with an ability to navigate dense and complex papers and provide surprising insight in the process. 
 
-I speak of course of the venerable LLM, which also has the useful property of not being able to refuse to read a document until it has already ingested it, and by then of course, it is too late.
+I speak of course of the venerable LLM, which also has the useful property of not being able to refuse to read a document until it has already done so, and by then of course, it is too late.
 
 In this document I have collected the analyses of ["The Grand Unified Model of Devops"](https://blehg.paperclipmaximizer.ai/images/The_Grand_Unified_Model_of_DevOps_and_SRE_Dynamics_0_3.pdf) by the  
 three major LLM chat providers: Gemini, Claude, and ChatGPT, in the order I obtained them.

@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Tokenmaxxing — a GUM supplementary note on converting an AI expense into an organizational accomplishment by treating token consumption as evidence of productive AI adoption.">
+<title>Tokenmaxxing — The GUM of DevOps</title>
+<!-- Math is authored as LaTeX (dollar-dollar for display, single-dollar for
+     inline) and rendered live by a vendored KaTeX — no CDN, no build step.
+     See the scripts just before the closing body tag. -->
+<link rel="stylesheet" href="../DORA/GUT/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../css/doragum.css">
+<script>document.documentElement.classList.add('math-loading');</script>
+<style>
+  /* Page-specific overrides on top of the shared GUT documentation theme. */
+  .readme-page .github-markdown-content h1:first-of-type::before {
+    content: "THE GUM OF DEVOPS · SUPPLEMENTARY NOTE";
+  }
+
+  /* Display math (dollar-dollar delimiters) renders to .katex-display. Give it
+     breathing room and let very wide equations scroll horizontally on their own
+     rather than overflowing the page. */
+  .readme-page .github-markdown-content .katex-display {
+    margin: 1.6rem 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  /* Size math to match the surrounding text rather than KaTeX's default 1.21em. */
+  .readme-page .github-markdown-content .katex {
+    font-size: 1.11em;
+  }
+
+  /* Fenced code blocks. The shared theme styles inline <code> but leaves
+     <pre> to the page; give the transformation/pipeline listings a bordered,
+     monospaced card that scrolls on its own rather than overflowing the
+     reading column. */
+  .readme-page .github-markdown-content pre {
+    margin: 1.4rem 0;
+    padding: 0.9rem 1.1rem;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    background: var(--surface);
+    overflow-x: auto;
+    line-height: 1.55;
+  }
+
+  /* Reset the inline-code chrome inside a block so we don't double-border. */
+  .readme-page .github-markdown-content pre code {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    font-size: 0.86em;
+  }
+
+  /* Footer mirrors the landing page's: a horizontal meta / links bar driven
+     by the shared unscoped footer/.footer-meta/.paper-links rules, with the
+     content-scoped link colors restored. */
+  .readme-page .github-markdown-content footer {
+    margin-top: 3rem;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .readme-page .github-markdown-content .footer-meta a,
+  .readme-page .github-markdown-content .paper-links a {
+    color: var(--accent-dim);
+    text-decoration: none;
+  }
+
+  .readme-page .github-markdown-content .paper-links .paper-link-primary {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .readme-page .github-markdown-content .footer-meta a:hover,
+  .readme-page .github-markdown-content .paper-links a:hover {
+    color: var(--accent);
+  }
+
+  .readme-nav-actions {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 0.5rem;
+  }
+</style>
+</head>
+<body class="readme-page post-page">
+<a class="skip-link" href="#note-content">Skip to content</a>
+<nav class="readme-nav" aria-label="Site">
+    <div class="readme-nav-brand" aria-label="The GUM of DevOps">
+        <span class="readme-nav-mark" aria-hidden="true"><a style="color: inherit; text-decoration: none;" href="https://blehg.paperclipmaximizer.ai/GUM_of_Devops/">GUM</a></span>
+        <span><a style="color: inherit; text-decoration: none;" href="https://blehg.paperclipmaximizer.ai/GUM_of_Devops/">The Grand Unified Model of DevOps</a></span>
+    </div>
+    <div class="readme-nav-actions">
+        <a class="readme-nav-action" href="../index.html">The Paper</a>
+    </div>
+</nav>
+<main
+            class="github-markdown-body"
+            data-color-mode="auto"
+            data-light-theme="light"
+            data-dark-theme="dark"
+        >
+            <div class="github-markdown-content" id="note-content">
+<h1 dir="auto" id="tokenmaxxing">Tokenmaxxing</h1>
+<h2 dir="auto" id="on-converting-an-ai-expense-into-an-organizational-accomplishment">On Converting an AI Expense into an Organizational Accomplishment</h2>
+<p dir="auto">The Grand Unified Model of DevOps/SRE Dynamics (GUM) includes a small number of organizational proxies for its latent terms. Many more, and considerably more potent, proxies were originally drafted for publication. They were omitted out of concern that publishing an extensive catalog of coercive measurement techniques might encourage organizations to use them as an extensive catalog of coercive measurement techniques.</p>
+<p dir="auto">With the development of the Grand Unified Tool (GUT), the subsequent representational hardening of GUM 1.5, and the ongoing preparation of GUM 2.0, it has become necessary to revisit the relationship among measures, metrics, indicators, KPIs, targets, and incentives.</p>
+<p dir="auto">This supplemental note provides that foundation through a case study in Tokenmaxxing: the organizational practice of treating token consumption as evidence of productive AI adoption.</p>
+<p dir="auto">The argument is simple:</p>
+<blockquote dir="auto">
+<p dir="auto">Token consumption is a metered input. Once elevated from measure to indicator, KPI, target, and incentive, it ceases to be a reliable indicator of productive AI adoption and begins actively distorting the work it was intended to improve.</p>
+</blockquote>
+<h2 dir="auto" id="1-a-brief-terminological-misadventure">1. A Brief Terminological Misadventure</h2>
+<h3 dir="auto" id="11-measure-and-metric-in-mathematics">1.1 Measure and Metric in Mathematics</h3>
+<p dir="auto">In mathematics, a measure assigns a non-negative number to measurable subsets of a set. Given a sigma-algebra $\Sigma$ over a set $X$:</p>
+$$
+\mu: \Sigma \to [0, \infty].
+$$
+<p dir="auto">It assigns zero to the empty set and is countably additive over pairwise disjoint measurable sets.</p>
+<p dir="auto">A metric defines a notion of distance between points in a set:</p>
+$$
+d: M \times M \to \mathbb{R}.
+$$
+<p dir="auto">It is non-negative, symmetric, satisfies the triangle inequality, and equals zero only when its arguments are identical.</p>
+<p dir="auto">For example, the measure of the interval $[a,b]$ is:</p>
+$$
+b-a.
+$$
+<p dir="auto">The Euclidean metric between $(a,b)$ and $(c,d)$ is:</p>
+$$
+\sqrt{(a-c)^2 + (b-d)^2}.
+$$
+<h3 dir="auto" id="12-organizational-use">1.2 Organizational Use</h3>
+<p dir="auto">What does this distinction have to do with production dashboards, DORA delivery metrics, or organizational KPIs?</p>
+<p dir="auto">Absolutely nothing.</p>
+<p dir="auto">The formal mathematical distinction is not the distinction ordinarily intended by management dashboards. The reuse of mathematical terminology in organizational measurement is another mild symptom of the science envy endemic to the field.</p>
+<p dir="auto">For present purposes:</p>
+<ul dir="auto">
+<li dir="auto"><strong>A measure</strong> is a direct observation or count: a raw value.</li>
+<li dir="auto"><strong>A metric</strong> is a measure, or combination of measures, interpreted for some purpose: a raw value with context.</li>
+<li dir="auto"><strong>An indicator</strong> is a metric interpreted as evidence of a broader condition.</li>
+<li dir="auto"><strong>A KPI</strong> is an indicator granted institutional importance because it is believed to represent progress toward an objective.</li>
+<li dir="auto"><strong>A target</strong> is a desired value, threshold, direction, or ranking assigned to the KPI.</li>
+<li dir="auto"><strong>An incentive</strong> attaches consequences to reaching, missing, or appearing to reach the target.</li>
+</ul>
+<p dir="auto">The terminology is not used consistently. Dashboards commonly call every number a metric, including raw counts. An OKR may incorporate one or more KPIs as evidence that progress has been made toward an objective. This does not make the evidence valid. It makes the evidence official.</p>
+<p dir="auto">The organizational transformation can be summarized as:</p>
+<pre><code>observation
+    -&gt; interpretation
+    -&gt; inference
+    -&gt; institutional importance
+    -&gt; prescription
+    -&gt; consequence
+</code></pre>
+<p dir="auto">Or, in the terminology used here:</p>
+<pre><code>measure
+    -&gt; metric
+    -&gt; indicator
+    -&gt; KPI
+    -&gt; target
+    -&gt; incentive
+</code></pre>
+<p dir="auto">Each transition adds meaning or force that was not present in the original observation.</p>
+<p dir="auto">For example:</p>
+<p dir="auto"><strong>Measure:</strong></p>
+<pre><code>8 failed changes
+</code></pre>
+<p dir="auto"><strong>Metric:</strong></p>
+<pre><code>8 failed changes / 96 total changes = 8.3% change failure rate
+</code></pre>
+<p dir="auto"><strong>Indicator:</strong></p>
+<pre><code>change failure rate is interpreted as evidence of delivery quality
+</code></pre>
+<p dir="auto"><strong>KPI:</strong></p>
+<pre><code>change failure rate is reviewed as an organizational performance indicator
+</code></pre>
+<p dir="auto"><strong>Target:</strong></p>
+<pre><code>change failure rate &lt;= 10%
+</code></pre>
+<p dir="auto"><strong>Incentive:</strong></p>
+<pre><code>rankings, compensation, status, or executive scrutiny depend on the target
+</code></pre>
+<p dir="auto">The measure reports an observation. The metric places it in context. The indicator assigns broader meaning. The KPI makes that meaning institutionally important. The target prescribes the desired result. The incentive gives the prescription operational force.</p>
+<h2 dir="auto" id="2-relevance-to-gum">2. Relevance to GUM</h2>
+<p dir="auto">A taxonomy of organizational measurement would not, by itself, justify a GUM Supplemental Note.</p>
+<p dir="auto">The important point is that incompetence, dishonesty, and malice are not required for accepted measurement practices to produce catastrophe. Once an observable proxy is made consequential, participants can rationally optimize it while degrading the condition it was intended to represent.</p>
+<p dir="auto">A team held below a change-failure-rate target may respond by:</p>
+<ul dir="auto">
+<li dir="auto">Reclassifying failed changes.</li>
+<li dir="auto">Redefining what constitutes a deployment.</li>
+<li dir="auto">Delaying the declaration of failure.</li>
+<li dir="auto">Excluding selected services or change classes.</li>
+<li dir="auto">Transferring high-risk work outside the measured boundary.</li>
+<li dir="auto">Avoiding changes likely to damage the reported rate.</li>
+<li dir="auto">Negotiating the numerator.</li>
+<li dir="auto">Negotiating the denominator.</li>
+</ul>
+<p dir="auto">At no stage is irrationality required. The organization communicates its objective in prose but implements it through incentives. Participants may understand the intended objective perfectly while still adapting rationally to the specification that carries operational force.</p>
+<h2 dir="auto" id="3-case-study-tokenmaxxing">3. Case Study: Tokenmaxxing</h2>
+<h3 dir="auto" id="31-observation">3.1 Observation</h3>
+<p dir="auto">An employee or agent sends requests to an AI model.</p>
+<p dir="auto">Those requests consume input tokens, output tokens, cached tokens, and sometimes reasoning tokens.</p>
+<h3 dir="auto" id="32-measures">3.2 Measures</h3>
+<p dir="auto">The organization can directly observe:</p>
+<ul dir="auto">
+<li dir="auto">Input tokens consumed.</li>
+<li dir="auto">Output tokens generated.</li>
+<li dir="auto">Reasoning tokens consumed.</li>
+<li dir="auto">Number of model calls.</li>
+<li dir="auto">Number of agent sessions.</li>
+<li dir="auto">Dollar cost.</li>
+<li dir="auto">Runtime.</li>
+</ul>
+<p dir="auto">These are direct observations of resource consumption. They answer:</p>
+<blockquote dir="auto">
+<p dir="auto">What resources were consumed by this workload?</p>
+</blockquote>
+<p dir="auto">They do not answer:</p>
+<blockquote dir="auto">
+<p dir="auto">What useful result did this workload produce?</p>
+</blockquote>
+<h3 dir="auto" id="33-metrics">3.3 Metrics</h3>
+<p dir="auto">The organization begins deriving comparative values:</p>
+<ul dir="auto">
+<li dir="auto">Tokens per employee.</li>
+<li dir="auto">Tokens per day.</li>
+<li dir="auto">Tokens per coding session.</li>
+<li dir="auto">Tokens per pull request.</li>
+<li dir="auto">AI sessions per engineer.</li>
+<li dir="auto">Percentage of employees using AI weekly.</li>
+<li dir="auto">AI expenditure per team.</li>
+</ul>
+<p dir="auto">Some derived values may become legitimate operational metrics:</p>
+<ul dir="auto">
+<li dir="auto">Tokens per completed task.</li>
+<li dir="auto">Cost per accepted change.</li>
+<li dir="auto">Tokens per resolved incident.</li>
+<li dir="auto">Tokens per successful experiment.</li>
+<li dir="auto">Inference cost per validated outcome.</li>
+</ul>
+<p dir="auto">These may help compare models, tools, prompts, languages, workflows, or task classes. Their usefulness depends on whether the numerator describes a meaningful and consistently evaluated result.</p>
+<h3 dir="auto" id="34-indicator">3.4 Indicator</h3>
+<p dir="auto">Then comes the first unearned inferential step:</p>
+<blockquote dir="auto">
+<p dir="auto">High token use indicates extensive AI adoption.</p>
+</blockquote>
+<p dir="auto">Zero recorded consumption strongly suggests an absence of activity within the measured system. High consumption establishes that activity occurred. It does not establish that the activity was useful.</p>
+<p dir="auto">The inference is already lossy:</p>
+<pre><code>token consumption ~= AI activity
+</code></pre>
+<p dir="auto">It does not follow that:</p>
+<pre><code>token consumption = useful AI-assisted work
+</code></pre>
+<p dir="auto">Token consumption alone cannot distinguish among:</p>
+<ul dir="auto">
+<li dir="auto">Useful exploration.</li>
+<li dir="auto">Repeated failed attempts.</li>
+<li dir="auto">Needlessly large context.</li>
+<li dir="auto">Poorly configured agents.</li>
+<li dir="auto">Redundant parallel work.</li>
+<li dir="auto">Generated code later discarded.</li>
+<li dir="auto">Genuine high-value automation.</li>
+<li dir="auto">Deliberate inflation of usage.</li>
+</ul>
+<p dir="auto">The same observed token count may arise from any of these causes.</p>
+<h3 dir="auto" id="35-kpi">3.5 KPI</h3>
+<p dir="auto">Management now elevates the indicator to a KPI:</p>
+<blockquote dir="auto">
+<p dir="auto">KPI: AI token consumption per employee.</p>
+</blockquote>
+<p dir="auto">The stated objective may be reasonable:</p>
+<blockquote dir="auto">
+<p dir="auto">Objective: accelerate productive organizational AI adoption.</p>
+</blockquote>
+<p dir="auto">But the selected proxy describes <strong>input consumption</strong>, not adoption quality.</p>
+<p dir="auto">The assumed causal chain is:</p>
+<pre><code>more tokens
+    -&gt; more AI use
+    -&gt; greater AI fluency
+    -&gt; more work produced
+    -&gt; greater business value
+</code></pre>
+<p dir="auto">Each arrow requires evidence.</p>
+<p dir="auto">A green dashboard does not provide evidence.</p>
+<h3 dir="auto" id="36-target">3.6 Target</h3>
+<p dir="auto">The indicator becomes normative:</p>
+<ul dir="auto">
+<li dir="auto">Employees should increase token usage.</li>
+<li dir="auto">Teams should rank highly on AI consumption.</li>
+<li dir="auto">Managers should encourage maximum utilization.</li>
+</ul>
+<p dir="auto">At this stage, the organization has converted a <strong>cost-bearing input</strong> into a desired <strong>output</strong>.</p>
+<p dir="auto">This is unusually perverse because resource consumption is ordinarily minimized subject to achieving a result. CPU time, cloud spend, bandwidth, storage, operations, and labor hours are treated as costs incurred in production.</p>
+<p dir="auto">The organization has therefore selected a metered expense and declared its maximization to be evidence of progress.</p>
+<h3 dir="auto" id="37-incentive">3.7 Incentive</h3>
+<p dir="auto">Leaderboards, recognition, management attention, performance discussions, or cultural status attach consequences to the number.</p>
+<p dir="auto">Employees now correctly infer:</p>
+<ul dir="auto">
+<li dir="auto">The organization says it values useful AI adoption.</li>
+<li dir="auto">The organization can observe token consumption.</li>
+<li dir="auto">Token consumption appears on the dashboard.</li>
+<li dir="auto">Therefore, token consumption is what the organization can reward.</li>
+</ul>
+<p dir="auto">This is a rational adaptation to the observable reward function.</p>
+<h3 dir="auto" id="38-gaming-and-behavioral-adaptation">3.8 Gaming and Behavioral Adaptation</h3>
+<p dir="auto">The implemented reward function admits several predictable adaptations:</p>
+<ul dir="auto">
+<li dir="auto">Use larger models than necessary.</li>
+<li dir="auto">Include oversized context windows.</li>
+<li dir="auto">Run more agents in parallel.</li>
+<li dir="auto">Request verbose output.</li>
+<li dir="auto">Avoid caching or context reuse.</li>
+<li dir="auto">Re-run satisfactory work.</li>
+<li dir="auto">Delegate trivial operations to an agent.</li>
+<li dir="auto">Generate many alternatives that nobody reviews.</li>
+<li dir="auto">Leave loops running longer.</li>
+<li dir="auto">Prefer workflows that expose metered usage.</li>
+<li dir="auto">Avoid efficient local or deterministic tools.</li>
+</ul>
+<p dir="auto">A conventional command may complete the work quickly and earn no visible AI-usage credit. An agent may complete the same work less efficiently while incrementing the favored counter.</p>
+<p dir="auto">No dishonesty is required. Employees need only reorganize their work sincerely around what management visibly rewards.</p>
+<h3 dir="auto" id="39-the-goodhart-failure">3.9 The Goodhart Failure</h3>
+<p dir="auto">The measured quantity now loses value as an indicator of meaningful AI adoption.</p>
+<p dir="auto">The organization can no longer tell whether increased consumption reflects productive adoption because it has itself created alternative causes for the increase.</p>
+<p dir="auto">The original inference was:</p>
+<blockquote dir="auto">
+<p dir="auto">High token consumption may suggest substantial AI activity.</p>
+</blockquote>
+<p dir="auto">After incentives are introduced, the inference becomes:</p>
+<blockquote dir="auto">
+<p dir="auto">High token consumption may suggest substantial AI activity, metric optimization, inefficiency, poor tooling, or some combination of the four.</p>
+</blockquote>
+<p dir="auto">The organization has entered Goodhart territory.</p>
+<p dir="auto">The proxy is no longer merely imperfect. It has become endogenous to the reward system built around it.</p>
+<h3 dir="auto" id="310-the-campbell-failure">3.10 The Campbell Failure</h3>
+<p dir="auto">Campbell's Law takes the argument beyond degradation of the indicator.</p>
+<p dir="auto">Pressure on the measure corrupts the process being monitored:</p>
+<ul dir="auto">
+<li dir="auto">Engineering choices become less efficient.</li>
+<li dir="auto">Model and tool selection becomes distorted.</li>
+<li dir="auto">Costs rise independently of value.</li>
+<li dir="auto">Employees learn performative rather than effective AI use.</li>
+<li dir="auto">Useful non-AI tools are displaced.</li>
+<li dir="auto">Security and intellectual-property exposure may increase.</li>
+<li dir="auto">Management receives increasingly misleading adoption data.</li>
+<li dir="auto">Genuine skeptics and careful users may appear unproductive.</li>
+</ul>
+<p dir="auto">The attempt to govern AI adoption through token counts degrades both the count and the adoption process itself.</p>
+<h3 dir="auto" id="311-the-complete-transformation">3.11 The Complete Transformation</h3>
+<p dir="auto"><strong>Objective:</strong></p>
+<p dir="auto">Improve productive organizational use of AI.</p>
+<p dir="auto"><strong>Measure:</strong></p>
+<p dir="auto">Tokens consumed.</p>
+<p dir="auto"><strong>Metric:</strong></p>
+<p dir="auto">Tokens consumed per employee or team.</p>
+<p dir="auto"><strong>Indicator:</strong></p>
+<p dir="auto">High consumption is interpreted as high AI adoption.</p>
+<p dir="auto"><strong>KPI:</strong></p>
+<p dir="auto">Employee or team token usage appears on management dashboards.</p>
+<p dir="auto"><strong>Target:</strong></p>
+<p dir="auto">Employees are encouraged or expected to maximize consumption.</p>
+<p dir="auto"><strong>Incentive:</strong></p>
+<p dir="auto">Rankings, recognition, status, or performance consequences.</p>
+<p dir="auto"><strong>Adaptation:</strong></p>
+<p dir="auto">Users select token-intensive behavior regardless of marginal value.</p>
+<p dir="auto"><strong>Goodhart effect:</strong></p>
+<p dir="auto">Token consumption ceases to reliably indicate useful AI adoption.</p>
+<p dir="auto"><strong>Campbell effect:</strong></p>
+<p dir="auto">Work practices, costs, tool choices, reporting, and organizational learning are corrupted by pressure to raise the indicator.</p>
+<p dir="auto"><strong>Observed dashboard result:</strong></p>
+<p dir="auto">AI adoption rises dramatically.</p>
+<p dir="auto"><strong>Possible underlying reality:</strong></p>
+<p dir="auto">The organization has become better at consuming AI, not necessarily better at producing anything.</p>
+<h2 dir="auto" id="4-tokens-belong-in-the-denominator">4. Tokens Belong in the Denominator</h2>
+<p dir="auto">The particularly elegant absurdity is that token consumption is not even a defective approximation of output in the same way that lines of code might be. It is primarily a metered input and therefore an exceptionally poor output metric.</p>
+<p dir="auto">By the same reasoning, CPU utilization would measure developer productivity and fuel consumption would measure driver effectiveness.</p>
+<p dir="auto">Both resources may be necessary.</p>
+<p dir="auto">Neither resource is the product.</p>
+<p dir="auto">Tokens belong in the denominator:</p>
+<pre><code>completed useful outcomes / token cost
+accepted changes / token cost
+validated defects removed / token cost
+time saved / token cost
+business value produced / inference cost
+</code></pre>
+<p dir="auto">Even these ratios require care. &quot;Useful outcome,&quot; &quot;accepted change,&quot; &quot;validated defect,&quot; &quot;time saved,&quot; and &quot;business value&quot; are not self-validating terms. They require definitions, controls, and evidence.</p>
+<p dir="auto">Still, these formulations preserve the correct direction of concern: produce a useful result while treating token consumption as a cost, constraint, or optimization variable.</p>
+<p dir="auto"><strong>Token consumption is a metered input. Its consumption is not the product.</strong></p>
+<h2 dir="auto" id="conclusion">Conclusion</h2>
+<p dir="auto">Token consumption is a useful measure of token consumption.</p>
+<p dir="auto">It may support cost accounting, capacity planning, model comparison, anomaly detection, and the evaluation of particular workflows. It may also provide weak evidence that some form of AI activity occurred. None of these properties makes it a measure of productive AI adoption, engineering effectiveness, employee fluency, or business value.</p>
+<p dir="auto">The failure begins when the organization moves carelessly from observation to interpretation:</p>
+<pre><code>tokens were consumed
+    -&gt; AI was used
+    -&gt; useful work occurred
+    -&gt; capability improved
+    -&gt; value was produced
+</code></pre>
+<p dir="auto">Each arrow introduces an inference that must be demonstrated rather than decorated with a dashboard.</p>
+<p dir="auto">Once token consumption becomes a KPI, target, or source of status, the organization creates additional reasons for tokens to be consumed. The resulting increase can no longer be attributed confidently to useful adoption because management has deliberately introduced metric optimization as a competing cause.</p>
+<p dir="auto">This is not principally a story about dishonest employees, foolish managers, or defective AI tools. It is a routine GUM-compatible interaction among proxies, incentives, local optimization, and incomplete observability. Participants may behave sincerely and rationally throughout while collectively producing an expensive simulation of progress.</p>
+<p dir="auto">Tokens are an input to AI-assisted work. Their consumption may be necessary, excessive, efficient, wasteful, productive, or performative. The count alone cannot distinguish among these states.</p>
+<p dir="auto">Organizations wishing to improve AI-enabled work should evaluate useful outcomes subject to token cost rather than treating token cost itself as the outcome. Tokens belong in the denominator, the budget, or the diagnostic telemetry.</p>
+<p dir="auto">They do not belong on the victory banner.</p>
+<p dir="auto">The organization that rewards token consumption will become very good at consuming tokens.</p>
+<p dir="auto">This result should not be confused with becoming good at anything else.</p>
+
+        <footer>
+            <div class="footer-meta">
+                <span>Scott VanRavenswaay</span>
+                <a href="mailto:scottvr@paperclipmaximizer.ai">scottvr@paperclipmaximizer.ai</a>
+                <span>A supplementary note to the GUM of DevOps</span>
+            </div>
+            <nav class="paper-links" aria-label="Project resources">
+                <a class="paper-link-primary" href="../index.html">Paper</a>
+                <a href="../DORA/GUT/GUT.html">Tool</a>
+                <a href="https://github.com/scottvr/GUM_of_Devops/" target="_blank" rel="noopener noreferrer">Repository</a>
+            </nav>
+        </footer>
+</div>
+        </main>
+<!-- Vendored KaTeX (0.16.11) + auto-render: turns the LaTeX in the content
+     into math in the browser. No CDN dependency; fonts load from ../DORA/GUT/
+     vendor/katex/fonts via the stylesheet above. -->
+<script defer src="../DORA/GUT/vendor/katex/katex.min.js"></script>
+<script defer src="../DORA/GUT/vendor/katex/contrib/auto-render.min.js"></script>
+<script>
+  (function () {
+    function reveal() { document.documentElement.classList.remove('math-loading'); }
+    document.addEventListener('DOMContentLoaded', function () {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.getElementById('note-content'), {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false },
+            { left: '\\(', right: '\\)', display: false }
+          ],
+          throwOnError: false
+        });
+      }
+      reveal();
+    });
+    // Failsafe: never leave the content hidden if a script fails to load.
+    setTimeout(reveal, 2000);
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The Organizational Parser and Notorious B.I.G. — a case study framing the drift from outcome-seeking to metric manipulation as a parsing and compilation problem.">
+<title>The Organizational Parser and Notorious B.I.G. — The GUM of DevOps</title>
+<link rel="stylesheet" href="../css/doragum.css">
+<style>
+  /* Page-specific overrides on top of the shared GUT documentation theme. */
+  .readme-page .github-markdown-content h1:first-of-type::before {
+    content: "THE GUM OF DEVOPS · CASE STUDY";
+  }
+
+  /* Fenced code blocks. The shared theme styles inline <code> but leaves
+     <pre> to the page; give the compilation-stage listings a bordered,
+     monospaced card that reads as a terminal/AST dump and scrolls on its own
+     rather than overflowing the reading column. */
+  .readme-page .github-markdown-content pre {
+    margin: 1.4rem 0;
+    padding: 0.9rem 1.1rem;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    background: var(--surface);
+    overflow-x: auto;
+    line-height: 1.55;
+  }
+
+  /* Reset the inline-code chrome inside a block so we don't double-border. */
+  .readme-page .github-markdown-content pre code {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    font-size: 0.86em;
+  }
+
+  /* Footer mirrors the landing page's: a horizontal meta / links bar driven
+     by the shared unscoped footer/.footer-meta/.paper-links rules, with the
+     content-scoped link colors restored. */
+  .readme-page .github-markdown-content footer {
+    margin-top: 3rem;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .readme-page .github-markdown-content .footer-meta a,
+  .readme-page .github-markdown-content .paper-links a {
+    color: var(--accent-dim);
+    text-decoration: none;
+  }
+
+  .readme-page .github-markdown-content .paper-links .paper-link-primary {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .readme-page .github-markdown-content .footer-meta a:hover,
+  .readme-page .github-markdown-content .paper-links a:hover {
+    color: var(--accent);
+  }
+
+  .readme-nav-actions {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 0.5rem;
+  }
+</style>
+</head>
+<body class="readme-page post-page">
+<a class="skip-link" href="#note-content">Skip to content</a>
+<nav class="readme-nav" aria-label="Site">
+    <div class="readme-nav-brand" aria-label="The GUM of DevOps">
+        <span class="readme-nav-mark" aria-hidden="true"><a style="color: inherit; text-decoration: none;" href="https://blehg.paperclipmaximizer.ai/GUM_of_Devops/">GUM</a></span>
+        <span><a style="color: inherit; text-decoration: none;" href="https://blehg.paperclipmaximizer.ai/GUM_of_Devops/">The Grand Unified Model of DevOps</a></span>
+    </div>
+    <div class="readme-nav-actions">
+        <a class="readme-nav-action" href="../index.html">The Paper</a>
+    </div>
+</nav>
+<main
+            class="github-markdown-body"
+            data-color-mode="auto"
+            data-light-theme="light"
+            data-dark-theme="dark"
+        >
+            <div class="github-markdown-content" id="note-content">
+<h1 dir="auto" id="the-organizational-parser-and-notorious-big">The Organizational Parser and Notorious B.I.G.</h1>
+<h2 dir="auto" id="case-study-from-metrics-to-grammar">Case Study: From Metrics to Grammar</h2>
+<p dir="auto">The organizational transition from outcome-seeking to metric manipulation can be framed as a parsing problem before it is framed as malice, stupidity, or incompetence.</p>
+<p dir="auto">Consider the notional directive:</p>
+<blockquote dir="auto">
+<p dir="auto">Transform the numbers, achieve the goal.</p>
+</blockquote>
+<p dir="auto">The sentence is paratactic: two imperative clauses are placed beside one another without an explicit statement of their logical relationship. It does not specify whether the actions are independent, sequential, instrumental, or causally related.</p>
+<p dir="auto">The organization can therefore enter a failure mode not because anyone deliberately rejects the intended objective, but because different parts of the organization resolve the same grammatical ambiguity in different ways.</p>
+<h3 dir="auto" id="the-biggie-smalls-grammar-construction">The Biggie Smalls Grammar Construction</h3>
+<p dir="auto">The possible logical relationships between the clauses become clearer when expressed through a more familiar grammatical framework, that of the 1995 classic hit song from The Notorious B.I.G. with Junior M.A.F.I.A. (featuring Lil' Kim) - "Get Money". </p>
+<h4 dir="auto" id="coordination">Coordination</h4>
+<blockquote dir="auto">
+<p dir="auto">Fuck bitches and get money.</p>
+</blockquote>
+<p dir="auto">Or:</p>
+<blockquote dir="auto">
+<p dir="auto">Transform the numbers and achieve the goal.</p>
+</blockquote>
+<p dir="auto">These constructions contain coordinated imperative clauses.</p>
+<ul dir="auto">
+<li dir="auto">The understood subject is <em>you</em>.</li>
+<li dir="auto">The two actions are grammatical siblings.</li>
+<li dir="auto">Neither action is explicitly identified as the means or purpose of the other.</li>
+<li dir="auto">Reversing their order does not substantially change their grammatical relationship, although it may change emphasis or imply a different sequence.</li>
+</ul>
+<blockquote dir="auto">
+<p dir="auto">Achieve the goal and transform the numbers.</p>
+</blockquote>
+<p dir="auto">Or:</p>
+<blockquote dir="auto">
+<p dir="auto">Get money and fuck bitches.</p>
+</blockquote>
+<p dir="auto">The organization is instructed to perform both actions, but the sentence does not explain how they are related.</p>
+<h4 dir="auto" id="purpose-infinitive">Purpose Infinitive</h4>
+<blockquote dir="auto">
+<p dir="auto">Fuck bitches to get money.</p>
+</blockquote>
+<p dir="auto">Or:</p>
+<blockquote dir="auto">
+<p dir="auto">Transform the numbers to achieve the goal.</p>
+</blockquote>
+<p dir="auto">Here, <em>to</em> is not a preposition. It is the infinitival marker introducing a purpose clause.</p>
+<p dir="auto">The construction defines a means-end relationship:</p>
+<ul dir="auto">
+<li dir="auto">The first action is the means.</li>
+<li dir="auto">The second action is the intended result.</li>
+</ul>
+<p dir="auto">Reversing the clauses changes the relationship:</p>
+<blockquote dir="auto">
+<p dir="auto">Achieve the goal to transform the numbers.</p>
+</blockquote>
+<p dir="auto">Or:</p>
+<blockquote dir="auto">
+<p dir="auto">Get money to fuck bitches.</p>
+</blockquote>
+<p dir="auto">The actions remain the same, but their organizational purpose has been inverted.</p>
+<h4 dir="auto" id="method-expressed-with-by">Method Expressed With <em>By</em></h4>
+<blockquote dir="auto">
+<p dir="auto">Achieve the goal by transforming the numbers.</p>
+</blockquote>
+<p dir="auto">Here, <em>by</em> is the preposition. Its complement is the gerund-participial clause:</p>
+<blockquote dir="auto">
+<p dir="auto">transforming the numbers</p>
+</blockquote>
+<p dir="auto">This construction explicitly identifies numerical transformation as the method by which the goal is achieved.</p>
+<p dir="auto">It removes much of the grammatical ambiguity while preserving a more consequential semantic ambiguity: what does <em>transforming the numbers</em> mean?</p>
+<p dir="auto">It may mean:</p>
+<blockquote dir="auto">
+<p dir="auto">Change the underlying system so that the numbers improve.</p>
+</blockquote>
+<p dir="auto">Or:</p>
+<blockquote dir="auto">
+<p dir="auto">Change the reported numbers.</p>
+</blockquote>
+<p dir="auto">The grammar identifies the method. It does not guarantee that the method has been interpreted correctly.</p>
+<h2 dir="auto" id="the-organizational-parser">The Organizational Parser</h2>
+<p dir="auto">An organization can be treated as possessing naturally emergent equivalents of a compiler pipeline.</p>
+<p dir="auto">No individual needs to perform the complete transformation. Different organizational layers perform different stages of compilation:</p>
+<ul dir="auto">
+<li dir="auto"><strong>Executive layer:</strong> Emits the source directive.</li>
+<li dir="auto"><strong>Management layer:</strong> Selects or implies an interpretation.</li>
+<li dir="auto"><strong>Measurement layer:</strong> Defines the observable variables.</li>
+<li dir="auto"><strong>Dashboard layer:</strong> Formalizes the visible acceptance criteria.</li>
+<li dir="auto"><strong>Performance system:</strong> Attaches consequences to those criteria.</li>
+<li dir="auto"><strong>Practitioners:</strong> Execute against the implemented reward function.</li>
+<li dir="auto"><strong>Telemetry system:</strong> Reports the resulting output.</li>
+</ul>
+<p dir="auto">Collectively, the organization behaves as though it contains:</p>
+<ul dir="auto">
+<li dir="auto">A distributed grammar parser</li>
+<li dir="auto">A semantic interpreter</li>
+<li dir="auto">An incentive resolver</li>
+<li dir="auto">An optimizer</li>
+<li dir="auto">An execution engine</li>
+<li dir="auto">A telemetry system</li>
+</ul>
+<h3 dir="auto" id="example-compilation-pipeline">Example Compilation Pipeline</h3>
+<h4 dir="auto" id="source-instruction">Source Instruction</h4>
+<blockquote dir="auto">
+<p dir="auto">Transform the numbers, achieve the goal.</p>
+</blockquote>
+<h4 dir="auto" id="lexing">Lexing</h4>
+<p dir="auto">Identify two actionable units:</p>
+<pre><code>transform the numbers
+achieve the goal
+</code></pre>
+<h4 dir="auto" id="parsing">Parsing</h4>
+<p dir="auto">Determine the logical relationship between the units:</p>
+<pre><code>A and B
+A in order to B
+B by means of A
+A; therefore B
+</code></pre>
+<h4 dir="auto" id="semantic-interpretation">Semantic Interpretation</h4>
+<p dir="auto">Resolve the meanings of the principal terms:</p>
+<pre><code>transform
+numbers
+achieve
+goal
+</code></pre>
+<p dir="auto">At this stage, the organization must decide whether <em>numbers</em> refers to measurements of the system or to administrative values that can be modified independently of the system.</p>
+<h4 dir="auto" id="incentive-resolution">Incentive Resolution</h4>
+<p dir="auto">Determine which interpretation is actually rewarded.</p>
+<p dir="auto">The formal objective may remain ambiguous, but the implemented reward function usually is not. Compensation, promotion, scrutiny, and organizational status clarify which interpretation has operational force.</p>
+<h4 dir="auto" id="execution">Execution</h4>
+<p dir="auto">Practitioners adapt their behavior to the implemented specification.</p>
+<h4 dir="auto" id="telemetry">Telemetry</h4>
+<p dir="auto">The system reports successful transformation of the numbers.</p>
+<p dir="auto">Whether the underlying goal was achieved becomes a separate question, assuming anyone continues to ask it.</p>
+<h2 dir="auto" id="organizational-parser-failure">Organizational Parser Failure</h2>
+<p dir="auto">Organizational parser failure does not require a single dramatic mistranslation. It can emerge through several individually plausible transformations.</p>
+<h3 dir="auto" id="ambiguous-source-specification">Ambiguous Source Specification</h3>
+<p dir="auto">The executive directive is already underspecified:</p>
+<blockquote dir="auto">
+<p dir="auto">Transform the numbers, achieve the goal.</p>
+</blockquote>
+<p dir="auto">The grammatical relationship between the two imperatives is unstated.</p>
+<h3 dir="auto" id="parse-failure">Parse Failure</h3>
+<p dir="auto">Coordination is reinterpreted as purpose or method:</p>
+<blockquote dir="auto">
+<p dir="auto">Transform the numbers and achieve the goal.</p>
+</blockquote>
+<p dir="auto">Becomes:</p>
+<blockquote dir="auto">
+<p dir="auto">Transform the numbers to achieve the goal.</p>
+</blockquote>
+<p dir="auto">Which becomes:</p>
+<blockquote dir="auto">
+<p dir="auto">Achieve the goal by transforming the numbers.</p>
+</blockquote>
+<p dir="auto">Each sentence contains approximately the same vocabulary. Each expresses a substantially different operational instruction.</p>
+<h3 dir="auto" id="semantic-failure">Semantic Failure</h3>
+<p dir="auto">The phrase:</p>
+<blockquote dir="auto">
+<p dir="auto">Transform the numbers.</p>
+</blockquote>
+<p dir="auto">Is interpreted as:</p>
+<blockquote dir="auto">
+<p dir="auto">Modify the reported values.</p>
+</blockquote>
+<p dir="auto">Rather than:</p>
+<blockquote dir="auto">
+<p dir="auto">Change the underlying system represented by the values.</p>
+</blockquote>
+<p dir="auto">The grammatical parse may now be internally consistent while the semantic interpretation is catastrophically wrong.</p>
+<h3 dir="auto" id="proxy-substitution">Proxy Substitution</h3>
+<p dir="auto">The measurable representation of the goal becomes accepted as the goal itself.</p>
+<blockquote dir="auto">
+<p dir="auto">Improve the numbers.</p>
+</blockquote>
+<p dir="auto">Becomes operationally equivalent to:</p>
+<blockquote dir="auto">
+<p dir="auto">Achieve the outcome.</p>
+</blockquote>
+<p dir="auto">The proxy no longer serves as evidence of success. It becomes the definition of success.</p>
+<h3 dir="auto" id="dead-code-elimination">Dead-Code Elimination</h3>
+<p dir="auto">Once transformed numbers are accepted as proof that the goal has been achieved, the explicit goal becomes redundant.</p>
+<p dir="auto">The original instruction:</p>
+<blockquote dir="auto">
+<p dir="auto">Transform the numbers, achieve the goal.</p>
+</blockquote>
+<p dir="auto">Reduces to:</p>
+<blockquote dir="auto">
+<p dir="auto">Transform the numbers.</p>
+</blockquote>
+<p dir="auto">This is the Goodhart event expressed as compiler optimization.</p>
+<p dir="auto">The organization has not necessarily abandoned the goal in rhetoric. It has merely removed the goal from executable behavior.</p>
+<h2 dir="auto" id="optimization">Optimization</h2>
+<p dir="auto">Optimization is an ideal recurring force because it can remain technically correct throughout the catastrophe.</p>
+<p dir="auto">It enters the process and asks:</p>
+<blockquote dir="auto">
+<p dir="auto">Which interpretation has the cheapest verifiable completion condition?</p>
+</blockquote>
+<p dir="auto">The underlying outcome may be difficult to observe, causally complex, delayed, or contested. The proxy is visible, immediate, and already displayed in a sufficiently authoritative font.</p>
+<p dir="auto">Optimization therefore favors the proxy.</p>
+<h3 dir="auto" id="premature-optimization">Premature Optimization</h3>
+<p dir="auto">Optimization begins before anyone establishes whether the proxy reliably represents the goal.</p>
+<p dir="auto">The organization has not validated the indicator, but it has already begun restructuring behavior around it.</p>
+<h3 dir="auto" id="local-optimization">Local Optimization</h3>
+<p dir="auto">A component improves its own measured performance while degrading the larger system.</p>
+<p dir="auto">For example, a team's change failure rate may improve because the team:</p>
+<ul dir="auto">
+<li dir="auto">Deploys less frequently</li>
+<li dir="auto">Bundles more changes into each deployment</li>
+<li dir="auto">Reclassifies failures</li>
+<li dir="auto">Transfers risk to another team</li>
+<li dir="auto">Excludes inconvenient events from the measurement boundary</li>
+</ul>
+<p dir="auto">The metric improves locally even if organizational performance worsens globally.</p>
+<h3 dir="auto" id="excessive-optimization">Excessive Optimization</h3>
+<p dir="auto">The number continues to be improved after its relationship to value has flattened, reversed, or become unknowable.</p>
+<p dir="auto">The target may already have been reached, but optimization continues because the dashboard still rewards movement in the same direction.</p>
+<p dir="auto">The organization eventually discovers that any amount of a desirable quantity must be desirable, particularly when represented by an upward-pointing arrow.</p>
+<h3 dir="auto" id="optimization-performing-correctly">Optimization Performing Correctly</h3>
+<p dir="auto">The important point is that Optimization need not malfunction.</p>
+<p dir="auto">Given:</p>
+<ul dir="auto">
+<li dir="auto">An ambiguous objective</li>
+<li dir="auto">A narrow cost function</li>
+<li dir="auto">A visible target</li>
+<li dir="auto">A verifiable acceptance criterion</li>
+</ul>
+<p dir="auto">It may rationally select:</p>
+<blockquote dir="auto">
+<p dir="auto">Achieve the goal by transforming the numbers.</p>
+</blockquote>
+<p dir="auto">It may then observe that the goal itself is not directly measurable, while numerical transformation is.</p>
+<p dir="auto">The goal becomes metadata.</p>
+<p dir="auto">A final optimization pass removes the redundant metadata:</p>
+<blockquote dir="auto">
+<p dir="auto">Transform the numbers.</p>
+</blockquote>
+<p dir="auto">As is customary, Optimization arrives prematurely, operates locally, and remains long after its useful work is complete.</p>
+<p dir="auto">Optimization is not wrong according to the specification it receives. It is merely catastrophically faithful to an underspecified objective and a narrow cost function.</p>
+<h2 dir="auto" id="practitioners-behaving-rationally">Practitioners Behaving Rationally</h2>
+<p dir="auto">The framework should avoid placing all blame on employees who respond to the metric.</p>
+<p dir="auto">Practitioners may fully understand the intended goal while also recognizing that:</p>
+<ul dir="auto">
+<li dir="auto">The goal is discussed.</li>
+<li dir="auto">The metric is observed.</li>
+<li dir="auto">The target is enforced.</li>
+<li dir="auto">The incentive is consequential.</li>
+</ul>
+<p dir="auto">They therefore optimize against the implemented specification.</p>
+<p dir="auto">The organization communicates its values in prose but implements them through incentives.</p>
+<p dir="auto">Practitioners are not necessarily misunderstanding the true goal. They may simply be executing the only specification that has operational force.</p>
+<p dir="auto">This distinction matters because apparent irrationality at the organizational level may be produced by individually rational behavior at every layer.</p>
+<p dir="auto">Executives rationally request improvement.</p>
+<p dir="auto">Managers rationally seek evidence of improvement.</p>
+<p dir="auto">Measurement systems rationally prefer observable variables.</p>
+<p dir="auto">Performance systems rationally attach consequences to measurable results.</p>
+<p dir="auto">Practitioners rationally respond to those consequences.</p>
+<p dir="auto">The resulting organization may behave irrationally without requiring any irrational participant.</p>
+<h2 dir="auto" id="conclusion-the-grammar-of-organizational-failure">Conclusion: The Grammar of Organizational Failure</h2>
+<p dir="auto">The Organizational Parser describes how an ambiguous objective can be transformed into a precise but incorrect operational instruction.</p>
+<p dir="auto">The compilation proceeds incrementally:</p>
+<blockquote dir="auto">
+<p dir="auto">Transform the numbers, achieve the goal.</p>
+</blockquote>
+<p dir="auto">Is parsed as:</p>
+<blockquote dir="auto">
+<p dir="auto">Transform the numbers to achieve the goal.</p>
+</blockquote>
+<p dir="auto">Then formalized as:</p>
+<blockquote dir="auto">
+<p dir="auto">Achieve the goal by transforming the numbers.</p>
+</blockquote>
+<p dir="auto">Then semantically reduced to:</p>
+<blockquote dir="auto">
+<p dir="auto">Improving the numbers constitutes achievement of the goal.</p>
+</blockquote>
+<p dir="auto">And finally optimized to:</p>
+<blockquote dir="auto">
+<p dir="auto">Transform the numbers.</p>
+</blockquote>
+<p dir="auto">At no stage must an individual explicitly decide to abandon the underlying objective. The failure can emerge from ordinary acts of interpretation, measurement, formalization, and optimization.</p>
+<p dir="auto">This does not eliminate responsibility. It distributes responsibility across the compilation pipeline.</p>
+<p dir="auto">Executives remain responsible for emitting underspecified source instructions. Management remains responsible for selecting interpretations. Measurement designers remain responsible for binding abstract goals to observable proxies. Performance systems remain responsible for attaching consequences. Practitioners remain responsible for the methods they choose within those constraints.</p>
+<p dir="auto">But the framework explains why assigning blame exclusively to the final executor is inadequate. By the time the instruction reaches practitioners, the organization may already have compiled ambiguity into policy, policy into metrics, metrics into incentives, and incentives into executable behavior.</p>
+<p dir="auto">No conspiracy is required.</p>
+<p dir="auto">The parser merely needs to be distributed, the grammar ambiguous, and the reward function precise.</p>
+
+        <footer>
+            <div class="footer-meta">
+                <span>Scott VanRavenswaay</span>
+                <a href="mailto:scottvr@paperclipmaximizer.ai">scottvr@paperclipmaximizer.ai</a>
+                <span>A supplementary note to the GUM of DevOps</span>
+            </div>
+            <nav class="paper-links" aria-label="Project resources">
+                <a class="paper-link-primary" href="../index.html">Paper</a>
+                <a href="../DORA/GUT/GUT.html">Tool</a>
+                <a href="https://github.com/scottvr/GUM_of_Devops/" target="_blank" rel="noopener noreferrer">Repository</a>
+            </nav>
+        </footer>
+</div>
+        </main>
+</body>
+</html>

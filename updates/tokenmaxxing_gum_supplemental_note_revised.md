@@ -9,53 +9,29 @@ This supplemental note provides that foundation through a case study in Tokenmax
 
 The argument is simple:
 
-> Token consumption is a metered input. Once elevated from measure to KPI, target, and incentive, it ceases to be a reliable indicator of productive AI adoption and begins actively distorting the work it was intended to improve.
+> Token consumption is a metered input. Once elevated from measure to indicator, KPI, target, and incentive, it ceases to be a reliable indicator of productive AI adoption and begins actively distorting the work it was intended to improve.
 
-## 1. Mathematical Definitions
+## 1. A Brief Terminological Misadventure
 
-### Measure
+### 1.1 Measure and Metric in Mathematics
 
-In mathematical terms, a measure is a systematic way to assign a non-negative number to subsets of a given set.
-
-It is defined on a sigma-algebra $\Sigma$ over a set $X$:
+In mathematics, a measure assigns a non-negative number to measurable subsets of a set. Given a sigma-algebra $\Sigma$ over a set $X$:
 
 $$
 \mu: \Sigma \to [0, \infty].
 $$
 
-A measure satisfies two principal axioms:
+It assigns zero to the empty set and is countably additive over pairwise disjoint measurable sets.
 
-- **Null empty set:** $\mu(\emptyset) = 0$.
-- **Countable additivity:** For any countable collection of pairwise disjoint measurable sets $E_1, E_2, E_3, \dots$,
-
-$$
-\mu\left(\bigcup_{i=1}^{\infty} E_i\right)
-=
-\sum_{i=1}^{\infty} \mu(E_i).
-$$
-
-### Metric
-
-A metric, or distance function, defines a notion of distance between any two points in a set.
-
-For a set $M$:
+A metric defines a notion of distance between points in a set:
 
 $$
 d: M \times M \to \mathbb{R}.
 $$
 
-For all $x, y, z \in M$, a metric satisfies:
+It is non-negative, symmetric, satisfies the triangle inequality, and equals zero only when its arguments are identical.
 
-- **Non-negativity:** $d(x,y) \ge 0$.
-- **Identity of indiscernibles:** $d(x,y) = 0$ if and only if $x = y$.
-- **Symmetry:** $d(x,y) = d(y,x)$.
-- **Triangle inequality:** $d(x,z) \le d(x,y) + d(y,z)$.
-
-### The Difference
-
-Put more simply:
-
-The measure of the interval $[a,b]$ is:
+For example, the measure of the interval $[a,b]$ is:
 
 $$
 b-a.
@@ -67,61 +43,48 @@ $$
 \sqrt{(a-c)^2 + (b-d)^2}.
 $$
 
-## 2. Organizational Relevance
+### 1.2 Organizational Use
 
-What does any of this have to do with production dashboards, DORA delivery metrics, or organizational KPIs?
+What does this distinction have to do with production dashboards, DORA delivery metrics, or organizational KPIs?
 
 Absolutely nothing.
 
-The formal mathematical distinction between a measure and a metric is not the distinction ordinarily intended by management dashboards. The reuse of mathematical terminology in organizational measurement is another mild symptom of the science envy endemic to the field.
+The formal mathematical distinction is not the distinction ordinarily intended by management dashboards. The reuse of mathematical terminology in organizational measurement is another mild symptom of the science envy endemic to the field.
 
 For present purposes:
 
-- **A measure is a direct observation or count: a raw value.**
-- **A metric is a measure, or combination of measures, interpreted for some purpose: a raw value with context.**
-
-The terminology is not used consistently. Dashboards commonly call every number a metric, including raw counts.
-
-Continuing upward through the organizational value chain:
-
-- **An indicator** is a metric interpreted as evidence of some broader condition.
-- **A KPI** is an indicator selected because it is believed to represent progress toward an important objective.
-- **A target** is a desired value assigned to the KPI.
+- **A measure** is a direct observation or count: a raw value.
+- **A metric** is a measure, or combination of measures, interpreted for some purpose: a raw value with context.
+- **An indicator** is a metric interpreted as evidence of a broader condition.
+- **A KPI** is an indicator granted institutional importance because it is believed to represent progress toward an objective.
+- **A target** is a desired value, threshold, direction, or ranking assigned to the KPI.
 - **An incentive** attaches consequences to reaching, missing, or appearing to reach the target.
 
-An OKR may incorporate one or more KPIs as evidence that progress has been made toward an objective. This does not make the evidence valid. It makes the evidence official.
+The terminology is not used consistently. Dashboards commonly call every number a metric, including raw counts. An OKR may incorporate one or more KPIs as evidence that progress has been made toward an objective. This does not make the evidence valid. It makes the evidence official.
 
-## 3. Where Organizational Metrics Come From
+The organizational transformation can be summarized as:
 
-A measure becomes a metric through interpretation.
+```text
+observation
+    -> interpretation
+    -> inference
+    -> institutional importance
+    -> prescription
+    -> consequence
+```
 
-Can the thing be directly counted or observed? If so, it is probably a measure.
+Or, in the terminology used here:
 
-Was the number normalized, aggregated, compared, divided, or otherwise transformed? If so, it is probably a metric.
+```text
+measure
+    -> metric
+    -> indicator
+    -> KPI
+    -> target
+    -> incentive
+```
 
-A metric becomes an indicator through inference.
-
-Has someone decided the number represents a broader quality such as reliability, productivity, adoption, or value? It is now an indicator.
-
-An indicator becomes a KPI through institutional importance.
-
-Has management decided that this number demonstrates success or failure? It is now a KPI.
-
-A KPI becomes a target through management.
-
-Has someone assigned a desired threshold, direction, or ranking? It is now a target.
-
-A target becomes a pathology through incentives.
-
-Are rewards, punishments, status, scrutiny, or career consequences attached to it? The organization has now created a reward function, regardless of what the dashboard calls it.
-
-### In Practice
-
-At this point, the organization is ostensibly attempting to transform the numbers **and** achieve the goal. The conjunction is more important than it is ordinarily treated.
-
-The KPI is no longer merely descriptive. It influences decisions, incentives, prioritization, and human behavior.
-
-Measures describe observed events or quantities. Metrics transform those observations into standardized or comparative values. Indicators assign broader meaning to those values. KPIs elevate selected indicators into proxies for organizational success.
+Each transition adds meaning or force that was not present in the original observation.
 
 For example:
 
@@ -137,66 +100,60 @@ For example:
 8 failed changes / 96 total changes = 8.3% change failure rate
 ```
 
+**Indicator:**
+
+```text
+change failure rate is interpreted as evidence of delivery quality
+```
+
 **KPI:**
+
+```text
+change failure rate is reviewed as an organizational performance indicator
+```
+
+**Target:**
 
 ```text
 change failure rate <= 10%
 ```
 
-The first value reports an observation. The second places that observation in context. The third introduces an organizational judgment.
+**Incentive:**
 
-## 4. Relevance to GUM
+```text
+rankings, compensation, status, or executive scrutiny depend on the target
+```
 
-This would not be worthy of a GUM Supplemental Note if its sole purpose were to explain what metrics are. Most readers already know.
+The measure reports an observation. The metric places it in context. The indicator assigns broader meaning. The KPI makes that meaning institutionally important. The target prescribes the desired result. The incentive gives the prescription operational force.
 
-The important point is that incompetence, dishonesty, and malice are not required for accepted measurement practices to produce catastrophe. Locally rational metrics can misrepresent the state of a delivery system, distort the organization observing it, and eventually damage the process they were intended to improve.
+## 2. Relevance to GUM
 
-The progression is familiar:
+A taxonomy of organizational measurement would not, by itself, justify a GUM Supplemental Note.
 
-1. **Observe something.**
+The important point is that incompetence, dishonesty, and malice are not required for accepted measurement practices to produce catastrophe. Once an observable proxy is made consequential, participants can rationally optimize it while degrading the condition it was intended to represent.
 
-   "Eight deployments failed."
+A team held below a change-failure-rate target may respond by:
 
-2. **Transform the observation into a metric.**
+- Reclassifying failed changes.
+- Redefining what constitutes a deployment.
+- Delaying the declaration of failure.
+- Excluding selected services or change classes.
+- Transferring high-risk work outside the measured boundary.
+- Avoiding changes likely to damage the reported rate.
+- Negotiating the numerator.
+- Negotiating the denominator.
 
-   "The change failure rate was 8.3%."
+At no stage is irrationality required. The organization communicates its objective in prose but implements it through incentives. Participants may understand the intended objective perfectly while still adapting rationally to the specification that carries operational force.
 
-3. **Decide that the metric represents an important outcome.**
+## 3. Case Study: Tokenmaxxing
 
-   "Change failure rate indicates delivery quality."
-
-4. **Designate it as a KPI.**
-
-   "Management reviews change failure rate monthly."
-
-5. **Attach a target.**
-
-   "Teams must remain below 10%."
-
-6. **Attach consequences.**
-
-   "Bonuses, rankings, status, or executive scrutiny depend on it."
-
-7. **Observe people optimizing the implemented reward function.**
-
-   - Reclassify failed changes.
-   - Avoid frequent deployments.
-   - Bundle more changes into each deployment.
-   - Delay declaring incidents.
-   - Exclude inconvenient services.
-   - Negotiate the denominator.
-
-At no stage is irrationality required. The organization has simply replaced the desired outcome with an observable proxy, then made optimization of that proxy consequential.
-
-## 5. Case Study: Tokenmaxxing
-
-### 5.1 Observation
+### 3.1 Observation
 
 An employee or agent sends requests to an AI model.
 
 Those requests consume input tokens, output tokens, cached tokens, and sometimes reasoning tokens.
 
-### 5.2 Measures
+### 3.2 Measures
 
 The organization can directly observe:
 
@@ -216,7 +173,7 @@ They do not answer:
 
 > What useful result did this workload produce?
 
-### 5.3 Metrics
+### 3.3 Metrics
 
 The organization begins deriving comparative values:
 
@@ -238,15 +195,15 @@ Some derived values may become legitimate operational metrics:
 
 These may help compare models, tools, prompts, languages, workflows, or task classes. Their usefulness depends on whether the numerator describes a meaningful and consistently evaluated result.
 
-### 5.4 Indicator
+### 3.4 Indicator
 
 Then comes the first unearned inferential step:
 
 > High token use indicates extensive AI adoption.
 
-This may be directionally true in aggregate. Someone consuming zero tokens is probably not using token-metered AI tools. Someone consuming many tokens probably is.
+Zero recorded consumption strongly suggests an absence of activity within the measured system. High consumption establishes that activity occurred. It does not establish that the activity was useful.
 
-But the inference is already lossy:
+The inference is already lossy:
 
 ```text
 token consumption ~= AI activity
@@ -271,7 +228,7 @@ Token consumption alone cannot distinguish among:
 
 The same observed token count may arise from any of these causes.
 
-### 5.5 KPI
+### 3.5 KPI
 
 Management now elevates the indicator to a KPI:
 
@@ -297,7 +254,7 @@ Each arrow requires evidence.
 
 A green dashboard does not provide evidence.
 
-### 5.6 Target
+### 3.6 Target
 
 The indicator becomes normative:
 
@@ -309,11 +266,9 @@ At this stage, the organization has converted a **cost-bearing input** into a de
 
 This is unusually perverse because resource consumption is ordinarily minimized subject to achieving a result. CPU time, cloud spend, bandwidth, storage, operations, and labor hours are treated as costs incurred in production.
 
-Tokenmaxxing reverses the relationship:
+The organization has therefore selected a metered expense and declared its maximization to be evidence of progress.
 
-> We know this input costs money, but consuming more of it will be interpreted as success.
-
-### 5.7 Incentive
+### 3.7 Incentive
 
 Leaderboards, recognition, management attention, performance discussions, or cultural status attach consequences to the number.
 
@@ -326,9 +281,9 @@ Employees now correctly infer:
 
 This is a rational adaptation to the observable reward function.
 
-### 5.8 Gaming and Behavioral Adaptation
+### 3.8 Gaming and Behavioral Adaptation
 
-The obvious strategies include:
+The implemented reward function admits several predictable adaptations:
 
 - Use larger models than necessary.
 - Include oversized context windows.
@@ -346,7 +301,7 @@ A conventional command may complete the work quickly and earn no visible AI-usag
 
 No dishonesty is required. Employees need only reorganize their work sincerely around what management visibly rewards.
 
-### 5.9 The Goodhart Failure
+### 3.9 The Goodhart Failure
 
 The measured quantity now loses value as an indicator of meaningful AI adoption.
 
@@ -364,7 +319,7 @@ The organization has entered Goodhart territory.
 
 The proxy is no longer merely imperfect. It has become endogenous to the reward system built around it.
 
-### 5.10 The Campbell Failure
+### 3.10 The Campbell Failure
 
 Campbell's Law takes the argument beyond degradation of the indicator.
 
@@ -381,7 +336,7 @@ Pressure on the measure corrupts the process being monitored:
 
 The attempt to govern AI adoption through token counts degrades both the count and the adoption process itself.
 
-### 5.11 How We Got There
+### 3.11 The Complete Transformation
 
 **Objective:**
 
@@ -431,15 +386,15 @@ AI adoption rises dramatically.
 
 The organization has become better at consuming AI, not necessarily better at producing anything.
 
-## 6. Tokens Belong in the Denominator
+## 4. Tokens Belong in the Denominator
 
 The particularly elegant absurdity is that token consumption is not even a defective approximation of output in the same way that lines of code might be. It is primarily a metered input and therefore an exceptionally poor output metric.
 
-We should not evaluate developers by CPU usage or drivers by the amount of fuel burned.
+By the same reasoning, CPU utilization would measure developer productivity and fuel consumption would measure driver effectiveness.
 
-The resource may be necessary for production.
+Both resources may be necessary.
 
-Its consumption is not the product.
+Neither resource is the product.
 
 Tokens belong in the denominator:
 
@@ -481,7 +436,7 @@ This is not principally a story about dishonest employees, foolish managers, or 
 
 Tokens are an input to AI-assisted work. Their consumption may be necessary, excessive, efficient, wasteful, productive, or performative. The count alone cannot distinguish among these states.
 
-Organizations wishing to improve AI-enabled work should therefore evaluate useful outcomes subject to token cost rather than treating token cost itself as the outcome. Tokens belong in the denominator, the budget, or the diagnostic telemetry.
+Organizations wishing to improve AI-enabled work should evaluate useful outcomes subject to token cost rather than treating token cost itself as the outcome. Tokens belong in the denominator, the budget, or the diagnostic telemetry.
 
 They do not belong on the victory banner.
 

@@ -84,6 +84,31 @@
     flex: 0 0 auto;
     gap: 0.5rem;
   }
+
+  /* Footnotes. A superscript reference on the title links to a small-print
+     note section above the footer; the back-reference returns to the mark. */
+  .readme-page .github-markdown-content .fn-ref {
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .readme-page .github-markdown-content .fn-ref sup {
+    font-size: 0.62em;
+    padding-left: 0.15em;
+  }
+  .readme-page .github-markdown-content .footnotes {
+    margin-top: 2.6rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--text-dim);
+  }
+  .readme-page .github-markdown-content .footnotes ol {
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+  .readme-page .github-markdown-content .footnotes li {
+    margin: 0.3rem 0;
+  }
 </style>
 </head>
 <body class="readme-page post-page">
@@ -104,7 +129,7 @@
             data-dark-theme="dark"
         >
             <div class="github-markdown-content" id="note-content">
-<h1 dir="auto" id="tokenmaxxing">Tokenmaxxing</h1>
+<h1 dir="auto" id="tokenmaxxing">Tokenmaxxing<a class="fn-ref" id="fnref-1" href="#fn-1" role="doc-noteref" aria-label="Footnote 1"><sup>1</sup></a></h1>
 <h2 dir="auto" id="on-converting-an-ai-expense-into-an-organizational-accomplishment">On Converting an AI Expense into an Organizational Accomplishment</h2>
 <p dir="auto">The Grand Unified Model of DevOps/SRE Dynamics (GUM) includes a small number of organizational proxies for its latent terms. Many more, and considerably more potent, proxies were originally drafted for publication. They were omitted out of concern that publishing an extensive catalog of coercive measurement techniques might encourage organizations to use them as an extensive catalog of coercive measurement techniques.</p>
 <p dir="auto">With the development of the Grand Unified Tool (GUT), the subsequent [representational hardening of GUM 1.5](https://blehg.paperclipmaximizer.ai/GUM_of_Devops/updates/SMDE.html), and the ongoing preparation of GUM 2.0, it has become necessary to revisit the relationship among measures, metrics, indicators, KPIs, targets, and incentives.</p>
@@ -407,6 +432,12 @@ business value produced / inference cost
 <p dir="auto">They do not belong on the victory banner.</p>
 <p dir="auto">The organization that rewards token consumption will become very good at consuming tokens.</p>
 <p dir="auto">This result should not be confused with becoming good at anything else.</p>
+
+<section class="footnotes" role="doc-endnotes" aria-label="Footnotes">
+<ol>
+<li id="fn-1">This note was written in response to the DORA Insight publication &ldquo;<a href="https://dora.dev/insights/finding-balance-in-the-era-of-tokenmaxxing/" target="_blank" rel="noopener noreferrer">Finding balance in the era of tokenmaxxing</a>&rdquo; by Evan Conaway (June 2, 2026). <a class="fn-back" href="#fnref-1" role="doc-backlink" aria-label="Back to content">&#8617;</a></li>
+</ol>
+</section>
 
         <footer>
             <div class="footer-meta">

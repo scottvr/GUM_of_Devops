@@ -12,7 +12,6 @@ Anyway, the meeting video is up now on DORA's [YouTube](https://www.youtube.com/
 
 [GUT README](https://blehg.paperclipmaximizer.ai/GUM_of_Devops/DORA/GUT/field-guide.html)   
 
-:w
 NEW 2026-07-26 - Advanced Plot mode now enabled by default. (A third tab.)
 
 <hr>
@@ -22,4 +21,5 @@ NEW 2026-07-26 - Advanced Plot mode now enabled by default. (A third tab.)
 
 <hr> 
 
+#### August 10 Update
 Tangentially related: that "devops rap diss track" I wrote and had an ai vocalist rap the first few stanzas of, that Amanada made a lyrics video for and played as a sort of "intro Theme" for me? I was bothered that I had to qualify "I wrote thel lyrics; the layered punchlines and rap braggadocio put-downs are mine, but that voice is not. So now, even though I don't have the voice or the topcial material from Tranditional hip-hop, I did find a way to make it my own "rap track", and am satisified that my ill-suited voice does just fine in this particular track. I've been told it is a "banger!" Check it out if you're so inclined. [Video is still a WIP, but it's minor things; you can hear it just fine I think. [New VIdeo for "El User"](https://killsignal.net/El_User/dj_defrag_and_uid_zero-el_user.mp4)

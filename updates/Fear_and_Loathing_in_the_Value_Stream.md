@@ -1,11 +1,11 @@
 # Fear and Loathing in the Value Stream
 
-The Grand Unified Model treats organizational dysfunction as observable, in principle, through its proxies. This note concerns the two mechanisms that determine whether an observed dysfunction ever becomes an *acted-upon* dysfunction. They are not technical. They are not even, strictly, managerial. They are affective and financial, respectively.
+The Grand Unified Model treats organizational dysfunction as observable, even where not directly measurable, through proxies. This note concerns the two mechanisms that determine whether an observed dysfunction ever becomes an *acted-upon* dysfunction. They are not technical. They are not even, strictly, managerial. They are *affective* and *financial* - attributes to which the GUM has been asked by practitioners to pay special attention because it may not be immediately obvious to the reader how the GUM addresses these aspects of the organizational system, or how exactly to view such things through the GUM lens.  while it may be said that, like obscenity, exactly how to define the GUM lens, you'll know it when you see through it.  And with that: 
 
 - **Fear determines whether dysfunction can be *reported*.**
 - **Finance determines whether it can be *remediated*.**
 
-A dysfunction that clears neither gate is, for all operational purposes, invisible. It continues to accrue cost, it continues to appear in nobody's status update, and it continues to be, per the dashboard, fine.
+A dysfunction that clears neither gate is, for all operational purposes, invisible. Unseen, it continues to accrue cost, it continues to appear in nobody's status update, and it continues to be, per the dashboard, fine.
 
 The two gates are not independent findings; they are stages of one machine. Sections I through III describe the reporting and financing gates. Section IV assembles them, together with the acknowledgment stage that sits between, into a single transfer function and reads off what the organization does to a dysfunction presented at its input.
 
@@ -13,7 +13,7 @@ The two gates are not independent findings; they are stages of one machine. Sect
 
 ## I. The Fear Factory
 
-Organizational reporting is usually modeled as an information problem: the system knows some facts, and management would prefer to know them too. This formulation is incomplete because the channel through which those facts travel is occupied by people whose continued employment, promotion, reputation, workload, and occasionally mortgage payment depend upon what happens after transmission.
+Organizational reporting is usually modeled as an information problem: the system knows some facts, and management would prefer to know them too. This formulation is incomplete because the channel through which those facts travel is occupied by people whose continued employment, promotion, reputation, workload, and occasionally mortgage payment depend upon what happens after transmission.  This is squarely within the GUM's territory of navigating and illuminating  well-charted but incorrectly assumed neutral territory, and misclassifications of exogeny.
 
 Fear is therefore not merely noise in the reporting layer. Under ordinary conditions it is part of the reporting layer.
 
@@ -49,9 +49,9 @@ The executive dilemma has several common forms. **Fear of owning the number** fo
 
 Reporting therefore clears only the fear gate. Remediation requires clearing the finance gate, and the two are guarded by different participants optimizing different proxies.
 
-This is why "we all know it's broken" is not a budget. Consensus is inexpensive and receives a corresponding valuation during capital allocation. Remediation competes against features, and features usually arrive with a revenue story. Remediation arrives with an avoided-loss story: money the organization hopes not to lose, incidents it hopes not to have, engineer-hours it hopes not to waste, and customers it hopes not to anger. None of these photographs especially well on the quarter's celebration deck.
+This is why "we all know it's broken" is not a budget. Consensus is inexpensive and receives a corresponding valuation during capital allocation. Remediation competes against features, and features usually arrive with a revenue story. Remediation arrives with an avoided-loss story: money the organization hopes not to lose, incidents it hopes not to have, engineer-hours it hopes not to waste, and customers it hopes not to anger. None of these photographs especially well for highlighting on the quarter's celebration deck.
 
-The CFO is not the villain in this account. Indeed, the mechanism depends upon the CFO behaving rationally. Finance cannot allocate capital against an instrument it cannot price, and "engineers appear increasingly haunted" is an unusually difficult entry to place in a discounted-cash-flow model. The dysfunction lies in the absence of a common unit. The GUM measures in proxies; Finance measures in dollars; and technical debt is denominated in a third currency that nobody accepts at the register.
+The CFO is not the villain in this account. Indeed, the mechanism depends upon the CFO behaving rationally. Finance cannot allocate capital against an instrument it cannot price, and "engineers appear increasingly haunted" is an unusually difficult entry to place in a discounted-cash-flow model. The dysfunction lies in the absence of a common unit. The GUM measures in unitless regularized values measured in large part by proxies; Finance measures in dollars; and technical debt is denominated in a third currency that nobody accepts at the register.
 
 The relevant financial boundary is therefore not whether a dysfunction is *real*, nor even whether it is *acknowledged*. It is whether the dysfunction can be rendered **financially legible**: transformed into a proposition that survives contact with the capital-allocation process. Section IV assigns this transformation its own coefficient and then subjects it to the same treatment as every other GUM variable unfortunate enough to acquire notation.
 
@@ -61,7 +61,7 @@ The relevant financial boundary is therefore not whether a dysfunction is *real*
 
 The phrase "technical debt" began as a metaphor asking to be taken seriously and has since been punished for the request. Real debt appears on a balance sheet, accrues interest at a stated rate, and eventually forces a reckoning. Technical debt appears nowhere, accrues interest at an unstated rate, and forces a reckoning principally by becoming an incident, at which point the accumulated liability is reclassified as bad luck.
 
-Its defining financial property is therefore not merely that it is expensive. It is a liability that has successfully avoided being one.
+Its defining financial property is therefore not merely that it is expensive. It is a liability that has successfully avoided officially being labeled one.
 
 ### Further Unnecessary Mathematics
 
@@ -158,7 +158,7 @@ legibility      F = 0.50   ->  12.50% survives
 authorization   B = 0.50   ->   6.25% survives
 ```
 
-Nobody was negligent. Everybody halved. Ninety-four percent of the dysfunction is gone, and the balance sheet, asked where it went, reports nothing -- because attenuation, unlike theft, leaves no residue. There is still no drawer.
+Nobody was negligent. Everybody halved. Ninety-four percent of the dysfunction is gone, and the balance sheet, asked where it went, reports nothing -- because attenuation, like theft, often  leaves onky latent prints. There is still no cash drawer.
 
 #### The Two Gaps
 
@@ -228,11 +228,11 @@ $$
 
 The three debt-*generating* terms are unattenuated -- urgency, deployment pressure, and competence mismatch reach the ledger at full strength, requiring no one's permission to accrue. Only the single debt-*reducing* term is passed through the gauntlet of $H$. Accumulation is exogenous; correction is gated. The equation is asymmetric in exactly the direction the organization is.
 
-This upgrades the Law of Toil Conservation from a warning into a forecast. The original law treated $R \to 0$ as a limiting pathology -- the thing that happens *if* an organization neglects remediation, and therefore a thing an organization could choose to avoid by resolving to remediate. But $H$ is a product of sub-unity gates, and a product of sub-unity gates is small by default and stays small without anyone's help. So $R_{\text{eff}} \to 0$ is not the failure mode an organization falls into; it is the operating point it starts from. An organization with a perfectly healthy $R_{\text{nominal}}$ -- one that fully intends to fix its debt, has the engineers to do it, and would spend the time gladly -- still accumulates debt, because the intent is attenuated to nothing before it reaches the ledger. Toil is conserved not when remediation is neglected but when remediation is merely *reported and funded through normal channels*. The GUM assumed the knob. This note found it disconnected from the panel -- and the debt equation, wired to the nominal rate through $H$, does not care how firmly anyone is turning it.
+This upgrades the Law of Toil Conservation from a warning into a forecast. The original law treated $R \to 0$ as a limiting pathology -- the thing that happens *if* an organization neglects remediation, and therefore a thing an organization could choose to avoid by resolving to remediate. But $H$ is a product of sub-unity gates, and a product of sub-unity gates is small by default and stays small without anyone's help. So $R_{\text{eff}} \to 0$ is not the failure mode an organization falls into; it is the operating point it starts from. An organization with a perfectly healthy $R_{\text{nominal}}$ -- one that fully intends to fix its debt, has the engineers to do it, and would spend the time gladly -- still accumulates debt, because the intent is attenuated to nothing before it reaches the ledger. Toil is conserved here not when remediation is neglected but when remediation is merely *reported and funded through normal channels*. The GUM assumed the knob. This note found it disconnected from the panel -- and the debt equation, wired to the nominal rate through $H$, does not care how firmly anyone is turning it.
 
 #### Every Stage Is Behaving
 
-This is the same result the Organizational Parser reached by a different route: a pipeline in which every stage is locally correct can still compile to an absurd output. Walk the stages and try to find the guilty one.
+This is the same result the Organizational Parser published in a recent update, just reached by a different route: a pipeline in which every stage is locally correct can still compile to an absurd output. Walk the stages and try to find the guilty one.
 
 - **$C$, reporting.** The employee who withholds is not lying; they are filtering, and filtering *correctly* with respect to the reward function of Section I. Candor is a metered expense with no line item for its benefit. Locally: rational.
 - **$A$, acknowledgment.** Management that declines to accept every reported problem as a live, fundable defect is not in denial; it is triaging. "Known issue" is a legitimate state. An organization that acknowledged everything at full weight would seize. Locally: rational.

@@ -1,7 +1,5 @@
 # Fear and Loathing in the Value Stream
 
-> *Note to self (delete before publishing): this is the fleshed-out skeleton. Openers are deadpan-but-thin; the weeds are bullet lists of topics to expand and then salt with jokes. The two theses below are the load-bearing walls — everything hangs off them.*
-
 The Grand Unified Model treats organizational dysfunction as observable, in principle, through its proxies. This note concerns the two mechanisms that determine whether an observed dysfunction ever becomes an *acted-upon* dysfunction. They are not technical. They are not even, strictly, managerial. They are affective and financial, respectively.
 
 - **Fear determines whether dysfunction can be *reported*.**

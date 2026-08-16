@@ -15,10 +15,12 @@ The two gates are not independent findings; they are two stages of one machine. 
 
 Section opener — establish that fear is not a bug in the reporting layer; it *is* the reporting layer. The org chart is, among other things, an instrument for converting information into silence at a predictable rate. Gesture at the fact that every incentive system quietly ships with a companion disincentive system, and the disincentive system is the one that actually gets internalized.
 
+### TODO:
 Candidate framing device: define a **Candor Coefficient** — the probability that a known problem is surfaced by the person who knows it — and note it decays with proximity to power, tenure remaining until vesting, and the size of the mortgage. (Leave the fake formula for Section III; here just name the intuition.)
 
 #### The Cost of Telling the Truth
 
+### TODO:
 Into the weeds. Topics to cover:
 
 - **A taxonomy of workplace fear.** Distinguish the varieties so we can abuse them individually later:
@@ -35,13 +37,13 @@ Into the weeds. Topics to cover:
 ---
 
 ## II. The Grand Unified Model Encounters a CFO
-
+### TODO:
 Section opener — a problem may be reported perfectly, understood completely, and agreed upon universally, and still never be fixed, because being *right* is not the currency of remediation. Funding is. Introduce the central character: the executive who *wants* to fix the endemic dysfunction, sees it clearly, and is nonetheless kept quiet by a fear that is not personal cowardice but structural. Their fear is that remediation, once proposed, becomes a *number*, and the number will be compared against numbers that photograph better.
 
 The GUM, having modeled the socio-technical system to satisfaction, walks into the CFO's office and discovers a second physics operating there, with its own conservation laws.
 
 #### Remediation Is a Funded Outcome
-
+### TODO:
 Into the weeds. Topics to cover:
 
 - **The executive's dilemma, enumerated.** What *types* of fear keep a well-intentioned executive silent:
@@ -56,7 +58,7 @@ Into the weeds. Topics to cover:
 ---
 
 ## III. The Financial Invisibility of Technical Debt
-
+### TODO: 
 Section opener — the phrase "technical debt" was a metaphor asking to be taken seriously and then punished for it. Real debt appears on a balance sheet, accrues interest at a stated rate, and eventually forces a reckoning. Technical debt appears nowhere, accrues interest at an *unstated* rate, and forces a reckoning only in the form of an incident, at which point it is reclassified as bad luck. Its defining financial property is that it is a liability that has successfully avoided being one.
 
 #### Further Unnecessary Mathematics
@@ -79,7 +81,7 @@ Into the weeds — this is the section where we deploy formalism for comic effec
 
 ## IV. The Remediation Transfer Function
 
-Section opener — "Why don't organizations fix things everybody knows are broken?" is a question that feels like it has an answer and does not. It invites villains — the coward, the bean-counter, the manager who shot the messenger — and villains are comforting because they are, in principle, replaceable. The GUM does not permit this comfort. Its whole method is to assume everyone in the system is behaving rationally with respect to their local instruments and to ask what the *system* does anyway.
+"Why don't organizations fix things everybody knows are broken?" is a question that feels like it has an answer and does not. It invites villains — the coward, the bean-counter, the manager who shot the messenger — and villains are comforting because they are, in principle, replaceable. The GUM does not permit this comfort. Its whole method is to assume everyone in the system is behaving rationally with respect to their local instruments and to ask what the *system* does anyway.
 
 There is also a debt to pay to the original model. GUM 1.0 gives technical debt an explicit equation of motion,
 

@@ -75,7 +75,9 @@ $$
 PV_{\text{remediation}} = \sum_{t=1}^{T} \frac{\mathbb{E}[L_t]}{(1 + r_o)^t},
 $$
 
-where $\mathbb{E}[L_t]$ is the expected loss avoided in period $t$ and $r_o$ is the **Organizational Discount Rate**: the rate at which the organization actually discounts its own future pain.
+Present value expresses a future cost or benefit in today’s terms by discounting it according to time and an assumed rate of return. Net present value (NPV) extends this across the expected costs and benefits of an investment; a positive NPV conventionally indicates that the investment creates value relative to the chosen discount rate.
+
+$\mathbb{E}[L_t]$ is the expected loss avoided in period $t$ and $r_o$ is the **Organizational Discount Rate**: the rate at which the organization actually discounts its own future pain.
 
 Crucially, $r_o$ is not the financial cost of capital $r$. A firm may borrow at $r$ while discounting its own future incidents at $r_o \gg r$. Under these conditions,
 
@@ -135,13 +137,13 @@ D(t)  --candor-->  --acknowledge-->  --legibility-->  --authorize-->  R(t)
 ```
 
 $$
-D_{\text{funded}}(t) \;=\; D(t)\,C(t)\,A(t)\,F(t)\,B(t)
+D_{\text{funded}}(t) = D(t)\,C(t)\,A(t)\,F(t)\,B(t)
 $$
 
 The overall transfer function -- the gain of the organization as an instrument for converting real problems into funded ones -- is therefore
 
 $$
-H(t) \;=\; \frac{D_{\text{funded}}(t)}{D(t)} \;=\; C(t)\,A(t)\,F(t)\,B(t).
+H(t) = \frac{D_{\text{funded}}(t)}{D(t)} = C(t)\,A(t)\,F(t)\,B(t).
 $$
 
 Two properties of a product of numbers in $[0,1]$ do all of the work:
@@ -165,7 +167,7 @@ Nobody was negligent. Everybody halved. Ninety-four percent of the dysfunction i
 The chain can be read forward, as a signal that survives, or backward, as a signal that is lost. The lost part is where the interesting quantities live. Read the chain as three levels of the same dysfunction, each observed at a different boundary:
 
 $$
-\underbrace{D(t)}_{\text{actual}} \;\longrightarrow\; \underbrace{D_{\text{reported}}(t) = C(t)\,D(t)}_{\text{reported}} \;\longrightarrow\; \underbrace{D_{\text{funded}}(t) = A(t)F(t)B(t)\,D_{\text{reported}}(t)}_{\text{funded}}
+\underbrace{D(t)}_{\text{actual}} \longrightarrow\ \underbrace{D_{\text{reported}}(t) = C(t)\,D(t)}_{\text{reported}} \longrightarrow \underbrace{D_{\text{funded}}(t) = A(t)F(t)B(t)\,D_{\text{reported}}(t)}_{\text{funded}}
 $$
 
 where $D_{\text{funded}}(t) = C(t)A(t)F(t)B(t)\,D(t)$ is the same quantity defined in the previous subsection, now written as the end of a chain rather than as a single product. Two gaps open on either side of the reported quantity in the middle.
@@ -173,7 +175,7 @@ where $D_{\text{funded}}(t) = C(t)A(t)F(t)B(t)\,D(t)$ is the same quantity defin
 The **Reporting Gap** (promoted from Section I) is the dysfunction that exists but never reaches a slide:
 
 $$
-G_R(t) \;=\; D(t) - D_{\text{reported}}(t) \;=\; D(t)\bigl(1 - C(t)\bigr).
+G_R(t) = D(t) - D_{\text{reported}}(t) = D(t)\bigl(1 - C(t)\bigr).
 $$
 
 It has a property worth stating carefully, because it is the section's central perversity.
@@ -183,9 +185,9 @@ It has a property worth stating carefully, because it is the section's central p
 The proof is one line. Since $D_{\text{reported}} = C\,D$,
 
 $$
-\frac{d}{dt}D_{\text{reported}} \;=\; C\,\dot{D} + \dot{C}\,D \;<\; 0
+\frac{d}{dt}D_{\text{reported}} \;=\; C\,\dot{D} + \dot{C}\,D < 0
 \qquad\Longleftrightarrow\qquad
--\frac{\dot{C}}{C} \;>\; \frac{\dot{D}}{D},
+-\frac{\dot{C}}{C} > \frac{\dot{D}}{D},
 $$
 
 that is, reported dysfunction declines precisely when candor's fractional rate of *decay* outruns dysfunction's fractional rate of *growth*. This is not exotic; it is the expected behavior. The same conditions that make an organization sicker -- mounting pressure, visible consequences for bad news, a hardening sense that reporting is unsafe -- are conditions that drive $C$ down. Sickness and silence are produced by the same cause, so they tend to arrive together. The organization therefore becomes **simultaneously less healthy and better-reported**: $D$ rising, $D_{\text{reported}}$ falling, the dashboards improving on schedule. The reports are not lying. They are faithfully reporting a shrinking fraction of a growing problem.
@@ -193,13 +195,13 @@ that is, reported dysfunction declines precisely when candor's fractional rate o
 The **Funding Gap** is the companion chasm on the far side -- acknowledged, reportable dysfunction that never converts into authorized spend:
 
 $$
-G_F(t) \;=\; D_{\text{reported}}(t) - D_{\text{funded}}(t) \;=\; D_{\text{reported}}(t)\bigl(1 - A(t)F(t)B(t)\bigr).
+G_F(t) = D_{\text{reported}}(t) - D_{\text{funded}}(t) = D_{\text{reported}}(t)\bigl(1 - A(t)F(t)B(t)\bigr).
 $$
 
 And the sum of both, the quantity that is actually the antagonist of this entire note -- the real dysfunction that is neither reported honestly nor funded for repair:
 
 $$
-G_{\text{total}}(t) \;=\; D(t) - D_{\text{funded}}(t) \;=\; D(t)\bigl(1 - C(t)A(t)F(t)B(t)\bigr) \;=\; D(t)\bigl(1 - H(t)\bigr).
+G_{\text{total}}(t) = D(t) - D_{\text{funded}}(t) = D(t)\bigl(1 - C(t)A(t)F(t)B(t)\bigr) = D(t)\bigl(1 - H(t)\bigr).
 $$
 
 Here is the GUM-canonical pathology in closed form. Everything downstream of the first gate -- $D_{\text{reported}}$, $D_{\text{funded}}$, and every dashboard, status update, and quarterly review derived from them -- is *observable*, and can remain flat, calm, or even improving. $D$ itself is *latent*: nobody measures it directly. So $G_{\text{total}}$ can grow without bound while every visible quantity in the organization stays green, for the same structural reason the GUM's latent $TDR$ can diverge beneath an unbroken row of healthy DORA metrics. The gap is invisible not because it is hidden but because it is the difference between a thing that is measured and a thing that is not. Nobody is watching the only variable that is moving.
@@ -209,13 +211,13 @@ Here is the GUM-canonical pathology in closed form. Everything downstream of the
 We can now discharge the debt to the original model. GUM 1.0 wrote remediation $R$ as an exogenous term -- a rate the organization directs toward debt reduction, entered into the debt dynamics as though it were a setting. But an organization cannot remediate a dysfunction whose need for remediation never survived the chain above. The remediation that GUM 1.0 assumed is the remediation the organization *would* perform if the need for it were transmitted without loss; call that the nominal rate $R_{\text{nominal}}(t)$ -- genuine, unattenuated intent-and-capacity. What actually lands on the debt is the nominal rate after the signal has crossed every boundary:
 
 $$
-R_{\text{eff}}(t) \;=\; R_{\text{nominal}}(t)\,H(t) \;=\; R_{\text{nominal}}(t)\,C(t)\,A(t)\,F(t)\,B(t),
+R_{\text{eff}}(t) = R_{\text{nominal}}(t)\,H(t) = R_{\text{nominal}}(t)\,C(t)\,A(t)\,F(t)\,B(t),
 $$
 
 or, if one prefers the conditional-probability reading of the same quantity,
 
 $$
-R_{\text{eff}}(t) \;=\; R_{\max}\,\Pr(\text{reported}\mid D)\,\Pr(\text{funded}\mid \text{reported}).
+R_{\text{eff}}(t) = R_{\max}\,\Pr(\text{reported}\mid D)\,\Pr(\text{funded}\mid \text{reported}).
 $$
 
 The original GUM term $R$ was never the exogenous control it appeared to be. It was $R_{\text{eff}}$ with the attenuation quietly set to $1$ -- the special case in which the reporting-and-capital system is assumed transparent.
@@ -223,7 +225,7 @@ The original GUM term $R$ was never the exogenous control it appeared to be. It 
 None of this is to suggest the original model was wrong, or even incomplete. The transparent-reporting assumption $H = 1$ was not an oversight; it was a modeling decision, made deliberately, at a time when the field was not yet prepared to receive the attenuated form. A model must be legible before it can be correct, and $R$-as-a-knob was the legible form. The apparatus was present in the structure of the equation all along, awaiting only the moment at which its exposure would clarify rather than merely intimidate. That moment is now. Restoring the attenuation and substituting into the canonical debt dynamics gives the corrected equation of motion:
 
 $$
-\frac{d}{dt}TDR(t) \;=\; \kappa_1 U(t) + \kappa_2 DF(t) + \kappa_3 C_m(t) - \kappa_4\,R_{\text{nominal}}(t)\,H(t).
+\frac{d}{dt}TDR(t) = \kappa_1 U(t) + \kappa_2 DF(t) + \kappa_3 C_m(t) - \kappa_4\,R_{\text{nominal}}(t)\,H(t).
 $$
 
 The three debt-*generating* terms are unattenuated -- urgency, deployment pressure, and competence mismatch reach the ledger at full strength, requiring no one's permission to accrue. Only the single debt-*reducing* term is passed through the gauntlet of $H$. Accumulation is exogenous; correction is gated. The equation is asymmetric in exactly the direction the organization is.
@@ -250,13 +252,13 @@ The analysis below moves between the time and frequency domains without ceremony
 **Legibility is a bandpass filter.** $F(t)$ does not attenuate by magnitude; it attenuates by *currency*. Its passband is centered on the dollar. A dysfunction denominated in engineer-hours, reliability, on-call sleep, or morale falls outside the passband and is attenuated in proportion to its distance from the dollar, regardless of how large it is. This is the formal statement of Section III: technical debt is not invisible because it is small; it is invisible because it is **out of band**. The filter is working perfectly. It was simply never built to pass the signal the problem is actually broadcasting on.
 
 $$
-F(\omega) \;\approx\; \mathbb{1}\!\left[\,\omega \in \text{passband}_{\$}\,\right], \qquad \text{technical debt broadcasts at } \omega \notin \text{passband}_{\$}.
+F(\omega) \approx \mathbb{1}\!\left[\,\omega \in \text{passband}_{\$}\,\right], \qquad \text{technical debt broadcasts at } \omega \notin \text{passband}_{\$}.
 $$
 
 **The chain has phase, not just gain.** Each boundary adds latency -- a report waits for a safe moment, an acknowledgment waits for a planning cycle, a proposition waits for budget season. Model the accumulated delay as a transport lag $e^{-sT}$ on the whole chain:
 
 $$
-H(s) \;=\; C\,A\,F\,B\;\,e^{-sT}.
+H(s) = C\,A\,F\,B\;\,e^{-sT}.
 $$
 
 Two things can happen during $T$. Either the dysfunction, left integrating, crosses the threshold at which it stops being a signal and becomes an *impulse* -- an incident -- or the executive who would have to authorize the fix rotates out of the role before the signal arrives, discharging the obligation onto a successor at, conveniently, zero personal cost. The delay, in other words, is long enough to outlast the signer. The organization does not so much discount the future as arrange to have left the building before it arrives.
@@ -264,7 +266,7 @@ Two things can happen during $T$. Either the dysfunction, left integrating, cros
 **The delay has a price, and it is the discount rate of Section III.** The transport lag has an economic reading, and it is where the present-value framing of Section III was left as a promissory note. If only a fraction $H$ of a future loss survives the chain, and it survives over a horizon of order $T$, then the organization behaves as though it discounts that loss continuously at the rate for which $e^{-\text{(rate)}\,T} = H$ -- namely $-\tfrac{1}{T}\ln H$ -- plus whatever hazard $h$ the signing role carries of turning over before the bill arrives. This is the Organizational Discount Rate $r_o$, now decomposed:
 
 $$
-r_o \;=\; \underbrace{r}_{\text{cost of capital}} \;+\; \underbrace{h \;-\; \tfrac{1}{T}\ln H(t)}_{\text{organizational premium } \rho}.
+r_o = \underbrace{r}_{\text{cost of capital}} + \underbrace{h - \tfrac{1}{T}\ln H(t)}_{\text{organizational premium } \rho}.
 $$
 
 Because $H \in (0,1)$, the premium $\rho$ is strictly positive and diverges as $H \to 0$: a low-candor, slow-reporting, high-turnover organization discounts its own future at a rate that has almost nothing to do with money. Substituting back into the present value of Section III, $PV_{\text{remediation}} \to 0$ precisely when $H$ is smallest -- that is, precisely when the dysfunction is largest and least reported. The remediation with the highest true value is discounted most steeply by the organization least equipped to see it. This is the quantitative content of the authorization gate $B$: the CFO who rejects the proposal is not overriding the arithmetic but computing it faithfully at $r_o$, at which it loses.
@@ -274,7 +276,7 @@ Low $H$ therefore does its damage twice, in two different registers. Once as a *
 **There is a second path, and it has unity gain.** The forward, deliberative path has gain $H \ll 1$, and it is the only path anyone is *supposed* to use. But there exists a parallel path that bypasses every gate at once: the incident. An outage need not be reported (it reports itself), acknowledged (it is on fire), rendered legible (the dollars are now unambiguous), or authorized (the money is already being spent). The catastrophic path has a transfer function of approximately $1$:
 
 $$
-H_{\text{deliberative}} \;\ll\; 1, \qquad H_{\text{incident}} \;\approx\; 1.
+H_{\text{deliberative}} \ll 1, \qquad H_{\text{incident}} \approx 1.
 $$
 
 The organization therefore contains two channels for converting dysfunction into spend: a lawful one attenuated nearly to zero, and a catastrophic one at full gain that activates only *after* the failure it would have funded the prevention of. A system offered a heavily attenuated forward path and an unattenuated failure path will, over enough dysfunction, route through the failure path -- not by anyone's decision, but because that is where the gain is. What looks from the outside like negligence is, on inspection, impedance matching.

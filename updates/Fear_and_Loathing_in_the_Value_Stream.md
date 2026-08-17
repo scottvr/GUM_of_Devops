@@ -53,7 +53,9 @@ Reporting therefore clears only the fear gate. Authorized remediation requires c
 
 This is why "we all know it's broken" is not a budget. Consensus is inexpensive and receives a corresponding valuation during capital allocation. Remediation competes against features, and features usually arrive with a revenue story. Remediation arrives with an avoided-loss story: money the organization hopes not to lose, incidents it hopes not to have, engineer-hours it hopes not to waste, and customers it hopes not to anger. None of these photographs especially well for highlighting on the quarter's celebration deck.
 
-The CFO is not the villain in this account. Indeed, the mechanism depends upon the CFO behaving rationally. Finance cannot allocate capital against an instrument it cannot price, and “the engineers have stopped saying if and started saying when” is an unusually difficult input to a discounted-cash-flow model. The dysfunction lies in the absence of a common unit. The GUM expresses many variables as unitless, regularized proxies; Finance measures in dollars; and technical debt is denominated in a third currency that nobody accepts at the register.
+For purposes of the present model, no executive is assumed to be deliberately suppressing remediation, manipulating a reporting boundary, or protecting a quarterly metric at the expense of long-horizon system health. This is the conventional blameless-postmortem assumption: not a claim that bad faith is empirically absent, but a methodological convenience permitting the analysis to proceed without immediately activating the defensive mechanisms being modeled.
+
+The assumption is conservative. If the observed failure mode can arise without malice, incompetence, or deliberate concealment, then the introduction of any such terms can only enlarge the feasible pathology space. The CFO therefore need not be the villain in this account. Indeed, the mechanism is more interesting when Finance is behaving rationally. Finance cannot allocate capital against an instrument it cannot price, and “the engineers have stopped saying if and started saying when” is an unusually difficult input to a discounted-cash-flow model. The dysfunction lies in the absence of a common unit. The GUM expresses many variables as unitless, regularized proxies; Finance measures in dollars; and technical debt is denominated in a third currency that nobody accepts at the register.
 
 The relevant financial boundary is therefore not whether a dysfunction is *real*, nor even whether it is *acknowledged*. It is whether the dysfunction can be rendered **financially legible**: transformed into a proposition that survives contact with the capital-allocation process. Section IV assigns this transformation its own coefficient and then subjects it to the same treatment as every other GUM variable unfortunate enough to acquire notation.
 
@@ -101,7 +103,9 @@ The invisibility is consequently load-bearing. Technical debt is financially obs
 
 ## IV. The Remediation Transfer Function
 
-"Why don't organizations fix things everybody knows are broken?" is a question that feels like it has an answer and does not. It invites villains -- the coward, the bean-counter, the manager who shot the messenger -- and villains are comforting because they are, in principle, replaceable. The GUM does not permit this comfort. Its whole method is to assume everyone in the system is behaving rationally with respect to their local instruments and to ask what the *system* does anyway.
+"Why don't organizations fix things everybody knows are broken?" is a question that feels like it has an answer and does not. It invites villains -- the coward, the bean-counter, the manager who shot the messenger -- and villains are comforting because they are, in principle, replaceable. The GUM does not require this comfort. Its stronger claim is that the same pathology can emerge even when everyone in the system behaves rationally with respect to their local instruments.
+
+For the purposes of the transfer function, this is a **Blamelessness Assumption**, not a certification of innocence. Direct attribution of intent introduces a sufficiently large attenuation term that the remediation proposal may fail to propagate beyond the layer being described. We therefore preserve executive plausible deniability as a boundary condition, allowing the organizational signal to remain nonzero long enough to complete the analysis. Readers possessing contrary empirical observations may treat them as additional forcing terms.
 
 There is also a debt to pay to the original model. GUM 1.0 gives technical debt an explicit equation of motion,
 
@@ -127,7 +131,7 @@ Between $D(t)$ and any money being spent sit a series of boundaries, each of whi
 
 - $C(t)$ -- the **Candor Coefficient** (Section I): the fraction of $D$ that survives the *reporting* boundary. Fear sets this.
 - $A(t)$ -- **Acknowledgment**: the fraction of *reported* dysfunction officially accepted as real, rather than absorbed as a "known issue," reframed as a training problem, or filed under working-as-intended.
-- $F(t)$ -- **Financial Legibility** (Sections II-III): the fraction of *acknowledged* dysfunction convertible into a funding proposition -- a number a CFO will read without flinching.
+- $F(t)$ -- **Financial Legibility** (Sections II-III): the fraction of *acknowledged* dysfunction convertible into a funding proposition -- a number a CFO will read without flinching. For purposes of this transfer function, the demand for legibility is treated as a genuine requirement of capital allocation rather than as a zero-cost mechanism for denying unglamorous work while preserving discretionary authority. This treatment should not be interpreted as establishing that the latter configuration has never been observed; it merely preserves enough plausible deniability for the signal to survive transmission.
 - $B(t)$ -- **Budget Authorization** (Section II): the fraction of the funding proposition actually authorized against everything else competing for the same capital.
 
 And the output:
@@ -190,7 +194,7 @@ It has a property worth stating carefully, because it is the section's central p
 The proof is one line. Since $D_{\text{reported}} = C\,D$, and taking $C,D>0$ on the interval of interest,
 
 $$
-\frac{d}{dt}D_{\text{reported}} \;=\; C\,\dot{D} + \dot{C}\,D < 0
+\frac{d}{dt}D_{\text{reported}} = C\,\dot{D} + \dot{C}\,D < 0
 \qquad\Longleftrightarrow\qquad
 -\frac{\dot{C}}{C} > \frac{\dot{D}}{D},
 $$
@@ -275,7 +279,7 @@ A dysfunction denominated in engineer-hours, reliability, on-call sleep, or mora
 **The chain has phase, not just gain.** Each boundary adds latency -- a report waits for a safe moment, an acknowledgment waits for a planning cycle, a proposition waits for budget season. Model the accumulated delay as a transport lag $e^{-sT}$ on the whole chain:
 
 $$
-H(s) = C\,A\,F\,B\;\,e^{-sT}.
+H(s) = C\,A\,F\,B\,e^{-sT}.
 $$
 
 Two things can happen during $T$. Either the dysfunction, left integrating, crosses the threshold at which it stops being a signal and becomes an *impulse* -- an incident -- or the executive who would have to authorize the fix rotates out of the role before the signal arrives, discharging the obligation onto a successor at, conveniently, zero personal cost. The delay, in other words, is long enough to outlast the signer. The organization does not so much discount the future as arrange to have left the building before it arrives.
@@ -306,6 +310,28 @@ $$
 R_{\text{total}}(t) = R_{\text{nominal}}(t)H(t) + R_{\text{shadow}}(t).
 $$
 
+A useful limiting case follows immediately. When organizational transmissibility is low,
+
+$$
+H(t) \ll 1,
+$$
+
+the formally authorized component satisfies
+
+$$
+R_{\text{nominal}}(t)H(t) \to 0,
+$$
+
+and therefore
+
+$$
+R_{\text{total}}(t) \approx R_{\text{shadow}}(t).
+$$
+
+Thus, in precisely the environments least capable of authorizing remediation, unofficial remediation may become the dominant mechanism by which remediation occurs at all. The shadow channel is therefore not merely an exception to the transfer function but, under sufficiently poor organizational transmission, its principal surviving path.
+
+This creates an observability problem with unusually convenient consequences. Because shadow remediation is performed outside the funded channel, its contribution is weakly represented in the same reporting system that rejected the work. Continued operation may consequently be interpreted as evidence that formal remediation was unnecessary, when continued operation is in fact being subsidized by the remediation that was never authorized. The organization can therefore become structurally dependent on work it has institutionally declared unworthy of funding.
+
 The extended debt equation above describes the authorized component; substituting $R_{\text{total}}$ includes the unofficial one. Shadow remediation is not free capacity discovered under a sofa cushion. It is paid for as reduced visible throughput, hidden labor, and personal exposure elsewhere in the system.
 
 Which is the mechanism the conclusion has been waiting for: the dysfunction is not necessarily resolved; it is *survived* after selecting the only channel wide enough to carry its immediate cost.
@@ -325,7 +351,7 @@ The useful observations are transitions, delays, and discrepancies at each bound
 
 These are not universal measures and should not be multiplied casually across unrelated surveys to produce a Candor Number with three decimal places. The defensible estimate of a gate is a cohort conversion rate: of the problems reaching this boundary during a stated interval, what fraction reached the next one, and how long did passage take? $C$ remains the hardest because its denominator contains facts that did not cross the boundary. Retrospective incident reviews, genuinely protected reporting channels, and differences between anonymous and attributable responses provide partial views of that denominator. Partial observability is not a defect in the model here; it is the phenomenon being modeled.
 
-The transfer function also identifies interventions without requiring a villain. Protect reporting from retaliation and separate discovery from compulsory ownership to raise $C$. Require an explicit disposition rather than indefinite "known issue" status to raise $A$. Translate chronic toil and recurrent incidents into bounded expected-loss ranges to raise $F$. Reserve remediation capacity or establish pre-authorized risk budgets to raise $B$. Then follow incident expenditure past restoration and ask whether any of it bought down the condition that caused the incident.
+The transfer function also identifies interventions without requiring a villain. This should not be mistaken for evidence that villains are unavailable. Protect reporting from retaliation and separate discovery from compulsory ownership to raise $C$. Require an explicit disposition rather than indefinite "known issue" status to raise $A$. Translate chronic toil and recurrent incidents into bounded expected-loss ranges to raise $F$. Reserve remediation capacity or establish pre-authorized risk budgets to raise $B$. Then follow incident expenditure past restoration and ask whether any of it bought down the condition that caused the incident.
 
 The product form supplies the priority rule: an absolute improvement in the smallest gate produces the largest proportional improvement in $H$. This is not permission to turn the smallest coefficient into a target. Once compensation depends on a gate, the gate will become excellent at counting whatever compensation requires. The point is to locate the boundary at which signal is being lost, change the conditions of passage, and then see whether more real problems survive to funded repair.
 
@@ -335,7 +361,9 @@ The product form supplies the priority rule: an absolute improvement in the smal
 
 A dysfunction must clear both principal gates to die of natural causes through the official channel. It must first be safe enough to report and then legible enough to fund. Between those gates sit acknowledgment, translation, timing, and authorization, each of which can attenuate the signal without any participant behaving irrationally or any department failing its local audit.
 
-The result is not that organizations deliberately choose dysfunction. More often, they build systems in which the rational action at each boundary is to pass only part of it onward. The employee protects employment, management triages, Finance demands legibility, and the CFO allocates finite capital. Every stage behaves. Their product does not.
+None of these dynamics requires a malicious actor. That result should not be mistaken for evidence that malicious actors are unavailable. More often, organizations build systems in which the rational action at each boundary is to pass only part of the dysfunction onward. The employee protects employment, management triages, Finance demands legibility, and the CFO allocates finite capital. Every stage behaves. Their product does not.
+
+The distinction matters. A system capable of producing the observed pathology from ordinary incentives alone requires no conspiracy theory to explain it; deliberate exploitation merely inherits an already functional mechanism.
 
 This matters because remediation is the only debt-reducing term in the GUM dynamics, and sustained correction at organizational scale must ask permission before acting. Urgency, deployment pressure, competence mismatch, and ordinary entropy accrue at full strength. Authorized correction arrives multiplied by $H$. The organization's nominal willingness to fix the problem may therefore remain high while its official remediation rate approaches zero, leaving participants to subsidize the difference or debt to accumulate.
 
@@ -346,5 +374,3 @@ The system may become remarkably competent at this mode of operation. It can dev
 It should not be confused with not having the dysfunction.
 
 ---
-
-*Epigraph intentionally omitted pending a sufficiently actuarial substitute for "buy the ticket, take the ride."*

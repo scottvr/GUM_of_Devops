@@ -1,0 +1,11 @@
+{
+  "_comment": "Pages built by scripts/build_updates.py. One entry per HTML page to generate from a Markdown source in updates/. 'label' is the header eyebrow (defaults to SUPPLEMENTARY NOTE); 'description' is the meta/SEO blurb. title, subtitle, KaTeX, and footnotes are inferred from the content. 'output' overrides the .html name when it differs from the source stem.",
+  "pages": [
+    {
+      "source": "Fear_and_Loathing_in_the_Value_Stream.md",
+      "output": "Fear_and_Loathing_in_the_Value_Stream.html",
+      "label": "SUPPLEMENTARY NOTE",
+      "description": "Fear and Loathing in the Value Stream — a GUM supplementary note on how workplace fear gates the reporting of dysfunction and organizational finance gates its remediation, assembled into a single remediation transfer function."
+    }
+  ]
+}

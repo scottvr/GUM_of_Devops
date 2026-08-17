@@ -9,7 +9,7 @@ The Grand Unified Model treats organizational dysfunction as observable through 
 
 A dysfunction that clears neither gate is, for all formal operational purposes, invisible. Unseen, it continues to accrue cost, it continues to appear in nobody's status update, and it continues to be, per the dashboard, fine.
 
-The two gates are not independent findings; they are stages of one machine. Sections I through III describe the reporting and financing gates. Section IV assembles them, together with the acknowledgment stage that sits between, into a single transfer function and reads off what the organization does to a dysfunction presented at its input. Section V asks how any of this might be observed without pretending that a culture survey is a voltmeter.
+The two gates are not independent findings; they are stages of one machine. Sections I through III describe the reporting and financing gates. Section IV assembles them, together with the actionable-acknowledgment stage that sits between, into a single transfer function and reads off what the organization does to a dysfunction presented at its input. Section V asks how any of this might be observed without pretending that a culture survey is a voltmeter.
 
 ---
 
@@ -130,9 +130,11 @@ Let the input be the real thing:
 Between $D(t)$ and any money being spent sit a series of boundaries, each of which passes some fraction of the signal and absorbs the rest. Define each as a coefficient in $[0,1]$:
 
 - $C(t)$ -- the **Candor Coefficient** (Section I): the fraction of $D$ that survives the *reporting* boundary. Fear sets this.
-- $A(t)$ -- **Acknowledgment**: the fraction of *reported* dysfunction officially accepted as real, rather than absorbed as a "known issue," reframed as a training problem, or filed under working-as-intended.
+- $A(t)$ -- **Actionable Acknowledgment**: the fraction of *reported* dysfunction accepted not merely as real, but as requiring organizational response. A condition may therefore be fully known while $A(t)$ remains low if it is classified as tolerated, inherited, non-blocking, out of scope, somebody else's problem, or otherwise unsuitable for action.
 - $F(t)$ -- **Financial Legibility** (Sections II-III): the fraction of *acknowledged* dysfunction convertible into a funding proposition -- a number a CFO will read without flinching. For purposes of this transfer function, the demand for legibility is treated as a genuine requirement of capital allocation rather than as a zero-cost mechanism for denying unglamorous work while preserving discretionary authority. This treatment should not be interpreted as establishing that the latter configuration has never been observed; it merely preserves enough plausible deniability for the signal to survive transmission.
 - $B(t)$ -- **Budget Authorization** (Section II): the fraction of the funding proposition actually authorized against everything else competing for the same capital.
+
+The phrase "known issue" is therefore not evidence that the acknowledgment stage has failed. On the contrary, the adjective *known* establishes that observability has completed successfully. A sufficiently old known issue is evidence that the failure has advanced to a later and more respectable organizational layer.
 
 And the output:
 
@@ -256,11 +258,13 @@ debt accumulates despite a healthy $R_{\text{nominal}}$ -- even where the organi
 This is the same result the Organizational Parser published in a recent update, just reached by a different route: a pipeline in which every stage is locally correct can still compile to an absurd output. Walk the stages and try to find the guilty one.
 
 - **$C$, reporting.** The employee who withholds is not lying; they are filtering, and filtering *correctly* with respect to the reward function of Section I. Candor is a metered expense with no line item for its benefit. Locally: rational.
-- **$A$, acknowledgment.** Management that declines to accept every reported problem as a live, fundable defect is not in denial; it is triaging. "Known issue" is a legitimate state. An organization that acknowledged everything at full weight would seize. Locally: rational.
-- **$F$, legibility.** Finance that requires a dysfunction to be expressed as a fundable proposition before it will move is not being obtuse; you cannot authorize a feeling, and "we all know it's broken" is, as established, worth exactly what consensus costs. Locally: rational.
-- **$B$, authorization.** The CFO who rations this proposition against features with a revenue story is behaving correctly with respect to their instruments (Section II). Avoided losses do not appear in the celebration deck. Locally: rational.
+- **$A$, actionable acknowledgment.** Management that declines to treat every reported problem as requiring action is not necessarily in denial; it is triaging. "Known issue" is a legitimate administrative state precisely because existence and obligation are different claims. The issue may be acknowledged as real while remaining unowned, tolerated, deferred, or somebody else's problem. Locally: rational.
+- **$F$, legibility.** Finance that requires an actionable dysfunction to be expressed as a fundable proposition before it will move is not being obtuse; you cannot authorize a feeling, and "we all know it's broken" is, as established, worth exactly what consensus costs. A known issue can therefore survive indefinitely after $A$ has passed if nobody can translate its harm into an admissible financial unit. Locally: rational.
+- **$B$, authorization.** The CFO who rations a financially legible proposition against features with a revenue story is behaving correctly with respect to their instruments (Section II). At this stage the organization may know the problem exists, agree that it requires action, and understand the expected cost of leaving it unresolved, yet still decline to fund it. Avoided losses do not appear in the celebration deck. Locally: rational.
 
 Every stage passes its own audit. Each department can demonstrate, convincingly, that it did its job. The composition -- a known, agreed, genuinely expensive problem that receives nothing -- is not attributable to any stage, because no stage failed. The *product* failed. There is no one to fire, which is precisely why nothing changes: the failure has no address.
+
+Once an issue is both known and persistent, the interesting question is therefore no longer whether the organization can see it, but which subsequent gate has learned to tolerate it.
 
 ### Further Unnecessary Dynamics
 
@@ -345,13 +349,13 @@ The practical objection arrives on schedule: if $D$, $C$, $A$, $F$, and $B$ are 
 The useful observations are transitions, delays, and discrepancies at each boundary:
 
 - **Candor ($C$):** the gap between anonymous and attributable reports; problems reconstructed after incidents that were already known locally; escalation latency; and whether reporters acquire remediation work, adverse visibility, or other messenger taxes.
-- **Acknowledgment ($A$):** the fraction of reported problems receiving an explicit disposition, owner, and review date; the age and recurrence of "known issues"; and the rate at which structural problems are reclassified as training or individual-performance defects.
-- **Financial legibility ($F$):** the fraction of acknowledged problems translated into ranges for expected loss, delay, capacity consumed, or exposure; the time required for that translation; and how often proposals die because the unit of harm is inadmissible rather than because the harm is disputed.
+- **Actionable acknowledgment ($A$):** the fraction of reported problems receiving an explicit disposition that treats remediation as required or intentionally deferred, together with an owner and review date; the age and recurrence of "known issues" without such disposition; and the rate at which structural problems are accepted as real while being reclassified as tolerated risk, training defects, local ownership problems, or non-blocking conditions.
+- **Financial legibility ($F$):** the fraction of actionably acknowledged problems translated into ranges for expected loss, delay, capacity consumed, or exposure; the time required for that translation; and how often proposals die because the unit of harm is inadmissible rather than because either the problem or the need for action is disputed.
 - **Authorization ($B$):** the fraction of financially legible proposals funded, their decision latency, and the ratio of planned preventive expenditure to emergency restoration expenditure for the same class of problem.
 
 These are not universal measures and should not be multiplied casually across unrelated surveys to produce a Candor Number with three decimal places. The defensible estimate of a gate is a cohort conversion rate: of the problems reaching this boundary during a stated interval, what fraction reached the next one, and how long did passage take? $C$ remains the hardest because its denominator contains facts that did not cross the boundary. Retrospective incident reviews, genuinely protected reporting channels, and differences between anonymous and attributable responses provide partial views of that denominator. Partial observability is not a defect in the model here; it is the phenomenon being modeled.
 
-The transfer function also identifies interventions without requiring a villain. This should not be mistaken for evidence that villains are unavailable. Protect reporting from retaliation and separate discovery from compulsory ownership to raise $C$. Require an explicit disposition rather than indefinite "known issue" status to raise $A$. Translate chronic toil and recurrent incidents into bounded expected-loss ranges to raise $F$. Reserve remediation capacity or establish pre-authorized risk budgets to raise $B$. Then follow incident expenditure past restoration and ask whether any of it bought down the condition that caused the incident.
+The transfer function also identifies interventions without requiring a villain. This should not be mistaken for evidence that villains are unavailable. Protect reporting from retaliation and separate discovery from compulsory ownership to raise $C$. Require "known issue" to resolve into an explicit actionable disposition -- remediate, accept, defer with review, or reject with rationale -- rather than allowing knowledge itself to masquerade as action, thereby raising $A$. Translate chronic toil and recurrent incidents into bounded expected-loss ranges to raise $F$. Reserve remediation capacity or establish pre-authorized risk budgets to raise $B$. Then follow incident expenditure past restoration and ask whether any of it bought down the condition that caused the incident.
 
 The product form supplies the priority rule: an absolute improvement in the smallest gate produces the largest proportional improvement in $H$. This is not permission to turn the smallest coefficient into a target. Once compensation depends on a gate, the gate will become excellent at counting whatever compensation requires. The point is to locate the boundary at which signal is being lost, change the conditions of passage, and then see whether more real problems survive to funded repair.
 
@@ -374,3 +378,5 @@ The system may become remarkably competent at this mode of operation. It can dev
 It should not be confused with not having the dysfunction.
 
 ---
+
+*Epigraph intentionally omitted pending a sufficiently actuarial substitute for "buy the ticket, take the ride."*

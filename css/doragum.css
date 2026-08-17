@@ -1417,7 +1417,7 @@ body.readme-page {
 }
 
 .readme-page .github-markdown-content h1:first-of-type::before {
-  content: "GUM GRAPH (GUT) · FIELD GUIDE";
+  content: "GUM GRAPH (GUT) \0000B7  FIELD GUIDE";
   position: absolute;
   top: 0;
   left: 0;
@@ -1605,7 +1605,7 @@ body.readme-page.post-page {
    side padding, so the actual text area is already narrower than 90ch. Using
    max-width:78ch here would exceed that text area and never apply. Instead we
    pull the abstract in from the body text width (100%) by the difference
-   between the two measures (90ch - 78ch = 12ch) — a padding-independent delta,
+   between the two measures (90ch - 78ch = 12ch) -- a padding-independent delta,
    so the abstract stays exactly that much narrower whatever the padding, split
    evenly across both sides by the auto margins. */
 .readme-page.post-page .github-markdown-content .post-abstract {
@@ -1646,7 +1646,7 @@ body.readme-page.post-page {
   mnargin: 2em;
 }
 
-/* Inline image-on-hover — a term that is NOT a link but reveals a small image
+/* Inline image-on-hover -- a term that is NOT a link but reveals a small image
    when hovered or keyboard-focused (visual asides / jokes). A dotted underline
    signals it's interactive without implying navigation. Markup:
      <span class="img-hover" tabindex="0">term<span class="img-hover__pop">
@@ -1695,12 +1695,12 @@ body.readme-page.post-page {
   transform: translateX(-50%) translateY(0);
 }
 
-/* Inline term gloss — like .img-hover, but the popup is a toast-style text
+/* Inline term gloss -- like .img-hover, but the popup is a toast-style text
    blurb (accent bubble, white text, mirroring the .toast styling) instead of
    an image. For defining jargon on first use without navigating anywhere.
    Markup:
      <span class="term-tip" tabindex="0">term<span class="term-tip__pop"
-       role="tooltip">definition…</span></span> */
+       role="tooltip">definition...</span></span> */
 .readme-page .github-markdown-content .term-tip {
   position: relative;
   border-bottom: 2px dotted var(--accent-dim);

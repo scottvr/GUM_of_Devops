@@ -1,1 +1,5 @@
 markdown>=3.10
+
+# For the pre-commit-framework hook (see .pre-commit-config.yaml). Not needed if
+# you instead arm the raw scripts/hooks/pre-commit via core.hooksPath.
+pre-commit>=3.5

@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+#
+# pre-commit: keep updates/*.html in sync with their Markdown sources.
+#
+# When a manifest Markdown source (or the build script / manifest) is staged,
+# rebuild the themed HTML and stage the regenerated files so they land in the
+# same commit. Local-only -- no GitHub or CI dependency.
+#
+# Activate once per clone:
+#     git config core.hooksPath scripts/hooks
+#
+set -euo pipefail
+
+cd "$(git rev-parse --show-toplevel)"
+
+# Do nothing unless something that affects generated pages is staged.
+if ! git diff --cached --name-only --diff-filter=ACMR \
+     | grep -Eq '^(updates/.+\.md|updates/build-manifest\.json|scripts/build_updates\.py)$'; then
+  exit 0
+fi
+
+# Prefer the project venv; fall back to python3. Needs the 'markdown' module.
+PY="$HOME/.venv/bin/python"
+[ -x "$PY" ] || PY="$(command -v python3 || true)"
+if [ -z "${PY:-}" ] || ! "$PY" -c 'import markdown' >/dev/null 2>&1; then
+  echo "pre-commit: no Python with the 'markdown' module found." >&2
+  echo "  install:  ${PY:-python3} -m pip install -r scripts/requirements.txt" >&2
+  exit 1
+fi
+
+echo "pre-commit: rebuilding updates HTML from Markdown..."
+"$PY" scripts/build_updates.py
+
+# Re-stage every generated output so the committed HTML matches the Markdown.
+"$PY" scripts/build_updates.py --list-outputs | while IFS= read -r out; do
+  git add -- "$out"
+done
+echo "pre-commit: regenerated HTML staged."

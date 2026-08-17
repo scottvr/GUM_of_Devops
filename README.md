@@ -51,3 +51,34 @@ VanRavenswaay, S. (2026). The Grand Unified Model of Devops, Proceedings of SIGB
 ## Contact
 
 Scott VanRavenswaay - scottvr+github@paperclipmaximizer.ai
+
+---
+
+## Building the update pages (maintainers)
+
+The supplementary notes under `updates/` are authored as Markdown and converted
+to the themed, 7-bit-ASCII HTML the site serves by `scripts/build_updates.py`.
+Edit the `.md` -- never the generated `.html` -- and let the build regenerate.
+
+Setup (once, in a venv):
+
+    python -m pip install -r scripts/requirements.txt
+
+Build manually:
+
+    python scripts/build_updates.py           # build every page in updates/build-manifest.json
+    python scripts/build_updates.py --check    # no writes; exit 1 if any HTML is stale
+
+Or keep the HTML in sync automatically with a pre-commit hook. Pick ONE per clone:
+
+- pre-commit framework (config in `.pre-commit-config.yaml`): regenerates and
+  aborts the commit if the HTML changed, so you re-`git add` and commit again.
+
+      pre-commit install
+
+- raw hook (`scripts/hooks/pre-commit`): regenerates and auto-stages in one shot.
+
+      git config core.hooksPath scripts/hooks
+
+Do not arm both: `core.hooksPath` overrides `.git/hooks`, and `pre-commit
+install` refuses to run while it is set (unset it first to switch).

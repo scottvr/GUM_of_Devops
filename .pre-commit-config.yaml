@@ -1,0 +1,22 @@
+# Regenerates updates/*.html from their Markdown sources on commit.
+#
+# This is just wiring -- the actual logic lives in scripts/build_updates.py.
+# Arm it with:  pre-commit install
+# (Use this OR the raw hook at scripts/hooks + `git config core.hooksPath
+#  scripts/hooks`, not both -- see README. pre-commit refuses to install while
+#  core.hooksPath is set, so unset that first if you switch to the framework.)
+#
+# Note: as a file-generating hook, this regenerates the HTML and then FAILS the
+# commit if anything changed ("files were modified by this hook"); re-`git add`
+# the HTML and commit again. The raw scripts/hooks/pre-commit instead auto-stages
+# and lets the commit through in one shot.
+repos:
+  - repo: local
+    hooks:
+      - id: build-updates-html
+        name: build updates HTML from Markdown
+        language: python
+        additional_dependencies: ["markdown>=3.10"]
+        entry: python scripts/build_updates.py
+        pass_filenames: false
+        files: '^(updates/.+\.md|updates/build-manifest\.json|scripts/build_updates\.py)$'

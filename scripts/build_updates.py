@@ -410,9 +410,15 @@ def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description="Build doragum-themed HTML from updates/ markdown.")
     ap.add_argument("targets", nargs="*", help="Only build these (source .md name or output slug).")
     ap.add_argument("--check", action="store_true", help="Fail if any output is stale (no writes).")
+    ap.add_argument("--list-outputs", action="store_true", help="Print each output path and exit.")
     args = ap.parse_args(argv)
 
     pages = load_manifest()
+    if args.list_outputs:
+        for page in pages:
+            print(output_path(page).relative_to(REPO_ROOT))
+        return 0
+
     if args.targets:
         wanted = set(args.targets)
         pages = [

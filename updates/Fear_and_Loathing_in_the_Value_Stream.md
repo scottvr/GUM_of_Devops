@@ -67,7 +67,7 @@ The phrase "technical debt" began as a metaphor asking to be taken seriously and
 
 Its defining financial property is therefore not merely that it is expensive. It is a liability that has successfully avoided officially being labeled one.
 
-### ### The Financial Dynamics of Technical Debt
+### The Financial Dynamics of Technical Debt
 
 Technical debt is an off-balance-sheet liability in the most literal non-accounting sense available. The organization has committed itself to future work, delay, fragility, or recovery cost, but the obligation fits no account. Nobody need hide it. There is simply no drawer.
 
@@ -266,7 +266,7 @@ Every stage passes its own audit. Each department can demonstrate, convincingly,
 
 Once an issue is both known and persistent, the interesting question is therefore no longer whether the organization can see it, but which subsequent gate has learned to tolerate it.
 
-### Further Unnecessary Dynamics
+### The Dynamics of Organizational Transmission
 
 The chain above is a static gain, and a static gain is beneath the dignity of the phenomenon. The coefficients are not directly observable -- no dashboard reports the Candor Coefficient -- so we are entitled, in the manner of the original GUM, to treat them as time-varying latent states, whether or not doing so improves anything.
 

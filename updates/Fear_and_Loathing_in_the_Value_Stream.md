@@ -67,7 +67,7 @@ The phrase "technical debt" began as a metaphor asking to be taken seriously and
 
 Its defining financial property is therefore not merely that it is expensive. It is a liability that has successfully avoided officially being labeled one.
 
-### The Financial Dynamics of Technical Debt
+### The Economics of an Unbooked Liabiity
 
 Technical debt is an off-balance-sheet liability in the most literal non-accounting sense available. The organization has committed itself to future work, delay, fragility, or recovery cost, but the obligation fits no account. Nobody need hide it. There is simply no drawer.
 
@@ -268,7 +268,7 @@ Once an issue is both known and persistent, the interesting question is therefor
 
 ### The Dynamics of Organizational Transmission
 
-The chain above is a static gain, and a static gain is beneath the dignity of the phenomenon. The coefficients are not directly observable -- no dashboard reports the Candor Coefficient -- so we are entitled, in the manner of the original GUM, to treat them as time-varying latent states, whether or not doing so improves anything.
+The chain above is a static gain, and a static gain is beneath the dignity of the phenomenon. The coefficients are not directly observable -- no dashboard reports the Candor Coefficient -- so we are entitled, in the manner of the original GUM, to treat them as time-varying latent states. Regrettably, doing so produces additional explanatory power.
 
 For the next few lines, freeze the coefficients over one planning interval. This is a local approximation, not the claim that an organization is literally linear and time-invariant -- no organization containing a reorganization could survive that claim. It lets us distinguish the chain's attenuation from its delay without asking the metaphor to impersonate a theorem.
 
@@ -338,7 +338,7 @@ This creates an observability problem with unusually convenient consequences. Be
 
 The extended debt equation above describes the authorized component; substituting $R_{\text{total}}$ includes the unofficial one. Shadow remediation is not free capacity discovered under a sofa cushion. It is paid for as reduced visible throughput, hidden labor, and personal exposure elsewhere in the system.
 
-Which is the mechanism the conclusion has been waiting for: the dysfunction is not necessarily resolved; it is *survived* after selecting the only channel wide enough to carry its immediate cost.
+Which is the mechanism the conclusion has been waiting for: the dysfunction is not necessarily resolved; it is *survived* after selecting the only channel wide enough to carry its immediate cost. We introduced the mathematics for rhetorical reasons and have suffered the professional embarrassment of discovering that it explains the thing.
 
 ---
 

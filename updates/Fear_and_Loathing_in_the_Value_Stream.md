@@ -9,7 +9,7 @@ The Grand Unified Model treats organizational dysfunction as observable through 
 
 A dysfunction that clears neither gate is, for all formal operational purposes, invisible. Unseen, it continues to accrue cost, it continues to appear in nobody's status update, and it continues to be, per the dashboard, fine.
 
-The two gates are not independent findings; they are stages of one machine. Sections I through III describe the reporting and financing gates. Section IV assembles them, together with the actionable-acknowledgment stage that sits between, into a single transfer function and reads off what the organization does to a dysfunction presented at its input. Section V asks how any of this might be observed without pretending that a culture survey is a voltmeter.
+The two gates are not independent findings; they are stages of one machine. Sections I through III describe the reporting and financing gates. Section IV assembles them, together with the actionable-acknowledgment stage that sits between, into a single transfer function and reads off what the organization does to a dysfunction presented at its input. Section V asks how any of this might be observed without pretending that a culture survey is a multimeter.
 
 ---
 

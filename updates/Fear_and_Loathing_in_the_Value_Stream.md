@@ -67,7 +67,7 @@ The phrase "technical debt" began as a metaphor asking to be taken seriously and
 
 Its defining financial property is therefore not merely that it is expensive. It is a liability that has successfully avoided officially being labeled one.
 
-### Further Unnecessary Mathematics
+### ### The Financial Dynamics of Technical Debt
 
 Technical debt is an off-balance-sheet liability in the most literal non-accounting sense available. The organization has committed itself to future work, delay, fragility, or recovery cost, but the obligation fits no account. Nobody need hide it. There is simply no drawer.
 

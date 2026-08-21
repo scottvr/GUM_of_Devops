@@ -891,7 +891,8 @@ HCAT therefore reframes organizational effectiveness as a routing problem.  The 
 
 Several limitations should be acknowledged.
 
-First, competence cannot be reliably represented as a scalar quantity.  Second, authority is contextual and socially mediated.  Third, responsibility may be formal, perceived, implicit, retrospective, or assigned immediately after an outage.  Fourth, permission may consist of technical access, procedural authorization, political permission, or possession of the one password written on the whiteboard in Conference Room B.
+First, competence cannot be reliably represented as a scalar quantity.  Second, authority is contextual and socially mediated.
+Third, responsibility may be formal, perceived, implicit, retrospective, or assigned immediately after an outage.  Fourth, permission may consist of technical access, procedural authorization, political permission, or possession of the one password written on the whiteboard in Conference Room B.
 
 Consequently, the CRAP vector cannot presently be measured with scientific precision.  This limitation is not expected to impede adoption by the management consulting industry.
 
@@ -914,7 +915,9 @@ A subscription model is being considered.
 
 Technical organizations do not fail solely because they lack competent people, adequate authority, clear responsibility, or sufficient operational permission.
 
-They also fail because these capabilities are distributed independently and then treated as though an org chart causes them to coincide.  HCAT provides a framework for examining that distribution.
+They also fail because these capabilities are distributed independently and then treated as though an org chart causes them to coincide.
+
+HCAT provides a framework for examining that distribution.
 
 Its central construct, the CRAP vector,
 
@@ -925,21 +928,13 @@ $$
 captures four properties necessary for effective technical action:
 
 **Competence** to understand what should be done.
-
 **Responsibility** for ensuring that it happens.
-
 **Authority** to make the necessary decisions.
-
 **Permission** to alter the systems involved.
-
 Misalignment among these dimensions produces recognizable organizational states.
-
 When authority exceeds competence, we observe the **Post Turtle Condition**.
-
 When competence exceeds authority, we observe **Putt Inversion**.
-
 When responsibility exceeds authority, we observe **Delegated Impossibility**.
-
 When responsibility exceeds permission, we observe **Permissionless Accountability**.
 
 When a competent actor repeatedly compensates for these failures, work begins to migrate toward that actor through the **Competence Gravity Well**, potentially creating an **Organizational Default Route**.
@@ -955,9 +950,7 @@ Who decides?
 Who can?
 ```
 
-If the answers identify four different people, the organization may have an HCAT problem.
-
-If the fifth answer is the consultant, it almost certainly does.
+If the answers identify four different people, the organization may have an HCAT problem.  If the fifth answer is the consultant, it almost certainly does.
 
 ---
 

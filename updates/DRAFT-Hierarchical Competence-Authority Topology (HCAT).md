@@ -499,9 +499,7 @@ $$
 
 This routing policy is highly efficient in the short term.  It is also self-destructive.  Every successful intervention strengthens the route.
 
-The reward for effectively resolving organizational ambiguity is therefore additional organizational ambiguity.
-
-Eventually the ODR saturates.
+The reward for effectively resolving organizational ambiguity is therefore additional organizational ambiguity.  Eventually the ODR saturates.
 
 We define **Default Route Saturation (DRS)** as the condition in which an actor's incoming problem rate exceeds their ability to forward, resolve, or refuse improperly routed work.
 
@@ -523,11 +521,8 @@ Typical statements include:
 
 ```text
 "I'm not an expert in this area."
-
 "This is outside my primary domain."
-
 "I think X is happening, but someone closer to the system should confirm."
-
 "If there is a specialist here, they should drive."
 ```
 
@@ -565,9 +560,7 @@ but discard calibration
 an expert for this"
 ```
 
-This can have unfortunate second-order effects.
-
-Suppose two actors make the following statements.
+This can have unfortunate second-order effects.  Suppose two actors make the following statements.
 
 Actor A:
 
@@ -583,14 +576,7 @@ Actor B:
 ```
 
 If X proves correct, an organization observing only prediction accuracy may score both actors equally.
-
-An organization that also rewards expressed confidence may score Actor B higher.
-
-Thus poor uncertainty calibration may become positively reinforced.
-
-The resulting selection pressure favors certainty independently of knowledge.
-
-HCAT therefore distinguishes **competence** from **performed certainty**.
+An organization that also rewards expressed confidence may score Actor B higher.  Thus poor uncertainty calibration may become positively reinforced.  The resulting selection pressure favors certainty independently of knowledge.  HCAT therefore distinguishes **competence** from **performed certainty**.
 
 This distinction is recommended.
 
@@ -726,7 +712,6 @@ This result is left as an exercise for the reader's employer.
 ## 16. HCAT and Incident Response
 
 HCAT is particularly useful during incidents because crises expose hidden organizational topology.
-
 Under normal conditions, documentation may imply:
 
 ```text
@@ -737,21 +722,15 @@ During an outage, the actual topology becomes visible:
 
 ```text
 Team A owns Service X.
-
 Team B has production credentials.
-
 Team C understands the application.
-
 An engineer who left eight months ago understood the deployment.
-
 The vendor owns the load balancer configuration.
-
 Nobody owns DNS.
 
 Scott is driving.
 ```
 
-The discrepancy between documented and effective topology is itself diagnostically useful.
 
 Incident response therefore provides an empirical method for discovering HCAT structure.
 
@@ -874,10 +853,7 @@ The organization can identify and correct CRAP misalignment before an incident e
 ### Level 5: Optimized
 
 Level 4 has been renamed, placed in a branded quadrant, and certified by an external consultancy.
-
-The organization now possesses an HCAT Transformation Roadmap.
-
-No further improvement is measurable, although several workshops remain.
+The organization now possesses an HCAT Transformation Roadmap.  No further improvement is measurable, although several workshops remain.
 
 ---
 
@@ -885,9 +861,7 @@ No further improvement is measurable, although several workshops remain.
 
 HCAT should not be interpreted as an argument that technical experts should automatically hold managerial authority.
 
-Such a conclusion would merely invert one form of misalignment into another.
-
-Competence is contextual.
+Such a conclusion would merely invert one form of misalignment into another.  Competence is contextual.
 
 The engineer best able to diagnose a packet-loss problem is not automatically the person best suited to allocate a department's budget, resolve personnel disputes, or determine strategic investment.
 
@@ -901,21 +875,15 @@ $$
 C = A
 $$
 
-but functional adjacency among the CRAP dimensions.
+but functional adjacency among the CRAP dimensions.  
 
-Authority must be reachable from competence.
+- Authority must be reachable from competence.  
+- Responsibility must be accompanied by control. 
+- Permission must be bounded by competence and accountability.  
 
-Responsibility must be accompanied by control.
+And work should not migrate indefinitely toward whoever happened to fix the previous unrelated emergency.  
 
-Permission must be bounded by competence and accountability.
-
-And work should not migrate indefinitely toward whoever happened to fix the previous unrelated emergency.
-
-HCAT therefore reframes organizational effectiveness as a routing problem.
-
-The organization already contains much of what it needs.
-
-The packets are simply going to strange places.
+HCAT therefore reframes organizational effectiveness as a routing problem.  The organization already contains much of what it needs.  The packets are simply going to strange places.
 
 ---
 
@@ -923,17 +891,9 @@ The packets are simply going to strange places.
 
 Several limitations should be acknowledged.
 
-First, competence cannot be reliably represented as a scalar quantity.
+First, competence cannot be reliably represented as a scalar quantity.  Second, authority is contextual and socially mediated.  Third, responsibility may be formal, perceived, implicit, retrospective, or assigned immediately after an outage.  Fourth, permission may consist of technical access, procedural authorization, political permission, or possession of the one password written on the whiteboard in Conference Room B.
 
-Second, authority is contextual and socially mediated.
-
-Third, responsibility may be formal, perceived, implicit, retrospective, or assigned immediately after an outage.
-
-Fourth, permission may consist of technical access, procedural authorization, political permission, or possession of the one password written on the whiteboard in Conference Room B.
-
-Consequently, the CRAP vector cannot presently be measured with scientific precision.
-
-This limitation is not expected to impede adoption by the management consulting industry.
+Consequently, the CRAP vector cannot presently be measured with scientific precision.  This limitation is not expected to impede adoption by the management consulting industry.
 
 Future work may therefore include development of:
 
@@ -954,9 +914,7 @@ A subscription model is being considered.
 
 Technical organizations do not fail solely because they lack competent people, adequate authority, clear responsibility, or sufficient operational permission.
 
-They also fail because these capabilities are distributed independently and then treated as though an org chart causes them to coincide.
-
-HCAT provides a framework for examining that distribution.
+They also fail because these capabilities are distributed independently and then treated as though an org chart causes them to coincide.  HCAT provides a framework for examining that distribution.
 
 Its central construct, the CRAP vector,
 

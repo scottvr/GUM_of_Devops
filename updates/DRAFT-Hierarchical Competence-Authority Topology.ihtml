@@ -1,0 +1,903 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="draft draft draft draft">
+<title>Hierarchical Competence-Authority Topology (HCAT) &mdash; The GUM of DevOps</title>
+<!-- Math is authored as LaTeX (dollar-dollar for display, single-dollar for
+     inline) and rendered live by a vendored KaTeX &mdash; no CDN, no build step.
+     See the scripts just before the closing body tag. -->
+<link rel="stylesheet" href="../DORA/GUT/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../css/doragum.css">
+<script>document.documentElement.classList.add('math-loading');</script>
+<style>
+  /* Page-specific overrides on top of the shared GUT documentation theme. */
+  .readme-page .github-markdown-content h1:first-of-type::before {
+    content: "THE GUM OF DEVOPS \0000B7  SPECIAL SUPPLEMENTAL";
+  }
+
+  /* Italic dek beneath the title. Mirrors the landing page's paper subtitle. */
+  .readme-page .github-markdown-content .paper-subtitle {
+    margin: 0 0 1.8rem;
+    color: var(--text-dim);
+    font-style: italic;
+    font-size: 1.05rem;
+  }
+
+  /* Display math (dollar-dollar delimiters) renders to .katex-display. Give it
+     breathing room and let very wide equations scroll horizontally on their own
+     rather than overflowing the page. */
+  .readme-page .github-markdown-content .katex-display {
+    margin: 1.6rem 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  /* Size math to match the surrounding text rather than KaTeX's default 1.21em. */
+  .readme-page .github-markdown-content .katex {
+    font-size: 1.11em;
+  }
+
+  /* Fenced code blocks. The shared theme styles inline <code> but leaves
+     <pre> to the page; give the chain/ledger listings a bordered, monospaced
+     card that scrolls on its own rather than overflowing the reading column. */
+  .readme-page .github-markdown-content pre {
+    margin: 1.4rem 0;
+    padding: 0.9rem 1.1rem;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    background: var(--surface);
+    overflow-x: auto;
+    line-height: 1.55;
+  }
+
+  /* Reset the inline-code chrome inside a block so we don't double-border. */
+  .readme-page .github-markdown-content pre code {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    font-size: 0.86em;
+  }
+
+  /* Footer mirrors the landing page's: a horizontal meta / links bar driven
+     by the shared unscoped footer/.footer-meta/.paper-links rules, with the
+     content-scoped link colors restored. */
+  .readme-page .github-markdown-content footer {
+    margin-top: 3rem;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .readme-page .github-markdown-content .footer-meta a,
+  .readme-page .github-markdown-content .paper-links a {
+    color: var(--accent-dim);
+    text-decoration: none;
+  }
+
+  .readme-page .github-markdown-content .paper-links .paper-link-primary {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .readme-page .github-markdown-content .footer-meta a:hover,
+  .readme-page .github-markdown-content .paper-links a:hover {
+    color: var(--accent);
+  }
+
+  .readme-nav-actions {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 0.5rem;
+  }
+</style>
+</head>
+<body class="readme-page post-page">
+<a class="skip-link" href="#note-content">Skip to content</a>
+<nav class="readme-nav" aria-label="Site">
+    <div class="readme-nav-brand" aria-label="The GUM of DevOps">
+        <span class="readme-nav-mark" aria-hidden="true"><a style="color: inherit; text-decoration: none;" href="https://blehg.paperclipmaximizer.ai/GUM_of_Devops/">GUM</a></span>
+        <span><a style="color: inherit; text-decoration: none;" href="https://blehg.paperclipmaximizer.ai/GUM_of_Devops/">The Grand Unified Model of DevOps</a></span>
+    </div>
+    <div class="readme-nav-actions">
+        <a class="readme-nav-action" href="../index.html">The Paper</a>
+    </div>
+</nav>
+<main
+            class="github-markdown-body"
+            data-color-mode="auto"
+            data-light-theme="light"
+            data-dark-theme="dark"
+        >
+            <div class="github-markdown-content" id="note-content">
+<h1 id="hierarchical-competence-authority-topology-hcat">Hierarchical Competence-Authority Topology (HCAT)</h1>
+<h2 id="a-formal-model-for-the-distribution-of-crap-in-technical-organizations">A Formal Model for the Distribution of CRAP in Technical Organizations</h2>
+<h3 id="gum-supplemental-note">GUM Supplemental Note</h3>
+<hr>
+<h2 id="abstract">Abstract</h2>
+<p>Technical organizations routinely assign work to individuals who possess some combination of the competence to understand it, the responsibility to complete it, the authority to make decisions concerning it, and the permission necessary to alter the systems in question. Less routinely, these properties are assigned to the same individual.</p>
+<p>This note introduces <strong>Hierarchical Competence-Authority Topology (HCAT)</strong>, a framework for examining the organizational distribution of <strong>Competence, Responsibility, Authority, and Permission (CRAP)</strong>. Rather than treating competence as an intrinsic property of an employee or authority as an intrinsic property of a job title, HCAT models their placement relative to one another and to the work being performed.</p>
+<p>Several common organizational pathologies emerge naturally from this representation. These include the <strong>Post Turtle Condition</strong>, in which authority substantially exceeds relevant competence; <strong>Putt Inversion</strong>, in which competence substantially exceeds authority; <strong>Delegated Impossibility</strong>, in which responsibility exceeds authority; and <strong>Permissionless Accountability</strong>, in which responsibility is assigned without sufficient operational permission to fulfill it.</p>
+<p>The framework further identifies a routing phenomenon termed the <strong>Competence Gravity Well</strong>, wherein repeated successful intervention causes unresolved work to migrate toward a competent actor regardless of formal ownership, scope, authority, or access. In sufficiently mature organizations, such an actor may become the <strong>Organizational Default Route (ODR)</strong>, receiving problems primarily because no more specific route exists.</p>
+<p>HCAT provides a topology for analyzing CRAP.</p>
+<p>The implications are discussed.</p>
+<hr>
+<h2 id="1-introduction">1. Introduction</h2>
+<p>Technical management has long recognized that organizational hierarchy and technical competence are related, although rarely in the direction implied by the org chart.</p>
+<p>The Peter Principle proposes that individuals in hierarchies tend to be promoted until reaching roles for which their previous competence no longer predicts success. Putt later focused this observation specifically on technical organizations, arguing that technological understanding and managerial control tend to become separated as hierarchies develop. His resulting corollary was characteristically concise:</p>
+<blockquote>
+<p>Every technical hierarchy, in time, develops a competence inversion.</p>
+</blockquote>
+<p>Putt&rsquo;s work originated in articles published during the 1970s and was collected into <em>Putt&rsquo;s Law and the Successful Technocrat</em> in 1981, later appearing in a revised Wiley-IEEE edition. It occupies a useful position between management theory and the considerably more rigorous discipline of noticing what management actually does.</p>
+<p>These prior formulations describe important properties of hierarchy, but they do not fully capture a recurring problem in contemporary DevOps, SRE, infrastructure, cloud engineering, platform engineering, cybersecurity, database administration, and other disciplines whose primary organizational function is explaining to management why changing a box in one system did not change a completely different box in another system.</p>
+<p>Consider a typical technical task.</p>
+<p>An organization would like a thing to occur.</p>
+<p>Person A understands the thing.</p>
+<p>Person B owns the thing.</p>
+<p>Person C is accountable for the thing.</p>
+<p>Person D possesses the credentials required to modify the thing.</p>
+<p>Person E is asked why the thing has not occurred.</p>
+<p>This arrangement is generally regarded as a team.</p>
+<p>The present work proposes that these apparently distinct organizational inconveniences may be studied through a common framework.</p>
+<p>We call this framework <strong>Hierarchical Competence-Authority Topology</strong>, or <strong>HCAT</strong>.</p>
+<p>Readers may observe that alternative lexical arrangements could produce other acronyms. This observation is correct but not actionable.</p>
+<hr>
+<h2 id="2-the-crap-state-vector">2. The CRAP State Vector</h2>
+<p>Let each organizational actor (i), relative to some task (t), possess four normalized quantities:</p>
+$$
+C_i(t) = \text{relevant competence}
+$$
+
+$$
+R_i(t) = \text{assigned responsibility}
+$$
+
+$$
+A_i(t) = \text{effective authority}
+$$
+
+$$
+P_i(t) = \text{operational permission or control}
+$$
+
+<p>For convenience, we define the actor&rsquo;s state as:</p>
+$$
+\mathbf{x}_i(t) =
+\left(
+C_i,
+R_i,
+A_i,
+P_i
+\right)
+$$
+
+<p>This ordered tuple will hereafter be referred to as the <strong>CRAP vector</strong>.</p>
+<p>No significance should be inferred from the ordering of these terms beyond the obvious significance.</p>
+<p>Each component is task-dependent.</p>
+<p>An accomplished network engineer may exhibit:</p>
+$$
+C \approx 1
+$$
+
+<p>when diagnosing BGP convergence and:</p>
+$$
+C \approx 0.07
+$$
+
+<p>when repairing an Oracle stored procedure, notwithstanding the fact that both tasks occur near computers.</p>
+<p>Likewise, organizational authority is not equivalent to operational permission. A vice president may possess considerable authority to demand that an AWS resource be changed while possessing no IAM permission whatsoever to change it personally.</p>
+<p>Conversely, an engineer may possess administrator credentials while having no organizational authority to use them for the requested purpose.</p>
+<p>This distinction turns out to matter.</p>
+<hr>
+<h2 id="3-crap-alignment">3. CRAP Alignment</h2>
+<p>HCAT assumes that successful execution is favored when the relevant CRAP dimensions are sufficiently aligned.</p>
+<p>For a task requiring action, the desirable condition is approximately:</p>
+$$
+C \sim R \sim A \sim P
+$$
+
+<p>The symbol (\sim) is used deliberately rather than equality, as the quantities involved cannot actually be measured on a common physical scale, and doing so would be ridiculous.</p>
+<p>We therefore normalize them to decimal values and proceed anyway.</p>
+<p>A generalized local misalignment function may be written:</p>
+$$
+M_i =
+w_{CA}|C_i-A_i|
++
+w_{RA}|R_i-A_i|
++
+w_{RP}|R_i-P_i|
++
+w_{CP}|C_i-P_i|
+$$
+
+<p>where the (w) terms are weighting coefficients selected according to organizational context, empirical evidence, author preference, or whichever values make Figure 2 look most persuasive.</p>
+<p>Low (M_i) indicates that competence, responsibility, authority, and control are reasonably colocated.</p>
+<p>High (M_i) indicates <strong>CRAP misalignment</strong>.</p>
+<p>Importantly, HCAT does not assert that every employee should possess equal authority, competence, responsibility, and system access.</p>
+<p>It asserts only that organizations should avoid assigning responsibility for changing a system to someone who:</p>
+<ol>
+<li>does not own it,</li>
+<li>cannot access it,</li>
+<li>is not authorized to alter it,</li>
+<li>did not create the problem,</li>
+<li>cannot even log into several of the affected environments,</li>
+</ol>
+<p>and then repeatedly ask that individual why the work remains incomplete.</p>
+<p>This is considered a high-(M) configuration.</p>
+<hr>
+<h2 id="4-hcat-is-a-topology-not-a-score">4. HCAT Is a Topology, Not a Score</h2>
+<p>The central claim of HCAT is that organizational dysfunction frequently arises not because competence, authority, responsibility, or permission are absent, but because they are <strong>located in different places</strong>.</p>
+<p>Suppose a task (t) requires four capabilities:</p>
+<pre><code class="language-text">understand the problem
+decide what should happen
+own the outcome
+perform the change
+</code></pre>
+<p>An organization may possess all four.</p>
+<p>Nevertheless:</p>
+<pre><code class="language-text">Engineer A       understands the problem
+Director B       can authorize the work
+Manager C        owns the outcome
+Administrator D  has the credentials
+Consultant E     gets asked about it every Tuesday
+</code></pre>
+<p>No resource deficit exists.</p>
+<p>The difficulty is topological.</p>
+<p>The CRAP is poorly distributed.</p>
+<p>HCAT therefore models not merely actors but the paths by which work, questions, approvals, escalations, and blame move between them.</p>
+<p>Let:</p>
+$$
+G = (V,E)
+$$
+
+<p>where (V) is the set of organizational actors and (E) represents the available routes through which work or accountability may travel.</p>
+<p>A technically healthy organization attempts to route work toward a node possessing an appropriate CRAP configuration.</p>
+<p>A sufficiently mature enterprise instead routes work according to calendar availability.</p>
+<hr>
+<h2 id="5-the-post-turtle-condition">5. The Post Turtle Condition</h2>
+<p>The familiar &ldquo;post turtle&rdquo; describes an individual observed in a position for which the observer cannot readily infer a plausible self-propelled route.</p>
+<p>The turtle:</p>
+<ol>
+<li>did not climb onto the post itself,</li>
+<li>appears poorly adapted to its current altitude,</li>
+<li>cannot perform many useful turtle functions while there,</li>
+<li>was therefore presumably placed there by some external mechanism.</li>
+</ol>
+<p>HCAT formalizes this observation as the <strong>Post Turtle Condition (PTC)</strong>.</p>
+<p>For actor (i):</p>
+$$
+A_i \gg C_i
+$$
+
+<p>That is, task-relevant authority substantially exceeds task-relevant competence.</p>
+<p>A simple Post Turtle Coefficient may therefore be defined:</p>
+$$
+PTC_i =
+\frac{A_i}{C_i + \epsilon}
+$$
+
+<p>where (\epsilon) is a small stabilizing term included because division by zero would otherwise make the organizational implications unnecessarily explicit.</p>
+<p>Large values of (PTC) indicate considerable hierarchical elevation relative to demonstrated role-relevant understanding.</p>
+<p>This formulation also makes clear that incompetence itself is not necessarily hazardous.</p>
+<p>An inexperienced junior employee with low competence and low authority presents limited systemic danger:</p>
+$$
+C \ll 1,\quad A \ll 1
+$$
+
+<p>The same competence attached to substantial decision authority produces:</p>
+$$
+C \ll A
+$$
+
+<p>and therefore elevated Post Turtle risk.</p>
+<p>A turtle on the ground is merely a turtle.</p>
+<p>A turtle on a post has acquired an <strong>authority multiplier</strong>.</p>
+<hr>
+<h2 id="6-putt-inversion">6. Putt Inversion</h2>
+<p>The inverse condition is equally important.</p>
+<p>Let:</p>
+$$
+C_i \gg A_i
+$$
+
+<p>Here the actor understands the system but lacks sufficient organizational authority to direct its behavior.</p>
+<p>We call this <strong>Putt Inversion</strong>, after Putt&rsquo;s observation that technical hierarchies tend to separate those who understand technology from those who manage it.</p>
+<p>Post Turtle and Putt Inversion are therefore mirror states:</p>
+<pre><code class="language-text">Post Turtle:      A &gt;&gt; C
+Putt Inversion:   C &gt;&gt; A
+</code></pre>
+<p>An organization may contain both simultaneously.</p>
+<p>Indeed, this is often the preferred implementation.</p>
+<p>One employee understands precisely what must be done but lacks authority to approve it.</p>
+<p>Another possesses authority to approve it but does not understand why it is necessary.</p>
+<p>A meeting is then scheduled so that both may exchange these properties verbally without actually transferring either one.</p>
+<p>The meeting concludes with an action item.</p>
+<hr>
+<h2 id="7-delegated-impossibility">7. Delegated Impossibility</h2>
+<p>A second HCAT pathology occurs when responsibility exceeds effective authority:</p>
+$$
+R_i \gg A_i
+$$
+
+<p>We term this <strong>Delegated Impossibility</strong>.</p>
+<p>The individual is held responsible for an outcome while lacking the authority necessary to cause the organizations controlling its prerequisites to act.</p>
+<p>A useful indicator is the <strong>Accountability-Authority Ratio</strong>:</p>
+$$
+DAR_i =
+\frac{R_i}{A_i+\epsilon}
+$$
+
+<p>As:</p>
+$$
+A_i \rightarrow 0
+$$
+
+<p>while:</p>
+$$
+R_i > 0
+$$
+
+<p>then:</p>
+$$
+DAR_i \rightarrow \infty
+$$
+
+<p>This is the <strong>organizational accountability singularity</strong>.</p>
+<p>Beyond this point, additional management pressure cannot produce additional execution because the responsible actor lacks the causal mechanisms required to affect the requested state.</p>
+<p>Nevertheless, pressure is commonly increased.</p>
+<p>This produces several secondary outputs:</p>
+<ul>
+<li>status reports,</li>
+<li>escalation emails,</li>
+<li>follow-up meetings,</li>
+<li>risk-register entries,</li>
+<li>increasingly elaborate explanations of the same dependency,</li>
+<li>requests for updated ETAs,</li>
+<li>and measurable growth in executive urgency.</li>
+</ul>
+<p>None of these alters the blocked system.</p>
+<p>This can surprise management.</p>
+<hr>
+<h2 id="8-permissionless-accountability">8. Permissionless Accountability</h2>
+<p>A particularly useful special case occurs when:</p>
+$$
+R_i \gg P_i
+$$
+
+<p>This condition shall be called <strong>Permissionless Accountability</strong>.</p>
+<p>The actor may fully understand the required work and may even be considered responsible for its completion, yet lacks the system permissions necessary to inspect or alter the relevant state.</p>
+<p>For example, consider a generalized cloud environment in which an organization wishes to normalize a set of metadata tags.</p>
+<p>A technical specialist is asked to remediate them.</p>
+<p>However:</p>
+<ul>
+<li>the specialist lacks access to several affected accounts,</li>
+<li>the specialist lacks permission to enumerate the relevant metadata,</li>
+<li>the specialist lacks permission to modify it,</li>
+<li>the organization&rsquo;s Cloud Operations function owns the environments,</li>
+<li>that function possesses both the access and organizational authority required,</li>
+<li>and an access request submitted previously remains unresolved.</li>
+</ul>
+<p>The organization may nevertheless continue routing the tagging question to the specialist.</p>
+<p>This behavior initially appears irrational.</p>
+<p>Under HCAT it is easily explained.</p>
+<p>Responsibility has been assigned independently of permission:</p>
+$$
+R_s > 0,\quad P_s \approx 0
+$$
+
+<p>The obvious remediation is to increase (P_s), decrease (R_s), or reroute the task to another actor whose existing CRAP vector is better aligned.</p>
+<p>Organizations frequently select a fourth option:</p>
+$$
+U \uparrow
+$$
+
+<p>where (U) is Management Urgency.</p>
+<p>This has the advantage of requiring no IAM changes.</p>
+<hr>
+<h2 id="9-responsibility-displacement">9. Responsibility Displacement</h2>
+<p>HCAT also permits responsibility itself to move through the organizational graph.</p>
+<p>We define <strong>Responsibility Displacement</strong> as the migration of ownership away from the actor possessing formal authority or control and toward an actor perceived as more likely to produce a successful outcome.</p>
+<p>Let (q_i) denote perceived problem-solving effectiveness.</p>
+<p>Then, informally:</p>
+$$
+Pr(R_i \uparrow) \propto q_i
+$$
+
+<p>even where:</p>
+$$
+A_i \not\uparrow
+$$
+
+<p>and:</p>
+$$
+P_i \not\uparrow
+$$
+
+<p>This produces a familiar organizational state:</p>
+<pre><code class="language-text">&quot;You seem to know how this works.&quot;
+
+therefore
+
+&quot;This is yours now.&quot;
+</code></pre>
+<p>The transition is subtle because competence genuinely is relevant to work assignment.</p>
+<p>The pathological step occurs when competence is treated as a substitute for ownership, authority, staffing, access, or scope.</p>
+<p>A person who can explain why a database migration is failing does not thereby become the database migration team.</p>
+<p>A person who identifies an IAM dependency does not thereby acquire IAM permissions.</p>
+<p>A person who has once restarted a printer successfully should conceal this fact indefinitely.</p>
+<hr>
+<h2 id="10-the-competence-gravity-well">10. The Competence Gravity Well</h2>
+<p>Responsibility Displacement becomes self-reinforcing.</p>
+<p>Suppose actor (i) repeatedly resolves ambiguous or cross-domain problems.</p>
+<p>Their perceived competence (q_i) increases.</p>
+<p>As (q_i) increases, unresolved work is increasingly routed toward them:</p>
+$$
+\frac{dR_i}{dt} \propto q_i
+$$
+
+<p>The additional work exposes the actor to more systems, teams, dependencies, and historical context.</p>
+<p>Consequently:</p>
+$$
+\frac{dC_i}{dt} > 0
+$$
+
+<p>which further increases (q_i), causing still more work to arrive.</p>
+<p>Thus:</p>
+$$
+C \uparrow
+\rightarrow
+R \uparrow
+\rightarrow
+context \uparrow
+\rightarrow
+C \uparrow
+$$
+
+<p>This positive feedback loop is termed the <strong>Competence Gravity Well</strong>.</p>
+<p>At sufficient mass, the individual begins attracting problems for which no plausible formal relationship exists.</p>
+<p>A certificate problem arrives.</p>
+<p>Then a DNS problem.</p>
+<p>Then a database problem.</p>
+<p>Then SMTP.</p>
+<p>Then IAM.</p>
+<p>Then an application nobody knew still existed.</p>
+<p>Eventually someone asks about procurement.</p>
+<p>The actor has become an organizational singularity.</p>
+<hr>
+<h2 id="11-the-organizational-default-route">11. The Organizational Default Route</h2>
+<p>At the terminal stage of the Competence Gravity Well, the organization develops an <strong>Organizational Default Route (ODR)</strong>.</p>
+<p>In network routing, a default route receives traffic for which no more specific route is known.</p>
+<p>In organizations, the corresponding mechanism is:</p>
+<pre><code class="language-text">Does anyone know who owns this?
+             |
+             no
+             |
+             v
+       Send it to Dave.
+</code></pre>
+<p>The ODR is not necessarily the most qualified person for the task.</p>
+<p>Rather, the ODR is the person with the strongest historical record of making poorly classified problems disappear.</p>
+<p>This distinction is important.</p>
+<p>Let (S(t)) denote specificity of ownership information available for task (t).</p>
+<p>Then:</p>
+$$
+S(t) \rightarrow 0
+$$
+
+<p>implies:</p>
+$$
+Pr(t \rightarrow ODR) \rightarrow 1
+$$
+
+<p>This routing policy is highly efficient in the short term.</p>
+<p>It is also self-destructive.</p>
+<p>Every successful intervention strengthens the route.</p>
+<p>The reward for effectively resolving organizational ambiguity is therefore additional organizational ambiguity.</p>
+<p>Eventually the ODR saturates.</p>
+<p>We define <strong>Default Route Saturation (DRS)</strong> as the condition in which an actor&rsquo;s incoming problem rate exceeds their ability to forward, resolve, or refuse improperly routed work.</p>
+<p>Symptoms include:</p>
+<ul>
+<li>unexplained calendar density,</li>
+<li>ownership of systems absent from the job description,</li>
+<li>attendance at meetings beginning with &ldquo;we just thought you might know,&rdquo;</li>
+<li>being included on incidents solely because &ldquo;you were helpful last time,&rdquo;</li>
+<li>and the discovery that taking vacation constitutes a resilience test.</li>
+</ul>
+<hr>
+<h2 id="12-the-expertise-disclaimer-paradox">12. The Expertise Disclaimer Paradox</h2>
+<p>Competent technical practitioners often employ explicit uncertainty calibration.</p>
+<p>Typical statements include:</p>
+<pre><code class="language-text">&quot;I'm not an expert in this area.&quot;
+
+&quot;This is outside my primary domain.&quot;
+
+&quot;I think X is happening, but someone closer to the system should confirm.&quot;
+
+&quot;If there is a specialist here, they should drive.&quot;
+</code></pre>
+<p>These statements are generally intended to communicate epistemic boundaries.</p>
+<p>They do not necessarily mean:</p>
+<pre><code class="language-text">&quot;I have no idea what is happening.&quot;
+</code></pre>
+<p>A highly experienced generalist may possess enough adjacent knowledge to diagnose a problem correctly while still recognizing that a domain specialist has deeper expertise.</p>
+<p>This creates the <strong>Expertise Disclaimer Paradox</strong>:</p>
+<blockquote>
+<p>Repeated successful performance by an actor who explicitly disclaims expertise may cause observers to infer that expertise was unnecessary rather than that the actor maintains a conservative threshold for claiming expertise.</p>
+</blockquote>
+<p>The process is straightforward:</p>
+<pre><code class="language-text">competent actor
+      |
+      v
+accurately disclaims expertise
+      |
+      v
+solves problem anyway
+      |
+      v
+observers retain outcome
+but discard calibration
+      |
+      v
+&quot;apparently you don't need
+an expert for this&quot;
+</code></pre>
+<p>This can have unfortunate second-order effects.</p>
+<p>Suppose two actors make the following statements.</p>
+<p>Actor A:</p>
+<pre><code class="language-text">&quot;I'm about 70% confident the issue is X.
+Before changing anything, test Y.&quot;
+</code></pre>
+<p>Actor B:</p>
+<pre><code class="language-text">&quot;It's X.&quot;
+</code></pre>
+<p>If X proves correct, an organization observing only prediction accuracy may score both actors equally.</p>
+<p>An organization that also rewards expressed confidence may score Actor B higher.</p>
+<p>Thus poor uncertainty calibration may become positively reinforced.</p>
+<p>The resulting selection pressure favors certainty independently of knowledge.</p>
+<p>HCAT therefore distinguishes <strong>competence</strong> from <strong>performed certainty</strong>.</p>
+<p>This distinction is recommended.</p>
+<hr>
+<h2 id="13-the-false-modesty-hazard">13. The False Modesty Hazard</h2>
+<p>Expertise disclaimers create another problem when repeatedly issued by actors whose baseline competence is unusually broad.</p>
+<p>If a person says:</p>
+<pre><code class="language-text">&quot;I'm not a database expert.&quot;
+</code></pre>
+<p>and subsequently identifies the database problem, the organization updates.</p>
+<p>If the same person later says:</p>
+<pre><code class="language-text">&quot;I'm not a DNS expert.&quot;
+</code></pre>
+<p>and identifies the DNS problem, the organization updates again.</p>
+<p>After sufficient repetitions, the phrase:</p>
+<pre><code class="language-text">&quot;I'm not an expert.&quot;
+</code></pre>
+<p>may become operationally indistinguishable from:</p>
+<pre><code class="language-text">&quot;I will now solve this.&quot;
+</code></pre>
+<p>This is undesirable.</p>
+<p>Worse, less competent actors may imitate the disclaimer without reproducing the calibration underlying it.</p>
+<p>The organization has now learned an incomplete ritual:</p>
+<pre><code class="language-text">1. Announce non-expertise.
+2. Continue making decisions.
+</code></pre>
+<p>The omitted step:</p>
+<pre><code class="language-text">1.5 Determine whether you actually know what the hell you are doing.
+</code></pre>
+<p>is difficult to encode in policy.</p>
+<p>We therefore caution against interpreting epistemic humility as evidence that domain expertise is optional.</p>
+<p>The fact that a sufficiently experienced systems practitioner can reason across an unfamiliar subsystem does not imply that unfamiliarity is itself a qualification.</p>
+<hr>
+<h2 id="14-hcat-failure-modes">14. HCAT Failure Modes</h2>
+<p>The principal CRAP imbalances may be summarized as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Relationship</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Post Turtle</td>
+<td>(A \gg C)</td>
+<td>Authority exceeds relevant competence</td>
+</tr>
+<tr>
+<td>Putt Inversion</td>
+<td>(C \gg A)</td>
+<td>Competence exceeds authority</td>
+</tr>
+<tr>
+<td>Delegated Impossibility</td>
+<td>(R \gg A)</td>
+<td>Responsibility exceeds decision authority</td>
+</tr>
+<tr>
+<td>Permissionless Accountability</td>
+<td>(R \gg P)</td>
+<td>Responsibility exceeds operational control</td>
+</tr>
+<tr>
+<td>Unaccountable Authority</td>
+<td>(A \gg R)</td>
+<td>Decision authority exists without corresponding ownership</td>
+</tr>
+<tr>
+<td>Unused Expertise</td>
+<td>(C \gg R)</td>
+<td>Relevant competence exists but is not incorporated into execution</td>
+</tr>
+<tr>
+<td>Competence Mismatch</td>
+<td>(R \gg C)</td>
+<td>Responsibility exceeds relevant competence</td>
+</tr>
+<tr>
+<td>Unbounded Agency</td>
+<td>(P \gg C)</td>
+<td>Operational control exceeds demonstrated competence</td>
+</tr>
+</tbody>
+</table>
+<p>The final condition should be monitored carefully.</p>
+<hr>
+<h2 id="15-crap-propagation">15. CRAP Propagation</h2>
+<p>HCAT failures rarely remain local.</p>
+<p>Suppose actor (i) has high responsibility but insufficient permission:</p>
+$$
+R_i \gg P_i
+$$
+
+<p>The task cannot progress.</p>
+<p>Management observes the lack of progress and increases urgency.</p>
+<p>The actor responds by escalating to actor (j), who possesses permission but insufficient responsibility:</p>
+$$
+P_j \gg R_j
+$$
+
+<p>Actor (j) reasonably prioritizes other work.</p>
+<p>Management therefore escalates again.</p>
+<p>After several iterations, the organization may produce:</p>
+<ul>
+<li>three project managers,</li>
+<li>two directors,</li>
+<li>a severity-one bridge,</li>
+<li>an executive sponsor,</li>
+<li>a shared spreadsheet,</li>
+<li>and no person simultaneously possessing (R) and (P).</li>
+</ul>
+<p>The original technical task remains unchanged.</p>
+<p>We call this <strong>CRAP propagation</strong>.</p>
+<p>The amount of organizational activity increases while effective alignment does not.</p>
+<p>A rough expression is:</p>
+$$
+Activity \uparrow
+\not\Rightarrow
+M \downarrow
+$$
+
+<p>This result is left as an exercise for the reader&rsquo;s employer.</p>
+<hr>
+<h2 id="16-hcat-and-incident-response">16. HCAT and Incident Response</h2>
+<p>HCAT is particularly useful during incidents because crises expose hidden organizational topology.</p>
+<p>Under normal conditions, documentation may imply:</p>
+<pre><code class="language-text">Team A owns Service X.
+</code></pre>
+<p>During an outage, the actual topology becomes visible:</p>
+<pre><code class="language-text">Team A owns Service X.
+
+Team B has production credentials.
+
+Team C understands the application.
+
+An engineer who left eight months ago understood the deployment.
+
+The vendor owns the load balancer configuration.
+
+Nobody owns DNS.
+
+Scott is driving.
+</code></pre>
+<p>The discrepancy between documented and effective topology is itself diagnostically useful.</p>
+<p>Incident response therefore provides an empirical method for discovering HCAT structure.</p>
+<p>Observe:</p>
+<ol>
+<li>who is contacted,</li>
+<li>who can answer questions,</li>
+<li>who can approve decisions,</li>
+<li>who can execute changes,</li>
+<li>who is blamed for delays.</li>
+</ol>
+<p>These frequently identify five different people.</p>
+<hr>
+<h2 id="17-hcat-intervention-strategy">17. HCAT Intervention Strategy</h2>
+<p>Traditional organizational remediation often begins by asking:</p>
+<blockquote>
+<p>Who owns this?</p>
+</blockquote>
+<p>HCAT recommends four questions instead:</p>
+<pre><code class="language-text">Who understands it?
+Who is responsible for the outcome?
+Who can authorize the decision?
+Who can actually alter the system?
+</code></pre>
+<p>These correspond directly to:</p>
+$$
+C,\;R,\;A,\;P
+$$
+
+<p>If the answers differ substantially, the organization should resist the immediate temptation to schedule a recurring synchronization meeting.</p>
+<p>Instead, one or more dimensions should be moved.</p>
+<p>Examples include:</p>
+<h3 id="171-increase-permission">17.1 Increase Permission</h3>
+<p>Appropriate where:</p>
+$$
+C,R,A > P
+$$
+
+<p>Grant the responsible actor the access necessary to perform the work.</p>
+<p>This technique is sometimes controversial because it requires completing the IAM ticket.</p>
+<h3 id="172-transfer-responsibility">17.2 Transfer Responsibility</h3>
+<p>Appropriate where another actor already possesses the required competence, authority, and permission.</p>
+<p>Formally:</p>
+$$
+R_i \rightarrow R_j
+$$
+
+<p>This is commonly called &ldquo;letting the team that owns the thing do its job.&rdquo;</p>
+<h3 id="173-increase-authority">17.3 Increase Authority</h3>
+<p>Appropriate where competent actors repeatedly identify required action but cannot cause it to occur.</p>
+<h3 id="174-acquire-competence">17.4 Acquire Competence</h3>
+<p>Appropriate where authority and control already exist but understanding does not.</p>
+<p>Possible mechanisms include:</p>
+<ul>
+<li>training,</li>
+<li>consultation,</li>
+<li>documentation,</li>
+<li>hiring,</li>
+<li>asking someone,</li>
+<li>or, in extreme cases, checking before publicly declaring that the technology does not work that way.</li>
+</ul>
+<h3 id="175-reduce-responsibility">17.5 Reduce Responsibility</h3>
+<p>This intervention is rarely considered because responsibility is inexpensive to assign.</p>
+<p>It is nevertheless valid.</p>
+<hr>
+<h2 id="18-the-hcat-maturity-model">18. The HCAT Maturity Model</h2>
+<p>For organizations requiring a maturity model before acknowledging an observable fact, we provide one.</p>
+<h3 id="level-1-accidental">Level 1: Accidental</h3>
+<p>CRAP is distributed primarily through historical circumstance.</p>
+<p>Ownership is inferred from whoever last touched the system.</p>
+<h3 id="level-2-documented">Level 2: Documented</h3>
+<p>Roles and responsibilities are recorded.</p>
+<p>The records are incorrect.</p>
+<h3 id="level-3-managed">Level 3: Managed</h3>
+<p>Responsibility and authority are generally aligned.</p>
+<p>Permissions remain governed by a separate process with a six-week SLA.</p>
+<h3 id="level-4-adaptive">Level 4: Adaptive</h3>
+<p>Work is routed toward appropriately competent actors while authority and operational control are deliberately aligned with responsibility.</p>
+<p>The organization can identify and correct CRAP misalignment before an incident exposes it.</p>
+<h3 id="level-5-optimized">Level 5: Optimized</h3>
+<p>Level 4 has been renamed, placed in a branded quadrant, and certified by an external consultancy.</p>
+<p>The organization now possesses an HCAT Transformation Roadmap.</p>
+<p>No further improvement is measurable, although several workshops remain.</p>
+<hr>
+<h2 id="19-discussion">19. Discussion</h2>
+<p>HCAT should not be interpreted as an argument that technical experts should automatically hold managerial authority.</p>
+<p>Such a conclusion would merely invert one form of misalignment into another.</p>
+<p>Competence is contextual.</p>
+<p>The engineer best able to diagnose a packet-loss problem is not automatically the person best suited to allocate a department&rsquo;s budget, resolve personnel disputes, or determine strategic investment.</p>
+<p>Likewise, management competence is itself a legitimate competence.</p>
+<p>The relevant question is whether decision authority concerning a technical system can interact effectively with the competence necessary to understand the consequences of those decisions.</p>
+<p>The healthiest condition is therefore not:</p>
+$$
+C = A
+$$
+
+<p>but functional adjacency among the CRAP dimensions.</p>
+<p>Authority must be reachable from competence.</p>
+<p>Responsibility must be accompanied by control.</p>
+<p>Permission must be bounded by competence and accountability.</p>
+<p>And work should not migrate indefinitely toward whoever happened to fix the previous unrelated emergency.</p>
+<p>HCAT therefore reframes organizational effectiveness as a routing problem.</p>
+<p>The organization already contains much of what it needs.</p>
+<p>The packets are simply going to strange places.</p>
+<hr>
+<h2 id="20-limitations">20. Limitations</h2>
+<p>Several limitations should be acknowledged.</p>
+<p>First, competence cannot be reliably represented as a scalar quantity.</p>
+<p>Second, authority is contextual and socially mediated.</p>
+<p>Third, responsibility may be formal, perceived, implicit, retrospective, or assigned immediately after an outage.</p>
+<p>Fourth, permission may consist of technical access, procedural authorization, political permission, or possession of the one password written on the whiteboard in Conference Room B.</p>
+<p>Consequently, the CRAP vector cannot presently be measured with scientific precision.</p>
+<p>This limitation is not expected to impede adoption by the management consulting industry.</p>
+<p>Future work may therefore include development of:</p>
+<ul>
+<li>the HCAT Organizational Readiness Assessment,</li>
+<li>CRAP heat maps,</li>
+<li>CRAP radar charts,</li>
+<li>CRAP maturity dashboards,</li>
+<li>quarterly CRAP reviews,</li>
+<li>enterprise CRAP benchmarking,</li>
+<li>AI-assisted CRAP detection,</li>
+<li>and certification programs for organizations wishing to demonstrate that their CRAP conforms to industry best practices.</li>
+</ul>
+<p>A subscription model is being considered.</p>
+<hr>
+<h2 id="21-conclusion">21. Conclusion</h2>
+<p>Technical organizations do not fail solely because they lack competent people, adequate authority, clear responsibility, or sufficient operational permission.</p>
+<p>They also fail because these capabilities are distributed independently and then treated as though an org chart causes them to coincide.</p>
+<p>HCAT provides a framework for examining that distribution.</p>
+<p>Its central construct, the CRAP vector,</p>
+$$
+(C,R,A,P)
+$$
+
+<p>captures four properties necessary for effective technical action:</p>
+<p><strong>Competence</strong> to understand what should be done.</p>
+<p><strong>Responsibility</strong> for ensuring that it happens.</p>
+<p><strong>Authority</strong> to make the necessary decisions.</p>
+<p><strong>Permission</strong> to alter the systems involved.</p>
+<p>Misalignment among these dimensions produces recognizable organizational states.</p>
+<p>When authority exceeds competence, we observe the <strong>Post Turtle Condition</strong>.</p>
+<p>When competence exceeds authority, we observe <strong>Putt Inversion</strong>.</p>
+<p>When responsibility exceeds authority, we observe <strong>Delegated Impossibility</strong>.</p>
+<p>When responsibility exceeds permission, we observe <strong>Permissionless Accountability</strong>.</p>
+<p>When a competent actor repeatedly compensates for these failures, work begins to migrate toward that actor through the <strong>Competence Gravity Well</strong>, potentially creating an <strong>Organizational Default Route</strong>.</p>
+<p>These effects are neither exotic nor difficult to observe.</p>
+<p>In many organizations, asking four questions is sufficient:</p>
+<pre><code class="language-text">Who knows?
+Who owns?
+Who decides?
+Who can?
+</code></pre>
+<p>If the answers identify four different people, the organization may have an HCAT problem.</p>
+<p>If the fifth answer is the consultant, it almost certainly does.</p>
+<hr>
+<h2 id="references">References</h2>
+<p>Putt, A. <em>Putt&rsquo;s Law and the Successful Technocrat</em>. Original edition, 1981; revised edition, Wiley-IEEE Press, 2006.</p>
+<p>Peter, L. J., and Hull, R. <em>The Peter Principle</em>. William Morrow, 1969.</p>
+<p>Adams, S. <em>The Dilbert Principle</em>. HarperBusiness, 1996.</p>
+<p>The Grand Unified Model of DevOps/SRE Dynamics (GUM), because apparently the existing literature had not yet contained enough equations.</p>
+
+        <footer>
+            <div class="footer-meta">
+                <span>Scott VanRavenswaay</span>
+                <a href="mailto:scottvr@paperclipmaximizer.ai">scottvr@paperclipmaximizer.ai</a>
+                <span>A supplementary note to the GUM of DevOps</span>
+            </div>
+            <nav class="paper-links" aria-label="Project resources">
+                <a class="paper-link-primary" href="../index.html">Paper</a>
+                <a href="../DORA/GUT/GUT.html">Tool</a>
+                <a href="https://github.com/scottvr/GUM_of_Devops/" target="_blank" rel="noopener noreferrer">Repository</a>
+            </nav>
+        </footer>
+</div>
+        </main>
+<!-- Vendored KaTeX (0.16.11) + auto-render: turns the LaTeX in the content
+     into math in the browser. No CDN dependency; fonts load from ../DORA/GUT/
+     vendor/katex/fonts via the stylesheet above. -->
+<script defer src="../DORA/GUT/vendor/katex/katex.min.js"></script>
+<script defer src="../DORA/GUT/vendor/katex/contrib/auto-render.min.js"></script>
+<script>
+  (function () {
+    function reveal() { document.documentElement.classList.remove('math-loading'); }
+    document.addEventListener('DOMContentLoaded', function () {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.getElementById('note-content'), {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false },
+            { left: '\\(', right: '\\)', display: false }
+          ],
+          throwOnError: false
+        });
+      }
+      reveal();
+    });
+    // Failsafe: never leave the content hidden if a script fails to load.
+    setTimeout(reveal, 2000);
+  })();
+</script>
+</body>
+</html>

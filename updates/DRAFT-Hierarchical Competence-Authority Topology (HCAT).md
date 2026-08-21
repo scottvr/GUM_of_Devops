@@ -39,13 +39,9 @@ Consider a typical technical task.
 An organization would like a thing to occur.
 
 Person A understands the thing.
-
 Person B owns the thing.
-
 Person C is accountable for the thing.
-
 Person D possesses the credentials required to modify the thing.
-
 Person E is asked why the thing has not occurred.
 
 This arrangement is generally regarded as a team.
@@ -89,15 +85,10 @@ A_i,
 P_i
 \right)
 $$
-
 This ordered tuple will hereafter be referred to as the **CRAP vector**.
-
 No significance should be inferred from the ordering of these terms beyond the obvious significance.
-
 Each component is task-dependent.
-
 An accomplished network engineer may exhibit:
-
 $$
 C \approx 1
 $$
@@ -128,9 +119,7 @@ $$
 C \sim R \sim A \sim P
 $$
 
-The symbol \(\sim\) is used deliberately rather than equality, as the quantities involved cannot actually be measured on a common physical scale, and doing so would be ridiculous.
-
-We therefore normalize them to decimal values and proceed anyway.
+The symbol \(\sim\) is used deliberately rather than equality, as the quantities involved cannot actually be measured on a common physical scale, and doing so would be ridiculous.  We therefore normalize them to decimal values and proceed anyway.
 
 A generalized local misalignment function may be written:
 
@@ -161,9 +150,7 @@ It asserts only that organizations should avoid assigning responsibility for cha
 4. did not create the problem,
 5. cannot even log into several of the affected environments,
 
-and then repeatedly ask that individual why the work remains incomplete.
-
-This is considered a high-\(M\) configuration.
+and then repeatedly ask that individual why the work remains incomplete.  This is considered a high-\(M\) configuration.
 
 ---
 
@@ -193,11 +180,8 @@ Consultant E     gets asked about it every Tuesday
 ```
 
 No resource deficit exists.
-
 The difficulty is topological.
-
 The CRAP is poorly distributed.
-
 HCAT therefore models not merely actors but the paths by which work, questions, approvals, escalations, and blame move between them.
 
 Let:
@@ -208,9 +192,7 @@ $$
 
 where \(V\) is the set of organizational actors and \(E\) represents the available routes through which work or accountability may travel.
 
-A technically healthy organization attempts to route work toward a node possessing an appropriate CRAP configuration.
-
-A sufficiently mature enterprise instead routes work according to calendar availability.
+A technically healthy organization attempts to route work toward a node possessing an appropriate CRAP configuration.  A sufficiently mature enterprise instead routes work according to calendar availability.
 
 ---
 
@@ -242,11 +224,7 @@ PTC_i =
 \frac{A_i}{C_i + \epsilon}
 $$
 
-where \(\epsilon\) is a small stabilizing term included because division by zero would otherwise make the organizational implications unnecessarily explicit.
-
-Large values of \(PTC\) indicate considerable hierarchical elevation relative to demonstrated role-relevant understanding.
-
-This formulation also makes clear that incompetence itself is not necessarily hazardous.
+where \(\epsilon\) is a small stabilizing term included because division by zero would otherwise make the organizational implications unnecessarily explicit.  Large values of \(PTC\) indicate considerable hierarchical elevation relative to demonstrated role-relevant understanding.  This formulation also makes clear that incompetence itself is not necessarily hazardous.
 
 An inexperienced junior employee with low competence and low authority presents limited systemic danger:
 
@@ -278,9 +256,7 @@ $$
 C_i \gg A_i
 $$
 
-Here the actor understands the system but lacks sufficient organizational authority to direct its behavior.
-
-We call this **Putt Inversion**, after Putt's observation that technical hierarchies tend to separate those who understand technology from those who manage it.
+Here the actor understands the system but lacks sufficient organizational authority to direct its behavior.  We call this **Putt Inversion**, after Putt's observation that technical hierarchies tend to separate those who understand technology from those who manage it.
 
 Post Turtle and Putt Inversion are therefore mirror states:
 
@@ -289,17 +265,11 @@ Post Turtle:      A >> C
 Putt Inversion:   C >> A
 ```
 
-An organization may contain both simultaneously.
-
-Indeed, this is often the preferred implementation.
-
+An organization may contain both simultaneously.  Indeed, this is often the preferred implementation.
 One employee understands precisely what must be done but lacks authority to approve it.
-
 Another possesses authority to approve it but does not understand why it is necessary.
 
-A meeting is then scheduled so that both may exchange these properties verbally without actually transferring either one.
-
-The meeting concludes with an action item.
+A meeting is then scheduled so that both may exchange these properties verbally without actually transferring either one.  The meeting concludes with an action item.
 
 ---
 
@@ -341,10 +311,7 @@ DAR_i \rightarrow \infty
 $$
 
 This is the **organizational accountability singularity**.
-
-Beyond this point, additional management pressure cannot produce additional execution because the responsible actor lacks the causal mechanisms required to affect the requested state.
-
-Nevertheless, pressure is commonly increased.
+Beyond this point, additional management pressure cannot produce additional execution because the responsible actor lacks the causal mechanisms required to affect the requested state.  Nevertheless, pressure is commonly increased.
 
 This produces several secondary outputs:
 
@@ -369,9 +336,7 @@ A particularly useful special case occurs when:
 $$
 R_i \gg P_i
 $$
-
 This condition shall be called **Permissionless Accountability**.
-
 The actor may fully understand the required work and may even be considered responsible for its completion, yet lacks the system permissions necessary to inspect or alter the relevant state.
 
 For example, consider a generalized cloud environment in which an organization wishes to normalize a set of metadata tags.
@@ -388,10 +353,7 @@ However:
 - and an access request submitted previously remains unresolved.
 
 The organization may nevertheless continue routing the tagging question to the specialist.
-
-This behavior initially appears irrational.
-
-Under HCAT it is easily explained.
+This behavior initially appears irrational.  Under HCAT it is easily explained.
 
 Responsibility has been assigned independently of permission:
 
@@ -407,9 +369,7 @@ $$
 U \uparrow
 $$
 
-where \(U\) is Management Urgency.
-
-This has the advantage of requiring no IAM changes.
+where \(U\) is Management Urgency.  This has the advantage of requiring no IAM changes.
 
 ---
 
@@ -441,7 +401,7 @@ $$
 
 This produces a familiar organizational state:
 
-```text
+1```text
 "You seem to know how this works."
 
 therefore
@@ -451,24 +411,17 @@ therefore
 
 The transition is subtle because competence genuinely is relevant to work assignment.
 
-The pathological step occurs when competence is treated as a substitute for ownership, authority, staffing, access, or scope.
+The pathological step occurs when competence is treated as a substitute for ownership, authority, staffing, access, or scope.  A person who can explain why a database migration is failing does not thereby become the database migration team.
 
-A person who can explain why a database migration is failing does not thereby become the database migration team.
-
-A person who identifies an IAM dependency does not thereby acquire IAM permissions.
-
-A person who has once restarted a printer successfully should conceal this fact indefinitely.
+A person who identifies an IAM dependency does not thereby acquire IAM permissions.  A person who has once restarted a printer successfully should conceal this fact indefinitely.
 
 ---
 
 ## 10. The Competence Gravity Well
 
 Responsibility Displacement becomes self-reinforcing.
-
 Suppose actor \(i\) repeatedly resolves ambiguous or cross-domain problems.
-
 Their perceived competence \(q_i\) increases.
-
 As \(q_i\) increases, unresolved work is increasingly routed toward them:
 
 $$
@@ -479,7 +432,6 @@ The additional work exposes the actor to more systems, teams, dependencies, and 
 
 Consequently:
 
-$$
 \frac{dC_i}{dt} > 0
 $$
 
@@ -500,23 +452,14 @@ $$
 This positive feedback loop is termed the **Competence Gravity Well**.
 
 At sufficient mass, the individual begins attracting problems for which no plausible formal relationship exists.
-
 A certificate problem arrives.
-
 Then a DNS problem.
-
 Then a database problem.
-
 Then SMTP.
-
 Then IAM.
-
 Then an application nobody knew still existed.
-
 Eventually someone asks about procurement.
-
 The actor has become an organizational singularity.
-
 ---
 
 ## 11. The Organizational Default Route
@@ -524,7 +467,6 @@ The actor has become an organizational singularity.
 At the terminal stage of the Competence Gravity Well, the organization develops an **Organizational Default Route (ODR)**.
 
 In network routing, a default route receives traffic for which no more specific route is known.
-
 In organizations, the corresponding mechanism is:
 
 ```text
@@ -537,7 +479,6 @@ Does anyone know who owns this?
 ```
 
 The ODR is not necessarily the most qualified person for the task.
-
 Rather, the ODR is the person with the strongest historical record of making poorly classified problems disappear.
 
 This distinction is important.
@@ -556,11 +497,7 @@ $$
 Pr(t \rightarrow ODR) \rightarrow 1
 $$
 
-This routing policy is highly efficient in the short term.
-
-It is also self-destructive.
-
-Every successful intervention strengthens the route.
+This routing policy is highly efficient in the short term.  It is also self-destructive.  Every successful intervention strengthens the route.
 
 The reward for effectively resolving organizational ambiguity is therefore additional organizational ambiguity.
 
